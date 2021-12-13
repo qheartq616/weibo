@@ -100,9 +100,12 @@ public class PostServiceImpl implements PostService{
 
 	@Override
 	//发微博
-	public int doPost(Post post) {
-		int i = postMapper.insertSelective(post);
-		return i;
+	public Post doPost(Post post) {
+		postMapper.insertSelective(post);
+		PostExample postExample=new PostExample();
+		postExample.createCriteria().andTextEqualTo(post.getText()).andPostTimeEqualTo(post.getPostTime());
+		List<Post> posts = postMapper.selectByExample(postExample);
+		return posts.get(0);
 	}
 
 	@Override
@@ -140,6 +143,11 @@ public class PostServiceImpl implements PostService{
 		}
 
 		return pageInfo;
+	}
+
+	@Override
+	public void delete() {
+
 	}
 
 

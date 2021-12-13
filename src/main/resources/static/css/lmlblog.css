@@ -244,6 +244,10 @@
     float: left;
     width: 300px;
 }
+.lmlblog-member-left-main {
+    float: left;
+    width: 200px;
+}
 .lmlblog-member-left-follow {
     padding: 16px;
     background-color: #fff;
@@ -471,6 +475,11 @@
 .lmlblog-member-right {
     float: right;
     width: 710px;
+}
+
+.lmlblog-member-right-main {
+    float: right;
+    width: 810px;
 }
 
 /*访客*/

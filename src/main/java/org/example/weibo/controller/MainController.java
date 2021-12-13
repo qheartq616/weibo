@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @RequestMapping("main")
 @Controller
@@ -89,9 +89,14 @@ public class MainController {
 
 	@RequestMapping("submit")
 	@ResponseBody
-	public Post submitNewPost(Post post){
-		int i = postService.doPost(post);
-		Post postNew = postMapper.selectByPrimaryKey(i);
-		return postNew;
+	public Map<String,Object> submitNewPost(Post post){
+		post.setPostTime(new Date());
+		Post postNew = postService.doPost(post);
+		Map<String,Object> map=new HashMap<>();
+		map.put("post",postNew);
+		SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		String formatTime = simpleDateFormat.format(postNew.getPostTime());
+		map.put("formatTime",formatTime);
+		return map;
 	}
 }
