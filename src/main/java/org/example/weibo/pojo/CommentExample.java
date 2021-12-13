@@ -1,6 +1,7 @@
 package org.example.weibo.pojo;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class CommentExample {
@@ -164,6 +165,66 @@ public class CommentExample {
             return (Criteria) this;
         }
 
+        public Criteria andPidIsNull() {
+            addCriterion("pid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPidIsNotNull() {
+            addCriterion("pid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPidEqualTo(Integer value) {
+            addCriterion("pid =", value, "pid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPidNotEqualTo(Integer value) {
+            addCriterion("pid <>", value, "pid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPidGreaterThan(Integer value) {
+            addCriterion("pid >", value, "pid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPidGreaterThanOrEqualTo(Integer value) {
+            addCriterion("pid >=", value, "pid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPidLessThan(Integer value) {
+            addCriterion("pid <", value, "pid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPidLessThanOrEqualTo(Integer value) {
+            addCriterion("pid <=", value, "pid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPidIn(List<Integer> values) {
+            addCriterion("pid in", values, "pid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPidNotIn(List<Integer> values) {
+            addCriterion("pid not in", values, "pid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPidBetween(Integer value1, Integer value2) {
+            addCriterion("pid between", value1, value2, "pid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPidNotBetween(Integer value1, Integer value2) {
+            addCriterion("pid not between", value1, value2, "pid");
+            return (Criteria) this;
+        }
+
         public Criteria andCommentIsNull() {
             addCriterion("comment is null");
             return (Criteria) this;
@@ -231,6 +292,66 @@ public class CommentExample {
 
         public Criteria andCommentNotBetween(String value1, String value2) {
             addCriterion("comment not between", value1, value2, "comment");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentTimeIsNull() {
+            addCriterion("comment_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentTimeIsNotNull() {
+            addCriterion("comment_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentTimeEqualTo(Date value) {
+            addCriterion("comment_time =", value, "commentTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentTimeNotEqualTo(Date value) {
+            addCriterion("comment_time <>", value, "commentTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentTimeGreaterThan(Date value) {
+            addCriterion("comment_time >", value, "commentTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("comment_time >=", value, "commentTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentTimeLessThan(Date value) {
+            addCriterion("comment_time <", value, "commentTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentTimeLessThanOrEqualTo(Date value) {
+            addCriterion("comment_time <=", value, "commentTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentTimeIn(List<Date> values) {
+            addCriterion("comment_time in", values, "commentTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentTimeNotIn(List<Date> values) {
+            addCriterion("comment_time not in", values, "commentTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentTimeBetween(Date value1, Date value2) {
+            addCriterion("comment_time between", value1, value2, "commentTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentTimeNotBetween(Date value1, Date value2) {
+            addCriterion("comment_time not between", value1, value2, "commentTime");
             return (Criteria) this;
         }
     }

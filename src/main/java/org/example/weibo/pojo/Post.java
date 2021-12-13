@@ -5,6 +5,8 @@ import java.util.Date;
 public class Post {
     private Integer pid;
 
+    private Integer forwardPid;
+
     private Integer uid;
 
     private String text;
@@ -15,11 +17,13 @@ public class Post {
 
     private Date updateTime;
 
+    private Integer status;
+
     private User user;
 
-    private boolean like;
+    private boolean postLike;
 
-    private int countLike;
+    private int countPostLike;
 
     public User getUser() {
         return user;
@@ -29,20 +33,20 @@ public class Post {
         this.user = user;
     }
 
-    public boolean isLike() {
-        return like;
+    public boolean isPostLike() {
+        return postLike;
     }
 
-    public void setLike(boolean like) {
-        this.like = like;
+    public void setPostLike(boolean postLike) {
+        this.postLike = postLike;
     }
 
-    public int getCountLike() {
-        return countLike;
+    public int getCountPostLike() {
+        return countPostLike;
     }
 
-    public void setCountLike(int countLike) {
-        this.countLike = countLike;
+    public void setCountPostLike(int countPostLike) {
+        this.countPostLike = countPostLike;
     }
 
     public Integer getPid() {
@@ -51,6 +55,14 @@ public class Post {
 
     public void setPid(Integer pid) {
         this.pid = pid;
+    }
+
+    public Integer getForwardPid() {
+        return forwardPid;
+    }
+
+    public void setForwardPid(Integer forwardPid) {
+        this.forwardPid = forwardPid;
     }
 
     public Integer getUid() {
@@ -91,5 +103,13 @@ public class Post {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

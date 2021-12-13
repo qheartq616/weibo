@@ -26,10 +26,15 @@
 	<link rel='stylesheet' id='style-css' href='/css/style.css' type='text/css' media='all' />
 	<link rel='stylesheet' id='lmlblog-css' href='/css/lmlblog.css' type='text/css' media='all' />
 	<link rel='stylesheet' id='all-css' href='/css/all.css' type='text/css' media='all' />
+
+	<!--<link rel="stylesheet" href="/css/bootstrap.min.css">-->
+	<link rel="stylesheet" type="text/css" href="/css/style-input.css">
+
 	<script type='text/javascript' src='/js/jquery.min.js'></script>
 	<script type='text/javascript' src='/js/ueditor.all.min.js'></script>
 </head>
 <body>
+<input hidden th:value="${uid}" id="uidVar">
 <!-- 菜单 -->
 <div class="menu-bar">
 	<div class="head_content">
@@ -38,20 +43,21 @@
 		<div id="nav" class="menu-menu-1-container">
 			<ul id="menu-menu-1" class="menu" >
 				<li id="head_search"><i class="fa fa-search"></i></li>
-				<li class="menu-item" style="margin-left: 0px;">
+				<li class="menu-item" style="margin-left: 3px;">
 					<form action="#" method=""  style="display: inline-block; ">
 						<input type="search" style="display: inline-block;" class="search" placeholder="搜索框" />
 					</form>
 				</li>
-				<li class="gengxin menu-item menu-item-type-custom"><a href="#1"><i class="fa fa-home"></i>首页</a>
+				<li class="gengxin menu-item menu-item-type-custom">
+					<a th:href="@{|/main/${session.user.uid}/all/1|}"><i class="fa fa-home"></i>微博首页</a>
 				</li>
-				<li class="menu-item menu-item-type-taxonomy menu-item-object-category">
-					<a href="#1"><i class="fa fa-comments-o"></i> 视频</a>
+				<li class="menu-item"><a href="#1"><i class="fa fa-envelope-o"></i>私信</a></li>
+				<li th:class="|menu-item menu-item-type-custom|">
+					<a th:href="@{|/user/${session.user.uid}/1|}">
+						<img th:src="|/avatar/${session.user.image}|" style="height: 32px;width: 32px;position: relative;top: -3px;" class="avatar" />
+						<span th:text="${session.user.name}" style="display: inline-block;position: relative;top: -14px;"></span>
+					</a>
 				</li>
-				<li class="menu-item"><a href="#1">火热</a></li>
-				<li class="menu-item"><a href="#1">私信</a></li>
-				<li id="menu-item" class="menu-item"><a href="#1">个人空间</a></li>
-
 			</ul>
 
 		</div>
@@ -69,7 +75,7 @@
 
 
 <div class="lmlblog-member-main" data="1">
-	<div class="lmlblog-member-bg">
+	<div class="lmlblog-member-bg-remove-image">
 
 		<div class="lmlblog-member-content-list clear">
 			<div class="lmlblog-member-left">
@@ -84,24 +90,74 @@
 				</div>
 				<div class="lmlblog-member-left-profile">
 					<h3>自定义分组 </h3>
-					<ul th:each="group1:${groupList1}">
-						<li><i class="fa fa-smile-o"></i><a th:href="@{|/main/${session.user.uid}/myGroups/${group1.gid}/1|}" th:text="${group1.name}">高校</a></li>
+					<ul th:each="group:${groupList}">
+						<li>
+							<i th:if="${group.gid==gid}" style="color: #ff8862;" class="fa fa-smile-o"></i>
+							<i th:unless="${group.gid==gid}" class="fa fa-smile-o"></i>
+							<a th:if="${group.gid==gid}" style="color: #ff8862;" th:href="@{|/main/${session.user.uid}/myGroups/${group.gid}/1|}" th:text="${group.name}">高校</a>
+							<a th:unless="${group.gid==gid}" th:href="@{|/main/${session.user.uid}/myGroups/${group.gid}/1|}" th:text="${group.name}">高校</a>
+						</li>
 					</ul>
-					<div class="lmlblog-member-left-profile-hide" th:if="${groupList2.size()>0}">
+					<!--<div class="lmlblog-member-left-profile-hide" th:if="${groupList2.size()>0}">
 						<ul th:each="group2:${groupList2}">
 							<li><i class="fa fa-smile-o"></i><a th:href="@{|/main/${session.user.uid}/myGroups/${group2.gid}/1|}" th:text="${group2.name}">高校</a></li>
 						</ul>
-						<!--<li><i class="fa fa-qq"></i> Q Q：<span>sikongqi-&#45;&#45;<span></li>
+						<li><i class="fa fa-qq"></i> Q Q：<span>sikongqi-&#45;&#45;<span></li>
                         <li><i class="fa fa-wechat"></i> 微信：<span>天涯路远，一剑轻安。携琪之手，相伴江湖-&#45;&#45;<span></li>
-                        <li><i class="fa fa-weibo"></i> 微博：<span>司空琪吧官博-&#45;&#45;<span></li>-->
+                        <li><i class="fa fa-weibo"></i> 微博：<span>司空琪吧官博-&#45;&#45;<span></li>
 					</div>
-					<div class="lmlblog-member-left-profile-more" th:if="${groupList2.size()>0}">查看更多 <i class="fa fa-angle-right"></i></div>
+					<div class="lmlblog-member-left-profile-more" th:if="${groupList2.size()>0}">查看更多 <i class="fa fa-angle-right"></i></div>-->
 				</div>
 
 			</div>
 			<div class="lmlblog-member-right">
+
+
 				<div class="lmlblog-post-list">
-					<div class="lmlblog-posts-list words" style="background-image:url(images/058.png);"
+					<div class="row" id="edit_form" >
+						<span class="pull-left" style="margin:15px;">编写新鲜事</span>
+						<span class="tips pull-right" style="margin:15px;"></span>
+						<form role="form" style="margin-top: 50px;" method="post">
+							<div class="form-group">
+								<div class="col-sm-12" style="margin-left: 15px;">
+									<div contentEditable="true" id="content" class="form-control"></div>
+								</div>
+								<div class="col-sm-12" style="margin-top: 12px;margin-left: 12px;">
+									<!--<span class="emoji" >表情</span>-->
+									<span class="pic" >图片	</span>
+									<span>
+										<input type="file" name="" class="select_Img" style="display: none" >
+										<img class="preview" src="">
+									</span>
+									<!--<div class="myEmoji" >
+										<ul id="myTab" class="nav nav-tabs">
+											<li class="active">
+												<a href="#set" data-toggle="tab">预设</a>
+											</li>
+											<li><a href="#hot" data-toggle="tab">热门</a></li>
+
+										</ul>
+										<div id="myTabContent" class="tab-content">
+											<div class="tab-pane fade in active" id="set">
+												<div class="emoji_1"></div>
+
+											</div>
+											<div class="tab-pane fade" id="hot">
+												<div class="emoji_2"></div>
+											</div>
+
+										</div>
+									</div>-->
+									<!-- <span> <input type="file" id="selectImg" value=""></input> </span> -->
+									<button type="button" id="send" class="btn btn-default pull-right disabled" style="position: relative;margin-right: 15px;">发布</button>
+								</div>
+							</div>
+						</form>
+					</div>
+
+					<br>
+
+					<div class="lmlblog-posts-list words" style="background-image:url(/images/058.png);"
 						 data="4197" th:each="post:${pageInfo.list}">
 
 						<!-- 动态内容部分，包括列表 -->
@@ -164,14 +220,11 @@
 						</div>-->
 
 						<div class="lmlblog-post-bar">
-							<li class="lmlblog-no-like" th:onclick="|javascript:doLove(${post.pid},${session.user.uid},this)|">
-								<i class="lmlblog-icon" th:id="|post${post.pid}0|" th:text="${post.like?'点了赞':'没点赞'}">&#xe608;</i><span th:id="|post${post.pid}1|" th:text="|${post.countLike}|"></span>
-							</li>
 							<li onclick='list_comments_show(this);'>
-								<i class="lmlblog-icon">&#xe633;</i><span>5评论数没写</span>
+								<i class="fa fa-comment-o"></i><span></span>
 							</li>
-							<li onclick='lmlblog_pop_login_style();'>
-								<i class="lmlblog-icon"></i>评论===<span>0</span>
+							<li class="lmlblog-no-like" th:onclick="|javascript:doLike(${post.pid},${session.user.uid},this)|">
+								<i class="fa fa-heart" th:if="${post.postLike==true}"></i><i class="fa fa-heart-o" th:if="${post.postLike==false}"></i><span th:text="|${post.countPostLike}|"></span>
 							</li>
 							<!--<li>
 								<i class="lmlblog-icon">&#xe602;</i> <span>1.2w</span>
@@ -212,10 +265,15 @@
 						</div>
 						<a class="lmlblog-pager-right" href="#3">下一页</a>
 					</div>-->
-					<div class="lmlblog-pager">
+					<div class="lmlblog-pager" th:if="${#strings.isEmpty(gid)}">
 						<a class="lmlblog-pager-left" th:href="@{|/main/${session.user.uid}/all/${pageInfo.hasPreviousPage?pageInfo.prePage:1}|}">上一页</a>
 						<div class="lmlblog-pager-center layui-form" th:text="|第${pageInfo.pageNum==0?1:pageInfo.pageNum}页|"></div>
 						<a class="lmlblog-pager-right" th:href="@{|/main/${session.user.uid}/all/${pageInfo.hasNextPage?pageInfo.nextPage:pageInfo.navigateLastPage}|}">下一页</a>
+					</div>
+					<div class="lmlblog-pager" th:if="${not #strings.isEmpty(gid)}">
+						<a class="lmlblog-pager-left" th:href="@{|/main/${session.user.uid}/myGroups/${gid}/${pageInfo.hasPreviousPage?pageInfo.prePage:1}|}">上一页</a>
+						<div class="lmlblog-pager-center layui-form" th:text="|第${pageInfo.pageNum==0?1:pageInfo.pageNum}页|"></div>
+						<a class="lmlblog-pager-right" th:href="@{|/main/${session.user.uid}/myGroups/${gid}/${pageInfo.hasNextPage?pageInfo.nextPage:pageInfo.navigateLastPage}|}">下一页</a>
 					</div>
 				</div>
 			</div>
@@ -229,7 +287,7 @@
 	<div class="footer_b_foot">
 		<div class="footer_b_top">
 		</div>
-		<div class="footer_b_bottom">Design by 2017 画江湖杯莫停 司空琪个人主页 司空琪微博/空间/贴吧官博。Promoted by 2021 红桃QHeartQ。内容源于网络搜集,仅学习、分享交流。</div>
+		<div class="footer_b_bottom">Design by 2017 画江湖杯莫停 司空琪个人主页 司空琪微博/空间/贴吧官博。Promoted by 2021 红桃QHeartQ。内容源于网络搜集，仅学习、分享交流。</div>
 	</div>
 </div>
 <!-- 返回顶部 -->
@@ -249,6 +307,10 @@
 <script type='text/javascript' src='/js/all.js'></script>
 <script type='text/javascript' src='/js/plupload.full.min.js'></script>
 <script type='text/javascript' src='/js/layui.js'></script>
+
+<script src="/js/jquery-3.1.0.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+
 <script>
 	jQuery(document).ready(function($) {
 		$.fn.smartFloat = function() {
@@ -282,30 +344,168 @@
 		};
 		$(".lmlblog-member-left-bg-xg").smartFloat();
 	});
-	function doLove(pid,uid,d) {
+
+	function doLike(pid,uid,d) {
 		//alert("22");
 		$.post(
-				"/user/"+uid+"/doLove",
+				"/user/"+uid+"/doLike",
 				"pid="+pid+"&uid="+uid,
 				function (data){
 					//alert("33");
 					//应该还需要去改变post.like的值
 					//alert(data);
 					var a=$("#post"+pid+"0").text();
-					var b=parseInt($("#post"+pid+"1").text());
+					var b=parseInt($(d).children().eq(1).text());
+					var h="<i className='fa fa-heart'></i>";
+					var ho="<i className='fa fa-heart-o'></i>";
 					//alert(b);
 					//alert(b-1);
 					//alert(!data);
 					if (!data){
-						$(d).children().eq(0).text('没点赞');
+						$(d).children().eq(0).removeClass("fa fa-heart");
+						$(d).children().eq(0).addClass("fa fa-heart-o");
 						$(d).children().eq(1).text(b-1);
 					}else {
-						$(d).children().eq(0).text('点了赞');
+						$(d).children().eq(0).removeClass("fa fa-heart-o");
+						$(d).children().eq(0).addClass("fa fa-heart");
 						$(d).children().eq(1).text(b+1);
 					}
 				},
 				"json"
 		)
 	}
+
+	$(function(){
+		$("#content").keyup(function(){
+			//判断输入的字符串长度
+			var content_len = $("#content").text().replace(/\s/g,"").length;
+
+			$(".tips").text("已经输入"+content_len+"个字");
+
+			if(content_len==0){
+				// alert(content);
+				$(".tips").text("");
+				$("#send").addClass("disabled");
+				return false;
+			}else{
+				$("#send").removeClass("disabled");
+			}
+		});
+
+		$(".pic").click(function(){
+			$(".select_Img").click();
+		})
+
+		// 	function confirm(){
+
+		// 		var r= new FileReader();
+		// f=$(".select_Img").files[0];
+		// r.readAsDataURL(f);
+		// r.onload=function(e) {
+		// 	$(".preview").src=this.result;
+
+		// };
+		// 	}
+
+		//点击按钮发送内容
+		$("#send").click(function(){
+
+			// var myDate = new Date();
+
+			//   var min = myDate.getMinutes();
+
+			//   var time = min-(min-1);
+
+			//   //alert(time);
+
+			var content=$("#content").text();
+
+			//判断选择的是否是图片格式
+			var imgPath = $(".imgPath").text();
+			var start  = imgPath.lastIndexOf(".");
+			var postfix = imgPath.substring(start,imgPath.length).toUpperCase();
+
+			var mytime=time.toLocaleTimeString(); //获取当前时间
+			time.toLocaleString( ); //获取日期与时间
+
+			var prependPost="<div class='lmlblog-post-user-info'><div class='lmlblog-post-user-info-avatar' user-data='1'><a href='#1' style='display: inline-block;'><span class='lmlblog-vip-icon'></span><img th:src='|/avatar/${post.user.image}|' class='avatar' /><i class='lmlblog-verify lmlblog-verify-a' th:title='${post.user.name}'></i></a><div class='lmlblog-user-info-card'><div class='info_card_loading'><img src='/picture/chat-loading.gif'><p>资料加载中...</p></div></div></div><div class='lmlblog-post-user-info-name'><a href='#1'><font style='color:#333;font-weight:600' th:text='${post.user.name}'>司空琪</font></a></div><div class='lmlblog-post-user-info-time' title='2017-12-14 05:25' th:text='${#dates.format(post.postTime,'yyyy-MM-dd HH:mm')}'>12-14 05:25</div><div class='lmlblog-post-user-info-time' title='来自weibo.com' th:text='来自weibo.com'>12-14 05:25</div></div><div class='lmlblog-post-setting'><i class='fa fa-angle-down'></i><div class='lmlblog-post-setting-box'><ul><a href='#' title='举报'><li>举报</li></a><a href='#1' title='访问主页'><li>访问主页</li></a></ul></div></div><div class='lmlblog-post-content' th:text='${post.text}'></div><div class='lmlblog-post-bar'><li onclick='list_comments_show(this);'><i class='fa fa-comment-o'></i><span></span></li><li class='lmlblog-no-like' th:onclick='|javascript:doLike(${post.pid},${session.user.uid},this)|'><i class='fa fa-heart' th:if='${post.postLike==true}'></i><i class='fa fa-heart-o' th:if='${post.postLike==false}'></i><span th:text='|${post.countPostLike}|'></span></li></div><div class='lmlblog-post-footer-bar'><span th:title='${#dates.format(post.postTime,'yyyy-MM-dd HH:mm')}' th:text='${#dates.format(post.postTime,'yyyy-MM-dd HH:mm')}'>12月14日 05:25</span><span>小尾巴</span><i class='lmlblog-icon' onclick='lmlblog_post_type_open();'>&#xe62c;</i></div></div>";
+
+			var uid=$("#uidVar").val();
+
+			$.post(
+					"/main/submit",
+					"forwardPid=0&uid="+uid+"&text="+content+"&postTime="+mytime+"&status=1",
+					function (post) {
+
+					},
+					"json"
+			);
+
+			if(imgPath!=""){
+				if(postfix!=".PNG"&&postfix!=".JPG"&&postfix!=".GIF"&&postfix!=".JPEG"){
+					alert("图片格式需为png,gif,jpeg,jpg格式");
+				}else{
+					/*$(".item_msg").append("<div class='col-sm-12 col-xs-12 message' > <img src='/img/icon.png' class='col-sm-2 col-xs-2' style='border-radius: 50%'><div class='col-sm-10 col-xs-10'><span style='font-weight: bold;''>Jack.C</span> <br><small class='date' style='color:#999'>刚刚</small><div class='msg_content'>"+content+"<img class='mypic' onerror='this.src='/img/bg_1.jpg' src='/file:///"+imgPath+"' ></div></div></div>");*/
+
+				}
+			}else{
+				/*$(".item_msg").append("<div class='col-sm-12 col-xs-12 message' > <img src='/img/icon.png' class='col-sm-2 col-xs-2' style='border-radius: 50%'><div class='col-sm-10 col-xs-10'><span style='font-weight: bold;''>Jack.C</span> <br><small class='date' style='color:#999'>刚刚</small><div class='msg_content'>"+content+"</div></div></div>");*/
+
+			}
+
+		});
+
+		//添加表情包1
+		for (var i = 1; i < 60; i++) {
+
+			$(".emoji_1").append("<img src='/img/f"+i+".png' style='width:35px;height:35px' >");
+		}
+		//添加表情包2
+		for (var i = 1; i < 61; i++) {
+
+			$(".emoji_2").append("<img src='/img/h"+i+".png' style='width:35px;height:35px' >");
+		}
+
+
+		$(".emoji").click(function(){
+
+			$(".myEmoji").show();
+
+			//点击空白处隐藏弹出层
+			$(document).click(function (e) {
+
+				if (!$("#edit_form").is(e.target) && $("#edit_form").has(e.target).length === 0) {
+
+					$(".myEmoji").hide();
+				}
+			});
+		});
+
+		//将表情添加到输入框
+		$(".myEmoji img").each(function(){
+			$(this).click(function(){
+				var url = $(this)[0].src;
+
+				$('#content').append("<img src='/"+url+"' style='width:25px;height:25px' >");
+
+				$("#send").removeClass("disabled");
+			})
+		})
+
+		//放大或缩小预览图片
+		$(".mypic").click(function(){
+			var oWidth=$(this).width(); //取得图片的实际宽度
+			var oHeight=$(this).height(); //取得图片的实际高度
+
+			if($(this).height()!=200){
+				$(this).height(200);
+			}else{
+				$(this).height(oHeight + 200/oWidth*oHeight);
+
+			}
+
+		})
+
+	})
 </script>
 </html>

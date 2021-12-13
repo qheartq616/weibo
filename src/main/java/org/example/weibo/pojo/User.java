@@ -25,6 +25,8 @@ public class User {
 
     private String city;
 
+    private Integer status;
+
     public Integer getUid() {
         return uid;
     }
@@ -111,5 +113,13 @@ public class User {
 
     public void setCity(String city) {
         this.city = city == null ? null : city.trim();
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

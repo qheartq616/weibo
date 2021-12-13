@@ -165,6 +165,66 @@ public class PostExample {
             return (Criteria) this;
         }
 
+        public Criteria andForwardPidIsNull() {
+            addCriterion("forward_pid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andForwardPidIsNotNull() {
+            addCriterion("forward_pid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andForwardPidEqualTo(Integer value) {
+            addCriterion("forward_pid =", value, "forwardPid");
+            return (Criteria) this;
+        }
+
+        public Criteria andForwardPidNotEqualTo(Integer value) {
+            addCriterion("forward_pid <>", value, "forwardPid");
+            return (Criteria) this;
+        }
+
+        public Criteria andForwardPidGreaterThan(Integer value) {
+            addCriterion("forward_pid >", value, "forwardPid");
+            return (Criteria) this;
+        }
+
+        public Criteria andForwardPidGreaterThanOrEqualTo(Integer value) {
+            addCriterion("forward_pid >=", value, "forwardPid");
+            return (Criteria) this;
+        }
+
+        public Criteria andForwardPidLessThan(Integer value) {
+            addCriterion("forward_pid <", value, "forwardPid");
+            return (Criteria) this;
+        }
+
+        public Criteria andForwardPidLessThanOrEqualTo(Integer value) {
+            addCriterion("forward_pid <=", value, "forwardPid");
+            return (Criteria) this;
+        }
+
+        public Criteria andForwardPidIn(List<Integer> values) {
+            addCriterion("forward_pid in", values, "forwardPid");
+            return (Criteria) this;
+        }
+
+        public Criteria andForwardPidNotIn(List<Integer> values) {
+            addCriterion("forward_pid not in", values, "forwardPid");
+            return (Criteria) this;
+        }
+
+        public Criteria andForwardPidBetween(Integer value1, Integer value2) {
+            addCriterion("forward_pid between", value1, value2, "forwardPid");
+            return (Criteria) this;
+        }
+
+        public Criteria andForwardPidNotBetween(Integer value1, Integer value2) {
+            addCriterion("forward_pid not between", value1, value2, "forwardPid");
+            return (Criteria) this;
+        }
+
         public Criteria andUidIsNull() {
             addCriterion("uid is null");
             return (Criteria) this;
@@ -482,6 +542,66 @@ public class PostExample {
 
         public Criteria andUpdateTimeNotBetween(Date value1, Date value2) {
             addCriterion("update_time not between", value1, value2, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIsNull() {
+            addCriterion("status is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIsNotNull() {
+            addCriterion("status is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusEqualTo(Integer value) {
+            addCriterion("status =", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotEqualTo(Integer value) {
+            addCriterion("status <>", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusGreaterThan(Integer value) {
+            addCriterion("status >", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusGreaterThanOrEqualTo(Integer value) {
+            addCriterion("status >=", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLessThan(Integer value) {
+            addCriterion("status <", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLessThanOrEqualTo(Integer value) {
+            addCriterion("status <=", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIn(List<Integer> values) {
+            addCriterion("status in", values, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotIn(List<Integer> values) {
+            addCriterion("status not in", values, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusBetween(Integer value1, Integer value2) {
+            addCriterion("status between", value1, value2, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotBetween(Integer value1, Integer value2) {
+            addCriterion("status not between", value1, value2, "status");
             return (Criteria) this;
         }
     }

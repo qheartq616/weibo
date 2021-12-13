@@ -37,10 +37,17 @@
 		<h1 class="m-logo"><a href="/" ></a></h1>
 		<div id="nav" class="menu-menu-1-container">
 			<ul id="menu-menu-1" class="menu">
-				<li class="menu-item menu-item-type-taxonomy menu-item-object-category">
-					<a th:href="@{|/main/${session.user.uid}/all/1|}"><i class="fa fa-comments-o"></i>微博首页</a>
+				<li id="head_search"><i class="fa fa-search"></i></li>
+				<li class="menu-item" style="margin-left: 3px;">
+					<form action="#" method=""  style="display: inline-block; ">
+						<input type="search" style="display: inline-block;" class="search" placeholder="搜索框" />
+					</form>
 				</li>
-				<li class="menu-item">
+				<li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+					<a th:href="@{|/main/${session.user.uid}/all/1|}"><i class="fa fa-home"></i>微博首页</a>
+				</li>
+				<li class="menu-item"><a href="#1"><i class="fa fa-envelope-o"></i>私信</a></li>
+				<!--<li class="menu-item">
 					<a href="#1">发现</a>
 				</li>
 				<li class="menu-item">
@@ -58,21 +65,27 @@
 						<li class="menu-item"><a href="#">陆雪琪</a></li>
 						<li class="menu-item"><a href="#">画江湖</a></li>
 					</ul>
-				</li>
+				</li>-->
 				<li th:class="|gengxin menu-item menu-item-type-custom|" th:if="${userCur.uid==session.user.uid}">
-					<a th:href="@{|/user/${session.user.uid}/1|}"><i class="fa fa-home" th:text="${session.user.name}"></i></a>
+					<a th:href="@{|/user/${session.user.uid}/1|}">
+						<img th:src="|/avatar/${session.user.image}|" style="height: 32px;width: 32px;position: relative;top: -3px;" class="avatar" />
+						<span th:text="${session.user.name}" style="display: inline-block;position: relative;top: -14px;"></span>
+					</a>
 				</li>
 				<li th:class="|menu-item menu-item-type-custom|" th:if="${userCur.uid!=session.user.uid}">
-					<a th:href="@{|/user/${session.user.uid}/1|}"><i class="fa fa-home" th:text="${session.user.name}"></i></a>
+					<a th:href="@{|/user/${session.user.uid}/1|}">
+						<img th:src="|/avatar/${session.user.image}|" style="height: 32px;width: 32px;position: relative;top: -3px;" class="avatar" />
+						<span th:text="${session.user.name}" style="display: inline-block;position: relative;top: -14px;"></span>
+					</a>
 				</li>
 			</ul>
 		</div>
 		<div class="head_user_info">
-			<ul>
+			<!--<ul>
 				<li id="head_search"><i class="fa fa-search"></i></li>
-				<!-- <li id="head_login" onclick="#1">登录</li>
+				&lt;!&ndash; <li id="head_login" onclick="#1">登录</li>
                 <span class="head_login_middle">or</span>
-                <li id="head_reg" onclick="#1">注册</li> --></ul>
+                <li id="head_reg" onclick="#1">注册</li> &ndash;&gt;</ul>-->
 		</div>
 		<div style="clear: both;"></div>
 	</div>
@@ -221,8 +234,8 @@
 								<div  class="lmlblog-post-setting-box" th:switch="${userCur.uid==session.user.uid}">
 									<ul th:case="true">
 										<a href="#" title="置顶"><li>置顶</li></a>
-										<a href="#" title="删除"><li>删除</li></a>
 										<a href="#" title="编辑"><li>编辑</li></a>
+										<a href="#" title="删除"><li>删除</li></a>
 									</ul>
 									<ul th:case="false">
 										<a href="#" title="举报"><li>举报</li></a>
@@ -235,14 +248,11 @@
 							</div>
 							<!--<div class="lmlblog-post-images-list clear"></div>-->
 							<div class="lmlblog-post-bar">
-								<li class="lmlblog-no-like" th:onclick="|javascript:doLove(${post.pid},${session.user.uid},this)|">
-									<i class="lmlblog-icon" th:id="|post${post.pid}0|" th:text="${post.like?'点了赞':'没点赞'}">&#xe608;</i><span th:id="|post${post.pid}1|" th:text="|${post.countLike}|"></span>
-								</li>
 								<li onclick='list_comments_show(this);'>
-									<i class="lmlblog-icon">&#xe633;</i><span>5评论数没写</span>
+									<i class="fa fa-comment-o"></i><span></span>
 								</li>
-								<li onclick='lmlblog_pop_login_style();'>
-									<i class="lmlblog-icon"></i>评论===<span>0</span>
+								<li class="lmlblog-no-like" th:onclick="|javascript:doLike(${post.pid},${session.user.uid},this)|">
+									<i class="fa fa-heart" th:if="${post.postLike==true}"></i><i class="fa fa-heart-o" th:if="${post.postLike==false}"></i><span th:text="|${post.countPostLike}|"></span>
 								</li>
 								<!--<li>
                                 <i class="lmlblog-icon">&#xe602;</i> <span>1.2w</span>
@@ -323,25 +333,29 @@
 		};
 		$(".lmlblog-member-left-bg-xg").smartFloat();
 	});
-	function doLove(pid,uid,d) {
+	function doLike(pid,uid,d) {
 		//alert("22");
 		$.post(
-				"/user/"+uid+"/doLove",
+				"/user/"+uid+"/doLike",
 				"pid="+pid+"&uid="+uid,
 				function (data){
 					//alert("33");
 					//应该还需要去改变post.like的值
 					//alert(data);
 					var a=$("#post"+pid+"0").text();
-					var b=parseInt($("#post"+pid+"1").text());
+					var b=parseInt($(d).children().eq(1).text());
+					var h="<i className='fa fa-heart'></i>";
+					var ho="<i className='fa fa-heart-o'></i>";
 					//alert(b);
 					//alert(b-1);
 					//alert(!data);
 					if (!data){
-						$(d).children().eq(0).text('没点赞');
+						$(d).children().eq(0).removeClass("fa fa-heart");
+						$(d).children().eq(0).addClass("fa fa-heart-o");
 						$(d).children().eq(1).text(b-1);
 					}else {
-						$(d).children().eq(0).text('点了赞');
+						$(d).children().eq(0).removeClass("fa fa-heart-o");
+						$(d).children().eq(0).addClass("fa fa-heart");
 						$(d).children().eq(1).text(b+1);
 					}
 				},

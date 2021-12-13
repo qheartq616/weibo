@@ -3,11 +3,13 @@
 <mapper namespace="org.example.weibo.mapper.PostMapper" >
   <resultMap id="BaseResultMap" type="org.example.weibo.pojo.Post" >
     <id column="pid" property="pid" jdbcType="INTEGER" />
+    <result column="forward_pid" property="forwardPid" jdbcType="INTEGER" />
     <result column="uid" property="uid" jdbcType="INTEGER" />
     <result column="text" property="text" jdbcType="VARCHAR" />
     <result column="picture" property="picture" jdbcType="VARCHAR" />
     <result column="post_time" property="postTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
     <association property="user" column="uid" javaType="org.example.weibo.pojo.User" select="org.example.weibo.mapper.UserMapper.selectByPrimaryKey"/>
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -69,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    pid, uid, text, picture, post_time, update_time
+    pid, forward_pid, uid, text, picture, post_time, update_time, status
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.example.weibo.pojo.PostExample" >
     select
@@ -102,18 +104,21 @@
     </if>
   </delete>
   <insert id="insert" parameterType="org.example.weibo.pojo.Post" >
-    insert into post (pid, uid, text, 
-      picture, post_time, update_time
-      )
-    values (#{pid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{text,jdbcType=VARCHAR}, 
-      #{picture,jdbcType=VARCHAR}, #{postTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
-      )
+    insert into post (pid, forward_pid, uid, 
+      text, picture, post_time, 
+      update_time, status)
+    values (#{pid,jdbcType=INTEGER}, #{forwardPid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, 
+      #{text,jdbcType=VARCHAR}, #{picture,jdbcType=VARCHAR}, #{postTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="org.example.weibo.pojo.Post" >
     insert into post
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="pid != null" >
         pid,
+      </if>
+      <if test="forwardPid != null" >
+        forward_pid,
       </if>
       <if test="uid != null" >
         uid,
@@ -130,10 +135,16 @@
       <if test="updateTime != null" >
         update_time,
       </if>
+      <if test="status != null" >
+        status,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="pid != null" >
         #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="forwardPid != null" >
+        #{forwardPid,jdbcType=INTEGER},
       </if>
       <if test="uid != null" >
         #{uid,jdbcType=INTEGER},
@@ -150,6 +161,9 @@
       <if test="updateTime != null" >
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="org.example.weibo.pojo.PostExample" resultType="java.lang.Integer" >
@@ -163,6 +177,9 @@
     <set >
       <if test="record.pid != null" >
         pid = #{record.pid,jdbcType=INTEGER},
+      </if>
+      <if test="record.forwardPid != null" >
+        forward_pid = #{record.forwardPid,jdbcType=INTEGER},
       </if>
       <if test="record.uid != null" >
         uid = #{record.uid,jdbcType=INTEGER},
@@ -179,6 +196,9 @@
       <if test="record.updateTime != null" >
         update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -187,11 +207,13 @@
   <update id="updateByExample" parameterType="map" >
     update post
     set pid = #{record.pid,jdbcType=INTEGER},
+      forward_pid = #{record.forwardPid,jdbcType=INTEGER},
       uid = #{record.uid,jdbcType=INTEGER},
       text = #{record.text,jdbcType=VARCHAR},
       picture = #{record.picture,jdbcType=VARCHAR},
       post_time = #{record.postTime,jdbcType=TIMESTAMP},
-      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -199,6 +221,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="org.example.weibo.pojo.Post" >
     update post
     <set >
+      <if test="forwardPid != null" >
+        forward_pid = #{forwardPid,jdbcType=INTEGER},
+      </if>
       <if test="uid != null" >
         uid = #{uid,jdbcType=INTEGER},
       </if>
@@ -214,16 +239,21 @@
       <if test="updateTime != null" >
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
     </set>
     where pid = #{pid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="org.example.weibo.pojo.Post" >
     update post
-    set uid = #{uid,jdbcType=INTEGER},
+    set forward_pid = #{forwardPid,jdbcType=INTEGER},
+      uid = #{uid,jdbcType=INTEGER},
       text = #{text,jdbcType=VARCHAR},
       picture = #{picture,jdbcType=VARCHAR},
       post_time = #{postTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER}
     where pid = #{pid,jdbcType=INTEGER}
   </update>
 </mapper>

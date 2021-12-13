@@ -19,7 +19,7 @@ public class PostServiceImpl implements PostService{
 	@Resource
 	FollowService followService;
 	@Resource
-	LoveService loveService;
+	PostLikeService postLikeService;
 	@Resource
 	GroupService groupService;
 
@@ -35,12 +35,12 @@ public class PostServiceImpl implements PostService{
 
 		for (Post post : pageInfo.getList()) {
 			//加入点赞状态
-			boolean b = loveService.ifLove(post.getPid(), uid);
-			post.setLike(b);
+			boolean b = postLikeService.ifPostLike(post.getPid(), uid);
+			post.setPostLike(b);
 
 			//加入点赞数
-			int i = loveService.countLove(post.getPid());
-			post.setCountLike(i);
+			int i = postLikeService.countPostLike(post.getPid());
+			post.setCountPostLike(i);
 		}
 		/*for (Post post : postList) {
 			System.out.println("post.getPostTime() = " + post.getPostTime());
@@ -72,11 +72,11 @@ public class PostServiceImpl implements PostService{
 
 			for (Post post : postList) {
 				//加入点赞状态
-				boolean b = loveService.ifLove(post.getPid(), uid);
+				boolean b = loveService.ifPostLike(post.getPid(), uid);
 				post.setLike(b);
 
 				//加入点赞数
-				int i = loveService.countLove(post.getPid());
+				int i = loveService.countPostLike(post.getPid());
 				post.setCountLike(i);
 			}
 			allPostList.addAll(postList);
@@ -87,12 +87,12 @@ public class PostServiceImpl implements PostService{
 		PageInfo<Post> pageInfo=new PageInfo<>(postList);
 		for (Post post : pageInfo.getList()) {
 			//加入点赞状态
-			boolean b = loveService.ifLove(post.getPid(), uid);
-			post.setLike(b);
+			boolean b = postLikeService.ifPostLike(post.getPid(), uid);
+			post.setPostLike(b);
 
 			//加入点赞数
-			int i = loveService.countLove(post.getPid());
-			post.setCountLike(i);
+			int i = postLikeService.countPostLike(post.getPid());
+			post.setCountPostLike(i);
 		}
 
 		return pageInfo;
@@ -100,8 +100,9 @@ public class PostServiceImpl implements PostService{
 
 	@Override
 	//发微博
-	public void doPost(Post post) {
-		postMapper.insertSelective(post);
+	public int doPost(Post post) {
+		int i = postMapper.insertSelective(post);
+		return i;
 	}
 
 	@Override
@@ -130,12 +131,12 @@ public class PostServiceImpl implements PostService{
 
 		for (Post post : pageInfo.getList()) {
 			//加入点赞状态
-			boolean b = loveService.ifLove(post.getPid(), uid);
-			post.setLike(b);
+			boolean b = postLikeService.ifPostLike(post.getPid(), uid);
+			post.setPostLike(b);
 
 			//加入点赞数
-			int i = loveService.countLove(post.getPid());
-			post.setCountLike(i);
+			int i = postLikeService.countPostLike(post.getPid());
+			post.setCountPostLike(i);
 		}
 
 		return pageInfo;

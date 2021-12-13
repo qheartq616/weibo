@@ -1,12 +1,11 @@
 package org.example.weibo.controller;
 
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.example.weibo.mapper.UserMapper;
 import org.example.weibo.pojo.Post;
 import org.example.weibo.pojo.User;
 import org.example.weibo.service.FollowService;
-import org.example.weibo.service.LoveService;
+import org.example.weibo.service.PostLikeService;
 import org.example.weibo.service.PostService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +26,7 @@ public class UserController {
 	@Resource
 	FollowService followService;
 	@Resource
-	LoveService loveService;
+	PostLikeService postLikeService;
 	@Resource
 	UserMapper userMapper;
 
@@ -58,7 +57,7 @@ public class UserController {
 		List<User> allFans = followService.showAllFans(curUid);
 		model.addAttribute("allFans",allFans);
 
-		int countAllLove = loveService.countAllLove(curUid);
+		int countAllLove = postLikeService.countAllPostLike(curUid);
 		model.addAttribute("countAllLove",countAllLove);
 
 		int countPost = postService.countPost(curUid);
@@ -73,14 +72,14 @@ public class UserController {
 		return "index";
 	}
 
-	@RequestMapping("*/doLove")
+	@RequestMapping("*/doLike")
 	@ResponseBody
 	//点赞功能
-	public boolean doLove(@RequestParam(name = "pid")Integer pid,
+	public boolean doLike(@RequestParam(name = "pid")Integer pid,
 	                      @RequestParam(name = "uid")Integer uid){
 		//System.out.println("pid = " + pid);
 		//System.out.println("uid = " + uid);
-		boolean b = loveService.doLove(pid, uid);
+		boolean b = postLikeService.doPostLike(pid, uid);
 		return b;
 	}
 

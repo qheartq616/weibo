@@ -42,7 +42,11 @@ public class GroupServiceImpl implements GroupService{
 		groupExample.createCriteria().andGidEqualTo(gid);
 		List<Group> groupList = groupMapper.selectByExample(groupExample);
 
-		if (groupList.size()>1){
+		/*for (Group group : groupList) {
+			System.out.println("group = " + group.toString());
+		}*/
+
+		if (groupList.size()>0){
 			List<User> followUserList=new ArrayList<>();
 			for (Group group : groupList) {
 				User user = userMapper.selectByPrimaryKey(group.getFollowUid());
