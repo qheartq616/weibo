@@ -3,6 +3,7 @@ package org.example.weibo.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.example.weibo.mapper.PostMapper;
+import org.example.weibo.mapper.UserMapper;
 import org.example.weibo.pojo.Post;
 import org.example.weibo.pojo.PostExample;
 import org.example.weibo.pojo.User;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class PostServiceImpl implements PostService{
@@ -22,6 +24,8 @@ public class PostServiceImpl implements PostService{
 	PostLikeService postLikeService;
 	@Resource
 	GroupService groupService;
+	@Resource
+	UserMapper userMapper;
 
 	@Override
 	//curUid的首页  查询curUid的所有微博
@@ -29,7 +33,7 @@ public class PostServiceImpl implements PostService{
 		PageHelper.startPage(pageNum,7);
 		PostExample postExample=new PostExample();
 		postExample.setOrderByClause("post_time desc");
-		postExample.createCriteria().andUidEqualTo(curUid);
+		postExample.createCriteria().andUidEqualTo(curUid).andStatusNotEqualTo(0);
 		List<Post> postList = postMapper.selectByExample(postExample);
 		PageInfo<Post> pageInfo=new PageInfo<>(postList);
 
@@ -65,7 +69,7 @@ public class PostServiceImpl implements PostService{
 		PageHelper.startPage(pageNum,7);
 		PostExample postExample=new PostExample();
 		postExample.setOrderByClause("post_time desc");
-		postExample.createCriteria().andUidIn(uidList);
+		postExample.createCriteria().andUidIn(uidList).andStatusNotEqualTo(0);
 		/*for (User followUser : allFollowUserList) {
 			Integer followUserUid = followUser.getUid();
 			List<Post> postList = showUserAllPost(followUserUid);
@@ -83,6 +87,43 @@ public class PostServiceImpl implements PostService{
 		}*/
 		//根据日期排序
 		//ListSortByDate.doSort(allPostList);
+		List<Post> postList = postMapper.selectByExample(postExample);
+		PageInfo<Post> pageInfo=new PageInfo<>(postList);
+		for (Post post : pageInfo.getList()) {
+			//加入点赞状态
+			boolean b = postLikeService.ifPostLike(post.getPid(), uid);
+			post.setPostLike(b);
+
+			//加入点赞数
+			int i = postLikeService.countPostLike(post.getPid());
+			post.setCountPostLike(i);
+		}
+
+		return pageInfo;
+	}
+
+	@Override
+	public PageInfo<Post> showAllFollowUserPostRandom(Integer uid, Integer pageNum) {
+		List<User> allFollowUserList = followService.showAllFollowUser(uid);
+
+		List<Integer> uidList=new ArrayList<>();
+		for (User user : allFollowUserList) {
+			uidList.add(user.getUid());
+		}
+
+		int countAllUid = userMapper.countByExample(null);
+
+		PageHelper.startPage(pageNum,7);
+		PostExample postExample=new PostExample();
+		postExample.setOrderByClause("post_time desc");
+		Random random=new Random(1);
+		int ran = random.nextInt(2);
+		if (ran==0){
+			postExample.createCriteria().andUidIn(uidList).andStatusNotEqualTo(0).andUidGreaterThan(countAllUid);
+		}else {
+			postExample.createCriteria().andUidIn(uidList).andStatusNotEqualTo(0).andUidLessThanOrEqualTo(countAllUid);
+		}
+
 		List<Post> postList = postMapper.selectByExample(postExample);
 		PageInfo<Post> pageInfo=new PageInfo<>(postList);
 		for (Post post : pageInfo.getList()) {
@@ -146,8 +187,11 @@ public class PostServiceImpl implements PostService{
 	}
 
 	@Override
-	public void delete() {
-
+	public void delete(Integer pid) {
+		Post post=new Post();
+		post.setPid(pid);
+		post.setStatus(0);
+		postMapper.updateByPrimaryKeySelective(post);
 	}
 
 

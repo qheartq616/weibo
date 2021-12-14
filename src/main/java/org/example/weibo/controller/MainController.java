@@ -42,10 +42,12 @@ public class MainController {
 			//PageInfo<Post> pageInfo=new PageInfo<>(postList);
 			model.addAttribute("pageInfo",pageInfo);
 		}else if (type.equals("latest")){
-
+			PageInfo<Post> pageInfo = postService.showAllFollowUserPostRandom(user.getUid(), pageNum);
+			model.addAttribute("pageInfo",pageInfo);
 		}else if (type.equals("friend")){
 
 		}
+
 
 		List<Group> groupList = groupService.showAllGroupList(user.getUid());
 		/*for (Group group : groupList) {
@@ -70,6 +72,8 @@ public class MainController {
 
 		return "main";
 	}
+
+
 
 	@RequestMapping("{uid}/myGroups/{gid}/{pageNum}")
 	public String showGroupPost(HttpSession session,Model model,
@@ -98,5 +102,11 @@ public class MainController {
 		String formatTime = simpleDateFormat.format(postNew.getPostTime());
 		map.put("formatTime",formatTime);
 		return map;
+	}
+
+	@RequestMapping("delete")
+	@ResponseBody
+	public void deletePost(Integer pid){
+		postService.delete(pid);
 	}
 }
