@@ -97,33 +97,37 @@
 			<div class="lmlblog-member-header">
 				<div class="lmlblog-member-avatar other">
 					<img th:src="|/avatar/${userCur.image}|" class="avatar"/>
-					<i class="lmlblog-verify lmlblog-verify-a" th:attr="title=${userCur.name}"></i></div>
-				<div class="lmlblog-member-username">
+					<i th:if="${userCur.status==0}" th:title="${userCur.name}"></i>
+					<i th:if="${userCur.status==1}" class="lmlblog-verify lmlblog-verify-a" th:title="${userCur.name}"></i>
+					<i th:if="${userCur.status==2}" class="lmlblog-verify lmlblog-verify-b" th:title="${userCur.name}"></i>
+					<i th:if="${userCur.status==3}" class="lmlblog-verify lmlblog-verify-a" th:title="${userCur.name}"></i>
+				</div>
+				<div class="lmlblog-member-username" th:switch="${userCur.gender}">
 					<h1 th:text="${userCur.name}"></h1>
-					<span class="lmlblog-mark lmlblog-girl"><i class="fa fa-mars">---</i></span>
-					<span class="lmlblog-mark lmlblog-lv" title="经验：3815"></span>
-					<span class="lmlblog-mark lmlblog-vip"></span></div>
-				<div class="lmlblog-member-desc" th:text="${userCur.description}">江湖风雨，几度阑珊。沧海一粟，愿君一剑轻安。</div>
-
-				<div class="lmlblog-member-follow-info" th:switch="${followStatus}">
-					<a href="https://weibo.com/u/6077164061" th:case="0" target="_blank" rel="nofollow">
-		<span class="follow no opacity">
-			<i class="lmlblog-icon"></i>+ 关注
-		</span>
-					</a>
-					<span class="opacity" th:case="1"><i class="lmlblog-icon">私聊</i></span>
-					<a href="https://weibo.com/u/6077164061" th:case="1" target="_blank" rel="nofollow">
-	<span class="follow no opacity">
-		<i class="lmlblog-icon"></i>已关注
-	</span>
-					</a>
-					<span class="opacity" th:case="1"><i class="lmlblog-icon">私聊</i></span>
-					<a href="https://weibo.com/u/6077164061" th:case="2" target="_blank" rel="nofollow">
-	<span class="follow no opacity">
-		<i class="lmlblog-icon"></i>互相关注
-	</span>
-					</a>
-					<span class="opacity" th:case="2"><i class="lmlblog-icon">私聊</i></span>
+					<span class="lmlblog-mark lmlblog-boy" th:case="'男'"><i class="fa fa-mars"></i></span>
+					<span class="lmlblog-mark lmlblog-girl" th:case="'女'"><i class="fa fa-venus"></i></span>
+					<span class="lmlblog-mark" style="background-color: orange" th:case="*"><i class="fa fa-transgender-alt"></i></span>
+					<!--<span class="lmlblog-mark lmlblog-lv" title="经验：3815"></span>
+					<span class="lmlblog-mark lmlblog-vip"></span></div>-->
+					<div class="lmlblog-member-desc" th:text="${userCur.description}">江湖风雨，几度阑珊。沧海一粟，愿君一剑轻安。</div>
+					<div class="lmlblog-member-follow-info" th:switch="${followStatus}">
+						<a href="https://weibo.com/u/6077164061" th:case="0" target="_blank" rel="nofollow">
+							<span class="follow no opacity">
+								<a onclick="doFollow()" style="display: inline-block"><i class="lmlblog-icon">+关注</i></a>
+							</span>
+						</a>
+						<a href="https://weibo.com/u/6077164061" th:case="1" target="_blank" rel="nofollow">
+							<span class="follow no opacity">
+								<i class="lmlblog-icon">已关注</i>
+							</span>
+						</a>
+						<a href="https://weibo.com/u/6077164061" th:case="2" target="_blank" rel="nofollow">
+							<span class="follow no opacity">
+								<i class="lmlblog-icon">互相关注</i>
+							</span>
+						</a>
+						<span class="opacity" th:if="${followStatus!=3}"><i class="lmlblog-icon">私聊</i></span>
+					</div>
 				</div>
 			</div>
 			<div class="lmlblog-member-menu clear">
@@ -146,8 +150,10 @@
 							<span>粉丝</span>
 						</li>
 						<li>
-							<strong th:text="${countPost}">888-&#45;&#45;</strong>
-							<span>微博</span>
+							<a th:href="@{|/user/${userCur.uid}/1|}">
+								<strong th:text="${countPost}">888-&#45;&#45;</strong>
+								<span>微博</span>
+							</a>
 						</li>
 						<li>
 							<strong th:text="${countAllLove}">888888-&#45;&#45;</strong>
@@ -212,8 +218,14 @@
 							<!-- 动态内容部分，包括列表 -->
 							<div class="lmlblog-post-user-info">
 								<div class="lmlblog-post-user-info-avatar" user-data="1">
-									<a href="#1" style="display: inline-block;">
-										<span class="lmlblog-vip-icon"></span><img th:src="|/avatar/${post.user.image}|" class="avatar"/><i class="lmlblog-verify lmlblog-verify-a" title="司空琪"></i></a>
+									<a href="#" style="display: inline-block;">
+										<span class="lmlblog-vip-icon"></span>
+										<img th:src="|/avatar/${post.user.image}|" class="avatar"/>
+										<i th:if="${post.user.status==0}" th:title="${post.user.name}"></i>
+										<i th:if="${post.user.status==1}" class="lmlblog-verify lmlblog-verify-a" th:title="${post.user.name}"></i>
+										<i th:if="${post.user.status==2}" class="lmlblog-verify lmlblog-verify-b" th:title="${post.user.name}"></i>
+										<i th:if="${post.user.status==3}" class="lmlblog-verify lmlblog-verify-a" th:title="${post.user.name}"></i>
+									</a>
 									<div class="lmlblog-user-info-card">
 										<div class="info_card_loading"><img src="/picture/chat-loading.gif"><p>资料加载中...</p>
 										</div>
@@ -221,7 +233,7 @@
 								</div>
 
 								<div class="lmlblog-post-user-info-name">
-									<a href="#1">
+									<a href="#">
 										<font style="color:#333;font-weight:600" th:text="${post.user.name}">司空琪</font>
 									</a>
 									<span class="lmlblog-mark lmlblog-lv" title="经验：3815"></span><span class="lmlblog-mark lmlblog-vip"></span>

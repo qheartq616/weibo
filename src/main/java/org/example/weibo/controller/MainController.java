@@ -1,6 +1,5 @@
 package org.example.weibo.controller;
 
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.example.weibo.mapper.PostMapper;
 import org.example.weibo.pojo.Group;
@@ -30,22 +29,30 @@ public class MainController {
 	@Resource
 	PostMapper postMapper;
 
-	@RequestMapping("*/{type}/{pageNum}")
+	@RequestMapping("{uid}/{type}/{pageNum}")
 	public String showAll(HttpSession session,Model model,
-	                      @RequestParam(defaultValue = "1") @PathVariable Integer pageNum,
-	                      @RequestParam(defaultValue = "all") @PathVariable String type){
+	                      @PathVariable Integer pageNum,
+	                      @PathVariable("type") String type){
 		User user = (User) session.getAttribute("user");
+
+		if (type!=null){
+			model.addAttribute("type",type);
+		}
 
 		if (type.equals("all")){
 			//PageHelper.startPage(pageNum,5);
-			PageInfo<Post> pageInfo = postService.showAllFollowUserPost(user.getUid(),pageNum);
+			PageInfo<Post> pageInfo = postService.showAllFollowUserPostRandom(user.getUid(), pageNum);
 			//PageInfo<Post> pageInfo=new PageInfo<>(postList);
 			model.addAttribute("pageInfo",pageInfo);
+			//System.out.println(1111);
 		}else if (type.equals("latest")){
-			PageInfo<Post> pageInfo = postService.showAllFollowUserPostRandom(user.getUid(), pageNum);
+			PageInfo<Post> pageInfo = postService.showAllFollowUserPostLatest(user.getUid(), pageNum);
 			model.addAttribute("pageInfo",pageInfo);
-		}else if (type.equals("friend")){
-
+			//System.out.println(2222);
+		}else if (type.equals("mutual")){
+			PageInfo<Post> pageInfo = postService.showAllFollowUserPostMutual(user.getUid(), pageNum);
+			model.addAttribute("pageInfo",pageInfo);
+			//System.out.println(3333);
 		}
 
 

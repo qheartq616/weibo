@@ -10,4 +10,5 @@ public interface FollowService {
 	public void doNotFollow(Integer uid,Integer followUid);
 	public List<User> showAllFans(Integer followUid);
 	public int followStatus(Integer uid,Integer followUid);
+	public List<User> showAllMutualFollowUser(Integer uid);
 }

@@ -83,9 +83,9 @@
 					<h3>首页</h3>
 					<ul>
 						<li><i class="fa fa-address-book-o"></i><a th:href="@{|/main/${session.user.uid}/all/1|}">全部关注</a></li>
-						<li><i class="fa fa-transgender"></i><a href="#">最新微博</a></li>
-						<!--<li><i class="fa fa-map-marker"></i><a href="#">特别关注</a></li>-->
-						<li><i class="fa fa-smile-o"></i> <a href="#">好友圈</a></li>
+						<li><i class="fa fa-transgender"></i><a th:href="@{|/main/${session.user.uid}/latest/1|}">最新微博</a></li>
+						<li><i class="fa fa-map-marker"></i><a href="#">特别关注</a></li>
+						<li><i class="fa fa-smile-o"></i> <a  th:href="@{|/main/${session.user.uid}/mutual/1|}">好友圈</a></li>
 					</ul>
 				</div>
 				<div class="lmlblog-member-left-profile">
@@ -145,8 +145,8 @@
 											</div>
 
 										</div>
-									</div>-->
-									<!-- <span> <input type="file" id="selectImg" value=""></input> </span> -->
+									</div>
+									<span> <input type="file" id="selectImg" value=""></input> </span> -->
 									<button type="button" id="send" class="btn btn-default pull-right disabled" style="position: relative;margin-right: 15px;">发布</button>
 								</div>
 							</div>
@@ -161,10 +161,14 @@
 						<!-- 动态内容部分，包括列表 -->
 						<div class="lmlblog-post-user-info">
 							<div class="lmlblog-post-user-info-avatar" user-data="1">
-								<a href="#1" style="display: inline-block;">
+								<a th:href="@{|/user/${post.user.uid}/1|}" style="display: inline-block;">
 									<span class="lmlblog-vip-icon"></span>
 									<img th:src="|/avatar/${post.user.image}|" class="avatar" />
-									<i class="lmlblog-verify lmlblog-verify-a" th:title="${post.user.name}"></i></a>
+									<i th:if="${post.user.status==0}" th:title="${post.user.name}"></i>
+									<i th:if="${post.user.status==1}" class="lmlblog-verify lmlblog-verify-a" th:title="${post.user.name}"></i>
+									<i th:if="${post.user.status==2}" class="lmlblog-verify lmlblog-verify-b" th:title="${post.user.name}"></i>
+									<i th:if="${post.user.status==3}" class="lmlblog-verify lmlblog-verify-a" th:title="${post.user.name}"></i>
+								</a>
 								<div class="lmlblog-user-info-card">
 									<div class="info_card_loading"><img src="/picture/chat-loading.gif">
 										<p>资料加载中...</p>
@@ -173,7 +177,7 @@
 							</div>
 
 							<div class="lmlblog-post-user-info-name">
-								<a href="#1">
+								<a th:href="@{|/user/${post.user.uid}/1|}">
 									<font style="color:#333;font-weight:600" th:text="${post.user.name}">司空琪</font>
 								</a>
 								<!--<span class="lmlblog-mark lmlblog-lv" title="经验：3815">Lv.6</span><span
@@ -226,8 +230,8 @@
 							</li>
 							<!--<li>
 								<i class="lmlblog-icon">&#xe602;</i> <span>1.2w</span>
-							</li>-->
-							<!--<li class="tag clear">
+							</li>
+							<li class="tag clear">
 								<i class="lmlblog-icon">&#xe895;</i><a href="#2" title="司空琪壁纸"># 司空琪壁纸</a>
 							</li>-->
 						</div>
@@ -263,10 +267,10 @@
 						</div>
 						<a class="lmlblog-pager-right" href="#3">下一页</a>
 					</div>-->
-					<div class="lmlblog-pager" th:if="${#strings.isEmpty(gid)}">
-						<a class="lmlblog-pager-left" th:href="@{|/main/${session.user.uid}/all/${pageInfo.hasPreviousPage?pageInfo.prePage:1}|}">上一页</a>
+					<div class="lmlblog-pager" th:if="${#strings.isEmpty(gid)&&type!='all'}">
+						<a class="lmlblog-pager-left" th:href="@{|/main/${session.user.uid}/${type}/${pageInfo.hasPreviousPage?pageInfo.prePage:1}|}">上一页</a>
 						<div class="lmlblog-pager-center layui-form" th:text="|第${pageInfo.pageNum==0?1:pageInfo.pageNum}页|"></div>
-						<a class="lmlblog-pager-right" th:href="@{|/main/${session.user.uid}/all/${pageInfo.hasNextPage?pageInfo.nextPage:pageInfo.navigateLastPage}|}">下一页</a>
+						<a class="lmlblog-pager-right" th:href="@{|/main/${session.user.uid}/${type}/${pageInfo.hasNextPage?pageInfo.nextPage:pageInfo.navigateLastPage}|}">下一页</a>
 					</div>
 					<div class="lmlblog-pager" th:if="${not #strings.isEmpty(gid)}">
 						<a class="lmlblog-pager-left" th:href="@{|/main/${session.user.uid}/myGroups/${gid}/${pageInfo.hasPreviousPage?pageInfo.prePage:1}|}">上一页</a>

@@ -5,6 +5,7 @@ import org.example.weibo.mapper.UserMapper;
 import org.example.weibo.pojo.Follow;
 import org.example.weibo.pojo.FollowExample;
 import org.example.weibo.pojo.User;
+import org.example.weibo.utils.ListUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -66,7 +67,7 @@ public class FollowServiceImpl implements FollowService{
 
 		List<User> fanList=new ArrayList<>();
 		for (Follow follow : followedList) {
-			User user = userMapper.selectByPrimaryKey(follow.getFollowUid());
+			User user = userMapper.selectByPrimaryKey(follow.getUid());
 			fanList.add(user);
 		}
 
@@ -75,7 +76,7 @@ public class FollowServiceImpl implements FollowService{
 
 	@Override
 	//关注状态
-	//1：已关注  0：未关注  2：互相关注  3：自己
+	//0：未关注  1：已关注  2：互相关注  3：自己
 	public int followStatus(Integer uid, Integer followUid) {
 		if (uid==followUid){
 			return 3;
@@ -97,5 +98,31 @@ public class FollowServiceImpl implements FollowService{
 			}
 		}
 
+	}
+
+	@Override
+	//互粉列表
+	public List<User> showAllMutualFollowUser(Integer uid) {
+		List<User> allFans = showAllFans(uid);
+		List<User> allFollowUser = showAllFollowUser(uid);
+		//所有粉丝和所有关注，重叠部分即为互相关注
+		List<User> unionList = ListUtils.unionList(allFans, allFollowUser);
+		ListUtils.sortByUid(unionList);
+		/*System.out.println("1111111");
+		System.out.println("allFans = " + allFans.size());
+		System.out.println("allFollowUser = " + allFollowUser.size());
+		for (User allFan : allFans) {
+			System.out.println("allFan.getUid() = " + allFan.getUid());
+		}
+		for (User user : allFollowUser) {
+			System.out.println("user.getUid() = " + user.getUid());
+		}
+
+		System.out.println("unionList = " + unionList.size());
+		for (User user : unionList) {
+			System.out.println("user = " + user.getUid());
+		}
+		System.out.println("2222222");*/
+		return unionList;
 	}
 }

@@ -7,6 +7,7 @@ import org.example.weibo.mapper.UserMapper;
 import org.example.weibo.pojo.Post;
 import org.example.weibo.pojo.PostExample;
 import org.example.weibo.pojo.User;
+import org.example.weibo.utils.ListUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -58,15 +59,17 @@ public class PostServiceImpl implements PostService{
 	//首页  查询所有关注的人的最近所有微博
 	//pagehelper在sql语句中插入limit进行分页，因此本方法不能用pagehelper分页
 	//貌似也可以。。。用in查询
-	public PageInfo<Post> showAllFollowUserPost(Integer uid,Integer pageNum) {
+	//随机查询最新微博
+	public PageInfo<Post> showAllFollowUserPostRandom(Integer uid, Integer pageNum) {
 		List<User> allFollowUserList = followService.showAllFollowUser(uid);
 
+		List<User> subRandomUserList= ListUtils.subRandomUserList(allFollowUserList);
+
 		List<Integer> uidList=new ArrayList<>();
-		for (User user : allFollowUserList) {
+		for (User user : subRandomUserList) {
 			uidList.add(user.getUid());
 		}
 
-		PageHelper.startPage(pageNum,7);
 		PostExample postExample=new PostExample();
 		postExample.setOrderByClause("post_time desc");
 		postExample.createCriteria().andUidIn(uidList).andStatusNotEqualTo(0);
@@ -103,7 +106,8 @@ public class PostServiceImpl implements PostService{
 	}
 
 	@Override
-	public PageInfo<Post> showAllFollowUserPostRandom(Integer uid, Integer pageNum) {
+	//最新微博
+	public PageInfo<Post> showAllFollowUserPostLatest(Integer uid, Integer pageNum) {
 		List<User> allFollowUserList = followService.showAllFollowUser(uid);
 
 		List<Integer> uidList=new ArrayList<>();
@@ -116,13 +120,39 @@ public class PostServiceImpl implements PostService{
 		PageHelper.startPage(pageNum,7);
 		PostExample postExample=new PostExample();
 		postExample.setOrderByClause("post_time desc");
-		Random random=new Random(1);
-		int ran = random.nextInt(2);
-		if (ran==0){
-			postExample.createCriteria().andUidIn(uidList).andStatusNotEqualTo(0).andUidGreaterThan(countAllUid);
-		}else {
-			postExample.createCriteria().andUidIn(uidList).andStatusNotEqualTo(0).andUidLessThanOrEqualTo(countAllUid);
+		postExample.createCriteria().andUidIn(uidList).andStatusNotEqualTo(0);
+
+		List<Post> postList = postMapper.selectByExample(postExample);
+		PageInfo<Post> pageInfo=new PageInfo<>(postList);
+		for (Post post : pageInfo.getList()) {
+			//加入点赞状态
+			boolean b = postLikeService.ifPostLike(post.getPid(), uid);
+			post.setPostLike(b);
+
+			//加入点赞数
+			int i = postLikeService.countPostLike(post.getPid());
+			post.setCountPostLike(i);
 		}
+
+		return pageInfo;
+	}
+
+	@Override
+	//好友圈微博
+	//其实我应该三个合到一起的。。。
+	public PageInfo<Post> showAllFollowUserPostMutual(Integer uid, Integer pageNum) {
+		List<User> allFollowUserList = followService.showAllMutualFollowUser(uid);
+
+		List<Integer> uidList=new ArrayList<>();
+		for (User user : allFollowUserList) {
+			uidList.add(user.getUid());
+			//System.out.println("user.getUid() = " + user.getUid());
+		}
+
+		PageHelper.startPage(pageNum,7);
+		PostExample postExample=new PostExample();
+		postExample.setOrderByClause("post_time desc");
+		postExample.createCriteria().andUidIn(uidList).andStatusNotEqualTo(0);
 
 		List<Post> postList = postMapper.selectByExample(postExample);
 		PageInfo<Post> pageInfo=new PageInfo<>(postList);

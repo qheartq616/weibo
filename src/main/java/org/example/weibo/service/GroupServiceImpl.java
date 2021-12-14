@@ -5,9 +5,8 @@ import org.example.weibo.mapper.UserMapper;
 import org.example.weibo.pojo.Group;
 import org.example.weibo.pojo.GroupExample;
 import org.example.weibo.pojo.User;
-import org.example.weibo.utils.ListDistinctByKey;
+import org.example.weibo.utils.ListUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -29,7 +28,7 @@ public class GroupServiceImpl implements GroupService{
 
 		List<Group> groupList = groupMapper.selectByExample(groupExample);
 		//同一组的不同成员会导致数据重复  只需要一个名字就行
-		List<Group> distinctGroupList=groupList.stream().filter(ListDistinctByKey.doDistinct(Group::getName)).collect(Collectors.toList());
+		List<Group> distinctGroupList=groupList.stream().filter(ListUtils.distinctByKey(Group::getName)).collect(Collectors.toList());
 
 		return distinctGroupList;
 	}
