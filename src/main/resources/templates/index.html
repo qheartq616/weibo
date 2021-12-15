@@ -97,10 +97,10 @@
 			<div class="lmlblog-member-header">
 				<div class="lmlblog-member-avatar other">
 					<img th:src="|/avatar/${userCur.image}|" class="avatar"/>
-					<i th:if="${userCur.status==0}" th:title="${userCur.name}"></i>
-					<i th:if="${userCur.status==1}" class="lmlblog-verify lmlblog-verify-a" th:title="${userCur.name}"></i>
-					<i th:if="${userCur.status==2}" class="lmlblog-verify lmlblog-verify-b" th:title="${userCur.name}"></i>
-					<i th:if="${userCur.status==3}" class="lmlblog-verify lmlblog-verify-a" th:title="${userCur.name}"></i>
+					<i th:if="${userCur.status==0}" th:title="普通用户"></i>
+					<i th:if="${userCur.status==1}" class="lmlblog-verify lmlblog-verify-a" th:title="会员用户"></i>
+					<i th:if="${userCur.status==2}" class="lmlblog-verify lmlblog-verify-b" th:title="认证用户"></i>
+					<i th:if="${userCur.status==3}" class="lmlblog-verify-c lmlblog-verify-cc" th:title="超级管理员"></i>
 				</div>
 				<div class="lmlblog-member-username" th:switch="${userCur.gender}">
 					<h1 th:text="${userCur.name}"></h1>
@@ -221,10 +221,10 @@
 									<a href="#" style="display: inline-block;">
 										<span class="lmlblog-vip-icon"></span>
 										<img th:src="|/avatar/${post.user.image}|" class="avatar"/>
-										<i th:if="${post.user.status==0}" th:title="${post.user.name}"></i>
-										<i th:if="${post.user.status==1}" class="lmlblog-verify lmlblog-verify-a" th:title="${post.user.name}"></i>
-										<i th:if="${post.user.status==2}" class="lmlblog-verify lmlblog-verify-b" th:title="${post.user.name}"></i>
-										<i th:if="${post.user.status==3}" class="lmlblog-verify lmlblog-verify-a" th:title="${post.user.name}"></i>
+										<i th:if="${post.user.status==0}" th:title="普通用户"></i>
+										<i th:if="${post.user.status==1}" class="lmlblog-verify lmlblog-verify-a" th:title="会员用户"></i>
+										<i th:if="${post.user.status==2}" class="lmlblog-verify lmlblog-verify-b" th:title="认证用户"></i>
+										<i th:if="${post.user.status==3}" class="lmlblog-verify-c lmlblog-verify-cc" th:title="超级管理员"></i>
 									</a>
 									<div class="lmlblog-user-info-card">
 										<div class="info_card_loading"><img src="/picture/chat-loading.gif"><p>资料加载中...</p>
@@ -251,7 +251,7 @@
 									</ul>
 									<ul th:case="false">
 										<a href="#" title="举报"><li>举报</li></a>
-										<a href="#1" title="访问主页"><li>访问主页</li></a>
+										<a th:href="@{|user/${userCur.uid}/1|}" title="访问主页"><li>访问主页</li></a>
 									</ul>
 								</div>
 							</div>

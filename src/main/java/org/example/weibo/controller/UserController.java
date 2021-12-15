@@ -30,18 +30,18 @@ public class UserController {
 	@Resource
 	UserMapper userMapper;
 
-	@RequestMapping("{curUid}/{pageNum}")
+	@RequestMapping("{userCurUid}/{pageNum}")
 	//*的个人主页  显示uid的所有微博
 	public String showAllPost(Model model, HttpSession session,
-	                          @PathVariable("curUid")Integer curUid,
+	                          @PathVariable("userCurUid")Integer userCurUid,
 	                          @PathVariable("pageNum") Integer pageNum){
 		User user = (User) session.getAttribute("user");
 
-		User userCur = userMapper.selectByPrimaryKey(curUid);
+		User userCur = userMapper.selectByPrimaryKey(userCurUid);
 		model.addAttribute("userCur",userCur);
 
 		//pagehelper一定要写在select方法前
-		PageInfo<Post> pageInfo = postService.showUserAllPost(user.getUid(),curUid,pageNum);
+		PageInfo<Post> pageInfo = postService.showUserAllPost(user.getUid(),userCurUid,pageNum);
 		/*for (Post post : pageInfo.getList()) {
 			System.out.println("post.getPostTime() = " + post.getPostTime());
 		}
@@ -51,22 +51,22 @@ public class UserController {
 		}*/
 		model.addAttribute("pageInfo",pageInfo);
 
-		List<User> allFollowUser = followService.showAllFollowUser(curUid);
+		List<User> allFollowUser = followService.showAllFollowUser(userCurUid);
 		model.addAttribute("allFollowUser",allFollowUser);
 
-		List<User> allFans = followService.showAllFans(curUid);
+		List<User> allFans = followService.showAllFans(userCurUid);
 		model.addAttribute("allFans",allFans);
 
-		int countAllLove = postLikeService.countAllPostLike(curUid);
+		int countAllLove = postLikeService.countAllPostLike(userCurUid);
 		model.addAttribute("countAllLove",countAllLove);
 
-		int countPost = postService.countPost(curUid);
+		int countPost = postService.countPost(userCurUid);
 		model.addAttribute("countPost",countPost);
 
 		//当前访问页面的uid（不一定为session.user.uid）
 		//model.addAttribute("uid",curUid);
 
-		int followStatus = followService.followStatus(user.getUid(), curUid);
+		int followStatus = followService.followStatus(user.getUid(), userCurUid);
 		model.addAttribute("followStatus",followStatus);
 
 		return "index";

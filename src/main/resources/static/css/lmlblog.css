@@ -672,6 +672,18 @@
 .lmlblog-verify-b {
     background-position: 0px -20px;
 }
+.lmlblog-verify-c {
+    position: absolute;
+    bottom: 1px;
+    right: -1px;
+    width: 16px;
+    height: 16px;
+    background-image: url(../images/jinsom-verify-icon.png);
+    background-size: 16px;
+}
+.lmlblog-verify-cc {
+    background-position: 0px -1px;
+}
 .lmlblog-sidebar-widget-list-info a {
     text-overflow: ellipsis;
     overflow: hidden;
