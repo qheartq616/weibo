@@ -7,6 +7,7 @@ public class Post {
 
     private Integer forwardPid;
 
+    //发微博的用户
     private Integer uid;
 
     private String text;
@@ -19,6 +20,7 @@ public class Post {
 
     private Integer countForward;
 
+    //session中的用户（当前浏览该页面的用户）
     private User user;
 
     private boolean postLike;

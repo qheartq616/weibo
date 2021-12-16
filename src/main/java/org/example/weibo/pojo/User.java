@@ -27,6 +27,56 @@ public class User {
 
     private Integer status;
 
+    private int countAllFollowUser;
+
+    private int countAllFans;
+
+    private int countAllLike;
+
+    private int countAllPost;
+
+    private int followStatus;
+
+    public int getFollowStatus() {
+        return followStatus;
+    }
+
+    public void setFollowStatus(int followStatus) {
+        this.followStatus = followStatus;
+    }
+
+    public int getCountAllFollowUser() {
+        return countAllFollowUser;
+    }
+
+    public void setCountAllFollowUser(int countAllFollowUser) {
+        this.countAllFollowUser = countAllFollowUser;
+    }
+
+    public int getCountAllFans() {
+        return countAllFans;
+    }
+
+    public void setCountAllFans(int countAllFans) {
+        this.countAllFans = countAllFans;
+    }
+
+    public int getCountAllLike() {
+        return countAllLike;
+    }
+
+    public void setCountAllLike(int countAllLike) {
+        this.countAllLike = countAllLike;
+    }
+
+    public int getCountAllPost() {
+        return countAllPost;
+    }
+
+    public void setCountAllPost(int countAllPost) {
+        this.countAllPost = countAllPost;
+    }
+
     public Integer getUid() {
         return uid;
     }

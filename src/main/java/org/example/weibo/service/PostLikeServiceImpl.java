@@ -44,6 +44,7 @@ public class PostLikeServiceImpl implements PostLikeService {
 
 
 	@Override
+	//点赞或取消赞
 	//三种状态（好像不用点踩？），两个状态码
 	//先判断是否点过赞  查有没有状态数据
 	//再查状态为0还是1

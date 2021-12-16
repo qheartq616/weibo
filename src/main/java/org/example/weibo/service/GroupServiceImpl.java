@@ -80,7 +80,7 @@ public class GroupServiceImpl implements GroupService{
 	@Override
 	//从该组移除某人
 	//移除出组但不取关
-	//取关的时候要==不==用该方法
+	//取关的时候==不要==用该方法
 	public void deleteUserFromGroup(Integer gid, Integer uid) {
 		GroupExample groupExample=new GroupExample();
 		groupExample.createCriteria().andGidEqualTo(gid).andUidEqualTo(uid);
@@ -91,7 +91,10 @@ public class GroupServiceImpl implements GroupService{
 	@Override
 	//取关的时候要==调==用该方法
 	public void deleteUserFromAllGroup(Integer uid, Integer followUid) {
+		GroupExample groupExample=new GroupExample();
+		groupExample.createCriteria().andUidEqualTo(uid).andFollowUidEqualTo(followUid);
 
+		groupMapper.deleteByExample(groupExample);
 	}
 
 }

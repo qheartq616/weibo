@@ -7,6 +7,7 @@ import org.example.weibo.pojo.Post;
 import org.example.weibo.pojo.User;
 import org.example.weibo.service.GroupService;
 import org.example.weibo.service.PostService;
+import org.example.weibo.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +29,8 @@ public class MainController {
 	GroupService groupService;
 	@Resource
 	PostMapper postMapper;
+	@Resource
+	UserService userService;
 
 	@RequestMapping("{uid}/{type}/{pageNum}")
 	public String showAll(HttpSession session,Model model,
@@ -103,8 +106,13 @@ public class MainController {
 	public Map<String,Object> submitNewPost(Post post){
 		post.setPostTime(new Date());
 		Post postNew = postService.doPost(post);
+		User user = postNew.getUser();
+		User filledUser = userService.fillUserInfo(user, user);
+		postNew.setUser(filledUser);
+
 		Map<String,Object> map=new HashMap<>();
 		map.put("post",postNew);
+
 		SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		String formatTime = simpleDateFormat.format(postNew.getPostTime());
 		map.put("formatTime",formatTime);

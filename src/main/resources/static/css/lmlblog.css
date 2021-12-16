@@ -679,10 +679,11 @@
     width: 16px;
     height: 16px;
     background-image: url(../images/jinsom-verify-icon.png);
+    border-radius: 50%;
     background-size: 16px;
 }
 .lmlblog-verify-cc {
-    background-position: 0px -1px;
+    background-position: 0px 0px;
 }
 .lmlblog-sidebar-widget-list-info a {
     text-overflow: ellipsis;

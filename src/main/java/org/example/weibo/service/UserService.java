@@ -9,4 +9,5 @@ public interface UserService {
 	public boolean ifUpdateNameGreaterThan100(String name);
 	public void updateUserInfo(User user);
 	public void updatePassword(Integer uid,String password);
+	public User fillUserInfo(User user,User userCur);
 }

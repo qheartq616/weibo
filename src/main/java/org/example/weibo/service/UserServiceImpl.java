@@ -15,6 +15,12 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 	@Resource
 	UserMapper userMapper;
+	@Resource
+	PostService postService;
+	@Resource
+	PostLikeService postLikeService;
+	@Resource
+	FollowService followService;
 
 	@Override
 	//登陆
@@ -45,8 +51,6 @@ public class UserServiceImpl implements UserService {
 			return false;
 		}
 	}
-
-
 
 	@Override
 	//注册
@@ -87,6 +91,32 @@ public class UserServiceImpl implements UserService {
 		user.setUid(uid);
 		user.setPassword(password);
 		userMapper.updateByPrimaryKeySelective(user);
+	}
+
+	@Override
+	//填充信息
+	//粉丝量、关注量、微博量、点赞量、session用户对当前页用户的关注状态
+	public User fillUserInfo(User user,User userCur) {
+		Integer userCurUid=userCur.getUid();
+
+		List<User> allFollowUser = followService.showAllFollowUser(userCurUid);
+		userCur.setCountAllFollowUser(allFollowUser.size());
+
+		List<User> allFans = followService.showAllFans(userCurUid);
+		userCur.setCountAllFans(allFans.size());
+
+		int countAllLike = postLikeService.countAllPostLike(userCurUid);
+		userCur.setCountAllLike(countAllLike);
+
+		int countPost = postService.countPost(userCurUid);
+		userCur.setCountAllPost(countPost);
+		//当前访问页面的uid（不一定为session.user.uid）
+		//model.addAttribute("uid",curUid);
+
+		int followStatus = followService.followStatus(user.getUid(), userCurUid);
+		userCur.setFollowStatus(followStatus);
+
+		return userCur;
 	}
 
 

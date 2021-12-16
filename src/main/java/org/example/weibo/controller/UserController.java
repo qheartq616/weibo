@@ -7,6 +7,7 @@ import org.example.weibo.pojo.User;
 import org.example.weibo.service.FollowService;
 import org.example.weibo.service.PostLikeService;
 import org.example.weibo.service.PostService;
+import org.example.weibo.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +30,8 @@ public class UserController {
 	PostLikeService postLikeService;
 	@Resource
 	UserMapper userMapper;
+	@Resource
+	UserService userService;
 
 	@RequestMapping("{userCurUid}/{pageNum}")
 	//*的个人主页  显示uid的所有微博
@@ -38,7 +41,9 @@ public class UserController {
 		User user = (User) session.getAttribute("user");
 
 		User userCur = userMapper.selectByPrimaryKey(userCurUid);
-		model.addAttribute("userCur",userCur);
+
+		User fillUserCur = userService.fillUserInfo(user, userCur);
+		model.addAttribute("userCur",fillUserCur);
 
 		//pagehelper一定要写在select方法前
 		PageInfo<Post> pageInfo = postService.showUserAllPost(user.getUid(),userCurUid,pageNum);
@@ -51,30 +56,12 @@ public class UserController {
 		}*/
 		model.addAttribute("pageInfo",pageInfo);
 
-		List<User> allFollowUser = followService.showAllFollowUser(userCurUid);
-		model.addAttribute("allFollowUser",allFollowUser);
-
-		List<User> allFans = followService.showAllFans(userCurUid);
-		model.addAttribute("allFans",allFans);
-
-		int countAllLove = postLikeService.countAllPostLike(userCurUid);
-		model.addAttribute("countAllLove",countAllLove);
-
-		int countPost = postService.countPost(userCurUid);
-		model.addAttribute("countPost",countPost);
-
-		//当前访问页面的uid（不一定为session.user.uid）
-		//model.addAttribute("uid",curUid);
-
-		int followStatus = followService.followStatus(user.getUid(), userCurUid);
-		model.addAttribute("followStatus",followStatus);
-
 		return "index";
 	}
 
 	@RequestMapping("*/doLike")
 	@ResponseBody
-	//点赞功能
+	//点赞取消赞功能
 	public boolean doLike(@RequestParam(name = "pid")Integer pid,
 	                      @RequestParam(name = "uid")Integer uid){
 		//System.out.println("pid = " + pid);
@@ -83,5 +70,11 @@ public class UserController {
 		return b;
 	}
 
-
+	@RequestMapping("*/doFollow")
+	@ResponseBody
+	//关注取关功能
+	public int doFollow(@RequestParam(name = "uid")Integer uid,
+	                    @RequestParam(name = "followUid")Integer followUid){
+		return followService.doFollow(uid, followUid);
+	}
 }
