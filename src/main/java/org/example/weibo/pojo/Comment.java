@@ -7,6 +7,8 @@ public class Comment {
 
     private Integer pid;
 
+    private Integer pcid;
+
     private String comment;
 
     private Date commentTime;
@@ -25,6 +27,14 @@ public class Comment {
 
     public void setPid(Integer pid) {
         this.pid = pid;
+    }
+
+    public Integer getPcid() {
+        return pcid;
+    }
+
+    public void setPcid(Integer pcid) {
+        this.pcid = pcid;
     }
 
     public String getComment() {

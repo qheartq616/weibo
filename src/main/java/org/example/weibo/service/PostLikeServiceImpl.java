@@ -1,6 +1,5 @@
 package org.example.weibo.service;
 
-import org.example.weibo.mapper.LoveMapper;
 import org.example.weibo.mapper.PostLikeMapper;
 import org.example.weibo.mapper.PostMapper;
 import org.example.weibo.pojo.*;
@@ -8,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -57,6 +57,7 @@ public class PostLikeServiceImpl implements PostLikeService {
 		PostLike like1=new PostLike();
 		like1.setPid(pid);
 		like1.setUid(uid);
+		like1.setLikeTime(new Date());
 
 		if (!selectLove){
 			//System.out.println("777");

@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="org.example.weibo.pojo.Comment" >
     <id column="cid" property="cid" jdbcType="INTEGER" />
     <result column="pid" property="pid" jdbcType="INTEGER" />
+    <result column="pcid" property="pcid" jdbcType="INTEGER" />
     <result column="comment" property="comment" jdbcType="VARCHAR" />
     <result column="comment_time" property="commentTime" jdbcType="TIMESTAMP" />
   </resultMap>
@@ -66,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    cid, pid, comment, comment_time
+    cid, pid, pcid, comment, comment_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.example.weibo.pojo.CommentExample" >
     select
@@ -99,10 +100,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="org.example.weibo.pojo.Comment" >
-    insert into comment (cid, pid, comment, 
-      comment_time)
-    values (#{cid,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, #{comment,jdbcType=VARCHAR}, 
-      #{commentTime,jdbcType=TIMESTAMP})
+    insert into comment (cid, pid, pcid, 
+      comment, comment_time)
+    values (#{cid,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, #{pcid,jdbcType=INTEGER}, 
+      #{comment,jdbcType=VARCHAR}, #{commentTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="org.example.weibo.pojo.Comment" >
     insert into comment
@@ -112,6 +113,9 @@
       </if>
       <if test="pid != null" >
         pid,
+      </if>
+      <if test="pcid != null" >
+        pcid,
       </if>
       <if test="comment != null" >
         comment,
@@ -126,6 +130,9 @@
       </if>
       <if test="pid != null" >
         #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="pcid != null" >
+        #{pcid,jdbcType=INTEGER},
       </if>
       <if test="comment != null" >
         #{comment,jdbcType=VARCHAR},
@@ -150,6 +157,9 @@
       <if test="record.pid != null" >
         pid = #{record.pid,jdbcType=INTEGER},
       </if>
+      <if test="record.pcid != null" >
+        pcid = #{record.pcid,jdbcType=INTEGER},
+      </if>
       <if test="record.comment != null" >
         comment = #{record.comment,jdbcType=VARCHAR},
       </if>
@@ -165,6 +175,7 @@
     update comment
     set cid = #{record.cid,jdbcType=INTEGER},
       pid = #{record.pid,jdbcType=INTEGER},
+      pcid = #{record.pcid,jdbcType=INTEGER},
       comment = #{record.comment,jdbcType=VARCHAR},
       comment_time = #{record.commentTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
@@ -176,6 +187,9 @@
     <set >
       <if test="pid != null" >
         pid = #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="pcid != null" >
+        pcid = #{pcid,jdbcType=INTEGER},
       </if>
       <if test="comment != null" >
         comment = #{comment,jdbcType=VARCHAR},
@@ -189,6 +203,7 @@
   <update id="updateByPrimaryKey" parameterType="org.example.weibo.pojo.Comment" >
     update comment
     set pid = #{pid,jdbcType=INTEGER},
+      pcid = #{pcid,jdbcType=INTEGER},
       comment = #{comment,jdbcType=VARCHAR},
       comment_time = #{commentTime,jdbcType=TIMESTAMP}
     where cid = #{cid,jdbcType=INTEGER}

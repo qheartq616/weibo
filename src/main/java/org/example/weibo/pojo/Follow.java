@@ -1,11 +1,15 @@
 package org.example.weibo.pojo;
 
+import java.util.Date;
+
 public class Follow {
     private Integer fid;
 
     private Integer uid;
 
     private Integer followUid;
+
+    private Date followTime;
 
     public Integer getFid() {
         return fid;
@@ -29,5 +33,13 @@ public class Follow {
 
     public void setFollowUid(Integer followUid) {
         this.followUid = followUid;
+    }
+
+    public Date getFollowTime() {
+        return followTime;
+    }
+
+    public void setFollowTime(Date followTime) {
+        this.followTime = followTime;
     }
 }

@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="org.example.weibo.mapper.FollowMapper" >
-  <resultMap id="BaseResultMap" type="org.example.weibo.pojo.Follow" >
-    <id column="fid" property="fid" jdbcType="INTEGER" />
+<mapper namespace="org.example.weibo.mapper.LastMapper" >
+  <resultMap id="BaseResultMap" type="org.example.weibo.pojo.Last" >
+    <id column="last_id" property="lastId" jdbcType="INTEGER" />
     <result column="uid" property="uid" jdbcType="INTEGER" />
-    <result column="follow_uid" property="followUid" jdbcType="INTEGER" />
-    <result column="follow_time" property="followTime" jdbcType="TIMESTAMP" />
+    <result column="lattime" property="lattime" jdbcType="TIMESTAMP" />
+    <result column="lftime" property="lftime" jdbcType="TIMESTAMP" />
+    <result column="lctime" property="lctime" jdbcType="TIMESTAMP" />
+    <result column="lltime" property="lltime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -66,15 +68,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    fid, uid, follow_uid, follow_time
+    last_id, uid, lattime, lftime, lctime, lltime
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.example.weibo.pojo.FollowExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.example.weibo.pojo.LastExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from follow
+    from last
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -85,76 +87,96 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from follow
-    where fid = #{fid,jdbcType=INTEGER}
+    from last
+    where last_id = #{lastId,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from follow
-    where fid = #{fid,jdbcType=INTEGER}
+    delete from last
+    where last_id = #{lastId,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="org.example.weibo.pojo.FollowExample" >
-    delete from follow
+  <delete id="deleteByExample" parameterType="org.example.weibo.pojo.LastExample" >
+    delete from last
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="org.example.weibo.pojo.Follow" >
-    insert into follow (fid, uid, follow_uid, 
-      follow_time)
-    values (#{fid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{followUid,jdbcType=INTEGER}, 
-      #{followTime,jdbcType=TIMESTAMP})
+  <insert id="insert" parameterType="org.example.weibo.pojo.Last" >
+    insert into last (last_id, uid, lattime, 
+      lftime, lctime, lltime
+      )
+    values (#{lastId,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{lattime,jdbcType=TIMESTAMP}, 
+      #{lftime,jdbcType=TIMESTAMP}, #{lctime,jdbcType=TIMESTAMP}, #{lltime,jdbcType=TIMESTAMP}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="org.example.weibo.pojo.Follow" >
-    insert into follow
+  <insert id="insertSelective" parameterType="org.example.weibo.pojo.Last" >
+    insert into last
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="fid != null" >
-        fid,
+      <if test="lastId != null" >
+        last_id,
       </if>
       <if test="uid != null" >
         uid,
       </if>
-      <if test="followUid != null" >
-        follow_uid,
+      <if test="lattime != null" >
+        lattime,
       </if>
-      <if test="followTime != null" >
-        follow_time,
+      <if test="lftime != null" >
+        lftime,
+      </if>
+      <if test="lctime != null" >
+        lctime,
+      </if>
+      <if test="lltime != null" >
+        lltime,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="fid != null" >
-        #{fid,jdbcType=INTEGER},
+      <if test="lastId != null" >
+        #{lastId,jdbcType=INTEGER},
       </if>
       <if test="uid != null" >
         #{uid,jdbcType=INTEGER},
       </if>
-      <if test="followUid != null" >
-        #{followUid,jdbcType=INTEGER},
+      <if test="lattime != null" >
+        #{lattime,jdbcType=TIMESTAMP},
       </if>
-      <if test="followTime != null" >
-        #{followTime,jdbcType=TIMESTAMP},
+      <if test="lftime != null" >
+        #{lftime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lctime != null" >
+        #{lctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lltime != null" >
+        #{lltime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="org.example.weibo.pojo.FollowExample" resultType="java.lang.Integer" >
-    select count(*) from follow
+  <select id="countByExample" parameterType="org.example.weibo.pojo.LastExample" resultType="java.lang.Integer" >
+    select count(*) from last
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update follow
+    update last
     <set >
-      <if test="record.fid != null" >
-        fid = #{record.fid,jdbcType=INTEGER},
+      <if test="record.lastId != null" >
+        last_id = #{record.lastId,jdbcType=INTEGER},
       </if>
       <if test="record.uid != null" >
         uid = #{record.uid,jdbcType=INTEGER},
       </if>
-      <if test="record.followUid != null" >
-        follow_uid = #{record.followUid,jdbcType=INTEGER},
+      <if test="record.lattime != null" >
+        lattime = #{record.lattime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.followTime != null" >
-        follow_time = #{record.followTime,jdbcType=TIMESTAMP},
+      <if test="record.lftime != null" >
+        lftime = #{record.lftime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lctime != null" >
+        lctime = #{record.lctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lltime != null" >
+        lltime = #{record.lltime,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -162,35 +184,45 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update follow
-    set fid = #{record.fid,jdbcType=INTEGER},
+    update last
+    set last_id = #{record.lastId,jdbcType=INTEGER},
       uid = #{record.uid,jdbcType=INTEGER},
-      follow_uid = #{record.followUid,jdbcType=INTEGER},
-      follow_time = #{record.followTime,jdbcType=TIMESTAMP}
+      lattime = #{record.lattime,jdbcType=TIMESTAMP},
+      lftime = #{record.lftime,jdbcType=TIMESTAMP},
+      lctime = #{record.lctime,jdbcType=TIMESTAMP},
+      lltime = #{record.lltime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="org.example.weibo.pojo.Follow" >
-    update follow
+  <update id="updateByPrimaryKeySelective" parameterType="org.example.weibo.pojo.Last" >
+    update last
     <set >
       <if test="uid != null" >
         uid = #{uid,jdbcType=INTEGER},
       </if>
-      <if test="followUid != null" >
-        follow_uid = #{followUid,jdbcType=INTEGER},
+      <if test="lattime != null" >
+        lattime = #{lattime,jdbcType=TIMESTAMP},
       </if>
-      <if test="followTime != null" >
-        follow_time = #{followTime,jdbcType=TIMESTAMP},
+      <if test="lftime != null" >
+        lftime = #{lftime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lctime != null" >
+        lctime = #{lctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lltime != null" >
+        lltime = #{lltime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where fid = #{fid,jdbcType=INTEGER}
+    where last_id = #{lastId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="org.example.weibo.pojo.Follow" >
-    update follow
+  <update id="updateByPrimaryKey" parameterType="org.example.weibo.pojo.Last" >
+    update last
     set uid = #{uid,jdbcType=INTEGER},
-      follow_uid = #{followUid,jdbcType=INTEGER},
-      follow_time = #{followTime,jdbcType=TIMESTAMP}
-    where fid = #{fid,jdbcType=INTEGER}
+      lattime = #{lattime,jdbcType=TIMESTAMP},
+      lftime = #{lftime,jdbcType=TIMESTAMP},
+      lctime = #{lctime,jdbcType=TIMESTAMP},
+      lltime = #{lltime,jdbcType=TIMESTAMP}
+    where last_id = #{lastId,jdbcType=INTEGER}
   </update>
 </mapper>

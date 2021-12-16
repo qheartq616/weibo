@@ -485,66 +485,6 @@ public class PostExample {
             return (Criteria) this;
         }
 
-        public Criteria andUpdateTimeIsNull() {
-            addCriterion("update_time is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdateTimeIsNotNull() {
-            addCriterion("update_time is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdateTimeEqualTo(Date value) {
-            addCriterion("update_time =", value, "updateTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdateTimeNotEqualTo(Date value) {
-            addCriterion("update_time <>", value, "updateTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdateTimeGreaterThan(Date value) {
-            addCriterion("update_time >", value, "updateTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdateTimeGreaterThanOrEqualTo(Date value) {
-            addCriterion("update_time >=", value, "updateTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdateTimeLessThan(Date value) {
-            addCriterion("update_time <", value, "updateTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdateTimeLessThanOrEqualTo(Date value) {
-            addCriterion("update_time <=", value, "updateTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdateTimeIn(List<Date> values) {
-            addCriterion("update_time in", values, "updateTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdateTimeNotIn(List<Date> values) {
-            addCriterion("update_time not in", values, "updateTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdateTimeBetween(Date value1, Date value2) {
-            addCriterion("update_time between", value1, value2, "updateTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdateTimeNotBetween(Date value1, Date value2) {
-            addCriterion("update_time not between", value1, value2, "updateTime");
-            return (Criteria) this;
-        }
-
         public Criteria andStatusIsNull() {
             addCriterion("status is null");
             return (Criteria) this;
@@ -602,6 +542,66 @@ public class PostExample {
 
         public Criteria andStatusNotBetween(Integer value1, Integer value2) {
             addCriterion("status not between", value1, value2, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andCountForwardIsNull() {
+            addCriterion("count_forward is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCountForwardIsNotNull() {
+            addCriterion("count_forward is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCountForwardEqualTo(Integer value) {
+            addCriterion("count_forward =", value, "countForward");
+            return (Criteria) this;
+        }
+
+        public Criteria andCountForwardNotEqualTo(Integer value) {
+            addCriterion("count_forward <>", value, "countForward");
+            return (Criteria) this;
+        }
+
+        public Criteria andCountForwardGreaterThan(Integer value) {
+            addCriterion("count_forward >", value, "countForward");
+            return (Criteria) this;
+        }
+
+        public Criteria andCountForwardGreaterThanOrEqualTo(Integer value) {
+            addCriterion("count_forward >=", value, "countForward");
+            return (Criteria) this;
+        }
+
+        public Criteria andCountForwardLessThan(Integer value) {
+            addCriterion("count_forward <", value, "countForward");
+            return (Criteria) this;
+        }
+
+        public Criteria andCountForwardLessThanOrEqualTo(Integer value) {
+            addCriterion("count_forward <=", value, "countForward");
+            return (Criteria) this;
+        }
+
+        public Criteria andCountForwardIn(List<Integer> values) {
+            addCriterion("count_forward in", values, "countForward");
+            return (Criteria) this;
+        }
+
+        public Criteria andCountForwardNotIn(List<Integer> values) {
+            addCriterion("count_forward not in", values, "countForward");
+            return (Criteria) this;
+        }
+
+        public Criteria andCountForwardBetween(Integer value1, Integer value2) {
+            addCriterion("count_forward between", value1, value2, "countForward");
+            return (Criteria) this;
+        }
+
+        public Criteria andCountForwardNotBetween(Integer value1, Integer value2) {
+            addCriterion("count_forward not between", value1, value2, "countForward");
             return (Criteria) this;
         }
     }

@@ -15,9 +15,9 @@ public class Post {
 
     private Date postTime;
 
-    private Date updateTime;
-
     private Integer status;
+
+    private Integer countForward;
 
     private User user;
 
@@ -97,19 +97,19 @@ public class Post {
         this.postTime = postTime;
     }
 
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
     public Integer getStatus() {
         return status;
     }
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getCountForward() {
+        return countForward;
+    }
+
+    public void setCountForward(Integer countForward) {
+        this.countForward = countForward;
     }
 }

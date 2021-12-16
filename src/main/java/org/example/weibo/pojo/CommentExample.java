@@ -225,6 +225,66 @@ public class CommentExample {
             return (Criteria) this;
         }
 
+        public Criteria andPcidIsNull() {
+            addCriterion("pcid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcidIsNotNull() {
+            addCriterion("pcid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcidEqualTo(Integer value) {
+            addCriterion("pcid =", value, "pcid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcidNotEqualTo(Integer value) {
+            addCriterion("pcid <>", value, "pcid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcidGreaterThan(Integer value) {
+            addCriterion("pcid >", value, "pcid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcidGreaterThanOrEqualTo(Integer value) {
+            addCriterion("pcid >=", value, "pcid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcidLessThan(Integer value) {
+            addCriterion("pcid <", value, "pcid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcidLessThanOrEqualTo(Integer value) {
+            addCriterion("pcid <=", value, "pcid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcidIn(List<Integer> values) {
+            addCriterion("pcid in", values, "pcid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcidNotIn(List<Integer> values) {
+            addCriterion("pcid not in", values, "pcid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcidBetween(Integer value1, Integer value2) {
+            addCriterion("pcid between", value1, value2, "pcid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcidNotBetween(Integer value1, Integer value2) {
+            addCriterion("pcid not between", value1, value2, "pcid");
+            return (Criteria) this;
+        }
+
         public Criteria andCommentIsNull() {
             addCriterion("comment is null");
             return (Criteria) this;

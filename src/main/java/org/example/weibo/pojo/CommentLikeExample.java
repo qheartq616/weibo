@@ -1,6 +1,7 @@
 package org.example.weibo.pojo;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class CommentLikeExample {
@@ -281,6 +282,66 @@ public class CommentLikeExample {
 
         public Criteria andCidNotBetween(Integer value1, Integer value2) {
             addCriterion("cid not between", value1, value2, "cid");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikeTimeIsNull() {
+            addCriterion("like_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikeTimeIsNotNull() {
+            addCriterion("like_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikeTimeEqualTo(Date value) {
+            addCriterion("like_time =", value, "likeTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikeTimeNotEqualTo(Date value) {
+            addCriterion("like_time <>", value, "likeTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikeTimeGreaterThan(Date value) {
+            addCriterion("like_time >", value, "likeTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikeTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("like_time >=", value, "likeTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikeTimeLessThan(Date value) {
+            addCriterion("like_time <", value, "likeTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikeTimeLessThanOrEqualTo(Date value) {
+            addCriterion("like_time <=", value, "likeTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikeTimeIn(List<Date> values) {
+            addCriterion("like_time in", values, "likeTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikeTimeNotIn(List<Date> values) {
+            addCriterion("like_time not in", values, "likeTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikeTimeBetween(Date value1, Date value2) {
+            addCriterion("like_time between", value1, value2, "likeTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikeTimeNotBetween(Date value1, Date value2) {
+            addCriterion("like_time not between", value1, value2, "likeTime");
             return (Criteria) this;
         }
     }

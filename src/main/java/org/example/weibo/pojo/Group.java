@@ -9,16 +9,6 @@ public class Group {
 
     private Integer followUid;
 
-    @Override
-    public String toString() {
-        return "Group{" +
-                "gid=" + gid +
-                ", name='" + name + '\'' +
-                ", uid=" + uid +
-                ", followUid=" + followUid +
-                '}';
-    }
-
     public Integer getGid() {
         return gid;
     }

@@ -1,11 +1,15 @@
 package org.example.weibo.pojo;
 
+import java.util.Date;
+
 public class PostLike {
     private Integer lid;
 
     private Integer uid;
 
     private Integer pid;
+
+    private Date likeTime;
 
     public Integer getLid() {
         return lid;
@@ -29,5 +33,13 @@ public class PostLike {
 
     public void setPid(Integer pid) {
         this.pid = pid;
+    }
+
+    public Date getLikeTime() {
+        return likeTime;
+    }
+
+    public void setLikeTime(Date likeTime) {
+        this.likeTime = likeTime;
     }
 }

@@ -1,6 +1,7 @@
 package org.example.weibo.pojo;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class FollowExample {
@@ -281,6 +282,66 @@ public class FollowExample {
 
         public Criteria andFollowUidNotBetween(Integer value1, Integer value2) {
             addCriterion("follow_uid not between", value1, value2, "followUid");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollowTimeIsNull() {
+            addCriterion("follow_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollowTimeIsNotNull() {
+            addCriterion("follow_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollowTimeEqualTo(Date value) {
+            addCriterion("follow_time =", value, "followTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollowTimeNotEqualTo(Date value) {
+            addCriterion("follow_time <>", value, "followTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollowTimeGreaterThan(Date value) {
+            addCriterion("follow_time >", value, "followTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollowTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("follow_time >=", value, "followTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollowTimeLessThan(Date value) {
+            addCriterion("follow_time <", value, "followTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollowTimeLessThanOrEqualTo(Date value) {
+            addCriterion("follow_time <=", value, "followTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollowTimeIn(List<Date> values) {
+            addCriterion("follow_time in", values, "followTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollowTimeNotIn(List<Date> values) {
+            addCriterion("follow_time not in", values, "followTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollowTimeBetween(Date value1, Date value2) {
+            addCriterion("follow_time between", value1, value2, "followTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollowTimeNotBetween(Date value1, Date value2) {
+            addCriterion("follow_time not between", value1, value2, "followTime");
             return (Criteria) this;
         }
     }
