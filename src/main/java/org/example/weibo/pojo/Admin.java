@@ -9,6 +9,8 @@ public class Admin {
 
     private String image;
 
+    private Long phone;
+
     public Integer getAid() {
         return aid;
     }
@@ -39,5 +41,13 @@ public class Admin {
 
     public void setImage(String image) {
         this.image = image == null ? null : image.trim();
+    }
+
+    public Long getPhone() {
+        return phone;
+    }
+
+    public void setPhone(Long phone) {
+        this.phone = phone;
     }
 }

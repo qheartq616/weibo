@@ -27,6 +27,8 @@ public class User {
 
     private Integer status;
 
+    private Long phone;
+
     private int countAllFollowUser;
 
     private int countAllFans;
@@ -171,5 +173,13 @@ public class User {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Long getPhone() {
+        return phone;
+    }
+
+    public void setPhone(Long phone) {
+        this.phone = phone;
     }
 }
