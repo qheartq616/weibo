@@ -77,4 +77,11 @@ public class UserController {
 	                    @RequestParam(name = "followUid")Integer followUid){
 		return followService.doFollow(uid, followUid);
 	}
+
+	@RequestMapping("*/doDelete")
+	@ResponseBody
+	//关注取关功能
+	public void doDelete(@RequestParam(name = "pid")Integer pid){
+		postService.delete(pid);
+	}
 }

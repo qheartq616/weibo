@@ -219,7 +219,7 @@
 				</div>
 				<div class="lmlblog-member-right">
 					<div class="lmlblog-post-list" th:each="post:${pageInfo.list}">
-						<div  class="lmlblog-posts-list words" style="background-image:url(/images/058.png); " data="4197">
+						<div  class="lmlblog-posts-list words" style="background-image:url(/images/058.png); " th:if="${post.status==4}" data="4197" th:id="|post${post.pid}|">
 							<!-- 动态内容部分，包括列表 -->
 							<div class="lmlblog-post-user-info">
 								<div class="lmlblog-post-user-info-avatar" user-data="1">
@@ -252,7 +252,70 @@
 									<ul th:case="true">
 										<a href="#" title="置顶"><li>置顶</li></a>
 										<a href="#" title="编辑"><li>编辑</li></a>
-										<a href="#" title="删除"><li>删除</li></a>
+										<a th:href="|javascript:doDelete(${post.user.uid},${post.pid})|" title="删除"><li>删除</li></a>
+									</ul>
+									<ul th:case="false">
+										<a href="#" title="举报"><li>举报</li></a>
+										<a th:href="@{|user/${userCur.uid}/1|}" title="访问主页"><li>访问主页</li></a>
+									</ul>
+								</div>
+							</div>
+							<div class="lmlblog-post-content ">
+								<p th:text="${post.text}"></p>
+							</div>
+							<!--<div class="lmlblog-post-images-list clear"></div>-->
+							<div class="lmlblog-post-bar">
+								<li onclick='list_comments_show(this);'>
+									<i class="fa fa-comment-o"></i><span></span>
+								</li>
+								<li class="lmlblog-no-like" th:onclick="|javascript:doLike(${post.pid},${session.user.uid},this)|">
+									<i class="fa fa-heart" th:if="${post.postLike==true}"></i><i class="fa fa-heart-o" th:if="${post.postLike==false}"></i><span th:text="|${post.countPostLike}|"></span>
+								</li>
+								<!--<li>
+                                <i class="lmlblog-icon">&#xe602;</i> <span>1.2w</span>
+                                </li>-->
+								<!--<li class="tag clear"><i class="lmlblog-icon">&#xe895;</i><a href="#2" title="司空琪壁纸"></a></li>-->
+							</div>
+							<div class="lmlblog-post-footer-bar">
+								<span th:title="${#dates.format(post.postTime,'yyyy-MM-dd HH:mm')}" th:text="${#dates.format(post.postTime,'yyyy-MM-dd HH:mm')}">12月14日 05:25</span>
+								<span>小尾巴</span><i class="lmlblog-icon" onclick="lmlblog_post_type_open();">&#xe62c;</i>
+							</div>
+
+						</div>
+						<div  class="lmlblog-posts-list words" style="background-image:url(/images/058.png); " th:if="${post.status!=4}" data="4197" th:id="|post${post.pid}|">
+							<!-- 动态内容部分，包括列表 -->
+							<div class="lmlblog-post-user-info">
+								<div class="lmlblog-post-user-info-avatar" user-data="1">
+									<a href="#" style="display: inline-block;">
+										<span class="lmlblog-vip-icon"></span>
+										<img th:src="|/avatar/${post.user.image}|" class="avatar"/>
+										<i th:if="${post.user.status==0}" th:title="普通用户"></i>
+										<i th:if="${post.user.status==1}" class="lmlblog-verify lmlblog-verify-a" th:title="会员用户"></i>
+										<i th:if="${post.user.status==2}" class="lmlblog-verify lmlblog-verify-b" th:title="认证用户"></i>
+										<i th:if="${post.user.status==3}" class="lmlblog-verify-c lmlblog-verify-cc" th:title="超级管理员"></i>
+									</a>
+									<div class="lmlblog-user-info-card">
+										<div class="info_card_loading"><img src="/picture/chat-loading.gif"><p>资料加载中...</p>
+										</div>
+									</div>
+								</div>
+
+								<div class="lmlblog-post-user-info-name">
+									<a href="#">
+										<font style="color:#333;font-weight:600" th:text="${post.user.name}">司空琪</font>
+									</a>
+									<span class="lmlblog-mark lmlblog-lv" title="经验：3815"></span><span class="lmlblog-mark lmlblog-vip"></span>
+								</div>
+								<div class="lmlblog-post-user-info-time" title="2017-12-14 05:25" th:text="${#dates.format(post.postTime,'yyyy-MM-dd HH:mm')}">12-14 05:25</div>
+								<div class="lmlblog-post-user-info-time" title="来自weibo.com" th:text="来自weibo.com">12-14 05:25</div>
+							</div><!-- 作者信息 -->
+							<div class="lmlblog-post-setting">
+								<i class="fa fa-angle-down"></i>
+								<div  class="lmlblog-post-setting-box" th:switch="${userCur.uid==session.user.uid}">
+									<ul th:case="true">
+										<a href="#" title="置顶"><li>置顶</li></a>
+										<a href="#" title="编辑"><li>编辑</li></a>
+										<a th:href="|javascript:doDelete(${post.user.uid},${post.pid})|" title="删除"><li>删除</li></a>
 									</ul>
 									<ul th:case="false">
 										<a href="#" title="举报"><li>举报</li></a>
@@ -402,6 +465,17 @@
 				},
 				"json"
 		);
+	}
+
+	function doDelete(uid,pid) {
+		$.post(
+				"/user/"+uid+"/doDelete",
+				"pid="+pid,
+				function (){
+					$("#post"+pid).remove();
+				},
+				"json"
+		)
 	}
 </script>
 </html>

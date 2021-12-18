@@ -28,6 +28,7 @@ public class PostServiceImpl implements PostService{
 	@Resource
 	UserMapper userMapper;
 
+	//微博状态码：-1：仅自己可见，0：删除，1：公开，2：好友圈，3：粉丝，4：置顶（置顶微博必须公开）
 	@Override
 	//curUid的首页  查询curUid的所有微博
 	public PageInfo<Post> showUserAllPost(Integer uid,Integer curUid,Integer pageNum) {
@@ -217,6 +218,9 @@ public class PostServiceImpl implements PostService{
 	}
 
 	@Override
+	//删除
+	//删除有必要整成逻辑删除吗。。
+	//有吧
 	public void delete(Integer pid) {
 		Post post=new Post();
 		post.setPid(pid);
