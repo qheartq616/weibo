@@ -123,7 +123,7 @@ public class FollowServiceImpl implements FollowService{
 			List<Follow> followeds = followMapper.selectByExample(followedExample);
 			//uid：session中的uid  followUid：当前被浏览的uid
 			/*System.out.println("follows = " + follows.size());
-			System.out.println("followeds = " + followeds.size());*/
+			System.out.println("followeds = " + followeds.size());
 			for (Follow follow : follows) {
 				System.out.println("follow = " + follow.getUid());
 				System.out.println("follow = " + follow.getFollowUid());
@@ -132,7 +132,7 @@ public class FollowServiceImpl implements FollowService{
 			for (Follow followed : followeds) {
 				System.out.println("followed = " + followed.getUid());
 				System.out.println("followed = " + followed.getFollowUid());
-			}
+			}*/
 
 			if (follows.size()>0&&followeds.size()>0){
 				return 2;

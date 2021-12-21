@@ -5,6 +5,8 @@ import java.util.Date;
 public class Comment {
     private Integer cid;
 
+    private Integer uid;
+
     private Integer pid;
 
     private Integer pcid;
@@ -13,12 +15,30 @@ public class Comment {
 
     private Date commentTime;
 
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public Integer getCid() {
         return cid;
     }
 
     public void setCid(Integer cid) {
         this.cid = cid;
+    }
+
+    public Integer getUid() {
+        return uid;
+    }
+
+    public void setUid(Integer uid) {
+        this.uid = uid;
     }
 
     public Integer getPid() {

@@ -1,6 +1,7 @@
 package org.example.weibo.pojo;
 
 import java.util.Date;
+import java.util.List;
 
 public class Post {
     private Integer pid;
@@ -26,6 +27,16 @@ public class Post {
     private boolean postLike;
 
     private int countPostLike;
+
+    private List<Comment> commentList;
+
+    public List<Comment> getCommentList() {
+        return commentList;
+    }
+
+    public void setCommentList(List<Comment> commentList) {
+        this.commentList = commentList;
+    }
 
     public User getUser() {
         return user;

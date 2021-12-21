@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 @RequestMapping("user")
 @Controller
@@ -44,6 +43,9 @@ public class UserController {
 
 		User fillUserCur = userService.fillUserInfo(user, userCur);
 		model.addAttribute("userCur",fillUserCur);
+
+		Post topPost = postService.showTopPost(userCurUid);
+		model.addAttribute("topPost",topPost);
 
 		//pagehelper一定要写在select方法前
 		PageInfo<Post> pageInfo = postService.showUserAllPost(user.getUid(),userCurUid,pageNum);
@@ -82,6 +84,15 @@ public class UserController {
 	@ResponseBody
 	//关注取关功能
 	public void doDelete(@RequestParam(name = "pid")Integer pid){
-		postService.delete(pid);
+		postService.doDelete(pid);
+	}
+
+	@RequestMapping("*/doTopPost")
+	//关注取关功能
+	public String doTopPost(@RequestParam(name = "pid")Integer pid,
+	                      HttpSession session){
+		User user = (User) session.getAttribute("user");
+		postService.doTopPost(user.getUid(),pid);
+		return "redirect:/user/"+user.getUid()+"/1";
 	}
 }

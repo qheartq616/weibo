@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.example.weibo.mapper.PostMapper;
 import org.example.weibo.mapper.UserMapper;
+import org.example.weibo.pojo.Comment;
 import org.example.weibo.pojo.Post;
 import org.example.weibo.pojo.PostExample;
 import org.example.weibo.pojo.User;
@@ -27,6 +28,8 @@ public class PostServiceImpl implements PostService{
 	GroupService groupService;
 	@Resource
 	UserMapper userMapper;
+	@Resource
+	CommentService commentService;
 
 	//微博状态码：-1：仅自己可见，0：删除，1：公开，2：好友圈，3：粉丝，4：置顶（置顶微博必须公开）
 	@Override
@@ -35,23 +38,15 @@ public class PostServiceImpl implements PostService{
 		PageHelper.startPage(pageNum,7);
 		PostExample postExample=new PostExample();
 		postExample.setOrderByClause("post_time desc");
-		postExample.createCriteria().andUidEqualTo(curUid).andStatusNotEqualTo(0);
+		postExample.createCriteria().andUidEqualTo(curUid).andStatusNotEqualTo(0).andStatusNotEqualTo(4);
 		List<Post> postList = postMapper.selectByExample(postExample);
 		PageInfo<Post> pageInfo=new PageInfo<>(postList);
 
-		for (Post post : pageInfo.getList()) {
-			//加入点赞状态
-			boolean b = postLikeService.ifPostLike(post.getPid(), uid);
-			post.setPostLike(b);
-
-			//加入点赞数
-			int i = postLikeService.countPostLike(post.getPid());
-			post.setCountPostLike(i);
-		}
+		List<Post> filledPostList = fillPostInfo(pageInfo.getList(), uid);
+		pageInfo.setList(filledPostList);
 		/*for (Post post : postList) {
 			System.out.println("post.getPostTime() = " + post.getPostTime());
 		}*/
-
 
 		return pageInfo;
 	}
@@ -93,7 +88,7 @@ public class PostServiceImpl implements PostService{
 		//ListSortByDate.doSort(allPostList);
 		List<Post> postList = postMapper.selectByExample(postExample);
 		PageInfo<Post> pageInfo=new PageInfo<>(postList);
-		for (Post post : pageInfo.getList()) {
+		/*for (Post post : pageInfo.getList()) {
 			//加入点赞状态
 			boolean b = postLikeService.ifPostLike(post.getPid(), uid);
 			post.setPostLike(b);
@@ -101,7 +96,9 @@ public class PostServiceImpl implements PostService{
 			//加入点赞数
 			int i = postLikeService.countPostLike(post.getPid());
 			post.setCountPostLike(i);
-		}
+		}*/
+		List<Post> filledPostList = fillPostInfo(pageInfo.getList(), uid);
+		pageInfo.setList(filledPostList);
 
 		return pageInfo;
 	}
@@ -116,7 +113,7 @@ public class PostServiceImpl implements PostService{
 			uidList.add(user.getUid());
 		}
 
-		int countAllUid = userMapper.countByExample(null);
+		//int countAllUid = userMapper.countByExample(null);
 
 		PageHelper.startPage(pageNum,7);
 		PostExample postExample=new PostExample();
@@ -125,7 +122,7 @@ public class PostServiceImpl implements PostService{
 
 		List<Post> postList = postMapper.selectByExample(postExample);
 		PageInfo<Post> pageInfo=new PageInfo<>(postList);
-		for (Post post : pageInfo.getList()) {
+		/*for (Post post : pageInfo.getList()) {
 			//加入点赞状态
 			boolean b = postLikeService.ifPostLike(post.getPid(), uid);
 			post.setPostLike(b);
@@ -133,7 +130,9 @@ public class PostServiceImpl implements PostService{
 			//加入点赞数
 			int i = postLikeService.countPostLike(post.getPid());
 			post.setCountPostLike(i);
-		}
+		}*/
+		List<Post> filledPostList = fillPostInfo(pageInfo.getList(), uid);
+		pageInfo.setList(filledPostList);
 
 		return pageInfo;
 	}
@@ -157,7 +156,7 @@ public class PostServiceImpl implements PostService{
 
 		List<Post> postList = postMapper.selectByExample(postExample);
 		PageInfo<Post> pageInfo=new PageInfo<>(postList);
-		for (Post post : pageInfo.getList()) {
+		/*for (Post post : pageInfo.getList()) {
 			//加入点赞状态
 			boolean b = postLikeService.ifPostLike(post.getPid(), uid);
 			post.setPostLike(b);
@@ -165,7 +164,9 @@ public class PostServiceImpl implements PostService{
 			//加入点赞数
 			int i = postLikeService.countPostLike(post.getPid());
 			post.setCountPostLike(i);
-		}
+		}*/
+		List<Post> filledPostList = fillPostInfo(pageInfo.getList(), uid);
+		pageInfo.setList(filledPostList);
 
 		return pageInfo;
 	}
@@ -203,8 +204,9 @@ public class PostServiceImpl implements PostService{
 		postExample.createCriteria().andUidIn(uidList);
 		List<Post> postList = postMapper.selectByExample(postExample);
 		PageInfo<Post> pageInfo=new PageInfo<>(postList);
-
-		for (Post post : pageInfo.getList()) {
+		List<Post> filledPostList = fillPostInfo(pageInfo.getList(), uid);
+		pageInfo.setList(filledPostList);
+		/*for (Post post : pageInfo.getList()) {
 			//加入点赞状态
 			boolean b = postLikeService.ifPostLike(post.getPid(), uid);
 			post.setPostLike(b);
@@ -212,7 +214,7 @@ public class PostServiceImpl implements PostService{
 			//加入点赞数
 			int i = postLikeService.countPostLike(post.getPid());
 			post.setCountPostLike(i);
-		}
+		}*/
 
 		return pageInfo;
 	}
@@ -221,11 +223,81 @@ public class PostServiceImpl implements PostService{
 	//删除
 	//删除有必要整成逻辑删除吗。。
 	//有吧
-	public void delete(Integer pid) {
+	public void doDelete(Integer pid) {
 		Post post=new Post();
 		post.setPid(pid);
 		post.setStatus(0);
 		postMapper.updateByPrimaryKeySelective(post);
+	}
+
+	@Override
+	//置顶、取消置顶微博
+	public void doTopPost(Integer uid, Integer pid) {
+		//三种情况，1、没有置顶--置顶pid微博；有置顶：2、取消原置顶（pid），3、或取消原置顶（uid查出来）添加新置顶（pid）
+		//微博状态码：-1：仅自己可见，0：删除，1：公开，2：好友圈，3：粉丝，4：置顶（置顶微博必须公开）
+		PostExample postExample=new PostExample();
+		postExample.createCriteria().andUidEqualTo(uid).andStatusEqualTo(4);
+		List<Post> posts = postMapper.selectByExample(postExample);
+
+		Post newTopPost=new Post();
+		newTopPost.setPid(pid);
+		newTopPost.setStatus(4);
+
+		if (posts.size()==0){
+			//1
+			postMapper.updateByPrimaryKeySelective(newTopPost);
+		}else {
+			Post oldTopPost = posts.get(0);
+			oldTopPost.setStatus(1);
+			postMapper.updateByPrimaryKeySelective(oldTopPost);
+			if (oldTopPost.getPid()==pid){
+				//2
+			}else {
+				//3
+				postMapper.updateByPrimaryKeySelective(newTopPost);
+			}
+		}
+	}
+
+	@Override
+	//单独查询置顶微博
+	public Post showTopPost(Integer uid) {
+		PostExample postExample=new PostExample();
+		postExample.createCriteria().andStatusEqualTo(4).andUidEqualTo(uid);
+		List<Post> posts = postMapper.selectByExample(postExample);
+		if (posts.size()==0){
+			return null;
+		}else {
+			/*Post topPost = posts.get(0);
+			//加入点赞状态
+			boolean b = postLikeService.ifPostLike(topPost.getPid(), uid);
+			topPost.setPostLike(b);
+
+			//加入点赞数
+			int i = postLikeService.countPostLike(topPost.getPid());
+			topPost.setCountPostLike(i);*/
+			List<Post> filledPostList = fillPostInfo(posts, uid);
+			return filledPostList.get(0);
+		}
+	}
+
+	@Override
+	//每条微博信息补全
+	public List<Post> fillPostInfo(List<Post> postList,Integer uid) {
+		for (Post post : postList) {
+			//加入点赞状态
+			boolean b = postLikeService.ifPostLike(post.getPid(), uid);
+			post.setPostLike(b);
+
+			//加入点赞数
+			int i = postLikeService.countPostLike(post.getPid());
+			post.setCountPostLike(i);
+
+			//加入所有评论
+			List<Comment> allCommentList = commentService.showAllCommentList(post.getPid());
+			post.setCommentList(allCommentList);
+		}
+		return postList;
 	}
 
 

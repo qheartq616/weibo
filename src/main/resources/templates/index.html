@@ -112,26 +112,26 @@
 					<div class="lmlblog-member-desc" th:text="${userCur.description}">江湖风雨，几度阑珊。沧海一粟，愿君一剑轻安。</div>
 					<div class="lmlblog-member-follow-info" th:switch="${userCur.followStatus}" id="followInfo">
 						<a th:onclick="|javascript:doFollow(${session.user.uid},${userCur.uid})|" th:case="0" target="_blank" rel="nofollow">
-							<span class="follow has opacity">
-								<i class="lmlblog-icon">+关注</i>
+							<span class="follow no opacity">
+								<i class="fa fa-plus-square-o"></i>&nbsp;&nbsp;<i class="lmlblog-icon">关注</i>
 							</span>
 						</a>
 						<a th:onclick="|javascript:doFollow(${session.user.uid},${userCur.uid})|" th:case="1" target="_blank" rel="nofollow">
-							<span class="follow no opacity">
-								<i class="lmlblog-icon">已关注</i>
+							<span class="follow has opacity">
+								<i class="fa fa-check-square-o"></i>&nbsp;&nbsp;<i class="lmlblog-icon">已关注</i>
 							</span>
 						</a>
 						<a th:onclick="|javascript:doFollow(${session.user.uid},${userCur.uid})|" th:case="2" target="_blank" rel="nofollow">
-							<span class="follow no opacity">
-								<i class="lmlblog-icon">互相关注</i>
+							<span class="follow has opacity">
+								<i class="fa fa-exchange"></i>&nbsp;&nbsp;<i class="lmlblog-icon">互相关注</i>
 							</span>
 						</a>
 						<a th:onclick="|javascript:doFollow(${session.user.uid},${userCur.uid})|" th:case="4" target="_blank" rel="nofollow">
-							<span class="follow has opacity">
-								<i class="lmlblog-icon">+关注</i>
+							<span class="follow no opacity">
+								<i class="fa fa-plus-square-o"></i>&nbsp;&nbsp;<i class="lmlblog-icon">关注</i>
 							</span>
 						</a>
-						<span class="opacity" th:if="${userCur.followStatus!=3}"><i class="lmlblog-icon">私聊</i></span>
+						<span class="opacity" th:if="${userCur.followStatus!=3}"><i class="fa fa-envelope-o"></i>&nbsp;&nbsp;<i class="lmlblog-icon">私聊</i></span>
 					</div>
 				</div>
 			</div>
@@ -173,15 +173,15 @@
 					</div>
 					<div class="lmlblog-member-left-profile">
 						<h3>资料简介</h3>
-						<li><i class="fa fa-address-book-o"></i> I D：<span th:text="${userCur.uid}">520</span></li>
+						<li><i class="fa fa-address-book-o"></i>微博ID：<span th:text="${userCur.uid}">520</span></li>
 						<li><i class="fa fa-transgender"></i> 性别：<span th:text="${userCur.gender}">女生</span></li>
-						<li><i class="fa fa-map-marker"></i> 城市：<span th:text="${userCur.city}">画江湖 司空家===</span></li>
-						<li><i class="fa fa-smile-o"></i> 签名：<span th:text="${userCur.description}">坚强勇敢，利落干脆。冰雪聪明，明眸善睐。重情重义，侠骨柔情。===</span></li>
+						<li><i class="fa fa-map-marker"></i> 城市：<span th:text="${userCur.city}">画江湖 司空家</span></li>
+						<li><i class="fa fa-smile-o"></i> 签名：<span th:text="${userCur.description}">坚强勇敢，利落干脆。冰雪聪明，明眸善睐。重情重义，侠骨柔情。</span></li>
 						<div class="lmlblog-member-left-profile-hide">
 							<!--<li><i class="fa fa-qq"></i> Q Q：<span>sikongqi-&#45;&#45;<span></li>
                             <li><i class="fa fa-wechat"></i> 微信：<span>天涯路远，一剑轻安。携琪之手，相伴江湖-&#45;&#45;<span></li>
                             <li><i class="fa fa-weibo"></i> 微博：<span>司空琪吧官博-&#45;&#45;<span></li>-->
-							<li><i class="fa fa-clock-o"></i> 生日：<span th:text="${#dates.format(userCur.birthday,'yyyy-MM-dd')}">2月15日</span></li>
+							<li><i class="fa fa-birthday-cake"></i> 生日：<span th:text="${#dates.format(userCur.birthday,'yyyy-MM-dd')}">2月15日</span></li>
 						</div>
 						<div class="lmlblog-member-left-profile-more">查看更多 <i class="fa fa-angle-right"></i></div>
 					</div>
@@ -218,18 +218,19 @@
 					</div>
 				</div>
 				<div class="lmlblog-member-right">
-					<div class="lmlblog-post-list" th:each="post:${pageInfo.list}">
-						<div  class="lmlblog-posts-list words" style="background-image:url(/images/058.png); " th:if="${post.status==4}" data="4197" th:id="|post${post.pid}|">
+					<div class="lmlblog-post-list" th:if="${topPost!=null&&pageInfo.pageNum==1}">
+						<div  class="lmlblog-posts-list words" style="background-image:url(/images/058.png); " data="4197" th:id="|post${topPost.pid}|">
 							<!-- 动态内容部分，包括列表 -->
 							<div class="lmlblog-post-user-info">
+								<div><i class="fa fa-arrow-circle-up"></i><span style="color: red;">置顶</span><br><br></div>
 								<div class="lmlblog-post-user-info-avatar" user-data="1">
 									<a href="#" style="display: inline-block;">
 										<span class="lmlblog-vip-icon"></span>
-										<img th:src="|/avatar/${post.user.image}|" class="avatar"/>
-										<i th:if="${post.user.status==0}" th:title="普通用户"></i>
-										<i th:if="${post.user.status==1}" class="lmlblog-verify lmlblog-verify-a" th:title="会员用户"></i>
-										<i th:if="${post.user.status==2}" class="lmlblog-verify lmlblog-verify-b" th:title="认证用户"></i>
-										<i th:if="${post.user.status==3}" class="lmlblog-verify-c lmlblog-verify-cc" th:title="超级管理员"></i>
+										<img th:src="|/avatar/${topPost.user.image}|" class="avatar"/>
+										<i th:if="${topPost.user.status==0}" th:title="普通用户"></i>
+										<i th:if="${topPost.user.status==1}" class="lmlblog-verify lmlblog-verify-a" th:title="会员用户"></i>
+										<i th:if="${topPost.user.status==2}" class="lmlblog-verify lmlblog-verify-b" th:title="认证用户"></i>
+										<i th:if="${topPost.user.status==3}" class="lmlblog-verify-c lmlblog-verify-cc" th:title="超级管理员"></i>
 									</a>
 									<div class="lmlblog-user-info-card">
 										<div class="info_card_loading"><img src="/picture/chat-loading.gif"><p>资料加载中...</p>
@@ -239,20 +240,20 @@
 
 								<div class="lmlblog-post-user-info-name">
 									<a href="#">
-										<font style="color:#333;font-weight:600" th:text="${post.user.name}">司空琪</font>
+										<font style="color:#333;font-weight:600" th:text="${topPost.user.name}">司空琪</font>
 									</a>
 									<span class="lmlblog-mark lmlblog-lv" title="经验：3815"></span><span class="lmlblog-mark lmlblog-vip"></span>
 								</div>
-								<div class="lmlblog-post-user-info-time" title="2017-12-14 05:25" th:text="${#dates.format(post.postTime,'yyyy-MM-dd HH:mm')}">12-14 05:25</div>
+								<div class="lmlblog-post-user-info-time" title="2017-12-14 05:25" th:text="${#dates.format(topPost.postTime,'yyyy-MM-dd HH:mm')}">12-14 05:25</div>
 								<div class="lmlblog-post-user-info-time" title="来自weibo.com" th:text="来自weibo.com">12-14 05:25</div>
 							</div><!-- 作者信息 -->
 							<div class="lmlblog-post-setting">
 								<i class="fa fa-angle-down"></i>
 								<div  class="lmlblog-post-setting-box" th:switch="${userCur.uid==session.user.uid}">
 									<ul th:case="true">
-										<a href="#" title="置顶"><li>置顶</li></a>
+										<a th:href="@{/user/${session.user.uid}/doTopPost(pid=${topPost.pid})}" title="取消置顶"><li>取消置顶</li></a>
 										<a href="#" title="编辑"><li>编辑</li></a>
-										<a th:href="|javascript:doDelete(${post.user.uid},${post.pid})|" title="删除"><li>删除</li></a>
+										<a th:href="|javascript:doDelete(${topPost.user.uid},${topPost.pid})|" title="删除"><li>删除</li></a>
 									</ul>
 									<ul th:case="false">
 										<a href="#" title="举报"><li>举报</li></a>
@@ -261,15 +262,15 @@
 								</div>
 							</div>
 							<div class="lmlblog-post-content ">
-								<p th:text="${post.text}"></p>
+								<p th:utext="${topPost.text}"></p>
 							</div>
 							<!--<div class="lmlblog-post-images-list clear"></div>-->
 							<div class="lmlblog-post-bar">
 								<li onclick='list_comments_show(this);'>
 									<i class="fa fa-comment-o"></i><span></span>
 								</li>
-								<li class="lmlblog-no-like" th:onclick="|javascript:doLike(${post.pid},${session.user.uid},this)|">
-									<i class="fa fa-heart" th:if="${post.postLike==true}"></i><i class="fa fa-heart-o" th:if="${post.postLike==false}"></i><span th:text="|${post.countPostLike}|"></span>
+								<li class="lmlblog-no-like" th:onclick="|javascript:doLike(${topPost.pid},${session.user.uid},this)|">
+									<i class="fa fa-heart" th:if="${topPost.postLike==true}"></i><i class="fa fa-heart-o" th:if="${topPost.postLike==false}"></i><span th:text="|${topPost.countPostLike}|"></span>
 								</li>
 								<!--<li>
                                 <i class="lmlblog-icon">&#xe602;</i> <span>1.2w</span>
@@ -277,14 +278,21 @@
 								<!--<li class="tag clear"><i class="lmlblog-icon">&#xe895;</i><a href="#2" title="司空琪壁纸"></a></li>-->
 							</div>
 							<div class="lmlblog-post-footer-bar">
-								<span th:title="${#dates.format(post.postTime,'yyyy-MM-dd HH:mm')}" th:text="${#dates.format(post.postTime,'yyyy-MM-dd HH:mm')}">12月14日 05:25</span>
+								<span th:title="${#dates.format(topPost.postTime,'yyyy-MM-dd HH:mm')}" th:text="${#dates.format(topPost.postTime,'yyyy-MM-dd HH:mm')}">12月14日 05:25</span>
 								<span>小尾巴</span><i class="lmlblog-icon" onclick="lmlblog_post_type_open();">&#xe62c;</i>
 							</div>
 
 						</div>
+					</div>
+					<div class="lmlblog-post-list" th:each="post:${pageInfo.list}">
 						<div  class="lmlblog-posts-list words" style="background-image:url(/images/058.png); " th:if="${post.status!=4}" data="4197" th:id="|post${post.pid}|">
 							<!-- 动态内容部分，包括列表 -->
 							<div class="lmlblog-post-user-info">
+								<div th:switch="${post.status}">
+									<i class="fa fa-lock" th:case="-1"><span style="color: orange;">仅自己可见</span><br><br></i>
+									<i class="fa fa-gittip" th:case="2"><span style="color: orange;">好友圈</span><br><br></i>
+									<i class="fa fa-user" th:case="3"><span style="color: orange;">仅粉丝可见</span><br><br></i>
+								</div>
 								<div class="lmlblog-post-user-info-avatar" user-data="1">
 									<a href="#" style="display: inline-block;">
 										<span class="lmlblog-vip-icon"></span>
@@ -313,7 +321,7 @@
 								<i class="fa fa-angle-down"></i>
 								<div  class="lmlblog-post-setting-box" th:switch="${userCur.uid==session.user.uid}">
 									<ul th:case="true">
-										<a href="#" title="置顶"><li>置顶</li></a>
+										<a th:href="@{/user/${session.user.uid}/doTopPost(pid=${post.pid})}" title="置顶"><li>置顶</li></a>
 										<a href="#" title="编辑"><li>编辑</li></a>
 										<a th:href="|javascript:doDelete(${post.user.uid},${post.pid})|" title="删除"><li>删除</li></a>
 									</ul>
@@ -324,7 +332,7 @@
 								</div>
 							</div>
 							<div class="lmlblog-post-content ">
-								<p th:text="${post.text}"></p>
+								<p th:utext="${post.text}"></p>
 							</div>
 							<!--<div class="lmlblog-post-images-list clear"></div>-->
 							<div class="lmlblog-post-bar">
@@ -449,8 +457,8 @@
 				"/user/"+uid+"/doFollow",
 				"uid="+uid+"&followUid="+followUid,
 				function (followStatus){
-					var message="<span class='opacity'><i class='lmlblog-icon'>私聊</i></span>";
-					var str04="<a onclick='javascript:doFollow("+uid+","+followUid+")' target='_blank' rel='nofollow'><span class='follow has opacity'><i class='lmlblog-icon'>+关注</i></span></a>";
+					var message="<span class='opacity'><i class='fa fa-envelope-o'></i>&nbsp;&nbsp;<i class='lmlblog-icon'>私聊</i></span>";
+					var str04="<a onclick='javascript:doFollow("+uid+","+followUid+")' target='_blank' rel='nofollow'><span class='follow has opacity'><i class='lmlblog-icon'><i class='fa fa-plus-square-o'></i>&nbsp;&nbsp;</i>关注</i></span></a>";
 					var str1="<a onclick='javascript:doFollow("+uid+","+followUid+")' target='_blank' rel='nofollow'><span class='follow no opacity'><i class='lmlblog-icon'>已关注</i></span></a>";
 					var str2="<a onclick='javascript:doFollow("+uid+","+followUid+")' target='_blank' rel='nofollow'><span class='follow no opacity'><i class='lmlblog-icon'>互相关注</i></span></a>";
 					if (followStatus==0||followStatus==4){
