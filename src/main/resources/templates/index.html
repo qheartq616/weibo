@@ -118,12 +118,12 @@
 						</a>
 						<a th:onclick="|javascript:doFollow(${session.user.uid},${userCur.uid})|" th:case="1" target="_blank" rel="nofollow">
 							<span class="follow has opacity">
-								<i class="fa fa-check-square-o"></i>&nbsp;&nbsp;<i class="lmlblog-icon">已关注</i>
+								<i class="fa fa-check-square-o"></i><i class="lmlblog-icon">已关注</i>
 							</span>
 						</a>
 						<a th:onclick="|javascript:doFollow(${session.user.uid},${userCur.uid})|" th:case="2" target="_blank" rel="nofollow">
 							<span class="follow has opacity">
-								<i class="fa fa-exchange"></i>&nbsp;&nbsp;<i class="lmlblog-icon">互相关注</i>
+								<i class="fa fa-exchange"></i><i class="lmlblog-icon">互相关注</i>
 							</span>
 						</a>
 						<a th:onclick="|javascript:doFollow(${session.user.uid},${userCur.uid})|" th:case="4" target="_blank" rel="nofollow">
@@ -132,6 +132,14 @@
 							</span>
 						</a>
 						<span class="opacity" th:if="${userCur.followStatus!=3}"><i class="fa fa-envelope-o"></i>&nbsp;&nbsp;<i class="lmlblog-icon">私聊</i></span>
+						<!--<span class="follow has opacity" onmouseover="showList(this)">
+							<ul style="display: none">
+								<a><li>取消关注</li></a>
+								<a><li>特别关注</li></a>
+								<a><li>移除粉丝</li></a>
+								<a><li>举报</li></a>
+							</ul>
+						</span>-->
 					</div>
 				</div>
 			</div>
@@ -174,9 +182,9 @@
 					<div class="lmlblog-member-left-profile">
 						<h3>资料简介</h3>
 						<li><i class="fa fa-address-book-o"></i>微博ID：<span th:text="${userCur.uid}">520</span></li>
-						<li><i class="fa fa-transgender"></i> 性别：<span th:text="${userCur.gender}">女生</span></li>
-						<li><i class="fa fa-map-marker"></i> 城市：<span th:text="${userCur.city}">画江湖 司空家</span></li>
-						<li><i class="fa fa-smile-o"></i> 签名：<span th:text="${userCur.description}">坚强勇敢，利落干脆。冰雪聪明，明眸善睐。重情重义，侠骨柔情。</span></li>
+						<li><i class="fa fa-transgender"></i>性别：<span th:text="${userCur.gender}">女生</span></li>
+						<li><i class="fa fa-map-marker"></i>城市：<span th:text="${userCur.city}">画江湖 司空家</span></li>
+						<li><i class="fa fa-smile-o"></i>签名：<span th:text="${userCur.description}">坚强勇敢，利落干脆。冰雪聪明，明眸善睐。重情重义，侠骨柔情。</span></li>
 						<div class="lmlblog-member-left-profile-hide">
 							<!--<li><i class="fa fa-qq"></i> Q Q：<span>sikongqi-&#45;&#45;<span></li>
                             <li><i class="fa fa-wechat"></i> 微信：<span>天涯路远，一剑轻安。携琪之手，相伴江湖-&#45;&#45;<span></li>
@@ -249,7 +257,7 @@
 							</div><!-- 作者信息 -->
 							<div class="lmlblog-post-setting">
 								<i class="fa fa-angle-down"></i>
-								<div  class="lmlblog-post-setting-box" th:switch="${userCur.uid==session.user.uid}">
+								<div class="lmlblog-post-setting-box" th:switch="${userCur.uid==session.user.uid}">
 									<ul th:case="true">
 										<a th:href="@{/user/${session.user.uid}/doTopPost(pid=${topPost.pid})}" title="取消置顶"><li>取消置顶</li></a>
 										<a href="#" title="编辑"><li>编辑</li></a>
@@ -319,7 +327,7 @@
 							</div><!-- 作者信息 -->
 							<div class="lmlblog-post-setting">
 								<i class="fa fa-angle-down"></i>
-								<div  class="lmlblog-post-setting-box" th:switch="${userCur.uid==session.user.uid}">
+								<div class="lmlblog-post-setting-box" th:switch="${userCur.uid==session.user.uid}">
 									<ul th:case="true">
 										<a th:href="@{/user/${session.user.uid}/doTopPost(pid=${post.pid})}" title="置顶"><li>置顶</li></a>
 										<a href="#" title="编辑"><li>编辑</li></a>
@@ -390,6 +398,9 @@
 <script type='text/javascript' th:src='@{/js/plupload.full.min.js}'></script>
 <script type='text/javascript' th:src='@{/js/layui.js}'></script>
 <script>
+	function showList(d){
+		$(d).children().eq(0).css("display","block");
+	}
 	jQuery(document).ready(function($){
 		$.fn.smartFloat = function() {
 			var position = function(element) {
@@ -458,9 +469,9 @@
 				"uid="+uid+"&followUid="+followUid,
 				function (followStatus){
 					var message="<span class='opacity'><i class='fa fa-envelope-o'></i>&nbsp;&nbsp;<i class='lmlblog-icon'>私聊</i></span>";
-					var str04="<a onclick='javascript:doFollow("+uid+","+followUid+")' target='_blank' rel='nofollow'><span class='follow has opacity'><i class='lmlblog-icon'><i class='fa fa-plus-square-o'></i>&nbsp;&nbsp;</i>关注</i></span></a>";
-					var str1="<a onclick='javascript:doFollow("+uid+","+followUid+")' target='_blank' rel='nofollow'><span class='follow no opacity'><i class='lmlblog-icon'>已关注</i></span></a>";
-					var str2="<a onclick='javascript:doFollow("+uid+","+followUid+")' target='_blank' rel='nofollow'><span class='follow no opacity'><i class='lmlblog-icon'>互相关注</i></span></a>";
+					var str04="<a onclick='javascript:doFollow("+uid+","+followUid+")' target='_blank' rel='nofollow'><span class='follow no opacity'><i class='fa fa-plus-square-o'></i>&nbsp;&nbsp;<i class='lmlblog-icon'></i>关注</i></span></a>";
+					var str1="<a onclick='javascript:doFollow("+uid+","+followUid+")' target='_blank' rel='nofollow'><span class='follow has opacity'><i class='fa fa-check-square-o'></i><i class='lmlblog-icon'>已关注</i></span></a>";
+					var str2="<a onclick='javascript:doFollow("+uid+","+followUid+")' target='_blank' rel='nofollow'><span class='follow has opacity'><i class='fa fa-exchange'></i><i class='lmlblog-icon'>互相关注</i></span></a>";
 					if (followStatus==0||followStatus==4){
 						$("#followInfo").html(str04+message);
 					}else if (followStatus==1){

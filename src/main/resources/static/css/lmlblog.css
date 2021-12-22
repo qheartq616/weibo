@@ -1677,6 +1677,14 @@ img.wp-smiley {
     text-decoration: none;
     color: #000;
 }
+.follow.has li {
+    padding: 7px 13px;
+}
+.follow.has li:hover {
+    background-color: white;
+    text-decoration: none;
+    color: #000;
+}
 .lmlblog-post-user-info {
     font-size: 14px;
     vertical-align: middle;
