@@ -6,7 +6,7 @@
 	<meta http-equiv="Pragma" content="no-cache">
 	<meta http-equiv="Cache-Control" content="no-cache">
 	<meta http-equiv="Expires" content="0">
-	<title th:text="|${session.user.name}的首页 微博-随时随地发现新鲜事|"></title>
+	<title text="我的首页 微博-随时随地发现新鲜事"></title>
 	<meta name="keywords" content="司空琪个人微博,司空琪个人主页,司空琪空间,画江湖动漫" />
 	<meta name="description" content="司空琪个人微博,司空琪个人主页,司空琪空间说说,画江湖动漫" />
 	<style type="text/css">
@@ -236,14 +236,13 @@
 									<i th:if="${post.user.status==2}" class="lmlblog-verify lmlblog-verify-b" th:title="认证用户"></i>
 									<i th:if="${post.user.status==3}" class="lmlblog-verify-c lmlblog-verify-cc" th:title="超级管理员"></i>
 								</a>
-								<div class="lmlblog-user-info-card" style="display: none" onmouseover="showImg(this)">
+								<div class="lmlblog-user-info-card" style="display: none" th:onmouseover="|showImg(this,${post.user.uid})|">
 									<div class="info_card_loading">
 										<!--<img src="/picture/chat-loading.gif">
 										<p>资料加载中...</p>-->
-										<img th:src="|/avatar/${post.user.image}|" class="avatar" />
-										<br>
-										<span th:text="${post.user.name}"></span>
-										<span>关注|粉丝|点赞</span>
+										<a th:href="@{/user/${post.user.uid}/1}" style="display: block"><img th:src="|/avatar/${post.user.image}|" class="avatar" /></a>
+										<div th:text="${post.user.name}"></div>
+										<div>&nbsp;关注&nbsp;&nbsp;&nbsp;|&nbsp;粉丝&nbsp;&nbsp;&nbsp;|&nbsp;点赞&nbsp;&nbsp;&nbsp;</div>
 									</div>
 									<!--<a class="nameInfo fl" title="详情" rel="/ajax/floatbox.html"></a>-->
 								</div>
@@ -265,8 +264,9 @@
 							<i class="fa fa-angle-down"></i>
 							<div class="lmlblog-post-setting-box">
 								<ul>
-									<a href="#" title="举报"><li>举报</li></a>
 									<a th:href="@{|/user/${post.user.uid}/1|}" title="访问主页"><li>访问主页</li></a>
+									<a th:href="|javascript:doFollow(${session.user.uid},${post.user.uid})|" th:title="|取消关注${post.user.name}|"><li>取消关注</li></a>
+									<a href="#" title="举报"><li>举报</li></a>
 								</ul>
 							</div>
 						</div>
@@ -390,8 +390,11 @@
 <script type="text/javascript" src="js/jquery.qtip-1.0.0-rc3.js"></script>
 
 <script>
-	function showImg(d){
+	function showImg(d,uid){
 		$(d).css("display","block");
+		$.post(
+
+		);
 	}
 	/*$(document).ready(function(){
 
@@ -507,6 +510,17 @@
 				},
 				"json"
 		)
+	}
+
+	function doFollow(uid,followUid) {
+		$.post(
+				"/user/"+uid+"/doFollow",
+				"uid="+uid+"&followUid="+followUid,
+				function (followStatus){
+					location.href="/main/"+uid+"/all/1";
+				},
+				"json"
+		);
 	}
 
 	$(function(){

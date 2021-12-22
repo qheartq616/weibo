@@ -334,8 +334,8 @@
 										<a th:href="|javascript:doDelete(${post.user.uid},${post.pid})|" title="删除"><li>删除</li></a>
 									</ul>
 									<ul th:case="false">
+										<a th:href="@{|/user/${post.user.uid}/1|}" title="取消关注"><li>取消关注</li></a>
 										<a href="#" title="举报"><li>举报</li></a>
-										<a th:href="@{|user/${userCur.uid}/1|}" title="访问主页"><li>访问主页</li></a>
 									</ul>
 								</div>
 							</div>
