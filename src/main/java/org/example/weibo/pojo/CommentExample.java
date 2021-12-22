@@ -295,52 +295,62 @@ public class CommentExample {
             return (Criteria) this;
         }
 
-        public Criteria andPcidEqualTo(Integer value) {
+        public Criteria andPcidEqualTo(String value) {
             addCriterion("pcid =", value, "pcid");
             return (Criteria) this;
         }
 
-        public Criteria andPcidNotEqualTo(Integer value) {
+        public Criteria andPcidNotEqualTo(String value) {
             addCriterion("pcid <>", value, "pcid");
             return (Criteria) this;
         }
 
-        public Criteria andPcidGreaterThan(Integer value) {
+        public Criteria andPcidGreaterThan(String value) {
             addCriterion("pcid >", value, "pcid");
             return (Criteria) this;
         }
 
-        public Criteria andPcidGreaterThanOrEqualTo(Integer value) {
+        public Criteria andPcidGreaterThanOrEqualTo(String value) {
             addCriterion("pcid >=", value, "pcid");
             return (Criteria) this;
         }
 
-        public Criteria andPcidLessThan(Integer value) {
+        public Criteria andPcidLessThan(String value) {
             addCriterion("pcid <", value, "pcid");
             return (Criteria) this;
         }
 
-        public Criteria andPcidLessThanOrEqualTo(Integer value) {
+        public Criteria andPcidLessThanOrEqualTo(String value) {
             addCriterion("pcid <=", value, "pcid");
             return (Criteria) this;
         }
 
-        public Criteria andPcidIn(List<Integer> values) {
+        public Criteria andPcidLike(String value) {
+            addCriterion("pcid like", value, "pcid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcidNotLike(String value) {
+            addCriterion("pcid not like", value, "pcid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcidIn(List<String> values) {
             addCriterion("pcid in", values, "pcid");
             return (Criteria) this;
         }
 
-        public Criteria andPcidNotIn(List<Integer> values) {
+        public Criteria andPcidNotIn(List<String> values) {
             addCriterion("pcid not in", values, "pcid");
             return (Criteria) this;
         }
 
-        public Criteria andPcidBetween(Integer value1, Integer value2) {
+        public Criteria andPcidBetween(String value1, String value2) {
             addCriterion("pcid between", value1, value2, "pcid");
             return (Criteria) this;
         }
 
-        public Criteria andPcidNotBetween(Integer value1, Integer value2) {
+        public Criteria andPcidNotBetween(String value1, String value2) {
             addCriterion("pcid not between", value1, value2, "pcid");
             return (Criteria) this;
         }

@@ -5,7 +5,7 @@
     <id column="cid" property="cid" jdbcType="INTEGER" />
     <result column="uid" property="uid" jdbcType="INTEGER" />
     <result column="pid" property="pid" jdbcType="INTEGER" />
-    <result column="pcid" property="pcid" jdbcType="INTEGER" />
+    <result column="pcid" property="pcid" jdbcType="VARCHAR" />
     <result column="comment" property="comment" jdbcType="VARCHAR" />
     <result column="comment_time" property="commentTime" jdbcType="TIMESTAMP" />
     <association property="user" column="uid" javaType="org.example.weibo.pojo.User" select="org.example.weibo.mapper.UserMapper.selectByPrimaryKey"/>
@@ -106,7 +106,7 @@
       pcid, comment, comment_time
       )
     values (#{cid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, 
-      #{pcid,jdbcType=INTEGER}, #{comment,jdbcType=VARCHAR}, #{commentTime,jdbcType=TIMESTAMP}
+      #{pcid,jdbcType=VARCHAR}, #{comment,jdbcType=VARCHAR}, #{commentTime,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="org.example.weibo.pojo.Comment" >
@@ -142,7 +142,7 @@
         #{pid,jdbcType=INTEGER},
       </if>
       <if test="pcid != null" >
-        #{pcid,jdbcType=INTEGER},
+        #{pcid,jdbcType=VARCHAR},
       </if>
       <if test="comment != null" >
         #{comment,jdbcType=VARCHAR},
@@ -171,7 +171,7 @@
         pid = #{record.pid,jdbcType=INTEGER},
       </if>
       <if test="record.pcid != null" >
-        pcid = #{record.pcid,jdbcType=INTEGER},
+        pcid = #{record.pcid,jdbcType=VARCHAR},
       </if>
       <if test="record.comment != null" >
         comment = #{record.comment,jdbcType=VARCHAR},
@@ -189,7 +189,7 @@
     set cid = #{record.cid,jdbcType=INTEGER},
       uid = #{record.uid,jdbcType=INTEGER},
       pid = #{record.pid,jdbcType=INTEGER},
-      pcid = #{record.pcid,jdbcType=INTEGER},
+      pcid = #{record.pcid,jdbcType=VARCHAR},
       comment = #{record.comment,jdbcType=VARCHAR},
       comment_time = #{record.commentTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
@@ -206,7 +206,7 @@
         pid = #{pid,jdbcType=INTEGER},
       </if>
       <if test="pcid != null" >
-        pcid = #{pcid,jdbcType=INTEGER},
+        pcid = #{pcid,jdbcType=VARCHAR},
       </if>
       <if test="comment != null" >
         comment = #{comment,jdbcType=VARCHAR},
@@ -221,7 +221,7 @@
     update comment
     set uid = #{uid,jdbcType=INTEGER},
       pid = #{pid,jdbcType=INTEGER},
-      pcid = #{pcid,jdbcType=INTEGER},
+      pcid = #{pcid,jdbcType=VARCHAR},
       comment = #{comment,jdbcType=VARCHAR},
       comment_time = #{commentTime,jdbcType=TIMESTAMP}
     where cid = #{cid,jdbcType=INTEGER}

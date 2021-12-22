@@ -6,10 +6,9 @@ import java.util.List;
 public class Post {
     private Integer pid;
 
-    private Integer forwardPid;
+    private String forwardPid;
 
-    //发微博的用户
-    private Integer uid;
+    private Integer uid;//发微博的用户
 
     private String text;
 
@@ -29,14 +28,6 @@ public class Post {
     private int countPostLike;
 
     private List<Comment> commentList;
-
-    public List<Comment> getCommentList() {
-        return commentList;
-    }
-
-    public void setCommentList(List<Comment> commentList) {
-        this.commentList = commentList;
-    }
 
     public User getUser() {
         return user;
@@ -62,6 +53,14 @@ public class Post {
         this.countPostLike = countPostLike;
     }
 
+    public List<Comment> getCommentList() {
+        return commentList;
+    }
+
+    public void setCommentList(List<Comment> commentList) {
+        this.commentList = commentList;
+    }
+
     public Integer getPid() {
         return pid;
     }
@@ -70,12 +69,12 @@ public class Post {
         this.pid = pid;
     }
 
-    public Integer getForwardPid() {
+    public String getForwardPid() {
         return forwardPid;
     }
 
-    public void setForwardPid(Integer forwardPid) {
-        this.forwardPid = forwardPid;
+    public void setForwardPid(String forwardPid) {
+        this.forwardPid = forwardPid == null ? null : forwardPid.trim();
     }
 
     public Integer getUid() {

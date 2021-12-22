@@ -175,52 +175,62 @@ public class PostExample {
             return (Criteria) this;
         }
 
-        public Criteria andForwardPidEqualTo(Integer value) {
+        public Criteria andForwardPidEqualTo(String value) {
             addCriterion("forward_pid =", value, "forwardPid");
             return (Criteria) this;
         }
 
-        public Criteria andForwardPidNotEqualTo(Integer value) {
+        public Criteria andForwardPidNotEqualTo(String value) {
             addCriterion("forward_pid <>", value, "forwardPid");
             return (Criteria) this;
         }
 
-        public Criteria andForwardPidGreaterThan(Integer value) {
+        public Criteria andForwardPidGreaterThan(String value) {
             addCriterion("forward_pid >", value, "forwardPid");
             return (Criteria) this;
         }
 
-        public Criteria andForwardPidGreaterThanOrEqualTo(Integer value) {
+        public Criteria andForwardPidGreaterThanOrEqualTo(String value) {
             addCriterion("forward_pid >=", value, "forwardPid");
             return (Criteria) this;
         }
 
-        public Criteria andForwardPidLessThan(Integer value) {
+        public Criteria andForwardPidLessThan(String value) {
             addCriterion("forward_pid <", value, "forwardPid");
             return (Criteria) this;
         }
 
-        public Criteria andForwardPidLessThanOrEqualTo(Integer value) {
+        public Criteria andForwardPidLessThanOrEqualTo(String value) {
             addCriterion("forward_pid <=", value, "forwardPid");
             return (Criteria) this;
         }
 
-        public Criteria andForwardPidIn(List<Integer> values) {
+        public Criteria andForwardPidLike(String value) {
+            addCriterion("forward_pid like", value, "forwardPid");
+            return (Criteria) this;
+        }
+
+        public Criteria andForwardPidNotLike(String value) {
+            addCriterion("forward_pid not like", value, "forwardPid");
+            return (Criteria) this;
+        }
+
+        public Criteria andForwardPidIn(List<String> values) {
             addCriterion("forward_pid in", values, "forwardPid");
             return (Criteria) this;
         }
 
-        public Criteria andForwardPidNotIn(List<Integer> values) {
+        public Criteria andForwardPidNotIn(List<String> values) {
             addCriterion("forward_pid not in", values, "forwardPid");
             return (Criteria) this;
         }
 
-        public Criteria andForwardPidBetween(Integer value1, Integer value2) {
+        public Criteria andForwardPidBetween(String value1, String value2) {
             addCriterion("forward_pid between", value1, value2, "forwardPid");
             return (Criteria) this;
         }
 
-        public Criteria andForwardPidNotBetween(Integer value1, Integer value2) {
+        public Criteria andForwardPidNotBetween(String value1, String value2) {
             addCriterion("forward_pid not between", value1, value2, "forwardPid");
             return (Criteria) this;
         }

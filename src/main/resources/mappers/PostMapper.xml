@@ -3,7 +3,7 @@
 <mapper namespace="org.example.weibo.mapper.PostMapper" >
   <resultMap id="BaseResultMap" type="org.example.weibo.pojo.Post" >
     <id column="pid" property="pid" jdbcType="INTEGER" />
-    <result column="forward_pid" property="forwardPid" jdbcType="INTEGER" />
+    <result column="forward_pid" property="forwardPid" jdbcType="VARCHAR" />
     <result column="uid" property="uid" jdbcType="INTEGER" />
     <result column="text" property="text" jdbcType="VARCHAR" />
     <result column="picture" property="picture" jdbcType="VARCHAR" />
@@ -107,7 +107,7 @@
     insert into post (pid, forward_pid, uid, 
       text, picture, post_time, 
       status, count_forward)
-    values (#{pid,jdbcType=INTEGER}, #{forwardPid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, 
+    values (#{pid,jdbcType=INTEGER}, #{forwardPid,jdbcType=VARCHAR}, #{uid,jdbcType=INTEGER}, 
       #{text,jdbcType=VARCHAR}, #{picture,jdbcType=VARCHAR}, #{postTime,jdbcType=TIMESTAMP}, 
       #{status,jdbcType=INTEGER}, #{countForward,jdbcType=INTEGER})
   </insert>
@@ -144,7 +144,7 @@
         #{pid,jdbcType=INTEGER},
       </if>
       <if test="forwardPid != null" >
-        #{forwardPid,jdbcType=INTEGER},
+        #{forwardPid,jdbcType=VARCHAR},
       </if>
       <if test="uid != null" >
         #{uid,jdbcType=INTEGER},
@@ -179,7 +179,7 @@
         pid = #{record.pid,jdbcType=INTEGER},
       </if>
       <if test="record.forwardPid != null" >
-        forward_pid = #{record.forwardPid,jdbcType=INTEGER},
+        forward_pid = #{record.forwardPid,jdbcType=VARCHAR},
       </if>
       <if test="record.uid != null" >
         uid = #{record.uid,jdbcType=INTEGER},
@@ -207,7 +207,7 @@
   <update id="updateByExample" parameterType="map" >
     update post
     set pid = #{record.pid,jdbcType=INTEGER},
-      forward_pid = #{record.forwardPid,jdbcType=INTEGER},
+      forward_pid = #{record.forwardPid,jdbcType=VARCHAR},
       uid = #{record.uid,jdbcType=INTEGER},
       text = #{record.text,jdbcType=VARCHAR},
       picture = #{record.picture,jdbcType=VARCHAR},
@@ -222,7 +222,7 @@
     update post
     <set >
       <if test="forwardPid != null" >
-        forward_pid = #{forwardPid,jdbcType=INTEGER},
+        forward_pid = #{forwardPid,jdbcType=VARCHAR},
       </if>
       <if test="uid != null" >
         uid = #{uid,jdbcType=INTEGER},
@@ -247,7 +247,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="org.example.weibo.pojo.Post" >
     update post
-    set forward_pid = #{forwardPid,jdbcType=INTEGER},
+    set forward_pid = #{forwardPid,jdbcType=VARCHAR},
       uid = #{uid,jdbcType=INTEGER},
       text = #{text,jdbcType=VARCHAR},
       picture = #{picture,jdbcType=VARCHAR},

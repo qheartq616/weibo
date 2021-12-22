@@ -9,7 +9,7 @@ public class Comment {
 
     private Integer pid;
 
-    private Integer pcid;
+    private String pcid;
 
     private String comment;
 
@@ -49,12 +49,12 @@ public class Comment {
         this.pid = pid;
     }
 
-    public Integer getPcid() {
+    public String getPcid() {
         return pcid;
     }
 
-    public void setPcid(Integer pcid) {
-        this.pcid = pcid;
+    public void setPcid(String pcid) {
+        this.pcid = pcid == null ? null : pcid.trim();
     }
 
     public String getComment() {
