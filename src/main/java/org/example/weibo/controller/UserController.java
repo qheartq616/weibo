@@ -64,11 +64,11 @@ public class UserController {
 	@RequestMapping("*/doLike")
 	@ResponseBody
 	//点赞取消赞功能
-	public boolean doLike(@RequestParam(name = "pid")Integer pid,
+	public boolean doLike(@RequestParam(name = "upid")String upid,
 	                      @RequestParam(name = "uid")Integer uid){
 		//System.out.println("pid = " + pid);
 		//System.out.println("uid = " + uid);
-		boolean b = postLikeService.doPostLike(pid, uid);
+		boolean b = postLikeService.doPostLike(upid, uid);
 		return b;
 	}
 

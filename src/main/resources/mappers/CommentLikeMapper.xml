@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="org.example.weibo.pojo.CommentLike" >
     <id column="clid" property="clid" jdbcType="INTEGER" />
     <result column="uid" property="uid" jdbcType="INTEGER" />
-    <result column="cid" property="cid" jdbcType="INTEGER" />
+    <result column="ucid" property="ucid" jdbcType="VARCHAR" />
     <result column="like_time" property="likeTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -66,7 +66,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    clid, uid, cid, like_time
+    clid, uid, ucid, like_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.example.weibo.pojo.CommentLikeExample" >
     select
@@ -99,9 +99,9 @@
     </if>
   </delete>
   <insert id="insert" parameterType="org.example.weibo.pojo.CommentLike" >
-    insert into comment_like (clid, uid, cid, 
+    insert into comment_like (clid, uid, ucid, 
       like_time)
-    values (#{clid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{cid,jdbcType=INTEGER}, 
+    values (#{clid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{ucid,jdbcType=VARCHAR}, 
       #{likeTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="org.example.weibo.pojo.CommentLike" >
@@ -113,8 +113,8 @@
       <if test="uid != null" >
         uid,
       </if>
-      <if test="cid != null" >
-        cid,
+      <if test="ucid != null" >
+        ucid,
       </if>
       <if test="likeTime != null" >
         like_time,
@@ -127,8 +127,8 @@
       <if test="uid != null" >
         #{uid,jdbcType=INTEGER},
       </if>
-      <if test="cid != null" >
-        #{cid,jdbcType=INTEGER},
+      <if test="ucid != null" >
+        #{ucid,jdbcType=VARCHAR},
       </if>
       <if test="likeTime != null" >
         #{likeTime,jdbcType=TIMESTAMP},
@@ -150,8 +150,8 @@
       <if test="record.uid != null" >
         uid = #{record.uid,jdbcType=INTEGER},
       </if>
-      <if test="record.cid != null" >
-        cid = #{record.cid,jdbcType=INTEGER},
+      <if test="record.ucid != null" >
+        ucid = #{record.ucid,jdbcType=VARCHAR},
       </if>
       <if test="record.likeTime != null" >
         like_time = #{record.likeTime,jdbcType=TIMESTAMP},
@@ -165,7 +165,7 @@
     update comment_like
     set clid = #{record.clid,jdbcType=INTEGER},
       uid = #{record.uid,jdbcType=INTEGER},
-      cid = #{record.cid,jdbcType=INTEGER},
+      ucid = #{record.ucid,jdbcType=VARCHAR},
       like_time = #{record.likeTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -177,8 +177,8 @@
       <if test="uid != null" >
         uid = #{uid,jdbcType=INTEGER},
       </if>
-      <if test="cid != null" >
-        cid = #{cid,jdbcType=INTEGER},
+      <if test="ucid != null" >
+        ucid = #{ucid,jdbcType=VARCHAR},
       </if>
       <if test="likeTime != null" >
         like_time = #{likeTime,jdbcType=TIMESTAMP},
@@ -189,7 +189,7 @@
   <update id="updateByPrimaryKey" parameterType="org.example.weibo.pojo.CommentLike" >
     update comment_like
     set uid = #{uid,jdbcType=INTEGER},
-      cid = #{cid,jdbcType=INTEGER},
+      ucid = #{ucid,jdbcType=VARCHAR},
       like_time = #{likeTime,jdbcType=TIMESTAMP}
     where clid = #{clid,jdbcType=INTEGER}
   </update>

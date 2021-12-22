@@ -79,6 +79,8 @@ public class MainController {
 		model.addAttribute("groupList2",groupList2);*/
 		model.addAttribute("groupList",groupList);
 
+
+
 		return "main";
 	}
 

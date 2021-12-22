@@ -12,4 +12,6 @@ public interface GroupService {
 	public void modifyGroupName(Integer gid,String name);
 	public void deleteUserFromGroup(Integer gid,Integer uid);
 	public void deleteUserFromAllGroup(Integer uid,Integer followUid);
+	public List<User> showAllNoGroupUser(Integer uid);
+	public User showSpUser(Integer uid);
 }

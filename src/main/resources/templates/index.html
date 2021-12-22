@@ -277,7 +277,7 @@
 								<li onclick='list_comments_show(this);'>
 									<i class="fa fa-comment-o"></i><span></span>
 								</li>
-								<li class="lmlblog-no-like" th:onclick="|javascript:doLike(${topPost.pid},${session.user.uid},this)|">
+								<li class="lmlblog-no-like" th:onclick="|javascript:doLike(${topPost.user.uid},${topPost.pid},${session.user.uid},this)|">
 									<i class="fa fa-heart" th:if="${topPost.postLike==true}"></i><i class="fa fa-heart-o" th:if="${topPost.postLike==false}"></i><span th:text="|${topPost.countPostLike}|"></span>
 								</li>
 								<!--<li>
@@ -347,7 +347,7 @@
 								<li onclick='list_comments_show(this);'>
 									<i class="fa fa-comment-o"></i><span></span>
 								</li>
-								<li class="lmlblog-no-like" th:onclick="|javascript:doLike(${post.pid},${session.user.uid},this)|">
+								<li class="lmlblog-no-like" th:onclick="|javascript:doLike(${post.user.uid},${post.pid},${session.user.uid},this)|">
 									<i class="fa fa-heart" th:if="${post.postLike==true}"></i><i class="fa fa-heart-o" th:if="${post.postLike==false}"></i><span th:text="|${post.countPostLike}|"></span>
 								</li>
 								<!--<li>
@@ -433,11 +433,11 @@
 		$(".lmlblog-member-left-bg-xg").smartFloat();
 	});
 
-	function doLike(pid,uid,d) {
+	function doLike(puid,pid,uid,d) {
 		//alert("22");
 		$.post(
 				"/user/"+uid+"/doLike",
-				"pid="+pid+"&uid="+uid,
+				"upid="+puid+"-"+pid+"&uid="+uid,
 				function (data){
 					//alert("33");
 					//应该还需要去改变post.like的值

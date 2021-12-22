@@ -7,7 +7,7 @@ public class PostLike {
 
     private Integer uid;
 
-    private Integer pid;
+    private String upid;
 
     private Date likeTime;
 
@@ -27,12 +27,12 @@ public class PostLike {
         this.uid = uid;
     }
 
-    public Integer getPid() {
-        return pid;
+    public String getUpid() {
+        return upid;
     }
 
-    public void setPid(Integer pid) {
-        this.pid = pid;
+    public void setUpid(String upid) {
+        this.upid = upid == null ? null : upid.trim();
     }
 
     public Date getLikeTime() {

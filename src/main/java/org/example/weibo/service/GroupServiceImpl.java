@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,12 +21,14 @@ public class GroupServiceImpl implements GroupService{
 	GroupMapper groupMapper;
 	@Resource
 	UserMapper userMapper;
+	@Resource
+	FollowService followService;
 
 	@Override
 	//展示所有分组（分组名字）
 	public List<Group> showAllGroupList(Integer uid) {
 		GroupExample groupExample=new GroupExample();
-		groupExample.createCriteria().andUidEqualTo(uid);
+		groupExample.createCriteria().andUidEqualTo(uid).andNameNotEqualTo("sp");
 
 		List<Group> groupList = groupMapper.selectByExample(groupExample);
 		//同一组的不同成员会导致数据重复  只需要一个名字就行
@@ -95,6 +99,41 @@ public class GroupServiceImpl implements GroupService{
 		groupExample.createCriteria().andUidEqualTo(uid).andFollowUidEqualTo(followUid);
 
 		groupMapper.deleteByExample(groupExample);
+	}
+
+	@Override
+	//展示所有未分组关注人
+	public List<User> showAllNoGroupUser(Integer uid) {
+		GroupExample groupExample=new GroupExample();
+		groupExample.createCriteria().andUidEqualTo(uid);
+		List<Group> groupList = groupMapper.selectByExample(groupExample);
+
+		Set<Integer> userSet=new HashSet<>();
+		for (Group group : groupList) {
+			userSet.add(group.getFollowUid());
+		}
+		List<User> allFollowUser = followService.showAllFollowUser(uid);
+
+		for (int i=0;i<allFollowUser.size();i++) {
+			if (userSet.contains(allFollowUser.get(i).getUid())){
+				allFollowUser.remove(i);
+			}
+		}
+
+		return allFollowUser;
+	}
+
+	@Override
+	//查询特别关注
+	public User showSpUser(Integer uid) {
+		GroupExample groupExample=new GroupExample();
+		groupExample.createCriteria().andUidEqualTo(uid).andNameEqualTo("sp");
+		List<Group> groups = groupMapper.selectByExample(groupExample);
+		if (groups.size()==0){
+			return null;
+		}else {
+			return userMapper.selectByPrimaryKey(groups.get(0).getFollowUid());
+		}
 	}
 
 }

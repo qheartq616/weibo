@@ -19,9 +19,9 @@ public class PostLikeServiceImpl implements PostLikeService {
 
 	@Override
 	//点赞数
-	public int countPostLike(Integer pid) {
+	public int countPostLike(String upid) {
 		PostLikeExample postLikeExample=new PostLikeExample();
-		postLikeExample.createCriteria().andPidEqualTo(pid);
+		postLikeExample.createCriteria().andUpidEqualTo(upid);
 		int i = postLikeMapper.countByExample(postLikeExample);
 		return i;
 	}
@@ -30,9 +30,9 @@ public class PostLikeServiceImpl implements PostLikeService {
 	//是否点了赞（需要根据登陆的uid查数据，存入不同post对象中）
 	//uid为登录的人（看见这条微博的人）的id，不是发这条微博的人的id！
 	//没点赞，查不到数据，返回false，否则为true
-	public boolean ifPostLike(Integer pid, Integer uid) {
+	public boolean ifPostLike(String upid, Integer uid) {
 		PostLikeExample postLikeExample=new PostLikeExample();
-		postLikeExample.createCriteria().andPidEqualTo(pid).andUidEqualTo(uid);
+		postLikeExample.createCriteria().andUpidEqualTo(upid).andUidEqualTo(uid);
 		List<PostLike> loves = postLikeMapper.selectByExample(postLikeExample);
 		//System.out.println("loves.size() = " + loves.size());
 		if (loves.size()==0){
@@ -52,11 +52,11 @@ public class PostLikeServiceImpl implements PostLikeService {
 	////////////////////////////////
 	//改了，去掉了like列和like属性
 	//点赞插入like表对应uid、pid，取消点赞根据uid、pid删除like表对应数据
-	public boolean doPostLike(Integer pid, Integer uid) {
-		boolean selectLove = this.ifPostLike(pid, uid);
+	public boolean doPostLike(String upid, Integer uid) {
+		boolean selectLove = this.ifPostLike(upid, uid);
 
 		PostLike like1=new PostLike();
-		like1.setPid(pid);
+		like1.setUpid(upid);
 		like1.setUid(uid);
 		like1.setLikeTime(new Date());
 
@@ -67,7 +67,7 @@ public class PostLikeServiceImpl implements PostLikeService {
 		}else {
 			//System.out.println("444");
 			PostLikeExample postLikeExample=new PostLikeExample();
-			postLikeExample.createCriteria().andPidEqualTo(pid).andUidEqualTo(uid);
+			postLikeExample.createCriteria().andUpidEqualTo(upid).andUidEqualTo(uid);
 			postLikeMapper.deleteByExample(postLikeExample);
 			return false;
 		}
@@ -79,13 +79,13 @@ public class PostLikeServiceImpl implements PostLikeService {
 		PostExample postExample=new PostExample();
 		postExample.createCriteria().andUidEqualTo(uid);
 		List<Post> postList = postMapper.selectByExample(postExample);
-		List<Integer> pidList=new ArrayList<>();
+		List<String> upidList=new ArrayList<>();
 		for (Post post : postList) {
-			pidList.add(post.getPid());
+			upidList.add(post.getUser().getUid()+"-"+post.getPid());
 		}
-		if (pidList.size()>0){
+		if (upidList.size()>0){
 			PostLikeExample postLikeExample=new PostLikeExample();
-			postLikeExample.createCriteria().andPidIn(pidList);
+			postLikeExample.createCriteria().andUpidIn(upidList);
 
 			return postLikeMapper.countByExample(postLikeExample);
 		}else {

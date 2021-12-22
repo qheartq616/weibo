@@ -225,63 +225,73 @@ public class CommentLikeExample {
             return (Criteria) this;
         }
 
-        public Criteria andCidIsNull() {
-            addCriterion("cid is null");
+        public Criteria andUcidIsNull() {
+            addCriterion("ucid is null");
             return (Criteria) this;
         }
 
-        public Criteria andCidIsNotNull() {
-            addCriterion("cid is not null");
+        public Criteria andUcidIsNotNull() {
+            addCriterion("ucid is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCidEqualTo(Integer value) {
-            addCriterion("cid =", value, "cid");
+        public Criteria andUcidEqualTo(String value) {
+            addCriterion("ucid =", value, "ucid");
             return (Criteria) this;
         }
 
-        public Criteria andCidNotEqualTo(Integer value) {
-            addCriterion("cid <>", value, "cid");
+        public Criteria andUcidNotEqualTo(String value) {
+            addCriterion("ucid <>", value, "ucid");
             return (Criteria) this;
         }
 
-        public Criteria andCidGreaterThan(Integer value) {
-            addCriterion("cid >", value, "cid");
+        public Criteria andUcidGreaterThan(String value) {
+            addCriterion("ucid >", value, "ucid");
             return (Criteria) this;
         }
 
-        public Criteria andCidGreaterThanOrEqualTo(Integer value) {
-            addCriterion("cid >=", value, "cid");
+        public Criteria andUcidGreaterThanOrEqualTo(String value) {
+            addCriterion("ucid >=", value, "ucid");
             return (Criteria) this;
         }
 
-        public Criteria andCidLessThan(Integer value) {
-            addCriterion("cid <", value, "cid");
+        public Criteria andUcidLessThan(String value) {
+            addCriterion("ucid <", value, "ucid");
             return (Criteria) this;
         }
 
-        public Criteria andCidLessThanOrEqualTo(Integer value) {
-            addCriterion("cid <=", value, "cid");
+        public Criteria andUcidLessThanOrEqualTo(String value) {
+            addCriterion("ucid <=", value, "ucid");
             return (Criteria) this;
         }
 
-        public Criteria andCidIn(List<Integer> values) {
-            addCriterion("cid in", values, "cid");
+        public Criteria andUcidLike(String value) {
+            addCriterion("ucid like", value, "ucid");
             return (Criteria) this;
         }
 
-        public Criteria andCidNotIn(List<Integer> values) {
-            addCriterion("cid not in", values, "cid");
+        public Criteria andUcidNotLike(String value) {
+            addCriterion("ucid not like", value, "ucid");
             return (Criteria) this;
         }
 
-        public Criteria andCidBetween(Integer value1, Integer value2) {
-            addCriterion("cid between", value1, value2, "cid");
+        public Criteria andUcidIn(List<String> values) {
+            addCriterion("ucid in", values, "ucid");
             return (Criteria) this;
         }
 
-        public Criteria andCidNotBetween(Integer value1, Integer value2) {
-            addCriterion("cid not between", value1, value2, "cid");
+        public Criteria andUcidNotIn(List<String> values) {
+            addCriterion("ucid not in", values, "ucid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUcidBetween(String value1, String value2) {
+            addCriterion("ucid between", value1, value2, "ucid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUcidNotBetween(String value1, String value2) {
+            addCriterion("ucid not between", value1, value2, "ucid");
             return (Criteria) this;
         }
 

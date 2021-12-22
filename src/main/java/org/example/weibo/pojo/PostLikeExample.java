@@ -225,63 +225,73 @@ public class PostLikeExample {
             return (Criteria) this;
         }
 
-        public Criteria andPidIsNull() {
-            addCriterion("pid is null");
+        public Criteria andUpidIsNull() {
+            addCriterion("upid is null");
             return (Criteria) this;
         }
 
-        public Criteria andPidIsNotNull() {
-            addCriterion("pid is not null");
+        public Criteria andUpidIsNotNull() {
+            addCriterion("upid is not null");
             return (Criteria) this;
         }
 
-        public Criteria andPidEqualTo(Integer value) {
-            addCriterion("pid =", value, "pid");
+        public Criteria andUpidEqualTo(String value) {
+            addCriterion("upid =", value, "upid");
             return (Criteria) this;
         }
 
-        public Criteria andPidNotEqualTo(Integer value) {
-            addCriterion("pid <>", value, "pid");
+        public Criteria andUpidNotEqualTo(String value) {
+            addCriterion("upid <>", value, "upid");
             return (Criteria) this;
         }
 
-        public Criteria andPidGreaterThan(Integer value) {
-            addCriterion("pid >", value, "pid");
+        public Criteria andUpidGreaterThan(String value) {
+            addCriterion("upid >", value, "upid");
             return (Criteria) this;
         }
 
-        public Criteria andPidGreaterThanOrEqualTo(Integer value) {
-            addCriterion("pid >=", value, "pid");
+        public Criteria andUpidGreaterThanOrEqualTo(String value) {
+            addCriterion("upid >=", value, "upid");
             return (Criteria) this;
         }
 
-        public Criteria andPidLessThan(Integer value) {
-            addCriterion("pid <", value, "pid");
+        public Criteria andUpidLessThan(String value) {
+            addCriterion("upid <", value, "upid");
             return (Criteria) this;
         }
 
-        public Criteria andPidLessThanOrEqualTo(Integer value) {
-            addCriterion("pid <=", value, "pid");
+        public Criteria andUpidLessThanOrEqualTo(String value) {
+            addCriterion("upid <=", value, "upid");
             return (Criteria) this;
         }
 
-        public Criteria andPidIn(List<Integer> values) {
-            addCriterion("pid in", values, "pid");
+        public Criteria andUpidLike(String value) {
+            addCriterion("upid like", value, "upid");
             return (Criteria) this;
         }
 
-        public Criteria andPidNotIn(List<Integer> values) {
-            addCriterion("pid not in", values, "pid");
+        public Criteria andUpidNotLike(String value) {
+            addCriterion("upid not like", value, "upid");
             return (Criteria) this;
         }
 
-        public Criteria andPidBetween(Integer value1, Integer value2) {
-            addCriterion("pid between", value1, value2, "pid");
+        public Criteria andUpidIn(List<String> values) {
+            addCriterion("upid in", values, "upid");
             return (Criteria) this;
         }
 
-        public Criteria andPidNotBetween(Integer value1, Integer value2) {
-            addCriterion("pid not between", value1, value2, "pid");
+        public Criteria andUpidNotIn(List<String> values) {
+            addCriterion("upid not in", values, "upid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpidBetween(String value1, String value2) {
+            addCriterion("upid between", value1, value2, "upid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpidNotBetween(String value1, String value2) {
+            addCriterion("upid not between", value1, value2, "upid");
             return (Criteria) this;
         }
 

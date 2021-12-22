@@ -191,8 +191,18 @@ public class PostServiceImpl implements PostService{
 
 	@Override
 	//展示分组成员的所有微博
+	//包含了特别关注、未分组关注
+	//gid为0，特别关注；gid为-1，未分组关注
 	public PageInfo<Post> showGroupAllPost(Integer uid,Integer gid,Integer pageNum) {
-		List<User> userList = groupService.showAllFollowUser(gid);
+		List<User> userList=new ArrayList<>();
+		if (gid==0){
+			userList.add(groupService.showSpUser(uid));
+		}else if (gid==-1){
+			userList=groupService.showAllNoGroupUser(uid);
+		}else {
+			userList = groupService.showAllFollowUser(gid);
+		}
+
 		List<Integer> uidList=new ArrayList<>();
 		for (User user : userList) {
 			uidList.add(user.getUid());
@@ -286,11 +296,11 @@ public class PostServiceImpl implements PostService{
 	public List<Post> fillPostInfo(List<Post> postList,Integer uid) {
 		for (Post post : postList) {
 			//加入点赞状态
-			boolean b = postLikeService.ifPostLike(post.getPid(), uid);
+			boolean b = postLikeService.ifPostLike(post.getUser().getUid()+"-"+post.getPid(), uid);
 			post.setPostLike(b);
 
 			//加入点赞数
-			int i = postLikeService.countPostLike(post.getPid());
+			int i = postLikeService.countPostLike(post.getUser().getUid()+"-"+post.getPid());
 			post.setCountPostLike(i);
 
 			//加入所有评论

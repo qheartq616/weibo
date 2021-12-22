@@ -144,9 +144,9 @@
 					<h3>首页</h3>
 					<ul>
 						<li><i class="fa fa-group"></i><a th:href="@{|/main/${session.user.uid}/all/1|}">全部关注</a></li>
-						<li><i class="fa fa-street-view"></i><a th:href="@{|/main/${session.user.uid}/latest/1|}">最新微博</a></li>
-						<li><i class="fa fa-user"></i><a href="#">特别关注</a></li>
-						<li><i class="fa fa-gittip"></i> <a  th:href="@{|/main/${session.user.uid}/mutual/1|}">好友圈</a></li>
+						<li><i class="fa fa-user"></i><a th:href="@{|/main/${session.user.uid}/latest/1|}">最新微博</a></li>
+						<li><i class="fa fa-street-view"></i><a th:href="@{|/main/${session.user.uid}/myGroups/0/1|}">特别关注</a></li>
+						<li><i class="fa fa-gittip"></i><a th:href="@{|/main/${session.user.uid}/mutual/1|}">好友圈</a></li>
 					</ul>
 				</div>
 				<div class="lmlblog-member-left-profile">
@@ -157,6 +157,12 @@
 							<i th:unless="${group.gid==gid}" class="fa fa-smile-o"></i>
 							<a th:if="${group.gid==gid}" style="color: #ff8862;" th:href="@{|/main/${session.user.uid}/myGroups/${group.gid}/1|}" th:text="${group.name}">高校</a>
 							<a th:unless="${group.gid==gid}" th:href="@{|/main/${session.user.uid}/myGroups/${group.gid}/1|}" th:text="${group.name}">高校</a>
+						</li>
+						<li>
+							<i th:if="${gid==-1}" style="color: #ff8862;" class="fa fa-smile-o"></i>
+							<i th:unless="${gid==-1}" class="fa fa-smile-o"></i>
+							<a th:if="${gid==-1}" style="color: #ff8862;" th:href="@{|/main/${session.user.uid}/myGroups/-1/1|}">未分组</a>
+							<a th:unless="${gid==-1}" th:href="@{|/main/${session.user.uid}/myGroups/-1/1|}">未分组</a>
 						</li>
 					</ul>
 					<!--<div class="lmlblog-member-left-profile-hide" th:if="${groupList2.size()>0}">
@@ -294,7 +300,7 @@
 								<span></span>
 
 							</li>
-							<li class="lmlblog-no-like" th:onclick="|javascript:doLike(${post.pid},${session.user.uid},this)|">
+							<li class="lmlblog-no-like" th:onclick="|javascript:doLike(${post.user.uid},${post.pid},${session.user.uid},this)|">
 								<i class="fa fa-heart" th:if="${post.postLike==true}"></i><i class="fa fa-heart-o" th:if="${post.postLike==false}"></i><span th:text="|${post.countPostLike}|"></span>
 							</li>
 							<!--<li>
@@ -462,11 +468,11 @@
 		$(".lmlblog-member-left-bg-xg").smartFloat();
 	});
 
-	function doLike(pid,uid,d) {
+	function doLike(puid,pid,uid,d) {
 		//alert("22");
 		$.post(
 				"/user/"+uid+"/doLike",
-				"pid="+pid+"&uid="+uid,
+				"upid="+puid+"-"+pid+"&uid="+uid,
 				function (data){
 					//alert("33");
 					//应该还需要去改变post.like的值

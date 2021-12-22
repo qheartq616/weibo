@@ -17,7 +17,7 @@ public class CommentServiceImpl implements CommentService{
 	//查询pid微博下的所有评论
 	public List<Comment> showAllCommentList(Integer pid) {
 		CommentExample commentExample=new CommentExample();
-		commentExample.createCriteria().andPidEqualTo(pid);
+		commentExample.createCriteria().andPidEqualTo(pid).andPidEqualTo(0);
 		List<Comment> allCommentList = commentMapper.selectByExample(commentExample);
 		return allCommentList;
 	}

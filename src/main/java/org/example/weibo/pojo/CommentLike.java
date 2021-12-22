@@ -7,7 +7,7 @@ public class CommentLike {
 
     private Integer uid;
 
-    private Integer cid;
+    private String ucid;
 
     private Date likeTime;
 
@@ -27,12 +27,12 @@ public class CommentLike {
         this.uid = uid;
     }
 
-    public Integer getCid() {
-        return cid;
+    public String getUcid() {
+        return ucid;
     }
 
-    public void setCid(Integer cid) {
-        this.cid = cid;
+    public void setUcid(String ucid) {
+        this.ucid = ucid == null ? null : ucid.trim();
     }
 
     public Date getLikeTime() {
