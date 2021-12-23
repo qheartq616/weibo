@@ -10,4 +10,5 @@ public interface UserService {
 	public void updateUserInfo(User user);
 	public void updatePassword(Integer uid,String password);
 	public User fillUserInfo(User user,User userCur);
+	public User getInfoByUid(Integer uid,Integer curUid);
 }

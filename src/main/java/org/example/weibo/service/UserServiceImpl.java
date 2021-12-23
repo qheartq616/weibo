@@ -119,5 +119,14 @@ public class UserServiceImpl implements UserService {
 		return userCur;
 	}
 
+	@Override
+	//信息卡片，通过uid获取
+	public User getInfoByUid(Integer uid,Integer curUid) {
+		User user = userMapper.selectByPrimaryKey(uid);
+		User userCur = userMapper.selectByPrimaryKey(curUid);
+
+		return fillUserInfo(user,userCur);
+	}
+
 
 }

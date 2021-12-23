@@ -83,16 +83,27 @@
 		.name_card .userdata li{float:left}
 		.name_card .userdata li.W_vline{margin:0 8px;}*/
 	</style>
+
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
 	<link rel='stylesheet' id='style-css' href='/css/style.css' type='text/css' media='all' />
 	<link rel='stylesheet' id='lmlblog-css' href='/css/lmlblog.css' type='text/css' media='all' />
 	<link rel='stylesheet' id='all-css' href='/css/all.css' type='text/css' media='all' />
 
-	<!--<link rel="stylesheet" href="/css/bootstrap.min.css">-->
+
 	<link rel="stylesheet" type="text/css" href="/css/style-input.css">
 
 	<script type='text/javascript' src='/js/jquery.min.js'></script>
 	<script type='text/javascript' src='/js/ueditor.all.min.js'></script>
-
+	<style type="text/css">
+		a{
+			color: black;
+			text-decoration: none;
+		}
+		a:hover{
+			color: orange;
+			text-decoration: none;
+		}
+	</style>
 </head>
 <body>
 <input hidden th:value="${session.user.uid}" id="uidVar">
@@ -114,9 +125,9 @@
 				</li>
 				<li class="menu-item"><a href="#1"><i class="fa fa-envelope-o"></i>私信</a></li>
 				<li th:class="|menu-item menu-item-type-custom|">
-					<a th:href="@{|/user/${session.user.uid}/1|}">
+					<a th:href="@{|/user/${session.user.uid}/1|}" style="text-decoration: none">
 						<img th:src="|/avatar/${session.user.image}|" style="height: 32px;width: 32px;position: relative;top: -3px;" class="avatar" />
-						<span th:text="${session.user.name}" style="display: inline-block;position: relative;top: -14px;"></span>
+						<span th:text="${session.user.name}"></span>
 					</a>
 				</li>
 			</ul>
@@ -179,12 +190,12 @@
 			</div>
 			<div class="lmlblog-member-right-main">
 				<div class="lmlblog-post-list">
-					<div class="row" id="edit_form" >
-						<span class="pull-left" style="margin:15px;">编写新鲜事</span>
+					<div class="row" id="edit_form" style="margin-left: 0px; margin-right: 0px;">
+						<span class="pull-left" style="margin:15px;padding-left: 10px;padding-top: 5px;">编写新鲜事</span>
 						<span class="tips pull-right" style="margin:15px;"></span>
 						<form role="form" style="margin-top: 50px;" method="post">
 							<div class="form-group">
-								<div class="col-sm-12" style="margin-left: 15px;margin-right: 15px;">
+								<div class="col-sm-12" style="margin-left: 5px">
 									<div contentEditable="true" id="content" class="form-control"></div>
 								</div>
 								<div class="col-sm-12" style="margin-top: 12px;margin-left: 12px;">
@@ -214,122 +225,145 @@
 										</div>
 									</div>
 									<span> <input type="file" id="selectImg" value=""></input> </span> -->
-									<button type="button" id="send" class="btn btn-default pull-right disabled" style="position: relative;margin-right: 15px;">发布</button>
+									<button type="button" id="send" class="btn btn-default pull-right disabled" style="position: relative;margin-right: 20px;">发布</button>
 								</div>
 							</div>
 						</form>
 					</div>
 
 					<br>
+					<div th:if="${pageInfo==null}">
+						该分组下暂无微博，去其他地方看看吧
+					</div>
+					<div th:if="${pageInfo!=null}">
+						<div class="lmlblog-posts-list words" style="background-image:url(/images/058.png);"
+							 data="4197" th:each="post:${pageInfo.list}" id="postList">
 
-					<div class="lmlblog-posts-list words" style="background-image:url(/images/058.png);"
-						 data="4197" th:each="post:${pageInfo.list}" id="postList">
-
-						<!-- 动态内容部分，包括列表 -->
-						<div class="lmlblog-post-user-info">
-							<div class="lmlblog-post-user-info-avatar" user-data="1">
-								<a th:href="@{|/user/${post.user.uid}/1|}" style="display: inline-block;">
-									<span class="lmlblog-vip-icon"></span>
-									<img th:src="|/avatar/${post.user.image}|" class="avatar" />
-									<i th:if="${post.user.status==0}" th:title="普通用户"></i>
-									<i th:if="${post.user.status==1}" class="lmlblog-verify lmlblog-verify-a" th:title="会员用户"></i>
-									<i th:if="${post.user.status==2}" class="lmlblog-verify lmlblog-verify-b" th:title="认证用户"></i>
-									<i th:if="${post.user.status==3}" class="lmlblog-verify-c lmlblog-verify-cc" th:title="超级管理员"></i>
-								</a>
-								<div class="lmlblog-user-info-card" style="display: none" th:onmouseover="|showImg(this,${post.user.uid})|">
-									<div class="info_card_loading">
-										<!--<img src="/picture/chat-loading.gif">
-										<p>资料加载中...</p>-->
-										<a th:href="@{/user/${post.user.uid}/1}" style="display: block"><img th:src="|/avatar/${post.user.image}|" class="avatar" /></a>
-										<div th:text="${post.user.name}"></div>
-										<div>&nbsp;关注&nbsp;&nbsp;&nbsp;|&nbsp;粉丝&nbsp;&nbsp;&nbsp;|&nbsp;点赞&nbsp;&nbsp;&nbsp;</div>
+							<!-- 动态内容部分，包括列表 -->
+							<div class="lmlblog-post-user-info">
+								<div class="lmlblog-post-user-info-avatar" user-data="1">
+									<a th:href="@{|/user/${post.user.uid}/1|}" style="display: inline-block;" th:onmouseover="|showImg(${post.pid},${post.user.uid},${session.user.uid})|">
+										<span class="lmlblog-vip-icon"></span>
+										<img th:src="|/avatar/${post.user.image}|" class="avatar" />
+										<i th:if="${post.user.status==0}" th:title="普通用户"></i>
+										<i th:if="${post.user.status==1}" class="lmlblog-verify lmlblog-verify-a" th:title="会员用户"></i>
+										<i th:if="${post.user.status==2}" class="lmlblog-verify lmlblog-verify-b" th:title="认证用户"></i>
+										<i th:if="${post.user.status==3}" class="lmlblog-verify-c lmlblog-verify-cc" th:title="超级管理员"></i>
+									</a>
+									<div class="lmlblog-user-info-card">
+										<div class="info_card_loading" th:id="|infoCard${post.pid}|">
+											<img style="margin-top: 70px" src="/picture/chat-loading.gif">
+											<p>资料加载中...</p>
+										</div>
+										<!--<a class="nameInfo fl" title="详情" rel="/ajax/floatbox.html"></a>-->
 									</div>
-									<!--<a class="nameInfo fl" title="详情" rel="/ajax/floatbox.html"></a>-->
+								</div>
+
+								<div class="lmlblog-post-user-info-name">
+									<a th:href="@{|/user/${post.user.uid}/1|}">
+										<font style="color:#333;font-weight:600" th:text="${post.user.name}">司空琪</font>
+									</a>
+									<!--<span class="lmlblog-mark lmlblog-lv" title="经验：3815">Lv.6</span><span
+                                        class="lmlblog-mark lmlblog-vip">VIP 6</span>-->
+								</div>
+								<div class="lmlblog-post-user-info-time" title="2017-12-14 05:25" th:text="${#dates.format(post.postTime,'yyyy-MM-dd HH:mm')}">12-14 05:25</div>
+								<div class="lmlblog-post-user-info-time" title="来自weibo.com" th:text="来自weibo.com">12-14 05:25</div>
+							</div>
+
+							<!-- 作者信息 -->
+							<div class="lmlblog-post-setting">
+								<i class="fa fa-angle-down"></i>
+								<div class="lmlblog-post-setting-box">
+									<ul>
+										<a th:href="@{|/user/${post.user.uid}/1|}" title="访问主页"><li>访问主页</li></a>
+										<a th:href="|javascript:doFollow(${session.user.uid},${post.user.uid})|" th:title="|取消关注${post.user.name}|"><li>取消关注</li></a>
+										<a href="#" title="举报"><li>举报</li></a>
+									</ul>
 								</div>
 							</div>
 
-							<div class="lmlblog-post-user-info-name">
-								<a th:href="@{|/user/${post.user.uid}/1|}">
-									<font style="color:#333;font-weight:600" th:text="${post.user.name}">司空琪</font>
-								</a>
-								<!--<span class="lmlblog-mark lmlblog-lv" title="经验：3815">Lv.6</span><span
-									class="lmlblog-mark lmlblog-vip">VIP 6</span>-->
+							<div class="lmlblog-post-content" style="white-space:pre-line" th:text="${post.text}">
+								<!--<a class="post_list_link" href="#">
+                                    <P>　　疏星淡月，紫陌曲岸，持觞游赏，神移长川。一片彀纹，溶溶泄泄，忽而烟靡云敛。睹一丽人，缦立青水，云蒸雾霭，花衬善睐。荧荧兮若北辰之荣现，扰扰兮若紫玉之生烟。颜如舜华，迫闻素腰华琚摇;和颜静志，远望渌水呈雾绡。戏流光之夜蝶，采舞雪之琼花，流眷眷之眸光，润荣曜之笑靥。
+                                    </P>
+                                    <P>　　偶得美人回顾，思之朝朝暮暮。采芝兰以明愫，寄琼琚以作妆。余咏永慕叹道长，彼应影独愿偕芳。才知世有解语，不过琪语溯光。<img
+                                            src="/images/66.png" alt="[s-65]" class="wp-smiley" />
+                                        <img src="/images/8.png" alt="[s-65]" class="wp-smiley" />
+                                    </P>
+                                </a>-->
 							</div>
-							<div class="lmlblog-post-user-info-time" title="2017-12-14 05:25" th:text="${#dates.format(post.postTime,'yyyy-MM-dd HH:mm')}">12-14 05:25</div>
-							<div class="lmlblog-post-user-info-time" title="来自weibo.com" th:text="来自weibo.com">12-14 05:25</div>
-						</div>
 
-						<!-- 作者信息 -->
-						<div class="lmlblog-post-setting">
-							<i class="fa fa-angle-down"></i>
-							<div class="lmlblog-post-setting-box">
-								<ul>
-									<a th:href="@{|/user/${post.user.uid}/1|}" title="访问主页"><li>访问主页</li></a>
-									<a th:href="|javascript:doFollow(${session.user.uid},${post.user.uid})|" th:title="|取消关注${post.user.name}|"><li>取消关注</li></a>
-									<a href="#" title="举报"><li>举报</li></a>
-								</ul>
+							<!--<div class="lmlblog-post-images-list clear">
+                                <a href="/images/qi01.jpg" data-fancybox="gallery"
+                                   data-caption='<i class="fa fa-copyright"></i> lmlblog'>
+                                    <img src="/images/qi01.jpg" alt="司空琪吧十一月壁纸" /></a>
+                                <a href="/images/qi02.jpg" data-fancybox="gallery"
+                                   data-caption='<i class="fa fa-copyright"></i> lmlblog'>
+                                    <img src="/images/qi02.jpg" alt="司空琪吧十一月壁纸" /></a>
+                                <a href="/images/qi03.jpg" data-fancybox="gallery"
+                                   data-caption='<i class="fa fa-copyright"></i> lmlblog'>
+                                    <img src="/images/qi03.jpg" alt="司空琪吧十一月壁纸" /></a>
+                            </div>-->
+							<div class="row">
+								<div class="lmlblog-post-bar">
+									<li onclick='list_comments_show(this);'>
+										<i class="fa fa-comment-o"></i>
+										<span></span>
+									</li>
+									<li class="lmlblog-no-like" th:onclick="|javascript:doLike(${post.user.uid},${post.pid},${session.user.uid},this)|">
+										<i class="fa fa-heart" th:if="${post.postLike==true}"></i><i class="fa fa-heart-o" th:if="${post.postLike==false}"></i><span th:text="|${post.countPostLike}|"></span>
+									</li>
+									<!--<li>
+                                        <i class="lmlblog-icon">&#xe602;</i> <span>1.2w</span>
+                                    </li>
+                                    <li class="tag clear">
+                                        <i class="lmlblog-icon">&#xe895;</i><a href="#2" title="司空琪壁纸"># 司空琪壁纸</a>
+                                    </li>-->
+								</div>
 							</div>
+
+
+							<!--<div class="lmlblog-post-like-list">
+                                <a href="#17" id="had_like_11788">
+                                    <img src="/picture/11.gif" class="avatar" /></a>
+                                <a href="#18" id="had_like_11499"><img src="/picture/12.gif"
+                                                                       class="avatar" /></a>
+                                <a href="#22" id="had_like_11488"><img src="/picture/20.png" class="avatar" />
+                                    <i class="lmlblog-verify lmlblog-verify-a" title="认证信息：作者许仙白"></i></a><a
+                                    href="#22" id="had_like_11477">
+                                <img src="/picture/13.gif" class="avatar" />
+                                <i class="lmlblog-verify lmlblog-verify-a" title="认证信息：168号计师"></i></a><a
+                                    href="#22" id="had_like_1">
+                                <img src="/images/tx2.jpg" class="avatar" />
+                                <i class="lmlblog-verify lmlblog-verify-a" title="司空琪"></i></a>
+                            </div>-->
+							<div class="row" style="display: none">
+								<div class="col-lg-2" style="display: inline-block;float: left;">
+									头像
+								</div>
+								<div class="col-lg-10" style="display: inline-block">
+									评论
+								</div>
+							</div>
+
+							<div class="lmlblog-post-footer-bar">
+								<span th:title="${#dates.format(post.postTime,'yyyy-MM-dd HH:mm')}" th:text="${#dates.format(post.postTime,'yyyy-MM-dd HH:mm')}">12月14日 05:25</span>
+								<span>小尾巴</span><i class="lmlblog-icon" onclick="lmlblog_post_type_open();">&#xe62c;</i>
+							</div>
+
 						</div>
-
-						<div class="lmlblog-post-content" style="white-space:pre-line" th:text="${post.text}">
-							<!--<a class="post_list_link" href="#">
-								<P>　　疏星淡月，紫陌曲岸，持觞游赏，神移长川。一片彀纹，溶溶泄泄，忽而烟靡云敛。睹一丽人，缦立青水，云蒸雾霭，花衬善睐。荧荧兮若北辰之荣现，扰扰兮若紫玉之生烟。颜如舜华，迫闻素腰华琚摇;和颜静志，远望渌水呈雾绡。戏流光之夜蝶，采舞雪之琼花，流眷眷之眸光，润荣曜之笑靥。
-								</P>
-								<P>　　偶得美人回顾，思之朝朝暮暮。采芝兰以明愫，寄琼琚以作妆。余咏永慕叹道长，彼应影独愿偕芳。才知世有解语，不过琪语溯光。<img
-										src="/images/66.png" alt="[s-65]" class="wp-smiley" />
-									<img src="/images/8.png" alt="[s-65]" class="wp-smiley" />
-								</P>
-							</a>-->
+						<div class="lmlblog-pager" th:if="${#strings.isEmpty(gid)&&type!='all'}">
+							<a class="lmlblog-pager-left" th:href="@{|/main/${session.user.uid}/${type}/${pageInfo.hasPreviousPage?pageInfo.prePage:1}|}">上一页</a>
+							<div class="lmlblog-pager-center layui-form" th:text="|第${pageInfo.pageNum==0?1:pageInfo.pageNum}页|"></div>
+							<a class="lmlblog-pager-right" th:href="@{|/main/${session.user.uid}/${type}/${pageInfo.hasNextPage?pageInfo.nextPage:pageInfo.navigateLastPage}|}">下一页</a>
 						</div>
-
-						<!--<div class="lmlblog-post-images-list clear">
-							<a href="/images/qi01.jpg" data-fancybox="gallery"
-							   data-caption='<i class="fa fa-copyright"></i> lmlblog'>
-								<img src="/images/qi01.jpg" alt="司空琪吧十一月壁纸" /></a>
-							<a href="/images/qi02.jpg" data-fancybox="gallery"
-							   data-caption='<i class="fa fa-copyright"></i> lmlblog'>
-								<img src="/images/qi02.jpg" alt="司空琪吧十一月壁纸" /></a>
-							<a href="/images/qi03.jpg" data-fancybox="gallery"
-							   data-caption='<i class="fa fa-copyright"></i> lmlblog'>
-								<img src="/images/qi03.jpg" alt="司空琪吧十一月壁纸" /></a>
-						</div>-->
-
-						<div class="lmlblog-post-bar">
-							<li onclick='list_comments_show(this);'>
-								<i class="fa fa-comment-o"></i>
-								<span></span>
-
-							</li>
-							<li class="lmlblog-no-like" th:onclick="|javascript:doLike(${post.user.uid},${post.pid},${session.user.uid},this)|">
-								<i class="fa fa-heart" th:if="${post.postLike==true}"></i><i class="fa fa-heart-o" th:if="${post.postLike==false}"></i><span th:text="|${post.countPostLike}|"></span>
-							</li>
-							<!--<li>
-								<i class="lmlblog-icon">&#xe602;</i> <span>1.2w</span>
-							</li>
-							<li class="tag clear">
-								<i class="lmlblog-icon">&#xe895;</i><a href="#2" title="司空琪壁纸"># 司空琪壁纸</a>
-							</li>-->
+						<div class="lmlblog-pager" th:if="${not #strings.isEmpty(gid)}">
+							<a class="lmlblog-pager-left" th:href="@{|/main/${session.user.uid}/myGroups/${gid}/${pageInfo.hasPreviousPage?pageInfo.prePage:1}|}">上一页</a>
+							<div class="lmlblog-pager-center layui-form" th:text="|第${pageInfo.pageNum==0?1:pageInfo.pageNum}页|"></div>
+							<a class="lmlblog-pager-right" th:href="@{|/main/${session.user.uid}/myGroups/${gid}/${pageInfo.hasNextPage?pageInfo.nextPage:pageInfo.navigateLastPage}|}">下一页</a>
 						</div>
-						<!--<div class="lmlblog-post-like-list">
-							<a href="#17" id="had_like_11788">
-								<img src="/picture/11.gif" class="avatar" /></a>
-							<a href="#18" id="had_like_11499"><img src="/picture/12.gif"
-																   class="avatar" /></a>
-							<a href="#22" id="had_like_11488"><img src="/picture/20.png" class="avatar" />
-								<i class="lmlblog-verify lmlblog-verify-a" title="认证信息：作者许仙白"></i></a><a
-								href="#22" id="had_like_11477">
-							<img src="/picture/13.gif" class="avatar" />
-							<i class="lmlblog-verify lmlblog-verify-a" title="认证信息：168号计师"></i></a><a
-								href="#22" id="had_like_1">
-							<img src="/images/tx2.jpg" class="avatar" />
-							<i class="lmlblog-verify lmlblog-verify-a" title="司空琪"></i></a>
-						</div>-->
-					<div class="lmlblog-post-footer-bar">
-						<span th:title="${#dates.format(post.postTime,'yyyy-MM-dd HH:mm')}" th:text="${#dates.format(post.postTime,'yyyy-MM-dd HH:mm')}">12月14日 05:25</span>
-						<span>小尾巴</span><i class="lmlblog-icon" onclick="lmlblog_post_type_open();">&#xe62c;</i>
 					</div>
 
-					</div>
 					<!-- posts_list -->
 
 					<!--<div class="lmlblog-pager"><a class="lmlblog-pager-left" href="#2">上一页</a>
@@ -342,16 +376,7 @@
 						</div>
 						<a class="lmlblog-pager-right" href="#3">下一页</a>
 					</div>-->
-					<div class="lmlblog-pager" th:if="${#strings.isEmpty(gid)&&type!='all'}">
-						<a class="lmlblog-pager-left" th:href="@{|/main/${session.user.uid}/${type}/${pageInfo.hasPreviousPage?pageInfo.prePage:1}|}">上一页</a>
-						<div class="lmlblog-pager-center layui-form" th:text="|第${pageInfo.pageNum==0?1:pageInfo.pageNum}页|"></div>
-						<a class="lmlblog-pager-right" th:href="@{|/main/${session.user.uid}/${type}/${pageInfo.hasNextPage?pageInfo.nextPage:pageInfo.navigateLastPage}|}">下一页</a>
-					</div>
-					<div class="lmlblog-pager" th:if="${not #strings.isEmpty(gid)}">
-						<a class="lmlblog-pager-left" th:href="@{|/main/${session.user.uid}/myGroups/${gid}/${pageInfo.hasPreviousPage?pageInfo.prePage:1}|}">上一页</a>
-						<div class="lmlblog-pager-center layui-form" th:text="|第${pageInfo.pageNum==0?1:pageInfo.pageNum}页|"></div>
-						<a class="lmlblog-pager-right" th:href="@{|/main/${session.user.uid}/myGroups/${gid}/${pageInfo.hasNextPage?pageInfo.nextPage:pageInfo.navigateLastPage}|}">下一页</a>
-					</div>
+
 				</div>
 			</div>
 		</div>
@@ -390,10 +415,52 @@
 <script type="text/javascript" src="js/jquery.qtip-1.0.0-rc3.js"></script>
 
 <script>
-	function showImg(d,uid){
-		$(d).css("display","block");
-		$.post(
+	function list_comments_show(d) {
+		var display=$(d).parent().parent().next().css("display");
+		if (display=="none"){
+			$(d).parent().parent().next().css("display","");
+		}else {
+			$(d).parent().parent().next().css("display","none");
+		}
+	}
 
+	function showImg(pid,curUid,uid){
+		$.post(
+			"/user/"+uid+"/getInfoByUid",
+			"curUid="+curUid,
+			function (data) {
+				var infoCard="<a href='/user/"+data.uid+"/1' style='display: inline-block'><img src='/avatar/"+data.image+"' class='avatar'/>"
+				switch (data.status) {
+					case 0:
+						infoCard+="<i title='普通用户'/>";
+						break;
+					case 1:
+						infoCard+="<i class='lmlblog-verify lmlblog-verify-a' style='position: absolute;top: 38px;left: 200px;' title='会员用户'/>";
+						break;
+					case 2:
+						infoCard+="<i class='lmlblog-verify lmlblog-verify-b' style='position: absolute;top: 38px;left: 200px;' title='认证用户'/>";
+						break;
+					case 3:
+						infoCard+="<i class='lmlblog-verify-c lmlblog-verify-cc' style='position: absolute;top: 38px;left: 200px;' title='超级管理员'/>";
+						break;
+				}
+				infoCard+="</a><div><strong>"+data.name+"</strong>";
+				switch (data.gender) {
+					case '男':
+						infoCard+="<span class='lmlblog-mark lmlblog-boy'><i class='fa fa-mars'></i></span>";
+						break;
+					case '女':
+						infoCard+="<span class='lmlblog-mark lmlblog-girl'><i class='fa fa-venus'></i></span>";
+						break;
+					default:
+						infoCard+="<span class='lmlblog-mark' style='background-color: orange'><i class='fa fa-transgender-alt'></i></span>";
+						break;
+				}
+				infoCard+="</div><br><div>"+data.description+"</div><hr><div>&nbsp;&nbsp;关注&nbsp;"+data.countAllFollowUser+"&nbsp;&nbsp;|&nbsp;&nbsp;粉丝&nbsp;"+data.countAllFans+"&nbsp;&nbsp;|&nbsp;&nbsp;<a href='/user/"+data.uid+"/1'>微博&nbsp;"+data.countAllPost+"</a>&nbsp;&nbsp;</div><br><div>"+data.city+"</div>";
+
+				$("#infoCard"+pid).html(infoCard);
+			},
+			"json"
 		);
 	}
 	/*$(document).ready(function(){

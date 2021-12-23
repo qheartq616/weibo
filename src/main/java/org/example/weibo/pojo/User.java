@@ -182,4 +182,28 @@ public class User {
     public void setPhone(Long phone) {
         this.phone = phone;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "uid=" + uid +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", image='" + image + '\'' +
+                ", email='" + email + '\'' +
+                ", gender='" + gender + '\'' +
+                ", registerTime=" + registerTime +
+                ", updateNameTime=" + updateNameTime +
+                ", description='" + description + '\'' +
+                ", birthday=" + birthday +
+                ", city='" + city + '\'' +
+                ", status=" + status +
+                ", phone=" + phone +
+                ", countAllFollowUser=" + countAllFollowUser +
+                ", countAllFans=" + countAllFans +
+                ", countAllLike=" + countAllLike +
+                ", countAllPost=" + countAllPost +
+                ", followStatus=" + followStatus +
+                '}';
+    }
 }

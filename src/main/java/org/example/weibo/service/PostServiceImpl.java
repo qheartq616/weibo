@@ -9,6 +9,7 @@ import org.example.weibo.pojo.Post;
 import org.example.weibo.pojo.PostExample;
 import org.example.weibo.pojo.User;
 import org.example.weibo.utils.ListUtils;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -47,7 +48,6 @@ public class PostServiceImpl implements PostService{
 		/*for (Post post : postList) {
 			System.out.println("post.getPostTime() = " + post.getPostTime());
 		}*/
-
 		return pageInfo;
 	}
 
@@ -196,16 +196,27 @@ public class PostServiceImpl implements PostService{
 	public PageInfo<Post> showGroupAllPost(Integer uid,Integer gid,Integer pageNum) {
 		List<User> userList=new ArrayList<>();
 		if (gid==0){
-			userList.add(groupService.showSpUser(uid));
+			User user = groupService.showSpUser(uid);
+//			System.out.println("user = " + user.toString());
+			if (user==null){
+				return null;
+			}else {
+				userList.add(groupService.showSpUser(uid));
+			}
 		}else if (gid==-1){
 			userList=groupService.showAllNoGroupUser(uid);
 		}else {
 			userList = groupService.showAllFollowUser(gid);
 		}
 
+//		System.out.println("userList = " + userList.size());
+		/*if (userList.size()==0){
+			return null;
+		}else {*/
 		List<Integer> uidList=new ArrayList<>();
 		for (User user : userList) {
-			uidList.add(user.getUid());
+			uidList.add(
+					user.getUid());
 		}
 
 		PageHelper.startPage(pageNum,7);
@@ -216,17 +227,18 @@ public class PostServiceImpl implements PostService{
 		PageInfo<Post> pageInfo=new PageInfo<>(postList);
 		List<Post> filledPostList = fillPostInfo(pageInfo.getList(), uid);
 		pageInfo.setList(filledPostList);
-		/*for (Post post : pageInfo.getList()) {
-			//加入点赞状态
-			boolean b = postLikeService.ifPostLike(post.getPid(), uid);
-			post.setPostLike(b);
+	/*for (Post post : pageInfo.getList()) {
+		//加入点赞状态
+		boolean b = postLikeService.ifPostLike(post.getPid(), uid);
+		post.setPostLike(b);
 
-			//加入点赞数
-			int i = postLikeService.countPostLike(post.getPid());
-			post.setCountPostLike(i);
-		}*/
+		//加入点赞数
+		int i = postLikeService.countPostLike(post.getPid());
+		post.setCountPostLike(i);
+	}*/
 
 		return pageInfo;
+		/*}*/
 	}
 
 	@Override

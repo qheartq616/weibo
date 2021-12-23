@@ -82,17 +82,25 @@ public class UserController {
 
 	@RequestMapping("*/doDelete")
 	@ResponseBody
-	//关注取关功能
+	//删除微博
 	public void doDelete(@RequestParam(name = "pid")Integer pid){
 		postService.doDelete(pid);
 	}
 
 	@RequestMapping("*/doTopPost")
-	//关注取关功能
+	//置顶微博
 	public String doTopPost(@RequestParam(name = "pid")Integer pid,
 	                      HttpSession session){
 		User user = (User) session.getAttribute("user");
 		postService.doTopPost(user.getUid(),pid);
 		return "redirect:/user/"+user.getUid()+"/1";
+	}
+
+	@RequestMapping("{uid}/getInfoByUid")
+	@ResponseBody
+	//根据uid找信息
+	public User getInfoByUid(@PathVariable(name = "uid")Integer uid,
+	                         @RequestParam(name = "curUid")Integer curUid){
+		return userService.getInfoByUid(uid, curUid);
 	}
 }
