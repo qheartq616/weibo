@@ -23,11 +23,20 @@
 			background: none !important;
 			padding: 0 !important;
 		}
+		a{
+			color: black;
+			text-decoration: none;
+		}
+		a:hover{
+			color: orange;
+			text-decoration: none;
+		}
 
 	</style>
-	<link rel='stylesheet' id='style-css'  th:href='@{/css/style.css}' type='text/css' media='all' />
-	<link rel='stylesheet' id='lmlblog-css'  th:href='@{/css/lmlblog.css}' type='text/css' media='all' />
-	<link rel='stylesheet' id='all-css'  th:href='@{/css/all.css}' type='text/css' media='all' />
+	<link rel='stylesheet' th:href='@{/css/bootstrap.min.css}' type='text/css' media='all' />
+	<link rel='stylesheet' id='style-css' th:href='@{/css/style.css}' type='text/css' media='all' />
+	<link rel='stylesheet' id='lmlblog-css' th:href='@{/css/lmlblog.css}' type='text/css' media='all' />
+	<link rel='stylesheet' id='all-css' th:href='@{/css/all.css}' type='text/css' media='all' />
 	<script type='text/javascript' th:src='@{/js/jquery.min.js}'></script>
 	<script type='text/javascript' th:src='@{/js/ueditor.all.min.js}'></script>
 </head>
@@ -45,7 +54,7 @@
 					</form>
 				</li>
 				<li class="menu-item menu-item-type-taxonomy menu-item-object-category">
-					<a th:href="@{|/main/${session.user.uid}/all/1|}"><i class="fa fa-home"></i>微博首页</a>
+					<a th:href="@{|/main/${session.user.uid}/all/1|}" style="text-decoration: none"><i class="fa fa-home"></i>微博首页</a>
 				</li>
 				<li class="menu-item"><a th:href="@{|/news/atme/${session.user.uid}/1|}"><i class="fa fa-envelope-o"></i>私信</a></li>
 				<!--<li class="menu-item">
@@ -68,15 +77,15 @@
 					</ul>
 				</li>-->
 				<li th:class="|gengxin menu-item menu-item-type-custom|" th:if="${userCur.uid==session.user.uid}">
-					<a th:href="@{|/user/${session.user.uid}/1|}">
+					<a th:href="@{|/user/${session.user.uid}/1|}" style="text-decoration: none">
 						<img th:src="|/avatar/${session.user.image}|" style="height: 32px;width: 32px;position: relative;top: -3px;" class="avatar" />
-						<span th:text="${session.user.name}" style="display: inline-block;position: relative;top: -14px;"></span>
+						<span th:text="${session.user.name}"></span>
 					</a>
 				</li>
 				<li th:class="|menu-item menu-item-type-custom|" th:if="${userCur.uid!=session.user.uid}">
-					<a th:href="@{|/user/${session.user.uid}/1|}">
+					<a th:href="@{|/user/${session.user.uid}/1|}" style="text-decoration: none">
 						<img th:src="|/avatar/${session.user.image}|" style="height: 32px;width: 32px;position: relative;top: -3px;" class="avatar" />
-						<span th:text="${session.user.name}" style="display: inline-block;position: relative;top: -14px;"></span>
+						<span th:text="${session.user.name}"></span>
 					</a>
 				</li>
 			</ul>
@@ -133,7 +142,7 @@
 							</span>
 						</a>
 						<span class="opacity" th:if="${userCur.followStatus!=3}"><i class="fa fa-envelope-o"></i>&nbsp;&nbsp;<i class="lmlblog-icon">私聊</i></span>
-						<span class="follow has opacity" style="height: 25px; margin-left: 5px;position: absolute"  onmouseover="showList(this)">
+						<span class="follow has opacity" style="height: 40px; margin-left: 5px;position: absolute"  onmouseover="showList(this)">
                   		</span>
 						<div class="setList" style="width: 100px;
 		                                            height:100px;
@@ -253,7 +262,8 @@
 										<i th:if="${topPost.user.status==3}" class="lmlblog-verify-c lmlblog-verify-cc" th:title="超级管理员"></i>
 									</a>
 									<div class="lmlblog-user-info-card">
-										<div class="info_card_loading"><img src="/picture/chat-loading.gif"><p>资料加载中...</p>
+										<div class="info_card_loading">
+											<img style="margin-top: 70px" src="/picture/chat-loading.gif"><p>资料加载中...</p>
 										</div>
 									</div>
 								</div>
@@ -323,7 +333,7 @@
 										<i th:if="${post.user.status==3}" class="lmlblog-verify-c lmlblog-verify-cc" th:title="超级管理员"></i>
 									</a>
 									<div class="lmlblog-user-info-card">
-										<div class="info_card_loading"><img src="/picture/chat-loading.gif"><p>资料加载中...</p>
+										<div class="info_card_loading"><img style="margin-top: 70px" src="/picture/chat-loading.gif"><p>资料加载中...</p>
 										</div>
 									</div>
 								</div>
@@ -346,8 +356,8 @@
 										<a th:href="|javascript:doDelete(${post.user.uid},${post.pid})|" title="删除"><li>删除</li></a>
 									</ul>
 									<ul th:case="false">
+										<a th:href="@{|/user/${post.user.uid}/1|}" title="取消关注"><li>取消关注</li></a>
 										<a href="#" title="举报"><li>举报</li></a>
-										<a th:href="@{|user/${userCur.uid}/1|}" title="访问主页"><li>访问主页</li></a>
 									</ul>
 								</div>
 							</div>

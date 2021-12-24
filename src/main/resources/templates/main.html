@@ -83,17 +83,27 @@
 		.name_card .userdata li{float:left}
 		.name_card .userdata li.W_vline{margin:0 8px;}*/
 	</style>
+
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
 	<link rel='stylesheet' id='style-css' href='/css/style.css' type='text/css' media='all' />
 	<link rel='stylesheet' id='lmlblog-css' href='/css/lmlblog.css' type='text/css' media='all' />
 	<link rel='stylesheet' id='all-css' href='/css/all.css' type='text/css' media='all' />
-	<link rel="stylesheet" href="/css/commentstyle.css">
-	<link rel="stylesheet" href="/css/comment.css">
 
-	<!--<link rel="stylesheet" href="/css/bootstrap.min.css">-->
+
 	<link rel="stylesheet" type="text/css" href="/css/style-input.css">
 
 	<script type='text/javascript' src='/js/jquery.min.js'></script>
 	<script type='text/javascript' src='/js/ueditor.all.min.js'></script>
+	<style type="text/css">
+		a{
+			color: black;
+			text-decoration: none;
+		}
+		a:hover{
+			color: orange;
+			text-decoration: none;
+		}
+	</style>
 
 
 </head>
@@ -117,9 +127,9 @@
 				</li>
 				<li class="menu-item"><a th:href="@{|/news/atme/${session.user.uid}/1|}"><i class="fa fa-envelope-o"></i>私信</a></li>
 				<li th:class="|menu-item menu-item-type-custom|">
-					<a th:href="@{|/user/${session.user.uid}/1|}">
+					<a th:href="@{|/user/${session.user.uid}/1|}" style="text-decoration: none">
 						<img th:src="|/avatar/${session.user.image}|" style="height: 32px;width: 32px;position: relative;top: -3px;" class="avatar" />
-						<span th:text="${session.user.name}" style="display: inline-block;position: relative;top: -14px;"></span>
+						<span th:text="${session.user.name}"></span>
 					</a>
 				</li>
 			</ul>
@@ -182,12 +192,12 @@
 			</div>
 			<div class="lmlblog-member-right-main">
 				<div class="lmlblog-post-list">
-					<div class="row" id="edit_form" >
-						<span class="pull-left" style="margin:15px;">编写新鲜事</span>
+					<div class="row" id="edit_form" style="margin-left: 0px; margin-right: 0px;">
+						<span class="pull-left" style="margin:15px;padding-left: 10px;padding-top: 5px;">编写新鲜事</span>
 						<span class="tips pull-right" style="margin:15px;"></span>
 						<form role="form" style="margin-top: 50px;" method="post">
 							<div class="form-group">
-								<div class="col-sm-12" style="margin-left: 15px;margin-right: 15px;">
+								<div class="col-sm-12" style="margin-left: 5px">
 									<div contentEditable="true" id="content" class="form-control"></div>
 								</div>
 								<div class="col-sm-12" style="margin-top: 12px;margin-left: 12px;">
@@ -217,159 +227,149 @@
 										</div>
 									</div>
 									<span> <input type="file" id="selectImg" value=""></input> </span> -->
-									<button type="button" id="send" class="btn btn-default pull-right disabled" style="position: relative;margin-right: 15px;">发布</button>
+									<button type="button" id="send" class="btn btn-default pull-right disabled" style="position: relative;margin-right: 20px;">发布</button>
 								</div>
 							</div>
 						</form>
 					</div>
 
 					<br>
+					<div th:if="${pageInfo==null}">
+						该分组下暂无微博，去其他地方看看吧
+					</div>
+					<div th:if="${pageInfo!=null}">
+						<div class="lmlblog-posts-list words" style="background-image:url(/images/058.png);"
+							 data="4197" th:each="post:${pageInfo.list}" id="postList">
 
-					<div class="lmlblog-posts-list words" style="background-image:url(/images/058.png);"
-						 data="4197" th:each="post:${pageInfo.list}" id="postList">
-
-						<!-- 动态内容部分，包括列表 -->
-						<div class="lmlblog-post-user-info">
-							<div class="lmlblog-post-user-info-avatar" user-data="1">
-								<a th:href="@{|/user/${post.user.uid}/1|}" style="display: inline-block;">
-									<span class="lmlblog-vip-icon"></span>
-									<img th:src="|/avatar/${post.user.image}|" class="avatar" />
-									<i th:if="${post.user.status==0}" th:title="普通用户"></i>
-									<i th:if="${post.user.status==1}" class="lmlblog-verify lmlblog-verify-a" th:title="会员用户"></i>
-									<i th:if="${post.user.status==2}" class="lmlblog-verify lmlblog-verify-b" th:title="认证用户"></i>
-									<i th:if="${post.user.status==3}" class="lmlblog-verify-c lmlblog-verify-cc" th:title="超级管理员"></i>
-								</a>
-								<div class="lmlblog-user-info-card" style="display: none" onmouseover="showImg(this)">
-									<div class="info_card_loading">
-										<!--<img src="/picture/chat-loading.gif">
-										<p>资料加载中...</p>-->
+							<!-- 动态内容部分，包括列表 -->
+							<div class="lmlblog-post-user-info">
+								<div class="lmlblog-post-user-info-avatar" user-data="1">
+									<a th:href="@{|/user/${post.user.uid}/1|}" style="display: inline-block;" th:onmouseover="|showImg(${post.pid},${post.user.uid},${session.user.uid})|">
+										<span class="lmlblog-vip-icon"></span>
 										<img th:src="|/avatar/${post.user.image}|" class="avatar" />
-										<br>
-										<span th:text="${post.user.name}"></span>
-										<span>关注|粉丝|点赞</span>
+										<i th:if="${post.user.status==0}" th:title="普通用户"></i>
+										<i th:if="${post.user.status==1}" class="lmlblog-verify lmlblog-verify-a" th:title="会员用户"></i>
+										<i th:if="${post.user.status==2}" class="lmlblog-verify lmlblog-verify-b" th:title="认证用户"></i>
+										<i th:if="${post.user.status==3}" class="lmlblog-verify-c lmlblog-verify-cc" th:title="超级管理员"></i>
+									</a>
+									<div class="lmlblog-user-info-card">
+										<div class="info_card_loading" th:id="|infoCard${post.pid}|">
+											<img style="margin-top: 70px" src="/picture/chat-loading.gif">
+											<p>资料加载中...</p>
+										</div>
+										<!--<a class="nameInfo fl" title="详情" rel="/ajax/floatbox.html"></a>-->
 									</div>
-									<!--<a class="nameInfo fl" title="详情" rel="/ajax/floatbox.html"></a>-->
+								</div>
+
+								<div class="lmlblog-post-user-info-name">
+									<a th:href="@{|/user/${post.user.uid}/1|}">
+										<font style="color:#333;font-weight:600" th:text="${post.user.name}">司空琪</font>
+									</a>
+									<!--<span class="lmlblog-mark lmlblog-lv" title="经验：3815">Lv.6</span><span
+                                        class="lmlblog-mark lmlblog-vip">VIP 6</span>-->
+								</div>
+								<div class="lmlblog-post-user-info-time" title="2017-12-14 05:25" th:text="${#dates.format(post.postTime,'yyyy-MM-dd HH:mm')}">12-14 05:25</div>
+								<div class="lmlblog-post-user-info-time" title="来自weibo.com" th:text="来自weibo.com">12-14 05:25</div>
+							</div>
+
+							<!-- 作者信息 -->
+							<div class="lmlblog-post-setting">
+								<i class="fa fa-angle-down"></i>
+								<div class="lmlblog-post-setting-box">
+									<ul>
+										<a th:href="@{|/user/${post.user.uid}/1|}" title="访问主页"><li>访问主页</li></a>
+										<a th:href="|javascript:doFollow(${session.user.uid},${post.user.uid})|" th:title="|取消关注${post.user.name}|"><li>取消关注</li></a>
+										<a href="#" title="举报"><li>举报</li></a>
+									</ul>
 								</div>
 							</div>
 
-							<div class="lmlblog-post-user-info-name">
-								<a th:href="@{|/user/${post.user.uid}/1|}">
-									<font style="color:#333;font-weight:600" th:text="${post.user.name}">司空琪</font>
-								</a>
-								<!--<span class="lmlblog-mark lmlblog-lv" title="经验：3815">Lv.6</span><span
-									class="lmlblog-mark lmlblog-vip">VIP 6</span>-->
+							<div class="lmlblog-post-content" style="white-space:pre-line" th:text="${post.text}">
+								<!--<a class="post_list_link" href="#">
+                                    <P>　　疏星淡月，紫陌曲岸，持觞游赏，神移长川。一片彀纹，溶溶泄泄，忽而烟靡云敛。睹一丽人，缦立青水，云蒸雾霭，花衬善睐。荧荧兮若北辰之荣现，扰扰兮若紫玉之生烟。颜如舜华，迫闻素腰华琚摇;和颜静志，远望渌水呈雾绡。戏流光之夜蝶，采舞雪之琼花，流眷眷之眸光，润荣曜之笑靥。
+                                    </P>
+                                    <P>　　偶得美人回顾，思之朝朝暮暮。采芝兰以明愫，寄琼琚以作妆。余咏永慕叹道长，彼应影独愿偕芳。才知世有解语，不过琪语溯光。<img
+                                            src="/images/66.png" alt="[s-65]" class="wp-smiley" />
+                                        <img src="/images/8.png" alt="[s-65]" class="wp-smiley" />
+                                    </P>
+                                </a>-->
 							</div>
-							<div class="lmlblog-post-user-info-time" title="2017-12-14 05:25" th:text="${#dates.format(post.postTime,'yyyy-MM-dd HH:mm')}">12-14 05:25</div>
-							<div class="lmlblog-post-user-info-time" title="来自weibo.com" th:text="来自weibo.com">12-14 05:25</div>
-						</div>
 
-						<!-- 作者信息 -->
-						<div class="lmlblog-post-setting">
-							<i class="fa fa-angle-down"></i>
-							<div class="lmlblog-post-setting-box">
-								<ul>
-									<a href="#" title="举报"><li>举报</li></a>
-									<a th:href="@{|/user/${post.user.uid}/1|}" title="访问主页"><li>访问主页</li></a>
-								</ul>
-							</div>
-						</div>
-
-						<div class="lmlblog-post-content" style="white-space:pre-line" th:text="${post.text}">
-							<!--<a class="post_list_link" href="#">
-								<P>　　疏星淡月，紫陌曲岸，持觞游赏，神移长川。一片彀纹，溶溶泄泄，忽而烟靡云敛。睹一丽人，缦立青水，云蒸雾霭，花衬善睐。荧荧兮若北辰之荣现，扰扰兮若紫玉之生烟。颜如舜华，迫闻素腰华琚摇;和颜静志，远望渌水呈雾绡。戏流光之夜蝶，采舞雪之琼花，流眷眷之眸光，润荣曜之笑靥。
-								</P>
-								<P>　　偶得美人回顾，思之朝朝暮暮。采芝兰以明愫，寄琼琚以作妆。余咏永慕叹道长，彼应影独愿偕芳。才知世有解语，不过琪语溯光。<img
-										src="/images/66.png" alt="[s-65]" class="wp-smiley" />
-									<img src="/images/8.png" alt="[s-65]" class="wp-smiley" />
-								</P>
-							</a>-->
-						</div>
-
-						<!--<div class="lmlblog-post-images-list clear">
-							<a href="/images/qi01.jpg" data-fancybox="gallery"
-							   data-caption='<i class="fa fa-copyright"></i> lmlblog'>
-								<img src="/images/qi01.jpg" alt="司空琪吧十一月壁纸" /></a>
-							<a href="/images/qi02.jpg" data-fancybox="gallery"
-							   data-caption='<i class="fa fa-copyright"></i> lmlblog'>
-								<img src="/images/qi02.jpg" alt="司空琪吧十一月壁纸" /></a>
-							<a href="/images/qi03.jpg" data-fancybox="gallery"
-							   data-caption='<i class="fa fa-copyright"></i> lmlblog'>
-								<img src="/images/qi03.jpg" alt="司空琪吧十一月壁纸" /></a>
-						</div>-->
-
-						<div class="lmlblog-post-bar">
-							<li th:onclick='|commens(${post.pid})|'>
-								<i class="fa fa-comment-o">评论</i>
-								<span></span>
-
-							</li>
-							<li class="lmlblog-no-like" th:onclick="|javascript:doLike(${post.user.uid},${post.pid},${session.user.uid},this)|">
-								<i class="fa fa-heart" th:if="${post.postLike==true}"></i><i class="fa fa-heart-o" th:if="${post.postLike==false}"></i><span th:text="|${post.countPostLike}|"></span>
-							</li>
-							<!--<li>
-								<i class="lmlblog-icon">&#xe602;</i> <span>1.2w</span>
-							</li>
-							<li class="tag clear">
-								<i class="lmlblog-icon">&#xe895;</i><a href="#2" title="司空琪壁纸"># 司空琪壁纸</a>
-							</li>-->
-						</div>
-						<!--<div class="lmlblog-post-like-list">
-							<a href="#17" id="had_like_11788">
-								<img src="/picture/11.gif" class="avatar" /></a>
-							<a href="#18" id="had_like_11499"><img src="/picture/12.gif"
-																   class="avatar" /></a>
-							<a href="#22" id="had_like_11488"><img src="/picture/20.png" class="avatar" />
-								<i class="lmlblog-verify lmlblog-verify-a" title="认证信息：作者许仙白"></i></a><a
-								href="#22" id="had_like_11477">
-							<img src="/picture/13.gif" class="avatar" />
-							<i class="lmlblog-verify lmlblog-verify-a" title="认证信息：168号计师"></i></a><a
-								href="#22" id="had_like_1">
-							<img src="/images/tx2.jpg" class="avatar" />
-							<i class="lmlblog-verify lmlblog-verify-a" title="司空琪"></i></a>
-						</div>-->
-					<div class="lmlblog-post-footer-bar">
-						<span th:title="${#dates.format(post.postTime,'yyyy-MM-dd HH:mm')}" th:text="${#dates.format(post.postTime,'yyyy-MM-dd HH:mm')}">12月14日 05:25</span>
-						<span>小尾巴</span><i class="lmlblog-icon" onclick="lmlblog_post_type_open();">&#xe62c;</i>
-					</div>
-
-					<!--评论区-->
-					<div th:id="|comment${post.pid}|" style="display: none; width: auto;height:auto; margin-bottom: 0px;padding-bottom: 0px">
-						<!--
-                            此评论textarea文本框部分使用的https://github.com/alexdunphy/flexText此插件
-                        -->
-						<div class="commentAll">
-							<!--评论区域 begin-->
-							<div class="reviewArea clearfix">
-								<textarea class="content comment-input " placeholder="Please enter a comment&hellip;" onkeyup="keyUP(this)"></textarea>
-								<a href="javascript:;" class="plBtn">评论</a>
-							</div>
-							<!--评论区域 end-->
-							<!--回复区域 begin-->
-							<div class="comment-show">
-								<div class="comment-show-con clearfix">
-									<div class="comment-show-con-img pull-left"><img src="images/header-img-comment_03.png" alt=""></div>
-									<div class="comment-show-con-list pull-left clearfix">
-										<div class="pl-text clearfix">
-											<a href="#" class="comment-size-name">张三 : </a>
-											<span class="my-pl-con">&nbsp;来啊 造作啊!</span>
-										</div>
-										<div class="date-dz">
-											<span class="date-dz-left pull-left comment-time">2017-5-2 11:11:39</span>
-											<div class="date-dz-right pull-right comment-pl-block">
-												<a href="javascript:;" class="removeBlock">删除</a>
-												<a href="javascript:;" class="date-dz-pl pl-hf hf-con-block pull-left">回复</a>
-												<span class="pull-left date-dz-line">|</span>
-												<a href="javascript:;" class="date-dz-z pull-left"><i class="date-dz-z-click-red"></i>赞 (<i class="z-num">666</i>)</a>
-											</div>
-										</div>
-										<div class="hf-list-con"></div>
+							<!--<div class="lmlblog-post-images-list clear">
+                                <a href="/images/qi01.jpg" data-fancybox="gallery"
+                                   data-caption='<i class="fa fa-copyright"></i> lmlblog'>
+                                    <img src="/images/qi01.jpg" alt="司空琪吧十一月壁纸" /></a>
+                                <a href="/images/qi02.jpg" data-fancybox="gallery"
+                                   data-caption='<i class="fa fa-copyright"></i> lmlblog'>
+                                    <img src="/images/qi02.jpg" alt="司空琪吧十一月壁纸" /></a>
+                                <a href="/images/qi03.jpg" data-fancybox="gallery"
+                                   data-caption='<i class="fa fa-copyright"></i> lmlblog'>
+                                    <img src="/images/qi03.jpg" alt="司空琪吧十一月壁纸" /></a>
+                            </div>-->
+							<div class="container">
+								<div class="row">
+									<div class="lmlblog-post-bar">
+										<li onclick='list_comments_show(this);'>
+											<i class="fa fa-comment-o"></i>
+											<span></span>
+										</li>
+										<li class="lmlblog-no-like" th:onclick="|javascript:doLike(${post.user.uid},${post.pid},${session.user.uid},this)|">
+											<i class="fa fa-heart" th:if="${post.postLike==true}"></i><i class="fa fa-heart-o" th:if="${post.postLike==false}"></i><span th:text="|${post.countPostLike}|"></span>
+										</li>
+										<!--<li>
+                                            <i class="lmlblog-icon">&#xe602;</i> <span>1.2w</span>
+                                        </li>
+                                        <li class="tag clear">
+                                            <i class="lmlblog-icon">&#xe895;</i><a href="#2" title="司空琪壁纸"># 司空琪壁纸</a>
+                                        </li>-->
 									</div>
 								</div>
 							</div>
-							<!--回复区域 end-->
-						</div>
 
+
+
+							<!--<div class="lmlblog-post-like-list">
+                                <a href="#17" id="had_like_11788">
+                                    <img src="/picture/11.gif" class="avatar" /></a>
+                                <a href="#18" id="had_like_11499"><img src="/picture/12.gif"
+                                                                       class="avatar" /></a>
+                                <a href="#22" id="had_like_11488"><img src="/picture/20.png" class="avatar" />
+                                    <i class="lmlblog-verify lmlblog-verify-a" title="认证信息：作者许仙白"></i></a><a
+                                    href="#22" id="had_like_11477">
+                                <img src="/picture/13.gif" class="avatar" />
+                                <i class="lmlblog-verify lmlblog-verify-a" title="认证信息：168号计师"></i></a><a
+                                    href="#22" id="had_like_1">
+                                <img src="/images/tx2.jpg" class="avatar" />
+                                <i class="lmlblog-verify lmlblog-verify-a" title="司空琪"></i></a>
+                            </div>-->
+							<div class="row" style="display: none">
+								<div class="col-lg-1">
+									头像
+								</div>
+								<div class="col-lg-11">
+									评论
+								</div>
+							</div>
+
+
+							<div class="lmlblog-post-footer-bar">
+								<span th:title="${#dates.format(post.postTime,'yyyy-MM-dd HH:mm')}" th:text="${#dates.format(post.postTime,'yyyy-MM-dd HH:mm')}">12月14日 05:25</span>
+								<span>小尾巴</span><i class="lmlblog-icon" onclick="lmlblog_post_type_open();">&#xe62c;</i>
+							</div>
+
+						</div>
+						<div class="lmlblog-pager" th:if="${#strings.isEmpty(gid)&&type!='all'}">
+							<a class="lmlblog-pager-left" th:href="@{|/main/${session.user.uid}/${type}/${pageInfo.hasPreviousPage?pageInfo.prePage:1}|}">上一页</a>
+							<div class="lmlblog-pager-center layui-form" th:text="|第${pageInfo.pageNum==0?1:pageInfo.pageNum}页|"></div>
+							<a class="lmlblog-pager-right" th:href="@{|/main/${session.user.uid}/${type}/${pageInfo.hasNextPage?pageInfo.nextPage:pageInfo.navigateLastPage}|}">下一页</a>
+						</div>
+						<div class="lmlblog-pager" th:if="${not #strings.isEmpty(gid)}">
+							<a class="lmlblog-pager-left" th:href="@{|/main/${session.user.uid}/myGroups/${gid}/${pageInfo.hasPreviousPage?pageInfo.prePage:1}|}">上一页</a>
+							<div class="lmlblog-pager-center layui-form" th:text="|第${pageInfo.pageNum==0?1:pageInfo.pageNum}页|"></div>
+							<a class="lmlblog-pager-right" th:href="@{|/main/${session.user.uid}/myGroups/${gid}/${pageInfo.hasNextPage?pageInfo.nextPage:pageInfo.navigateLastPage}|}">下一页</a>
+						</div>
 					</div>
+
 					<!-- posts_list -->
 
 					<!--<div class="lmlblog-pager"><a class="lmlblog-pager-left" href="#2">上一页</a>
@@ -382,16 +382,7 @@
 						</div>
 						<a class="lmlblog-pager-right" href="#3">下一页</a>
 					</div>-->
-					<div class="lmlblog-pager" th:if="${#strings.isEmpty(gid)&&type!='all'}">
-						<a class="lmlblog-pager-left" th:href="@{|/main/${session.user.uid}/${type}/${pageInfo.hasPreviousPage?pageInfo.prePage:1}|}">上一页</a>
-						<div class="lmlblog-pager-center layui-form" th:text="|第${pageInfo.pageNum==0?1:pageInfo.pageNum}页|"></div>
-						<a class="lmlblog-pager-right" th:href="@{|/main/${session.user.uid}/${type}/${pageInfo.hasNextPage?pageInfo.nextPage:pageInfo.navigateLastPage}|}">下一页</a>
-					</div>
-					<div class="lmlblog-pager" th:if="${not #strings.isEmpty(gid)}">
-						<a class="lmlblog-pager-left" th:href="@{|/main/${session.user.uid}/myGroups/${gid}/${pageInfo.hasPreviousPage?pageInfo.prePage:1}|}">上一页</a>
-						<div class="lmlblog-pager-center layui-form" th:text="|第${pageInfo.pageNum==0?1:pageInfo.pageNum}页|"></div>
-						<a class="lmlblog-pager-right" th:href="@{|/main/${session.user.uid}/myGroups/${gid}/${pageInfo.hasNextPage?pageInfo.nextPage:pageInfo.navigateLastPage}|}">下一页</a>
-					</div>
+
 				</div>
 			</div>
 		</div>
@@ -429,198 +420,57 @@
 <script src="/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/jquery.qtip-1.0.0-rc3.js"></script>
 
-<script type="text/javascript" src="/js/jquery-1.12.0.min.js"></script>
-<script type="text/javascript" src="/js/jquery.flexText.js"></script>
 <script>
-    //高度自适应
-    $(function () {
-        $('.content').flexText();
-    });
-    //限制字数
-    function keyUP(t){
-        var len = $(t).val().length;
-        if(len > 139){
-            $(t).val($(t).val().substring(0,140));
-        }
-    }
-    //点击评论创建评论条-->
-    $('.commentAll').on('click','.plBtn',function(){
-        var myDate = new Date();
-        //获取当前年
-        var year=myDate.getFullYear();
-        //获取当前月
-        var month=myDate.getMonth()+1;
-        //获取当前日
-        var date=myDate.getDate();
-        var h=myDate.getHours();       //获取当前小时数(0-23)
-        var m=myDate.getMinutes();     //获取当前分钟数(0-59)
-        if(m<10) m = '0' + m;
-        var s=myDate.getSeconds();
-        if(s<10) s = '0' + s;
-        var now=year+'-'+month+"-"+date+" "+h+':'+m+":"+s;
-        //获取输入内容
-        var oSize = $(this).siblings('.flex-text-wrap').find('.comment-input').val();
-        console.log(oSize);
-        //动态创建评论模块
-        oHtml = '<div class="comment-show-con clearfix">' +
-            '<div class="comment-show-con-img pull-left">' +
-            '<img src="images/header-img-comment_03.png" alt="">' +
-            '</div>' +
-            ' <div class="comment-show-con-list pull-left clearfix">' +
-            '<div class="pl-text clearfix"> ' +
-            '<a href="#" class="comment-size-name">评论人的名字</a> ' +
-            '<span class="my-pl-con">&nbsp;'+ oSize +'</span> ' +
-            '</div> ' +
-            '<div class="date-dz"> ' +
-            '<span class="date-dz-left pull-left comment-time">'+now+'</span>' +
-            ' <div class="date-dz-right pull-right comment-pl-block">' +
-            '<a href="javascript:;" class="removeBlock">删除</a> ' +
-            '<a href="javascript:;" class="date-dz-pl pl-hf hf-con-block pull-left">回复</a> ' +
-            '<span class="pull-left date-dz-line">|</span>' +
-            ' <a href="javascript:;" class="date-dz-z pull-left"><i class="date-dz-z-click-red"></i>赞 (<i class="z-num">666</i>)</a> ' +
-            '</div> ' +
-            '</div>' +
-            '<div class="hf-list-con"></div>' +
-            '</div> </div>';
-        if(oSize.replace(/(^\s*)|(\s*$)/g, "") != ''){
-            $(this).parents('.reviewArea ').siblings('.comment-show').prepend(oHtml);
-            $(this).siblings('.flex-text-wrap').find('.comment-input').prop('value','').siblings('pre').find('span').text('');
-        }
-    });
-    //<!--点击回复动态创建回复块-->
-    $('.comment-show').on('click','.pl-hf',function(){
-        //获取回复人的名字
-        var fhName = $(this).parents('.date-dz-right').parents('.date-dz').siblings('.pl-text').find('.comment-size-name').html();
-        //回复@
-        var fhN = '回复@'+fhName;
-        //var oInput = $(this).parents('.date-dz-right').parents('.date-dz').siblings('.hf-con');
-        var fhHtml = '<div class="hf-con pull-left"> ' +
-            '<textarea class="content comment-input hf-input" placeholder="" onkeyup="keyUP(this)"></textarea> ' +
-            '<a href="javascript:;" class="hf-pl">评论</a>' +
-            '</div>';
-        //显示回复
-        if($(this).is('.hf-con-block')){
-            $(this).parents('.date-dz-right').parents('.date-dz').append(fhHtml);
-            $(this).removeClass('hf-con-block');
-            $('.content').flexText();
-            $(this).parents('.date-dz-right').siblings('.hf-con').find('.pre').css('padding','6px 15px');
-            //console.log($(this).parents('.date-dz-right').siblings('.hf-con').find('.pre'))
-            //input框自动聚焦
-            $(this).parents('.date-dz-right').siblings('.hf-con').find('.hf-input').val('').focus().val(fhN);
-        }else {
-            $(this).addClass('hf-con-block');
-            $(this).parents('.date-dz-right').siblings('.hf-con').remove();
-        }
-    });
-    // <!--评论回复块创建-->
-    $('.comment-show').on('click','.hf-pl',function(){
-        var oThis = $(this);
-        var myDate = new Date();
-        //获取当前年
-        var year=myDate.getFullYear();
-        //获取当前月
-        var month=myDate.getMonth()+1;
-        //获取当前日
-        var date=myDate.getDate();
-        var h=myDate.getHours();       //获取当前小时数(0-23)
-        var m=myDate.getMinutes();     //获取当前分钟数(0-59)
-        if(m<10) m = '0' + m;
-        var s=myDate.getSeconds();
-        if(s<10) s = '0' + s;
-        var now=year+'-'+month+"-"+date+" "+h+':'+m+":"+s;
-        //获取输入内容
-        var oHfVal = $(this).siblings('.flex-text-wrap').find('.hf-input').val();
-        console.log(oHfVal)
-        var oHfName = $(this).parents('.hf-con').parents('.date-dz').siblings('.pl-text').find('.comment-size-name').html();
-        var oAllVal = '回复@'+oHfName;
-        if(oHfVal.replace(/^ +| +$/g,'') == '' || oHfVal == oAllVal){
-        }else {
-            $.getJSON("json/pl.json",function(data){
-                var oAt = '';
-                var oHf = '';
-                $.each(data,function(n,v){
-                    delete v.hfContent;
-                    delete v.atName;
-                    var arr;
-                    var ohfNameArr;
-                    if(oHfVal.indexOf("@") == -1){
-                        data['atName'] = '';
-                        data['hfContent'] = oHfVal;
-                    }else {
-                        arr = oHfVal.split(':');
-                        ohfNameArr = arr[0].split('@');
-                        data['hfContent'] = arr[1];
-                        data['atName'] = ohfNameArr[1];
-                    }
+	function list_comments_show(d) {
+		var display=$(d).parent().parent().parent().next().css("display");
+		if (display=="none"){
+			$(d).parent().parent().parent().next().css("display","");
+			$.post(
+				"/comment/"
+			);
+		}else {
+			$(d).parent().parent().parent().next().css("display","none");
+		}
+	}
 
-                    if(data.atName == ''){
-                        oAt = data.hfContent;
-                    }else {
-                        oAt = '回复<a href="#" class="atName">@'+data.atName+'</a> : '+data.hfContent;
-                    }
-                    oHf = data.hfName;
-                });
+	function showImg(pid,curUid,uid){
+		$.post(
+			"/user/"+uid+"/getInfoByUid",
+			"curUid="+curUid,
+			function (data) {
+				var infoCard="<a href='/user/"+data.uid+"/1' style='display: inline-block'><img src='/avatar/"+data.image+"' class='avatar'/>"
+				switch (data.status) {
+					case 0:
+						infoCard+="<i title='普通用户'/>";
+						break;
+					case 1:
+						infoCard+="<i class='lmlblog-verify lmlblog-verify-a' style='position: absolute;top: 38px;left: 200px;' title='会员用户'/>";
+						break;
+					case 2:
+						infoCard+="<i class='lmlblog-verify lmlblog-verify-b' style='position: absolute;top: 38px;left: 200px;' title='认证用户'/>";
+						break;
+					case 3:
+						infoCard+="<i class='lmlblog-verify-c lmlblog-verify-cc' style='position: absolute;top: 38px;left: 200px;' title='超级管理员'/>";
+						break;
+				}
+				infoCard+="</a><div><strong>"+data.name+"</strong>";
+				switch (data.gender) {
+					case '男':
+						infoCard+="<span class='lmlblog-mark lmlblog-boy'><i class='fa fa-mars'></i></span>";
+						break;
+					case '女':
+						infoCard+="<span class='lmlblog-mark lmlblog-girl'><i class='fa fa-venus'></i></span>";
+						break;
+					default:
+						infoCard+="<span class='lmlblog-mark' style='background-color: orange'><i class='fa fa-transgender-alt'></i></span>";
+						break;
+				}
+				infoCard+="</div><br><div>"+data.description+"</div><hr><div>&nbsp;&nbsp;关注&nbsp;"+data.countAllFollowUser+"&nbsp;&nbsp;|&nbsp;&nbsp;粉丝&nbsp;"+data.countAllFans+"&nbsp;&nbsp;|&nbsp;&nbsp;<a href='/user/"+data.uid+"/1'>微博&nbsp;"+data.countAllPost+"</a>&nbsp;&nbsp;</div><br><div>"+data.city+"</div>";
 
-                var oHtml = '<div class="all-pl-con">' +
-                    '<div class="pl-text hfpl-text clearfix">' +
-                    '<a href="#" class="comment-size-name">我的名字 : </a>' +
-                    '<span class="my-pl-con">'+oAt+'</span>' +
-                    '</div>' +
-                    '<div class="date-dz">' +
-                    ' <span class="date-dz-left pull-left comment-time">'+now+'</span> ' +
-                    '<div class="date-dz-right pull-right comment-pl-block">' +
-                    ' <a href="javascript:;" class="removeBlock">删除</a>' +
-                    ' <a href="javascript:;" class="date-dz-pl pl-hf hf-con-block pull-left">回复</a>' +
-                    ' <span class="pull-left date-dz-line">|</span> ' +
-                    '<a href="javascript:;" class="date-dz-z pull-left"><i class="date-dz-z-click-red"></i>赞 (<i class="z-num">666</i>)</a> ' +
-                    '</div> ' +
-                    '</div>' +
-                    '</div>';
-                oThis.parents('.hf-con').parents('.comment-show-con-list').find('.hf-list-con').css('display','block').prepend(oHtml) && oThis.parents('.hf-con').siblings('.date-dz-right').find('.pl-hf').addClass('hf-con-block') && oThis.parents('.hf-con').remove();
-            });
-        }
-    });
-    //<!--删除评论块-->
-    $('.commentAll').on('click','.removeBlock',function(){
-        var oT = $(this).parents('.date-dz-right').parents('.date-dz').parents('.all-pl-con');
-        if(oT.siblings('.all-pl-con').length >= 1){
-            oT.remove();
-        }else {
-            $(this).parents('.date-dz-right').parents('.date-dz').parents('.all-pl-con').parents('.hf-list-con').css('display','none')
-            oT.remove();
-        }
-        $(this).parents('.date-dz-right').parents('.date-dz').parents('.comment-show-con-list').parents('.comment-show-con').remove();
-
-    });
-    //  <!--点赞-->
-    $('.comment-show').on('click','.date-dz-z',function(){
-        var zNum = $(this).find('.z-num').html();
-        if($(this).is('.date-dz-z-click')){
-            zNum--;
-            $(this).removeClass('date-dz-z-click red');
-            $(this).find('.z-num').html(zNum);
-            $(this).find('.date-dz-z-click-red').removeClass('red');
-        }else {
-            zNum++;
-            $(this).addClass('date-dz-z-click');
-            $(this).find('.z-num').html(zNum);
-            $(this).find('.date-dz-z-click-red').addClass('red');
-        }
-    })
-    //循环出现评论框
-    function commens(pid) {
-        var display=$("#comment"+pid).css("display");
-        if(display=="none"){
-            $("#comment"+pid).css("display","block");
-        }else{
-            $("#comment"+pid).css("display","none")
-        }
-    }
-</script>
-<script>
-
-	function showImg(d){
-		$(d).css("display","block");
+				$("#infoCard"+pid).html(infoCard);
+			},
+			"json"
+		);
 	}
 	/*$(document).ready(function(){
 
@@ -736,6 +586,17 @@
 				},
 				"json"
 		)
+	}
+
+	function doFollow(uid,followUid) {
+		$.post(
+				"/user/"+uid+"/doFollow",
+				"uid="+uid+"&followUid="+followUid,
+				function (followStatus){
+					location.href="/main/"+uid+"/all/1";
+				},
+				"json"
+		);
 	}
 
 	$(function(){

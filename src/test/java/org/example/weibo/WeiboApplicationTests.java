@@ -2,7 +2,9 @@ package org.example.weibo;
 
 import org.example.weibo.pojo.User;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,15 +12,20 @@ import java.util.Random;
 
 @SpringBootTest
 class WeiboApplicationTests {
+	@Autowired
+	StringRedisTemplate stringRedisTemplate;
 
 	@Test
 	void contextLoads() {
-		Random random=new Random();
+		/*Random random=new Random();
 
 		for (int r=0;r<20;r++){
 			int i= random.nextInt(10);
 			System.out.println("i = " + i);
-		}
+		}*/
+		stringRedisTemplate.opsForValue().append("msg","helloSpringRedis");
+		String msg = stringRedisTemplate.opsForValue().get("msg");
+		System.out.println("msg = " + msg);
 	}
 
 	public static void main(String[] args) {

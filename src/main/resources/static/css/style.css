@@ -783,7 +783,7 @@ span.home_follow_btn.no {
     color: #555;
     border: 1px solid #ccc;
     border-radius: 4px;
-    width: 724px;
+    width: 740px;
 }
 
 .chat_list {
@@ -6691,9 +6691,11 @@ input.get_mail_code_btn.no,input.get_phone_code_btn.no {
     width: 375px;
 }
 .info_card_loading {
+    /*align-content:center;
+    height: 220px;*/
     text-align: center;
-    margin-top: 80px;
     cursor: pointer;
+    margin: 30px auto;
 }
 .info_card_loading p {
     line-height: 30px;

@@ -112,13 +112,19 @@ public class GroupServiceImpl implements GroupService{
 		for (Group group : groupList) {
 			userSet.add(group.getFollowUid());
 		}
+//		System.out.println("userSet.size() = " + userSet.size());
 		List<User> allFollowUser = followService.showAllFollowUser(uid);
+//		System.out.println("allFollowUser.size() = " + allFollowUser.size());
 
 		for (int i=0;i<allFollowUser.size();i++) {
 			if (userSet.contains(allFollowUser.get(i).getUid())){
+//				System.out.println("allFollowUser.get(i).getUid() = " + allFollowUser.get(i).getUid());
 				allFollowUser.remove(i);
+//				System.out.println("i = " + i);
+				i--;//必须i--不然集合下一个元素会被忽略
 			}
 		}
+//		System.out.println("allFollowUser.size() = " + allFollowUser.size());
 
 		return allFollowUser;
 	}
@@ -130,8 +136,10 @@ public class GroupServiceImpl implements GroupService{
 		groupExample.createCriteria().andUidEqualTo(uid).andNameEqualTo("sp");
 		List<Group> groups = groupMapper.selectByExample(groupExample);
 		if (groups.size()==0){
+//			System.out.println("groups.size() = " + groups.size());
 			return null;
 		}else {
+//			System.out.println("groups.size() = " + groups.size());
 			return userMapper.selectByPrimaryKey(groups.get(0).getFollowUid());
 		}
 	}

@@ -47,7 +47,7 @@ body{
 }
 .pic{
 	background: url(../img/pic.png)  no-repeat;
-	margin-left: 10px;
+	margin-left: -3px;
 	padding:1px 0 10px 25px;
 	cursor: pointer;
 	font-size: 13px;
