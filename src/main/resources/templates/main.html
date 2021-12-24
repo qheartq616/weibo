@@ -304,23 +304,26 @@
                                    data-caption='<i class="fa fa-copyright"></i> lmlblog'>
                                     <img src="/images/qi03.jpg" alt="司空琪吧十一月壁纸" /></a>
                             </div>-->
-							<div class="row">
-								<div class="lmlblog-post-bar">
-									<li onclick='list_comments_show(this);'>
-										<i class="fa fa-comment-o"></i>
-										<span></span>
-									</li>
-									<li class="lmlblog-no-like" th:onclick="|javascript:doLike(${post.user.uid},${post.pid},${session.user.uid},this)|">
-										<i class="fa fa-heart" th:if="${post.postLike==true}"></i><i class="fa fa-heart-o" th:if="${post.postLike==false}"></i><span th:text="|${post.countPostLike}|"></span>
-									</li>
-									<!--<li>
-                                        <i class="lmlblog-icon">&#xe602;</i> <span>1.2w</span>
-                                    </li>
-                                    <li class="tag clear">
-                                        <i class="lmlblog-icon">&#xe895;</i><a href="#2" title="司空琪壁纸"># 司空琪壁纸</a>
-                                    </li>-->
+							<div class="container">
+								<div class="row">
+									<div class="lmlblog-post-bar">
+										<li onclick='list_comments_show(this);'>
+											<i class="fa fa-comment-o"></i>
+											<span></span>
+										</li>
+										<li class="lmlblog-no-like" th:onclick="|javascript:doLike(${post.user.uid},${post.pid},${session.user.uid},this)|">
+											<i class="fa fa-heart" th:if="${post.postLike==true}"></i><i class="fa fa-heart-o" th:if="${post.postLike==false}"></i><span th:text="|${post.countPostLike}|"></span>
+										</li>
+										<!--<li>
+                                            <i class="lmlblog-icon">&#xe602;</i> <span>1.2w</span>
+                                        </li>
+                                        <li class="tag clear">
+                                            <i class="lmlblog-icon">&#xe895;</i><a href="#2" title="司空琪壁纸"># 司空琪壁纸</a>
+                                        </li>-->
+									</div>
 								</div>
 							</div>
+
 
 
 							<!--<div class="lmlblog-post-like-list">
@@ -338,13 +341,14 @@
                                 <i class="lmlblog-verify lmlblog-verify-a" title="司空琪"></i></a>
                             </div>-->
 							<div class="row" style="display: none">
-								<div class="col-lg-2" style="display: inline-block;float: left;">
+								<div class="col-lg-1">
 									头像
 								</div>
-								<div class="col-lg-10" style="display: inline-block">
+								<div class="col-lg-11">
 									评论
 								</div>
 							</div>
+
 
 							<div class="lmlblog-post-footer-bar">
 								<span th:title="${#dates.format(post.postTime,'yyyy-MM-dd HH:mm')}" th:text="${#dates.format(post.postTime,'yyyy-MM-dd HH:mm')}">12月14日 05:25</span>
@@ -416,11 +420,14 @@
 
 <script>
 	function list_comments_show(d) {
-		var display=$(d).parent().parent().next().css("display");
+		var display=$(d).parent().parent().parent().next().css("display");
 		if (display=="none"){
-			$(d).parent().parent().next().css("display","");
+			$(d).parent().parent().parent().next().css("display","");
+			$.post(
+				"/comment/"
+			);
 		}else {
-			$(d).parent().parent().next().css("display","none");
+			$(d).parent().parent().parent().next().css("display","none");
 		}
 	}
 

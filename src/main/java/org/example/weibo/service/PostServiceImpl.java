@@ -315,9 +315,10 @@ public class PostServiceImpl implements PostService{
 			int i = postLikeService.countPostLike(post.getUser().getUid()+"-"+post.getPid());
 			post.setCountPostLike(i);
 
-			//加入所有评论
-			List<Comment> allCommentList = commentService.showAllCommentList(post.getPid());
-			post.setCommentList(allCommentList);
+			/*加入所有评论
+			这种写法太耗资源
+			List<Comment> allCommentList = commentService.showAllComment(post.getPid());
+			post.setCommentList(allCommentList);*/
 		}
 		return postList;
 	}

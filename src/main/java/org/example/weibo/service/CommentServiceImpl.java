@@ -15,10 +15,15 @@ public class CommentServiceImpl implements CommentService{
 
 	@Override
 	//查询pid微博下的所有评论
-	public List<Comment> showAllCommentList(Integer pid) {
+	public List<Comment> showAllComment(Integer pid) {
 		CommentExample commentExample=new CommentExample();
 		commentExample.createCriteria().andPidEqualTo(pid).andPidEqualTo(0);
 		List<Comment> allCommentList = commentMapper.selectByExample(commentExample);
 		return allCommentList;
+	}
+
+	@Override
+	public List<Comment> showLatestComment() {
+		return null;
 	}
 }
