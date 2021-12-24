@@ -5,6 +5,7 @@
     display: block;
     content: '';
     clear: both;
+    z-index: 80;
 }
 .jinsom-content {
     padding: 80px 0;

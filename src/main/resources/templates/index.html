@@ -23,6 +23,7 @@
 			background: none !important;
 			padding: 0 !important;
 		}
+
 	</style>
 	<link rel='stylesheet' id='style-css'  th:href='@{/css/style.css}' type='text/css' media='all' />
 	<link rel='stylesheet' id='lmlblog-css'  th:href='@{/css/lmlblog.css}' type='text/css' media='all' />
@@ -46,7 +47,7 @@
 				<li class="menu-item menu-item-type-taxonomy menu-item-object-category">
 					<a th:href="@{|/main/${session.user.uid}/all/1|}"><i class="fa fa-home"></i>微博首页</a>
 				</li>
-				<li class="menu-item"><a href="#1"><i class="fa fa-envelope-o"></i>私信</a></li>
+				<li class="menu-item"><a th:href="@{|/news/atme/${session.user.uid}/1|}"><i class="fa fa-envelope-o"></i>私信</a></li>
 				<!--<li class="menu-item">
 					<a href="#1">发现</a>
 				</li>
@@ -132,14 +133,25 @@
 							</span>
 						</a>
 						<span class="opacity" th:if="${userCur.followStatus!=3}"><i class="fa fa-envelope-o"></i>&nbsp;&nbsp;<i class="lmlblog-icon">私聊</i></span>
-						<!--<span class="follow has opacity" onmouseover="showList(this)">
-							<ul style="display: none">
-								<a><li>取消关注</li></a>
-								<a><li>特别关注</li></a>
-								<a><li>移除粉丝</li></a>
-								<a><li>举报</li></a>
+						<span class="follow has opacity" style="height: 25px; margin-left: 5px;position: absolute"  onmouseover="showList(this)">
+                  		</span>
+						<div class="setList" style="width: 100px;
+		                                            height:100px;
+		                                            cursor: pointer;
+		                                            position: relative;
+		                                            left:630px;
+		                                            top: 0px;
+                                                    z-index: 100;
+                                                    display: none;
+                                                    background: #FFFFFF;
+                                                  ">
+							<ul>
+								<li><a>取消关注</a></li>
+								<li><a>特别关注</a></li>
+								<li><a>移除粉丝</a></li>
+								<li><a>举报</a></li>
 							</ul>
-						</span>-->
+						</div>
 					</div>
 				</div>
 			</div>
@@ -151,7 +163,7 @@
 				<li><a href="http://www.lmlblog.com/blog/sikongqi/2.html" target="_blank">视频</a></li>
 				<li><a href="http://www.lmlblog.com/blog/sikongqi/1.html" target="_blank">个人档</a></li>
 			</div>
-			<div class="lmlblog-member-content-list clear">
+			<div class="lmlblog-member-content-list clear" style="margin-top: 50px">
 				<div class="lmlblog-member-left">
 					<div class="lmlblog-member-left-follow clear">
 						<li>
@@ -394,12 +406,24 @@
 </script>
 </body>
 <script type='text/javascript' th:src='@{/js/base.js}'></script>
-<script type='text/javascript' th:src='@{/all.js}'></script>
+<script type='text/javascript' th:src='@{/js/all.js}'></script>
 <script type='text/javascript' th:src='@{/js/plupload.full.min.js}'></script>
 <script type='text/javascript' th:src='@{/js/layui.js}'></script>
 <script>
 	function showList(d){
-		$(d).children().eq(0).css("display","block");
+        $(".setList").css({"display":"block"});
+
+		$(".setList").mouseover(function () {
+            $(".setList").css({"display":"block"});
+
+            $(".setList").mouseout(function () {
+                $(".setList").css("display","none");
+            })
+
+        })
+        $(d).mouseout(function () {
+            $(".setList").css({"display":"none","z-index":"99"});
+        })
 	}
 	jQuery(document).ready(function($){
 		$.fn.smartFloat = function() {

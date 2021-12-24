@@ -1103,15 +1103,10 @@ return false;
 
 
 
-
-
-
-
 //动态列表点击显示评论列表
 function list_comments_show(obj){
 $(obj).parent().siblings('.comments').toggle();
 }
-
 
 
 //查看密码动态

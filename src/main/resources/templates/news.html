@@ -1,0 +1,334 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<link rel="shortcut icon" href="/images/tx.jpg" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Cache-Control" content="no-cache">
+	<meta http-equiv="Expires" content="0">
+	<title th:text="|${session.user.name}的私信页面 微博-随时随地发现新鲜事|"></title>
+	<meta name="keywords" content="司空琪个人微博,司空琪个人主页,司空琪空间,画江湖动漫" />
+	<meta name="description" content="司空琪个人微博,司空琪个人主页,司空琪空间说说,画江湖动漫" />
+	<style type="text/css">
+		img.wp-smiley,
+		img.emoji {
+			display: inline !important;
+			border: none !important;
+			box-shadow: none !important;
+			height: 1em !important;
+			width: 1em !important;
+			margin: 0 .07em !important;
+			vertical-align: -0.1em !important;
+			background: none !important;
+			padding: 0 !important;
+		}
+
+		/**/
+
+		/*!*头像信息框的样式*!
+		*{margin:0;padding:0;list-style-type:none;font-style:normal;}
+		a,img{border:0;}
+		a,a:visited{color:#5e5e5e; text-decoration:none;}
+		a:hover{color:#4183C4;text-decoration:underline;}
+		.clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden;}
+		.clearfix{display:inline-table;}!* Hides from IE-mac *!
+		*html .clearfix{height:1%;}
+		.clearfix{display:block;}!* End hide from IE-mac *!
+		*+html .clearfix{min-height:1%;}
+		!*.clear{height:0;overflow:hidden;clear:both;display:block;}*!
+		body{font:12px/180% Arial, Helvetica, sans-serif, "新宋体";}
+		!* demo *!
+		.demo{width:950px;margin:20px auto;}
+		.demo h2{color:#8FD401;font-size:16px;height:40px;text-align:center;}
+		.demo p{line-height:22px;margin-bottom:20px;}
+		.demo p a{color:#3366cc;margin:0 5px;font-weight:800;font-size:14px;}
+		.demo .fl{float:left;}
+		.demo img{border:1px solid #555555;margin:5px 15px 0 0;padding:3px;}
+		!* demobtn *!
+		.demobtn{padding:20px 10px 40px 10px;}
+		.demobtn a{display:inline-block;height:24px;line-height:24px;font-size:14px;padding:5px 0;text-align:center;width:210px;}
+		!* qtip 提示框基础样式 *!
+		.qtip .qtip-content{padding:10px;overflow:hidden;}
+		.qtip .qtip-content .qtip-title,.qtip-cream .qtip-content .qtip-title{background-color:#F0DE7D;}
+		.qtip-light .qtip-content .qtip-title{background-color:#f1f1f1;}
+		.qtip-dark .qtip-content .qtip-title{background-color:#404040;}
+		.qtip-red .qtip-content .qtip-title{background-color:#F28279;}
+		.qtip-green .qtip-content .qtip-title{background-color:#B9DB8C;}
+		!* name_card *!
+		.name_card{background:url("/images/footer_bg.png") no-repeat -230px bottom;_background:none;}
+		.name_card .W_vline{color:#999;}
+		!* name_card name *!
+		.name_card .name dt,.name_card .name dd,.name_card .info dt,.name_card .info dd{float:left;display:inline;}
+		.name_card .name{padding:20px 20px 10px;zoom:1;}
+		.name_card .name dt img{height:50px;display:block;border-radius: 2px;}
+		.name_card .name dd{margin:-4px 0 0 10px;line-height:20px;}
+		.name_card .name dd span{padding:0 10px 0 0;}
+		.name_card .name dd p{width:260px;word-wrap:break-word;}
+		.name_card .name dd div{width: 210px}.
+											 .name_card .name .address img{margin:0 0 0 3px;}
+		!* name_card info *!
+		.name_card .info{margin:0 20px 8px;line-height:18px;width:330px;}
+		.name_card .info dd{width:294px;margin-bottom:2px;word-wrap:break-word;}
+		.name_card .info dd a{display:inline-block;}
+		.name_card .info li.honour{padding-top:5px;float:left;margin-right:10px;height:24px}
+		!* name_card links *!
+		.name_card .links{margin:0;padding:6px 20px 10px;overflow:hidden}
+		.name_card .links .W_vline{margin:0 3px;}
+		.name_card .links .W_btn_c{float:right;display:inline;}
+		.name_card .links p{float:left;display:inline-block;margin-top:4px}
+		.name_card .links p .W_chat_stat{display:inline-block;width:7px;height:7px;border-width:1px;border-style:solid;border-radius:2px;overflow:hidden;}
+		.name_card .links p .W_chat_stat_online{margin-right:5px;background-color:#8FDC00;border-color:#48C000;}
+		!* name_card userdata *!
+		.name_card .userdata{width:270px}
+		.name_card .userdata li{float:left}
+		.name_card .userdata li.W_vline{margin:0 8px;}*/
+	</style>
+	<link rel='stylesheet' id='style-css' href='/css/style.css' type='text/css' media='all' />
+	<link rel='stylesheet' id='lmlblog-css' href='/css/lmlblog.css' type='text/css' media='all' />
+	<link rel='stylesheet' id='all-css' href='/css/all.css' type='text/css' media='all' />
+
+	<!--<link rel="stylesheet" href="/css/bootstrap.min.css">-->
+	<link rel="stylesheet" type="text/css" href="/css/style-input.css">
+
+	<script type='text/javascript' src='/js/jquery.min.js'></script>
+	<script type='text/javascript' src='/js/ueditor.all.min.js'></script>
+
+</head>
+<body>
+<input hidden th:value="${session.user.uid}" id="uidVar">
+<!-- 菜单 -->
+<div class="menu-bar">
+	<div class="head_content">
+		<h1 class="m-logo"><a href="https://weibo.com/"></a></h1>
+
+		<div id="nav" class="menu-menu-1-container">
+			<ul id="menu-menu-1" class="menu" >
+				<li id="head_search"><i class="fa fa-search"></i></li>
+				<li class="menu-item" style="margin-left: 3px;">
+					<form action="#" method=""  style="display: inline-block; ">
+						<input type="search" style="display: inline-block;" class="search" placeholder="搜索框" />
+					</form>
+				</li>
+				<li class=" menu-item menu-item-type-custom">
+					<a th:href="@{|/main/${session.user.uid}/all/1|}"><i class="fa fa-home"></i>微博首页</a>
+				</li>
+				<li class="gengxin menu-item "><a th:href="@{|/news/atme/${session.user.uid}/1|}"><i class="fa fa-envelope-o"></i>私信</a></li>
+				<li th:class="|menu-item menu-item-type-custom|">
+					<a th:href="@{|/user/${session.user.uid}/1|}">
+						<img th:src="|/avatar/${session.user.image}|" style="height: 32px;width: 32px;position: relative;top: -3px;" class="avatar" />
+						<span th:text="${session.user.name}" style="display: inline-block;position: relative;top: -14px;"></span>
+					</a>
+				</li>
+			</ul>
+
+		</div>
+		<!--<div class="head_user_info">
+			<ul>
+				<li id="head_login" onclick="#1">登录</li>
+				<span class="head_login_middle">or</span>
+				<li id="head_reg" onclick="#1">注册</li>
+			</ul>
+		</div>-->
+		<div style="clear: both;"></div>
+	</div>
+</div><!-- menu-bar -->
+<div style="clear: both;"></div>
+<div class="lmlblog-member-main" data="1">
+	<div class="lmlblog-member-bg-remove-image">
+		<div class="lmlblog-member-content-list clear">
+			<div class="lmlblog-member-left-main">
+				<div class="lmlblog-member-left-profile">
+					<h3>我的消息</h3>
+					<ul>
+						<li><i class="fa fa-address-book-o"></i><a th:href="@{|/news/atme/${session.user.uid}/1|}">@我的人</a></li>
+						<li><i class="fa fa-transgender"></i><a href="#">评论</a></li>
+						<li><i class="fa fa-map-marker"></i><a th:href="@{|/news/likeMe/${session.user.uid}/1|}">点赞</a></li>
+						<li><i class="fa fa-smile-o"></i> <a href="#">私信</a></li>
+					</ul>
+				</div>
+
+			</div>
+			<div class="lmlblog-member-right-main" style="overflow: auto">
+				<div th:if="${pageInfo!=null}">
+					<div class="lmlblog-post-list">
+					<div class="lmlblog-posts-list words" style="background-image:url(/images/058.png);"
+						 data="4197" th:each="post:${pageInfo.list}" id="postList">
+						<!-- 动态内容部分，包括列表 -->
+						<div class="lmlblog-post-user-info">
+							<div class="lmlblog-post-user-info-avatar" user-data="1">
+								<a th:href="@{|/user/${post.user.uid}/1|}" style="display: inline-block;">
+									<span class="lmlblog-vip-icon"></span>
+									<img th:src="|/avatar/${post.user.image}|" class="avatar" />
+									<i th:if="${post.user.status==0}" th:title="普通用户"></i>
+									<i th:if="${post.user.status==1}" class="lmlblog-verify lmlblog-verify-a" th:title="会员用户"></i>
+									<i th:if="${post.user.status==2}" class="lmlblog-verify lmlblog-verify-b" th:title="认证用户"></i>
+									<i th:if="${post.user.status==3}" class="lmlblog-verify-c lmlblog-verify-cc" th:title="超级管理员"></i>
+								</a>
+								<div class="lmlblog-user-info-card" style="display: none" onMouseOut="hideImg(this)" onmouseover="showImg(this)">
+									<!--悬浮显示信息-->
+									<div class="info_card_loading">
+										<img th:src="|/avatar/${post.user.image}|" class="avatar" />
+										<br>
+										<span th:text="${post.user.name}"></span>
+										<span>关注|粉丝|点赞</span>
+									</div>
+								</div>
+							</div>
+							<div class="lmlblog-post-user-info-name">
+								<a th:href="@{|/user/${post.user.uid}/1|}">
+									<font style="color:#333;font-weight:600" th:text="${post.user.name}">司空琪</font>
+								</a>
+							</div>
+							<div class="lmlblog-post-user-info-time" title="2017-12-14 05:25" th:text="${#dates.format(post.postTime,'yyyy-MM-dd HH:mm')}">12-14 05:25</div>
+							<div class="lmlblog-post-user-info-time" title="来自weibo.com" th:text="来自weibo.com">12-14 05:25</div>
+						</div>
+						<!-- 作者信息 -->
+						<div class="lmlblog-post-setting">
+							<i class="fa fa-angle-down"></i>
+							<div class="lmlblog-post-setting-box">
+								<ul>
+									<a href="#" title="举报"><li>举报</li></a>
+									<a th:href="@{|/user/${post.user.uid}/1|}" title="访问主页"><li>访问主页</li></a>
+								</ul>
+							</div>
+						</div>
+						<div class="lmlblog-post-content" style="white-space:pre-line" th:text="${post.text}">
+						</div>
+						<div class="lmlblog-post-bar">
+							<li onclick='list_comments_show(this);'>
+								<i class="fa fa-comment-o"></i>
+								<span></span>
+							</li>
+							<li class="lmlblog-no-like" th:onclick="|javascript:doLike(${post.pid},${session.user.uid},this)|">
+								<i class="fa fa-heart" th:if="${post.postLike==true}"></i><i class="fa fa-heart-o" th:if="${post.postLike==false}"></i><span th:text="|${post.countPostLike}|"></span>
+							</li>
+						</div>
+						<div class="lmlblog-post-footer-bar">
+							<span th:title="${#dates.format(post.postTime,'yyyy-MM-dd HH:mm')}" th:text="${#dates.format(post.postTime,'yyyy-MM-dd HH:mm')}">12月14日 05:25</span>
+							<span>小尾巴</span><i class="lmlblog-icon" onclick="lmlblog_post_type_open();">&#xe62c;</i>
+						</div>
+					</div>
+					<div class="lmlblog-pager" th:if="${#strings.isEmpty(gid)&&type!='all'}">
+						<a class="lmlblog-pager-left" th:href="@{|/main/${session.user.uid}/${type}/${pageInfo.hasPreviousPage?pageInfo.prePage:1}|}">上一页</a>
+						<div class="lmlblog-pager-center layui-form" th:text="|第${pageInfo.pageNum==0?1:pageInfo.pageNum}页|"></div>
+						<a class="lmlblog-pager-right" th:href="@{|/main/${session.user.uid}/${type}/${pageInfo.hasNextPage?pageInfo.nextPage:pageInfo.navigateLastPage}|}">下一页</a>
+					</div>
+					<div class="lmlblog-pager" th:if="${not #strings.isEmpty(gid)}">
+						<a class="lmlblog-pager-left" th:href="@{|/main/${session.user.uid}/myGroups/${gid}/${pageInfo.hasPreviousPage?pageInfo.prePage:1}|}">上一页</a>
+						<div class="lmlblog-pager-center layui-form" th:text="|第${pageInfo.pageNum==0?1:pageInfo.pageNum}页|"></div>
+						<a class="lmlblog-pager-right" th:href="@{|/main/${session.user.uid}/myGroups/${gid}/${pageInfo.hasNextPage?pageInfo.nextPage:pageInfo.navigateLastPage}|}">下一页</a>
+					</div>
+				</div>
+				</div>
+				<div th:if="${pageInfo==null}">
+					<div class="lmlblog-post-user-info">
+						<div class="lmlblog-post-user-info-time" title="2017-12-14 05:25" th:text="对不起没有AT你的数据">12-14 05:25</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+<!-- 底部 -->
+<div style="clear:both"></div>
+<div class="footer">
+	<div class="footer_b_foot">
+		<div class="footer_b_top">
+		</div>
+		<div class="footer_b_bottom">Design by 2017 画江湖杯莫停 司空琪个人主页 司空琪微博/空间/贴吧官博。Promoted by 2021 红桃QHeartQ。内容源于网络搜集，仅学习、分享交流。</div>
+	</div>
+</div>
+<!-- 返回顶部 -->
+<a href="javascript:returnTop();" class="cd-top"></a>
+<script type="text/javascript">
+	var sdelay = 0;
+
+	function returnTop() {
+		window.scrollBy(0, -100); //Only for y vertical-axis
+		if (document.body.scrollTop > 0) {
+			sdelay = setTimeout('returnTop()', 50);
+		}
+	}
+</script>
+</body>
+<script type='text/javascript' src='/js/base.js'></script>
+<script type='text/javascript' src='/js/all.js'></script>
+<script type='text/javascript' src='/js/plupload.full.min.js'></script>
+<script type='text/javascript' src='/js/layui.js'></script>
+
+<script src="/js/jquery-3.1.0.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/jquery.qtip-1.0.0-rc3.js"></script>
+
+<script>
+	function showImg(d){
+		$(d).css("display","block");
+	}
+	function hideImg(d){
+		$(d).css("display","block");
+	}
+	jQuery(document).ready(function($) {
+		$.fn.smartFloat = function() {
+			var position = function(element) {
+				var top = element.position().top,
+						pos = element.css("position");
+				$(window).scroll(function() {
+					var scrolls = $(this).scrollTop();
+					if (scrolls > top) {
+						if (window.XMLHttpRequest) {
+							element.css({
+								position: "fixed",
+								top: 0
+							});
+						} else {
+							element.css({
+								top: scrolls
+							});
+						}
+					} else {
+						element.css({
+							position: "absolute",
+							top: top
+						});
+					}
+				});
+			};
+			return $(this).each(function() {
+				position($(this));
+			});
+		};
+		$(".lmlblog-member-left-bg-xg").smartFloat();
+	});
+
+	function doLike(pid,uid,d) {
+		//alert("22");
+		$.post(
+				"/user/"+uid+"/doLike",
+				"pid="+pid+"&uid="+uid,
+				function (data){
+					//alert("33");
+					//应该还需要去改变post.like的值
+					//alert(data);
+					var a=$("#post"+pid+"0").text();
+					var b=parseInt($(d).children().eq(1).text());
+					var h="<i className='fa fa-heart'></i>";
+					var ho="<i className='fa fa-heart-o'></i>";
+					//alert(b);
+					//alert(b-1);
+					//alert(!data);
+					if (!data){
+						$(d).children().eq(0).removeClass("fa fa-heart");
+						$(d).children().eq(0).addClass("fa fa-heart-o");
+						$(d).children().eq(1).text(b-1);
+					}else {
+						$(d).children().eq(0).removeClass("fa fa-heart-o");
+						$(d).children().eq(0).addClass("fa fa-heart");
+						$(d).children().eq(1).text(b+1);
+					}
+				},
+				"json"
+		)
+	}
+</script>
+</html>
