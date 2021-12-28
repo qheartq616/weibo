@@ -5,7 +5,7 @@ import org.example.weibo.mapper.UserMapper;
 import org.example.weibo.pojo.Follow;
 import org.example.weibo.pojo.FollowExample;
 import org.example.weibo.pojo.User;
-import org.example.weibo.utils.ListUtils;
+import org.example.weibo.utils.ListUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -153,8 +153,8 @@ public class FollowServiceImpl implements FollowService{
 		List<User> allFans = showAllFans(uid);
 		List<User> allFollowUser = showAllFollowUser(uid);
 		//所有粉丝和所有关注，重叠部分即为互相关注
-		List<User> unionList = ListUtils.unionList(allFans, allFollowUser);
-		ListUtils.sortByUid(unionList);
+		List<User> unionList = ListUtil.unionList(allFans, allFollowUser);
+		ListUtil.sortByUid(unionList);
 		/*System.out.println("1111111");
 		System.out.println("allFans = " + allFans.size());
 		System.out.println("allFollowUser = " + allFollowUser.size());

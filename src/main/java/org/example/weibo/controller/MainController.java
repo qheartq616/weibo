@@ -27,8 +27,6 @@ public class MainController {
 	@Resource
 	GroupService groupService;
 	@Resource
-	PostMapper postMapper;
-	@Resource
 	UserService userService;
 
 	@RequestMapping("{uid}/{type}/{pageNum}")

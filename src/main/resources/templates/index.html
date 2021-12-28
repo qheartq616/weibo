@@ -36,6 +36,8 @@
 	<link rel='stylesheet' id='style-css' th:href='@{/css/style.css}' type='text/css' media='all' />
 	<link rel='stylesheet' id='lmlblog-css' th:href='@{/css/lmlblog.css}' type='text/css' media='all' />
 	<link rel='stylesheet' id='all-css' th:href='@{/css/all.css}' type='text/css' media='all' />
+
+	<link rel="stylesheet" type="text/css" href="/css/style-input.css">
 	<script type='text/javascript' th:src='@{/js/jquery.min.js}'></script>
 	<script type='text/javascript' th:src='@{/js/ueditor.all.min.js}'></script>
 </head>
@@ -78,13 +80,13 @@
 				<li th:class="|gengxin menu-item menu-item-type-custom|" th:if="${userCur.uid==session.user.uid}">
 					<a th:href="@{|/user/${session.user.uid}/1|}" style="text-decoration: none">
 						<img th:src="|/avatar/${session.user.image}|" style="height: 32px;width: 32px;position: relative;top: -3px;" class="avatar" />
-						<span th:text="${session.user.name}"></span>
+						<span th:text="${session.user.name}" style="position: relative;top: -1px"></span>
 					</a>
 				</li>
 				<li th:class="|menu-item menu-item-type-custom|" th:if="${userCur.uid!=session.user.uid}">
 					<a th:href="@{|/user/${session.user.uid}/1|}" style="text-decoration: none">
 						<img th:src="|/avatar/${session.user.image}|" style="height: 32px;width: 32px;position: relative;top: -3px;" class="avatar" />
-						<span th:text="${session.user.name}"></span>
+						<span th:text="${session.user.name}" style="position: relative;top: -1px"></span>
 					</a>
 				</li>
 			</ul>
@@ -282,24 +284,147 @@
 							<div class="lmlblog-post-content ">
 								<p th:utext="${topPost.text}"></p>
 							</div>
-							<!--<div class="lmlblog-post-images-list clear"></div>-->
-							<div class="lmlblog-post-bar">
-								<li onclick='list_comments_show(this);'>
-									<i class="fa fa-comment-o"></i><span></span>
-								</li>
-								<li class="lmlblog-no-like" th:onclick="|javascript:doLike(${topPost.user.uid},${topPost.pid},${session.user.uid},this)|">
-									<i class="fa fa-heart" th:if="${topPost.postLike==true}"></i><i class="fa fa-heart-o" th:if="${topPost.postLike==false}"></i><span th:text="|${topPost.countPostLike}|"></span>
-								</li>
-								<!--<li>
-                                <i class="lmlblog-icon">&#xe602;</i> <span>1.2w</span>
-                                </li>-->
-								<!--<li class="tag clear"><i class="lmlblog-icon">&#xe895;</i><a href="#2" title="司空琪壁纸"></a></li>-->
+
+							<div class="container">
+								<div class="row">
+									<div class="lmlblog-post-bar" >
+										<hr style="width: 710px;position: relative;left: -20px;top: 10px">
+										<li th:onclick='|list_comments_show(this,${topPost.user.uid},${topPost.pid});|'>
+											<i class="fa fa-comment-o"></i><span></span>
+										</li>
+										<li class="lmlblog-no-like" th:onclick="|javascript:doLike(${topPost.user.uid},${topPost.pid},${session.user.uid},this)|">
+											<i class="fa fa-heart" th:if="${topPost.postLike==true}"></i><i class="fa fa-heart-o" th:if="${topPost.postLike==false}"></i><span th:text="|${topPost.countPostLike}|"></span>
+										</li>
+									</div>
+									<hr style="width: 710px">
+								</div>
+							</div>
+							<div style='display: none;padding-bottom: 15px;background-color: #f2f2f5;position: relative;top: -10px' >
+								<!--发送评论开始-->
+								<div class='row' style='margin-left: 0px;margin-right: 0px;padding-top: 10px'>
+									<div class='col-lg-1'>
+										<img th:src='|/avatar/${session.user.image}|' style='height: 32px;width: 32px'/>
+									</div>
+									<div class='col-lg-11' style='padding-left: 0px'>
+										<form role='form' method="post">
+											<div class='form-group' style='margin-top: 0px'>
+												<div class='col-lg-12' style='padding-left: 0px'>
+													<div contentEditable='true' th:id='|comment${topPost.pid}|' class='form-control' style='width: 635px;height: auto'>我是母回复</div>
+												</div>
+												<div class='col-lg-12' style='margin-top: 12px;margin-left: 12px;'>
+													<button type='button' id='send' class='btn btn-default pull-right disabled' style='color: #ffc09f;height: 30px;width: 60px;padding: 0 0'>发布</button>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+								<!--发送评论结束-->
+
+								<hr style="width: 680px;margin-left: 15px"/>
+
+								<div style='display: block;background-color: #f2f2f5;'>
+									<div class='row'  style='margin-left: 0px;margin-right: 0px;'>
+										<div class="col-lg-6"><a href=''>按热度</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href=''>按时间</a></div>
+									</div>
+									<!--需要遍历的评论开始-->
+									<div class='row' style='margin-left: 0px;margin-right: 0px'>
+										<hr style="width: 680px;margin-left: 15px"/>
+										<div class='col-lg-1'>
+											<img src='/avatar/1.jpg' style='height: 32px;width: 32px'/>
+										</div>
+										<div class='col-lg-11' style='padding-left: 0px'>
+											<a style='color: orange' href='/user/1/1'>Admin</a>
+											<span>：我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论</span>
+										</div>
+									</div>
+									<!--评论的时间与回复开始-->
+									<div class='row' style='margin-left: 0px;margin-right: 0px'>
+										<div class='col-lg-1'></div>
+										<div class='col-lg-3' style="color: #808080;padding-left: 0px">时间</div>
+										<div class='col-lg-6'></div>
+										<div class='col-lg-2'>
+											<a href='javascript:void(0);' style='text-decoration: none' onclick='showReComment(this)'>回复</a>
+											&nbsp;&nbsp;|&nbsp;&nbsp;
+											<a href=''><i class='fa fa-heart'></i></a>
+											1
+										</div>
+									</div>
+									<!--评论的时间与回复结束-->
+									<!--发送回复评论开始-->
+									<div class='row' style='margin-left: 0px;margin-right: 0px;display: none'>
+										<br>
+										<div class='col-lg-1'></div>
+										<div class='col-lg-11' style='padding-left: 0px;background-color: white;padding-right: 0px;width: 635px'>
+											<br>
+											<div class='row'  style='margin-left: 0px;margin-right: 0px'>
+												<div class='col-lg-12'>
+													<form role='form' method="post">
+														<div class='form-group' style='margin-top: 0px'>
+															<div class='col-lg-12' style='padding-left: 0px'>
+																<div contentEditable='true' id="content1" class='form-control' style='width: 605px;height: auto'>我是子回复</div>
+															</div>
+															<div class='col-lg-12' style='margin-top: 12px;margin-left: 12px;'>
+																<button type='button' id='send1' class='btn btn-default pull-right disabled' style='color: #ffc09f;height: 30px;width: 60px;padding: 0 0'>发布</button>
+															</div>
+														</div>
+													</form>
+												</div>
+											</div>
+											<br>
+										</div>
+									</div>
+									<!--发送回复评论结束-->
+									<div class='row' style='margin-left: 0px;margin-right: 0px;'>
+										<br>
+										<div class='col-lg-1'></div>
+										<div class='col-lg-11' style='padding-left: 0px;background-color: #eaeaec;width: 635px;padding-top: 10px;padding-bottom: 15px'>
+											<div class='row' style='margin-left: 0px;margin-right: 0px'>
+												<div class='col-lg-12' style='padding-right: 0px;padding-left: 12px'>
+													<a style='color: orange' href='/user/1/1'>Admin</a>
+													<span>：我是子评论我是子评论我是子评论我是子评论我是子评论我是子评论我是子评论我是子评论我是子评论我是子评论我是子评论我是子评论我是子评论我是子评论我是子评论</span>
+												</div>
+											</div>
+											<div class='row' style='margin-left: 0px;margin-right: 0px'>
+												<div class='col-lg-4' style='color: #808080;padding-right: 0px;padding-left: 12px'>时间</div>
+												<div class='col-lg-5'></div>
+												<div class='col-lg-3' style="padding-right: 5px">
+													<span style="float: right">
+														<a href='javascipt:void(0);' style='text-decoration: none' onclick='showReCommentComment(this)'>回复</a>
+														&nbsp;&nbsp;|&nbsp;&nbsp;
+														<a href=''><i class='fa fa-heart'></i></a>
+														1
+													</span>
+												</div>
+											</div>
+											<div class='row' style='display: none;margin-left: 15px;margin-right: 0px'>
+												<br>
+												<div class='col-lg-12' style='background-color: white;'>
+													<br>
+													<div class='row'  style='margin-left: 0px;margin-right: 0px'>
+														<div class='col-lg-12' style='padding-left: 0px'>
+															<form role='form' method="post">
+																<div class='form-group' style='margin-top: 0px'>
+																	<div class='col-lg-12' style='padding-left: 0px'>
+																		<div contentEditable='true' id="content2" class='form-control' style='width: 575px;height: auto'>我是子子回复</div>
+																	</div>
+																	<div class='col-lg-12' style='margin-top: 12px;margin-left: 12px;padding-right: 5px'>
+																		<button type='button' id='send2' class='btn btn-default pull-right disabled' style='color: #ffc09f;height: 30px;width: 60px;padding: 0 0'>发布</button>
+																	</div>
+																</div>
+															</form>
+														</div>
+													</div>
+													<br>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
 							<div class="lmlblog-post-footer-bar">
 								<span th:title="${#dates.format(topPost.postTime,'yyyy-MM-dd HH:mm')}" th:text="${#dates.format(topPost.postTime,'yyyy-MM-dd HH:mm')}">12月14日 05:25</span>
 								<span>小尾巴</span><i class="lmlblog-icon" onclick="lmlblog_post_type_open();">&#xe62c;</i>
 							</div>
-
 						</div>
 					</div>
 					<div class="lmlblog-post-list" th:each="post:${pageInfo.list}">
@@ -353,17 +478,25 @@
 								<p th:utext="${post.text}"></p>
 							</div>
 							<!--<div class="lmlblog-post-images-list clear"></div>-->
-							<div class="lmlblog-post-bar">
-								<li onclick='list_comments_show(this);'>
-									<i class="fa fa-comment-o"></i><span></span>
-								</li>
-								<li class="lmlblog-no-like" th:onclick="|javascript:doLike(${post.user.uid},${post.pid},${session.user.uid},this)|">
-									<i class="fa fa-heart" th:if="${post.postLike==true}"></i><i class="fa fa-heart-o" th:if="${post.postLike==false}"></i><span th:text="|${post.countPostLike}|"></span>
-								</li>
-								<!--<li>
-                                <i class="lmlblog-icon">&#xe602;</i> <span>1.2w</span>
-                                </li>-->
-								<!--<li class="tag clear"><i class="lmlblog-icon">&#xe895;</i><a href="#2" title="司空琪壁纸"></a></li>-->
+							<div class="container">
+								<div class="row">
+									<div class="lmlblog-post-bar">
+										<li th:onclick='|list_comments_show(this,${post.user.uid},${post.pid});|'>
+											<i class="fa fa-comment-o"></i><span></span>
+										</li>
+										<li class="lmlblog-no-like" th:onclick="|javascript:doLike(${post.user.uid},${post.pid},${session.user.uid},this)|">
+											<i class="fa fa-heart" th:if="${post.postLike==true}"></i><i class="fa fa-heart-o" th:if="${post.postLike==false}"></i><span th:text="|${post.countPostLike}|"></span>
+										</li>
+									</div>
+								</div>
+							</div>
+							<div class="row" style="display: none">
+								<div class="col-lg-1">
+									头像
+								</div>
+								<div class="col-lg-11">
+									评论
+								</div>
 							</div>
 							<div class="lmlblog-post-footer-bar">
 								<span th:title="${#dates.format(post.postTime,'yyyy-MM-dd HH:mm')}" th:text="${#dates.format(post.postTime,'yyyy-MM-dd HH:mm')}">12月14日 05:25</span>
@@ -408,6 +541,50 @@
 <script type='text/javascript' th:src='@{/js/plupload.full.min.js}'></script>
 <script type='text/javascript' th:src='@{/js/layui.js}'></script>
 <script>
+	function showReComment(d) {
+		var displayRe=$(d).parent().parent().next().css("display");
+		if (displayRe=="none"){
+			$(d).parent().parent().next().css("display","block");
+		}else {
+			$(d).parent().parent().next().css("display","none");
+		}
+	}
+	function showReCommentComment(d) {
+		var displayRe=$(d).parent().parent().parent().next().css("display");
+		if (displayRe=="none"){
+			$(d).parent().parent().parent().next().css("display","block");
+		}else {
+			$(d).parent().parent().parent().next().css("display","none");
+		}
+	}
+	function list_comments_show(d,uid,pid) {
+		var display=$(d).parent().parent().parent().next().css("display");
+		if (display=="none"){
+			$(d).parent().parent().parent().next().css("display","block");
+			//alert("111");
+			$.post(
+				"/comment/hotComment",
+				"upid="+uid+"-"+pid,
+				function (data) {
+					if (data==""){
+						alert("empty");
+					}else {
+						var comment="";
+						for (var i=0;i<data.length;i++){
+							/*alert(i+"comment"+data[i].comment);
+							alert(i+"upid"+data[i].upid);
+							alert(i+"upcid"+data[i].upcid)*/
+
+						}
+						$(d).parent().parent().parent().next().html(comment);
+					}
+				},
+				"json"
+			);
+		}else {
+			$(d).parent().parent().parent().next().css("display","none");
+		}
+	}
 	function showList(d){
 		$(d).children().eq(0).css("display","block");
 	}

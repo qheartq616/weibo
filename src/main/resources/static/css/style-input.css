@@ -34,6 +34,16 @@ body{
  	border-style:solid;
  	border-width:1px;
  	border-color:#AEEEEE}
+#content1{
+	height:95px;
+	border-style:solid;
+	border-width:1px;
+	border-color:#AEEEEE}
+#content2{
+	height:95px;
+	border-style:solid;
+	border-width:1px;
+	border-color:#AEEEEE}
  #content img{
 
  }
@@ -73,6 +83,18 @@ body{
 	 background: #e0620d;
 	 color: #fff;
 	 padding: 8px 30px
+}
+#send1{
+	margin-top:-5px ;
+	background: #e0620d;
+	color: #fff;
+	padding: 8px 30px
+}
+#send2{
+	margin-top:-5px ;
+	background: #e0620d;
+	color: #fff;
+	padding: 8px 30px
 }
 .message{
 	background:#fff;
