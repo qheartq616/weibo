@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
-
 @Service
 public class AdminServiceImpl implements AdminService {
     @Resource
@@ -19,8 +18,6 @@ public class AdminServiceImpl implements AdminService {
     UserMapper userMapper;
     @Resource
     PostMapper postMapper;
-
-
     @Override
     public Admin login(String name, String password) {
         if (name!=null&&password!=null){
@@ -84,6 +81,10 @@ public class AdminServiceImpl implements AdminService {
         UserExample userExample=new UserExample();
         userExample.createCriteria().andPhoneEqualTo(phone);
         List<User> users = userMapper.selectByExample(userExample);
-        return users.get(0);
+        if(users!=null) {
+            if (users.size()!=0){return users.get(0);}else {return null;}
+        }else{
+            return null;
+        }
     }
 }
