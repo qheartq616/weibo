@@ -309,39 +309,17 @@
 							<div class="container">
 								<div class="row">
 									<div class="lmlblog-post-bar">
-										<li onclick='list_comments_show(this);'>
+										<li th:onclick='|list_comments_show(this,${post.user.uid},${post.pid});|'>
 											<i class="fa fa-comment-o"></i>
 											<span></span>
 										</li>
 										<li class="lmlblog-no-like" th:onclick="|javascript:doLike(${post.user.uid},${post.pid},${session.user.uid},this)|">
 											<i class="fa fa-heart" th:if="${post.postLike==true}"></i><i class="fa fa-heart-o" th:if="${post.postLike==false}"></i><span th:text="|${post.countPostLike}|"></span>
 										</li>
-										<!--<li>
-                                            <i class="lmlblog-icon">&#xe602;</i> <span>1.2w</span>
-                                        </li>
-                                        <li class="tag clear">
-                                            <i class="lmlblog-icon">&#xe895;</i><a href="#2" title="司空琪壁纸"># 司空琪壁纸</a>
-                                        </li>-->
 									</div>
 								</div>
 							</div>
 
-
-
-							<!--<div class="lmlblog-post-like-list">
-                                <a href="#17" id="had_like_11788">
-                                    <img src="/picture/11.gif" class="avatar" /></a>
-                                <a href="#18" id="had_like_11499"><img src="/picture/12.gif"
-                                                                       class="avatar" /></a>
-                                <a href="#22" id="had_like_11488"><img src="/picture/20.png" class="avatar" />
-                                    <i class="lmlblog-verify lmlblog-verify-a" title="认证信息：作者许仙白"></i></a><a
-                                    href="#22" id="had_like_11477">
-                                <img src="/picture/13.gif" class="avatar" />
-                                <i class="lmlblog-verify lmlblog-verify-a" title="认证信息：168号计师"></i></a><a
-                                    href="#22" id="had_like_1">
-                                <img src="/images/tx2.jpg" class="avatar" />
-                                <i class="lmlblog-verify lmlblog-verify-a" title="司空琪"></i></a>
-                            </div>-->
 							<div class="row" style="display: none">
 								<div class="col-lg-1">
 									头像
@@ -370,25 +348,12 @@
 						</div>
 					</div>
 
-					<!-- posts_list -->
-
-					<!--<div class="lmlblog-pager"><a class="lmlblog-pager-left" href="#2">上一页</a>
-						<div class="lmlblog-pager-center layui-form">
-							<select>
-								<option value="#=1">第 1 页</option>
-								<option value="#=2">第 2 页</option>
-								<option selected="selected" value="#3">第 3 页</option>
-							</select>第 1 页
-						</div>
-						<a class="lmlblog-pager-right" href="#3">下一页</a>
-					</div>-->
-
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-</div>
+
 <!-- 底部 -->
 <div style="clear:both"></div>
 <div class="footer">
@@ -421,12 +386,26 @@
 <script type="text/javascript" src="js/jquery.qtip-1.0.0-rc3.js"></script>
 
 <script>
-	function list_comments_show(d) {
+	function list_comments_show(d,uid,pid) {
 		var display=$(d).parent().parent().parent().next().css("display");
 		if (display=="none"){
 			$(d).parent().parent().parent().next().css("display","");
+			alert("111");
 			$.post(
-				"/comment/"
+				"/comment/hotComment",
+				"upid="+uid+"-"+pid,
+				function (data) {
+					if (data==""){
+						alert("empty");
+					}else {
+						for (var i=0;i<data.size();i++){
+							alert(data[i].comment);
+							alert(data[i].upid);
+							alert(data[i].upcid)
+						}
+					}
+				},
+				"json"
 			);
 		}else {
 			$(d).parent().parent().parent().next().css("display","none");

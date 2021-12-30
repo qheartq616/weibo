@@ -1,6 +1,5 @@
 package org.example.weibo.controller;
 
-
 import com.github.pagehelper.PageInfo;
 import org.example.weibo.pojo.Admin;
 import org.example.weibo.pojo.Post;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
@@ -54,7 +52,6 @@ public class BackGroundController {
         if(pageStart==null||pageStart.equals("")){
             pageStart=1;
         }
-
             limit=5;
 
         PageInfo<User> allUser = adminService.getAllUser(pageStart, limit);
@@ -93,7 +90,6 @@ public class BackGroundController {
         user.setDescription(description);
         user.setUpdateNameTime(new Date());
         adminService.addUser(user);
-
         return "redirect:/background/allUser/"+pageNum;
     }
     @DeleteMapping("/deluser/{uid}/{pageStart}")
@@ -101,7 +97,6 @@ public class BackGroundController {
         adminService.deleteUser(uid);
         return "redirect:/background/allUser/" + pageStart;
     }
-
     //获取所有 微博信息
     @RequestMapping("/allPost/{pageStart}")
     public  String allPost(@PathVariable(required = false) Integer pageStart,@RequestParam(required = false,defaultValue = "10") Integer limit,Model model){

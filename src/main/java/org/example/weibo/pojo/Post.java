@@ -20,7 +20,7 @@ public class Post {
 
     private Integer countForward;
 
-    //session中的用户（当前浏览该页面的用户）
+    //发这条微博的用户
     private User user;
 
     private boolean postLike;

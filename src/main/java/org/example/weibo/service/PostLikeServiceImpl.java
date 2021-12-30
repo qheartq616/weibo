@@ -33,9 +33,9 @@ public class PostLikeServiceImpl implements PostLikeService {
 	public boolean ifPostLike(String upid, Integer uid) {
 		PostLikeExample postLikeExample=new PostLikeExample();
 		postLikeExample.createCriteria().andUpidEqualTo(upid).andUidEqualTo(uid);
-		List<PostLike> loves = postLikeMapper.selectByExample(postLikeExample);
+		int i = postLikeMapper.countByExample(postLikeExample);
 		//System.out.println("loves.size() = " + loves.size());
-		if (loves.size()==0){
+		if (i==0){
 			return false;
 		}else {
 			return true;

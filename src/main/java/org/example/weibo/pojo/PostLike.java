@@ -1,5 +1,7 @@
 package org.example.weibo.pojo;
 
+import javafx.geometry.Pos;
+
 import java.util.Date;
 
 public class PostLike {
@@ -10,6 +12,26 @@ public class PostLike {
     private String upid;
 
     private Date likeTime;
+
+    private User user;
+
+    private Post post;
+
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public Integer getLid() {
         return lid;

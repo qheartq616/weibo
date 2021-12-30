@@ -124,7 +124,6 @@ public class UserServiceImpl implements UserService {
 	public User getInfoByUid(Integer uid,Integer curUid) {
 		User user = userMapper.selectByPrimaryKey(uid);
 		User userCur = userMapper.selectByPrimaryKey(curUid);
-
 		return fillUserInfo(user,userCur);
 	}
 

@@ -83,15 +83,14 @@
 		.name_card .userdata li{float:left}
 		.name_card .userdata li.W_vline{margin:0 8px;}*/
 	</style>
-	<link rel='stylesheet' id='style-css' href='/css/style.css' type='text/css' media='all' />
-	<link rel='stylesheet' id='lmlblog-css' href='/css/lmlblog.css' type='text/css' media='all' />
-	<link rel='stylesheet' id='all-css' href='/css/all.css' type='text/css' media='all' />
+	<link rel='stylesheet' th:href='@{/css/bootstrap.min.css}' type='text/css' media='all' />
+	<link rel='stylesheet' id='style-css' th:href='@{/css/style.css}' type='text/css' media='all' />
+	<link rel='stylesheet' id='lmlblog-css' th:href='@{/css/lmlblog.css}' type='text/css' media='all' />
+	<link rel='stylesheet' id='all-css' th:href='@{/css/all.css}' type='text/css' media='all' />
 
-	<!--<link rel="stylesheet" href="/css/bootstrap.min.css">-->
 	<link rel="stylesheet" type="text/css" href="/css/style-input.css">
-
-	<script type='text/javascript' src='/js/jquery.min.js'></script>
-	<script type='text/javascript' src='/js/ueditor.all.min.js'></script>
+	<script type='text/javascript' th:src='@{/js/jquery.min.js}'></script>
+	<script type='text/javascript' th:src='@{/js/ueditor.all.min.js}'></script>
 
 </head>
 <body>
@@ -140,9 +139,9 @@
 				<div class="lmlblog-member-left-profile">
 					<h3>我的消息</h3>
 					<ul>
-						<li><i class="fa fa-address-book-o"></i><a th:href="@{|/news/atme/${session.user.uid}/1|}">@我的人</a></li>
-						<li><i class="fa fa-transgender"></i><a href="#">评论</a></li>
-						<li><i class="fa fa-map-marker"></i><a th:href="@{|/news/likeMe/${session.user.uid}/1|}">点赞</a></li>
+						<li><i class="fa fa-address-book-o"></i><a th:href="@{|/news/atme/${session.user.uid}/1|}" th:onclick="at()">@我的人</a></li>
+						<li><i class="fa fa-transgender"></i><a th:href="@{|/news/comment/${session.user.uid}/1|}" th:onclick="comment()">评论</a></li>
+						<li><i class="fa fa-map-marker"></i><a th:href="@{|/news/likeMe/${session.user.uid}/1|}" th:onclick="lastlike()">点赞</a></li>
 						<li><i class="fa fa-smile-o"></i> <a href="#">私信</a></li>
 					</ul>
 				</div>
@@ -156,7 +155,7 @@
 						<!-- 动态内容部分，包括列表 -->
 						<div class="lmlblog-post-user-info">
 							<div class="lmlblog-post-user-info-avatar" user-data="1">
-								<a th:href="@{|/user/${post.user.uid}/1|}" style="display: inline-block;">
+								<a th:href="@{|/user/${post.uid}/1|}" style="display: inline-block;">
 									<span class="lmlblog-vip-icon"></span>
 									<img th:src="|/avatar/${post.user.image}|" class="avatar" />
 									<i th:if="${post.user.status==0}" th:title="普通用户"></i>
@@ -179,33 +178,16 @@
 									<font style="color:#333;font-weight:600" th:text="${post.user.name}">司空琪</font>
 								</a>
 							</div>
-							<div class="lmlblog-post-user-info-time" title="2017-12-14 05:25" th:text="${#dates.format(post.postTime,'yyyy-MM-dd HH:mm')}">12-14 05:25</div>
-							<div class="lmlblog-post-user-info-time" title="来自weibo.com" th:text="来自weibo.com">12-14 05:25</div>
+							<!--<div class="lmlblog-post-user-info-time" title="2017-12-14 05:25" th:text="${#dates.format(post.postTime,'yyyy-MM-dd HH:mm')}">12-14 05:25</div>-->
+							<div class="lmlblog-post-user-info-time" title="来自weibo.com" style="width: 300px" th:text="|${#dates.format(post.likeTime,'yyyy年MM月dd日 HH:mm')}   来自weibo.com|">12-14 05:25</div>
 						</div>
-						<!-- 作者信息 -->
-						<div class="lmlblog-post-setting">
-							<i class="fa fa-angle-down"></i>
-							<div class="lmlblog-post-setting-box">
-								<ul>
-									<a href="#" title="举报"><li>举报</li></a>
-									<a th:href="@{|/user/${post.user.uid}/1|}" title="访问主页"><li>访问主页</li></a>
-								</ul>
-							</div>
-						</div>
-						<div class="lmlblog-post-content" style="white-space:pre-line" th:text="${post.text}">
-						</div>
-						<div class="lmlblog-post-bar">
-							<li onclick='list_comments_show(this);'>
-								<i class="fa fa-comment-o"></i>
-								<span></span>
-							</li>
-							<li class="lmlblog-no-like" th:onclick="|javascript:doLike(${post.pid},${session.user.uid},this)|">
-								<i class="fa fa-heart" th:if="${post.postLike==true}"></i><i class="fa fa-heart-o" th:if="${post.postLike==false}"></i><span th:text="|${post.countPostLike}|"></span>
-							</li>
+						<div class="lmlblog-post-content" style=" margin-left: 50px ">给你这条微博点了赞</div>
+						<div class="lmlblog-post-content" style=" margin-left: 50px; padding:10px; background-color: whitesmoke ;width: 600px;  vertical-align:middle;" >
+							<a href="#" style="margin-bottom: 20px;padding-bottom: 10px" th:text="${post.post.text}"></a>
 						</div>
 						<div class="lmlblog-post-footer-bar">
-							<span th:title="${#dates.format(post.postTime,'yyyy-MM-dd HH:mm')}" th:text="${#dates.format(post.postTime,'yyyy-MM-dd HH:mm')}">12月14日 05:25</span>
-							<span>小尾巴</span><i class="lmlblog-icon" onclick="lmlblog_post_type_open();">&#xe62c;</i>
+							<span th:title="${#dates.format(post.post.postTime,'yyyy-MM-dd HH:mm')}" th:text="${#dates.format(post.post.postTime,'yyyy-MM-dd HH:mm')}">12月14日 05:25</span>
+							<br/>
 						</div>
 					</div>
 					<div class="lmlblog-pager" th:if="${#strings.isEmpty(gid)&&type!='all'}">
@@ -213,23 +195,18 @@
 						<div class="lmlblog-pager-center layui-form" th:text="|第${pageInfo.pageNum==0?1:pageInfo.pageNum}页|"></div>
 						<a class="lmlblog-pager-right" th:href="@{|/main/${session.user.uid}/${type}/${pageInfo.hasNextPage?pageInfo.nextPage:pageInfo.navigateLastPage}|}">下一页</a>
 					</div>
-					<div class="lmlblog-pager" th:if="${not #strings.isEmpty(gid)}">
-						<a class="lmlblog-pager-left" th:href="@{|/main/${session.user.uid}/myGroups/${gid}/${pageInfo.hasPreviousPage?pageInfo.prePage:1}|}">上一页</a>
-						<div class="lmlblog-pager-center layui-form" th:text="|第${pageInfo.pageNum==0?1:pageInfo.pageNum}页|"></div>
-						<a class="lmlblog-pager-right" th:href="@{|/main/${session.user.uid}/myGroups/${gid}/${pageInfo.hasNextPage?pageInfo.nextPage:pageInfo.navigateLastPage}|}">下一页</a>
-					</div>
 				</div>
 				</div>
 				<div th:if="${pageInfo==null}">
 					<div class="lmlblog-post-user-info">
-						<div class="lmlblog-post-user-info-time" title="2017-12-14 05:25" th:text="对不起没有AT你的数据">12-14 05:25</div>
+						<div class="lmlblog-post-user-info-time" title="2017-12-14 05:25" th:text="对不起没有数据">12-14 05:25</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-</div>
+
 <!-- 底部 -->
 <div style="clear:both"></div>
 <div class="footer">
@@ -252,16 +229,84 @@
 	}
 </script>
 </body>
-<script type='text/javascript' src='/js/base.js'></script>
-<script type='text/javascript' src='/js/all.js'></script>
-<script type='text/javascript' src='/js/plupload.full.min.js'></script>
-<script type='text/javascript' src='/js/layui.js'></script>
+<script type='text/javascript' th:src='@{/js/base.js}'></script>
+<script type='text/javascript' th:src='@{/js/all.js}'></script>
+<script type='text/javascript' th:src='@{/js/plupload.full.min.js}'></script>
+<script type='text/javascript' th:src='@{/js/layui.js}'></script>
 
-<script src="/js/jquery-3.1.0.js"></script>
-<script src="/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="js/jquery.qtip-1.0.0-rc3.js"></script>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script  th:src="@{/js/bootstrap.min.js}"></script>
+<script type="text/javascript"  th:src="@{/js/jquery.qtip-1.0.0-rc3.js}"></script>
 
 <script>
+	//评论我的人
+    function comment() {
+        var uid=$("#uidVar").val();
+        $.ajax({
+            type: 'post',
+            url: '/upLast/'+uid,
+            data:{
+                type:'commen'
+            },
+            dataType: 'json',
+            success: function(data) {
+                if(data===true){
+                    alert("添加离开时间成功")
+                }else{
+                    alert("添加离开时间失败")
+                }
+            },
+            error: function(data) {
+                alert("请求失败")
+            },
+        });
+    }
+	//@我的页面信息更新
+	function at() {
+        var uid=$("#uidVar").val();
+        $.ajax({
+            type: 'post',
+            url: '/upLast/'+uid,
+            data:{
+                type:'at'
+            },
+            dataType: 'json',
+            success: function(data) {
+                if(data===true){
+                    alert("添加离开时间成功")
+                }else{
+                    alert("添加离开时间失败")
+                }
+            },
+            error: function(data) {
+                alert("请求失败")
+            },
+        });
+    }
+
+	//插入最后进入点赞页面数据
+	function lastlike() {
+	    var uid=$("#uidVar").val();
+        $.ajax({
+            type: 'post',
+            url: '/upLast/'+uid,
+			data:{
+                type:'like'
+			},
+            dataType: 'json',
+            success: function(data) {
+                if(data===true){
+					alert("添加离开时间成功")
+                }else{
+                    alert("添加离开时间失败")
+                }
+            },
+            error: function(data) {
+				alert("请求失败")
+            },
+        });
+    }
+	
 	function showImg(d){
 		$(d).css("display","block");
 	}

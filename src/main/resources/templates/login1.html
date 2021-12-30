@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Home</title>
     <!-- Meta tag Keywords -->
@@ -27,9 +26,9 @@
         <!-- /form -->
         <div class="workinghny-form-grid">
             <div class="main-hotair">
-                <div class="alert-close">
-                    <span class="fa fa-close"></span>
-                </div>
+                <!--<div class="alert-close">-->
+                    <!--<span class="fa fa-close"></span>-->
+                <!--</div>-->
                 <div class="content-wthree">
                     <h2>Log In</h2>
                     <p>To Your Account</p>
@@ -41,7 +40,7 @@
                                 <button class="namBtn" type="submit">Log In</button>
                             </form>
                         </div>
-                        <span onclick="change()" style="margin: 0px auto;">Login With Your Phone</span>
+                        <p class="account" style="margin: 0px auto;">Login With Your <a  onclick="change()" href="javascript:;">Phone</a></p>
                         <div class="social-icons w3layouts">
                             <ul>
                                 <li>
@@ -69,7 +68,7 @@
                             </div>
                         </div>
 
-                        <span onclick="change()"  style="margin: 0px auto;">Login With Your Password</span>
+                        <p class="account"  style="margin: 0px auto;">Login With Your <a  onclick="change()" href="javascript:;">Password</a></p>
                         <div class="social-icons w3layouts">
                             <ul>
                                 <li>
@@ -85,8 +84,19 @@
                             </ul>
                         </div>
                     </div>
-                    <a href="/QQLogin">qq登录</a>
-                    <p class="account">Don't have an account? <a href="#signup">Register</a></p>
+
+                    <div id="left_register" style="width: 300px; display: none">
+                        <div>
+                                <input type="text"  name="name" id="username" placeholder="用户名" required="">
+                                <input type="password" class="password" id="password" name="passwordFirst" placeholder="密码" required="">
+                                <input type="password" class="repassword" id="repassword" name="password" placeholder="确认密码" required="">
+                                <input type="text" name="phone" id="phone" placeholder="手机号" required="">
+                                <button class="namBtn" type="submit" onclick="subRegst()">Register</button>
+                        </div>
+                        <p class="account">已注册账号，去 <a href="/" >登录</a></p>
+                    </div>
+                    <!--<a href="/QQLogin">qq登录</a>-->
+                    <p class="account">Don't have an account? <a href="javascript:;" onclick="register()" >Register</a></p>
                 </div>
                 <!-- 右半部分 -->
                 <div class="w3l_form align-self" style="width: 300px;">
@@ -117,6 +127,73 @@
     });
 </script>
 <script>
+    //注册
+    function register() {
+        var regDispay=$("#left_register").css("display","block");
+        var box=$(".content-wthree");
+        box.html(regDispay)
+    }
+    function subRegst() {
+        var name = $("#username").val();
+        var password = $("#password").val();
+        var repassword = $("#repassword").val();
+        var phone=$("#phone").val();
+        var reg_tel = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;    //11位手机号码正则
+        if(name==""){
+            alert("请输入姓名")
+        }else if(password==""){
+            alert("请输入密码")
+        }else  if(repassword==""){
+            alert("请再次输入密码")
+        }else  if(password!=repassword){
+            alert("两次密码不一样")
+        }else if(!reg_tel.test(phone)){
+            alert("请输入正确的手机号！");
+        }else if(reg_tel.test(phone)){
+            $.ajax({
+                type: 'post',
+                url: '/phone',
+                data: {
+                    phone:phone
+                },
+                dataType: 'json',
+                success: function(data) {
+                    if(data===true){
+                        $.ajax({
+                            type: 'post',
+                            url: '/register',
+                            data: {
+                                name : name,
+                                password:repassword,
+                                phone:phone
+                            },
+                            dataType: 'json',
+                            success: function(data) {
+                                if(data===1){
+                                    alert("注册成功")
+                                    name = $("#username").val("");
+                                    password = $("#password").val("");
+                                    repassword = $("#repassword").val("");
+                                    phone=$("#phone").val("");
+                                }else{
+                                    alert("注册失败")
+                                }
+                            },
+                            error: function(data) {
+                                alert('连接超时！');
+                            },
+                        });
+                    }else{
+                        alert("该手机号已经注册")
+                    }
+                },
+                error: function(data) {
+                    alert('判断手机号是否注册失败！');
+                },
+            });
+        }
+    }
+    //登录方式切换
     function change(){
         var pasDisplay=$("#left_name").css("display");
         var phoDispay=$("#left_phone").css("display");
@@ -128,7 +205,6 @@
             $("#left_name").css("display","block")
             $("#left_phone").css("display","none")
         }
-
     }
 </script>
 <script type="text/javascript">

@@ -1,5 +1,6 @@
 package org.example.weibo.utils;
 
+import org.example.weibo.pojo.Comment;
 import org.example.weibo.pojo.Post;
 import org.example.weibo.pojo.User;
 
@@ -10,7 +11,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class ListUtils {
+public class ListUtil {
 	public static <T> Predicate<T> distinctByKey(Function<? super T, Object> keyExtractor) {
 		Map<Object, Boolean> seen = new ConcurrentHashMap<>();
 		return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
@@ -73,5 +74,41 @@ public class ListUtils {
 
 		subRandomUserList.addAll(set);
 		return subRandomUserList;
+	}
+
+	//按热度排序，影响因子为转发数、评论数、点赞数，比重为6:3:1
+	//查询微博下的热门三条评论
+	public static List<Comment> sortByHeat(List<Comment> commentList){
+		Collections.sort(commentList, new Comparator<Comment>() {
+			@Override
+			public int compare(Comment o1, Comment o2) {
+				int heat1,heat2=0;
+				int countCommentComment1,countCommentLike1,countCommentComment2,countCommentLike2=0;
+				if (o1.getSubCommentList()==null){
+					countCommentComment1=0;
+				}else {
+					countCommentComment1 = o1.getSubCommentList().size();
+				}
+				if (o2.getSubCommentList()==null){
+					countCommentComment2=0;
+				}else {
+					countCommentComment2 = o2.getSubCommentList().size();
+				}
+				countCommentLike1 = o1.getCountCommentLike();
+				countCommentLike2 = o2.getCountCommentLike();
+				heat1=countCommentComment1*3+countCommentLike1;
+				heat2=countCommentComment2*3+countCommentLike2;
+				return heat2-heat1;
+			}
+		});
+		if (commentList.size()<=3){
+			return commentList;
+		}else {
+			for (Comment comment : commentList) {
+				System.out.println(comment.toString());
+			}
+
+			return commentList.subList(0,3);
+		}
 	}
 }

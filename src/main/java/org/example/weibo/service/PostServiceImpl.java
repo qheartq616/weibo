@@ -4,18 +4,15 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.example.weibo.mapper.PostMapper;
 import org.example.weibo.mapper.UserMapper;
-import org.example.weibo.pojo.Comment;
 import org.example.weibo.pojo.Post;
 import org.example.weibo.pojo.PostExample;
 import org.example.weibo.pojo.User;
-import org.example.weibo.utils.ListUtils;
-import org.springframework.cache.annotation.Cacheable;
+import org.example.weibo.utils.ListUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 @Service
 public class PostServiceImpl implements PostService{
@@ -59,7 +56,7 @@ public class PostServiceImpl implements PostService{
 	public PageInfo<Post> showAllFollowUserPostRandom(Integer uid, Integer pageNum) {
 		List<User> allFollowUserList = followService.showAllFollowUser(uid);
 
-		List<User> subRandomUserList= ListUtils.subRandomUserList(allFollowUserList);
+		List<User> subRandomUserList= ListUtil.subRandomUserList(allFollowUserList);
 
 		List<Integer> uidList=new ArrayList<>();
 		for (User user : subRandomUserList) {
@@ -308,12 +305,12 @@ public class PostServiceImpl implements PostService{
 	public List<Post> fillPostInfo(List<Post> postList,Integer uid) {
 		for (Post post : postList) {
 			//加入点赞状态
-			boolean b = postLikeService.ifPostLike(post.getUser().getUid()+"-"+post.getPid(), uid);
-			post.setPostLike(b);
+			boolean ifPostLike = postLikeService.ifPostLike(post.getUser().getUid()+"-"+post.getPid(), uid);
+			post.setPostLike(ifPostLike);
 
 			//加入点赞数
-			int i = postLikeService.countPostLike(post.getUser().getUid()+"-"+post.getPid());
-			post.setCountPostLike(i);
+			int countPostLike = postLikeService.countPostLike(post.getUser().getUid()+"-"+post.getPid());
+			post.setCountPostLike(countPostLike);
 
 			/*加入所有评论
 			这种写法太耗资源
