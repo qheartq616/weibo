@@ -69,4 +69,10 @@ public class CommentServiceImpl implements CommentService{
 		return commentList;
 	}
 
+	@Override
+	//发评论
+	public void doComment(Comment comment) {
+		commentMapper.insertSelective(comment);
+	}
+
 }

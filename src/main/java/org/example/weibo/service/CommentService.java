@@ -9,4 +9,5 @@ public interface CommentService {
 	public List<Comment> showLatestComment(String upid);
 	public List<Comment> showHotComment(String upid,String upcid,Integer uid);
 	public List<Comment> fillCommentInfo(List<Comment> commentList,Integer uid);
+	public void doComment(Comment comment);
 }

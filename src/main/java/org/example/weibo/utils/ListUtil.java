@@ -104,9 +104,9 @@ public class ListUtil {
 		if (commentList.size()<=3){
 			return commentList;
 		}else {
-			for (Comment comment : commentList) {
+			/*for (Comment comment : commentList) {
 				System.out.println(comment.toString());
-			}
+			}*/
 
 			return commentList.subList(0,3);
 		}
