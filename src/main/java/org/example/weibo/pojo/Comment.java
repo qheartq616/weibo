@@ -1,5 +1,7 @@
 package org.example.weibo.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 import java.util.List;
 
@@ -14,8 +16,10 @@ public class Comment {
 
     private String comment;
 
+    @JsonFormat(pattern = "MM月dd日 HH:mm",timezone="GMT+8")
     private Date commentTime;
 
+    //发评论的用户
     private User user;
 
     private int countCommentLike;

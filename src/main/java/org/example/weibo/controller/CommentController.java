@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.List;
 
 @RequestMapping("comment")
@@ -30,5 +31,14 @@ public class CommentController {
 		}*/
 
 		return commentList;
+	}
+
+	@RequestMapping("sendComment")
+	@ResponseBody
+	public boolean sendComment(Comment comment){
+		comment.setCommentTime(new Date());
+		commentService.doComment(comment);
+		System.out.println(comment.toString());
+		return true;
 	}
 }

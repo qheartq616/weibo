@@ -289,7 +289,7 @@
 								<div class="row">
 									<div class="lmlblog-post-bar" >
 										<hr style="width: 710px;position: relative;left: -20px;top: 10px">
-										<li th:onclick='|list_comments_show(this,${topPost.user.uid},${topPost.pid},${session.user});|'>
+										<li th:onclick='list_comments_show(this,[[${topPost.user.uid}]],[[${topPost.pid}]],[[${session.user.image}]]);'>
 											<i class="fa fa-comment-o"></i><span></span>
 										</li>
 										<li class="lmlblog-no-like" th:onclick="|javascript:doLike(${topPost.user.uid},${topPost.pid},${session.user.uid},this)|">
@@ -559,7 +559,7 @@
 		}
 	}
 
-	function list_comments_show(d,uid,pid,user) {
+	function list_comments_show(d,uid,pid,image) {
 		var display=$(d).parent().parent().parent().next().css("display");
 		if (display=="none"){
 			$(d).parent().parent().parent().next().css("display","block");
@@ -572,18 +572,18 @@
 					comment="\t\t\t<!--发送评论开始-->\n" +
 							"\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px;padding-top: 10px'>\n" +
 							"\t\t\t\t<div class='col-lg-1'>\n" +
-							"\t\t\t\t\t<img src='/avatar/"+user.image+"' style='height: 32px;width: 32px' />\n" +
+							"\t\t\t\t\t<img src='/avatar/"+image+"' style='height: 32px;width: 32px' />\n" +
 							"\t\t\t\t</div>\n" +
 							"\t\t\t\t<div class='col-lg-11' style='padding-left: 0px'>\n" +
 							"\t\t\t\t\t<form role='form' method=\"post\">\n" +
 							"\t\t\t\t\t\t<div class='form-group' style='margin-top: 0px'>\n" +
 							"\t\t\t\t\t\t\t<div class='col-lg-12' style='padding-left: 0px'>\n" +
 							"\t\t\t\t\t\t\t\t<div contentEditable='true' class='form-control'\n" +
-							"\t\t\t\t\t\t\t\t\tstyle='width: 635px;height: auto' onkeyup='ifSendAble(this,'')'></div>\n" +
+							"\t\t\t\t\t\t\t\t\tstyle='width: 635px;height: auto' onkeyup='ifSendAble(this,"+0+")'></div>\n" +
 							"\t\t\t\t\t\t\t</div>\n" +
 							"\t\t\t\t\t\t\t<div class='col-lg-12' style='margin-top: 12px;margin-left: 12px;'>\n" +
 							"\t\t\t\t\t\t\t\t<button type='button' id='send' class='btn btn-default pull-right disabled'\n" +
-							"\t\t\t\t\t\t\t\t\tstyle='color: #ffc09f;height: 30px;width: 60px;padding: 0 0' onclick='reply(this,"+uid+","+pid+",0,'')'>发布</button>\n" +
+							"\t\t\t\t\t\t\t\t\tstyle='height: 30px;width: 60px;padding: 0 0' onclick='reply(this,"+uid+","+pid+",0,"+0+")'>发布</button>\n" +
 							"\t\t\t\t\t\t\t</div>\n" +
 							"\t\t\t\t\t\t</div>\n" +
 							"\t\t\t\t\t</form>\n" +
@@ -611,13 +611,19 @@
 									"\t\t\t\t<!--评论的时间与回复开始-->\n" +
 									"\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px'>\n" +
 									"\t\t\t\t\t<div class='col-lg-1'></div>\n" +
-									"\t\t\t\t\t<div class='col-lg-3' style=\"color: #808080;padding-left: 0px\">时间</div>\n" +
+									"\t\t\t\t\t<div class='col-lg-3' style=\"color: #808080;padding-left: 0px\">"+data[i].commentTime+"</div>\n" +
 									"\t\t\t\t\t<div class='col-lg-6'></div>\n" +
 									"\t\t\t\t\t<div class='col-lg-2'>\n" +
 									"\t\t\t\t\t\t<a href='javascript:void(0);' style='text-decoration: none' onclick='showReComment(this)'>回复</a>\n" +
 									"\t\t\t\t\t\t&nbsp;&nbsp;|&nbsp;&nbsp;\n" +
-									"\t\t\t\t\t\t<a href=''><i class='fa fa-heart'></i></a>\n" +
-									"\t\t\t\t\t\t1\n" +
+									"\t\t\t\t\t\t<a href=''>";
+							if(data[i].commentLike){
+								comment+="<i class='fa fa-heart'></i>";
+							}else {
+								comment+="<i class='fa fa-heart-o'></i>";
+							}
+							comment+="</a>\n" +
+									"\t\t\t\t\t\t"+data[i].countCommentLike+"\n" +
 									"\t\t\t\t\t</div>\n" +
 									"\t\t\t\t</div>\n" +
 									"\t\t\t\t<!--评论的时间与回复结束-->\n" +
@@ -637,7 +643,7 @@
 									"\t\t\t\t\t\t\t\t\t\t\t\tstyle='width: 605px;height: auto'>回复@"+data[i].user.name+"：</div>\n" +
 									"\t\t\t\t\t\t\t\t\t\t</div>\n" +
 									"\t\t\t\t\t\t\t\t\t\t<div class='col-lg-12' style='margin-top: 12px;margin-left: 12px;'>\n" +
-									"\t\t\t\t\t\t\t\t\t\t\t<button type='button' id='send1' class='btn btn-default pull-right disabled'\n" +
+									"\t\t\t\t\t\t\t\t\t\t\t<button type='button' id='send' class='btn btn-default pull-right disabled'\n" +
 									"\t\t\t\t\t\t\t\t\t\t\t\tstyle='color: #ffc09f;height: 30px;width: 60px;padding: 0 0'>发布</button>\n" +
 									"\t\t\t\t\t\t\t\t\t\t</div>\n" +
 									"\t\t\t\t\t\t\t\t\t</div>\n" +
@@ -672,15 +678,21 @@
 											"\t\t\t\t\t\t\t</div>\n" +
 											"\t\t\t\t\t\t</div>\n" +
 											"\t\t\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px'>\n" +
-											"\t\t\t\t\t\t\t<div class='col-lg-4' style='color: #808080;padding-right: 0px;padding-left: 12px'>时间</div>\n" +
+											"\t\t\t\t\t\t\t<div class='col-lg-4' style='color: #808080;padding-right: 0px;padding-left: 12px'>"+data[i].subCommentList[j].commentTime+"</div>\n" +
 											"\t\t\t\t\t\t\t<div class='col-lg-5'></div>\n" +
 											"\t\t\t\t\t\t\t<div class='col-lg-3' style=\"padding-right: 5px\">\n" +
 											"\t\t\t\t\t\t\t\t<span style=\"float: right\">\n" +
 											"\t\t\t\t\t\t\t\t\t<a href='javascipt:void(0);' style='text-decoration: none'\n" +
 											"\t\t\t\t\t\t\t\t\t\tonclick='showReCommentComment(this)'>回复</a>\n" +
 											"\t\t\t\t\t\t\t\t\t&nbsp;&nbsp;|&nbsp;&nbsp;\n" +
-											"\t\t\t\t\t\t\t\t\t<a href=''><i class='fa fa-heart'></i></a>\n" +
-											"\t\t\t\t\t\t\t\t\t1\n" +
+											"\t\t\t\t\t\t\t\t\t<a href=''>";
+									if(data[i].subCommentList[j].commentLike){
+										comment+="<i class='fa fa-heart'></i>";
+									}else {
+										comment+="<i class='fa fa-heart-o'></i>";
+									}
+									comment+="</a>\n" +
+											"\t\t\t\t\t\t\t\t\t"+data[i].subCommentList[j].countCommentLike+"\n" +
 											"\t\t\t\t\t\t\t\t</span>\n" +
 											"\t\t\t\t\t\t\t</div>\n" +
 											"\t\t\t\t\t\t</div>\n" +
@@ -698,7 +710,7 @@
 											"\t\t\t\t\t\t\t\t\t\t\t\t</div>\n" +
 											"\t\t\t\t\t\t\t\t\t\t\t\t<div class='col-lg-12'\n" +
 											"\t\t\t\t\t\t\t\t\t\t\t\t\tstyle='margin-top: 12px;margin-left: 12px;padding-right: 5px'>\n" +
-											"\t\t\t\t\t\t\t\t\t\t\t\t\t<button type='button' id='send2'\n" +
+											"\t\t\t\t\t\t\t\t\t\t\t\t\t<button type='button' id='send'\n" +
 											"\t\t\t\t\t\t\t\t\t\t\t\t\t\tclass='btn btn-default pull-right disabled'\n" +
 											"\t\t\t\t\t\t\t\t\t\t\t\t\t\tstyle='color: #ffc09f;height: 30px;width: 60px;padding: 0 0'>发布</button>\n" +
 											"\t\t\t\t\t\t\t\t\t\t\t\t</div>\n" +
@@ -728,37 +740,57 @@
 	}
 
 	function ifSendAble(d,name) {
-		var content_len = $(d).text().replace(/\s/g,"").length;
-		var content=$(d).html();
-		if (name==''){
+		//alert('=====')
+		let content_len = $(d).text().replace(/\s/g, "").length;
+		let content=$(d).html();
+		if (name=='0'){
 			if(content_len==0){
-				$(d).addClass("disabled");
+				$(d).parent().next().children().eq(0).addClass("disabled");
+				//alert(111)
+				return false;
 			}else{
-				$(d).removeClass("disabled");
+				$(d).parent().next().children().eq(0).removeClass("disabled");
+				//alert(222)
+				//alert(1111)
+				/*console.log(content_len)
+				alert($(d))
+				console.log($(d).html())*/
+				return true;
 			}
 		}else {
 			var str="回复@"+name+"：";
-			if (content!=str){
+			if (content==str){
 				$(d).addClass("disabled");
+				//alert(333)
+				return false;
 			}else {
-				$(d).addClass("disabled");
+				$(d).removeClass("disabled");
+				//alert(444)
+				return true;
 			}
 		}
 	}
 
 	function reply(d,uid,pid,upcid,name) {
-		var contentElement=$(d).parent().prev().children().eq(0).children().eq(0);
-		var content=contentElement.html();
+		let contentElement=$(d).parent().prev().children().eq(0);
+		let content=contentElement.html();
 
-		if(name==''){
-			if(content){
-
-			}
+		if (ifSendAble(contentElement,name)){
+			console.log('可以发送ajax')
+			$.post(
+				"/comment/sendComment",
+				"uid="+uid+"&upid="+uid+"-"+pid+"&upcid="+upcid+"&comment="+content,
+				function (data) {
+					console.log(data)
+					if (data==="true"){
+						alert("发送成功");
+					}else{
+						alert("发送失败");
+					}
+				},
+				"json"
+			)
 		}
-
-		$.post(
-			""
-		)
 	}
 
 	function showList(d){
