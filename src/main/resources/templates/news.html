@@ -139,9 +139,13 @@
 				<div class="lmlblog-member-left-profile">
 					<h3>我的消息</h3>
 					<ul>
-						<li><i class="fa fa-address-book-o"></i><a th:href="@{|/news/atme/${session.user.uid}/1|}" th:onclick="at()">@我的人</a></li>
-						<li><i class="fa fa-transgender"></i><a th:href="@{|/news/comment/${session.user.uid}/1|}" th:onclick="comment()">评论</a></li>
-						<li><i class="fa fa-map-marker"></i><a th:href="@{|/news/likeMe/${session.user.uid}/1|}" th:onclick="lastlike()">点赞</a></li>
+						<!--<li><i class="fa fa-address-book-o"></i><a th:href="@{|/news/atme/${session.user.uid}/1|}" th:onclick="at()">@我的人</a></li>-->
+						<!--<li><i class="fa fa-transgender"></i><a th:href="@{|/news/comment/${session.user.uid}/1|}" th:onclick="comment()">评论</a></li>-->
+						<!--<li><i class="fa fa-map-marker"></i><a th:href="@{|/news/likeMe/${session.user.uid}/1|}" th:onclick="lastlike()">点赞</a></li>-->
+						<!--<li><i class="fa fa-smile-o"></i> <a href="#">私信</a></li>-->
+						<li><i class="fa fa-address-book-o"></i><a th:href="@{|/news/atme/${session.user.uid}/1|}" >@我的人</a></li>
+						<li><i class="fa fa-transgender"></i><a th:href="@{|/news/comment/${session.user.uid}/1|}">评论</a></li>
+						<li><i class="fa fa-map-marker"></i><a th:href="@{|/news/likeMe/${session.user.uid}/1|}">点赞</a></li>
 						<li><i class="fa fa-smile-o"></i> <a href="#">私信</a></li>
 					</ul>
 				</div>
@@ -229,83 +233,81 @@
 	}
 </script>
 </body>
-<script type='text/javascript' th:src='@{/js/base.js}'></script>
+
 <script type='text/javascript' th:src='@{/js/all.js}'></script>
 <script type='text/javascript' th:src='@{/js/plupload.full.min.js}'></script>
 <script type='text/javascript' th:src='@{/js/layui.js}'></script>
 
 <script th:src="@{/js/jquery.min.js}"></script>
 <script  th:src="@{/js/bootstrap.min.js}"></script>
-<script type="text/javascript"  th:src="@{/js/jquery.qtip-1.0.0-rc3.js}"></script>
-
 <script>
-	//评论我的人
-    function comment() {
-        var uid=$("#uidVar").val();
-        $.ajax({
-            type: 'post',
-            url: '/upLast/'+uid,
-            data:{
-                type:'commen'
-            },
-            dataType: 'json',
-            success: function(data) {
-                if(data===true){
-                    alert("添加离开时间成功")
-                }else{
-                    alert("添加离开时间失败")
-                }
-            },
-            error: function(data) {
-                alert("请求失败")
-            },
-        });
-    }
-	//@我的页面信息更新
-	function at() {
-        var uid=$("#uidVar").val();
-        $.ajax({
-            type: 'post',
-            url: '/upLast/'+uid,
-            data:{
-                type:'at'
-            },
-            dataType: 'json',
-            success: function(data) {
-                if(data===true){
-                    alert("添加离开时间成功")
-                }else{
-                    alert("添加离开时间失败")
-                }
-            },
-            error: function(data) {
-                alert("请求失败")
-            },
-        });
-    }
-
-	//插入最后进入点赞页面数据
-	function lastlike() {
-	    var uid=$("#uidVar").val();
-        $.ajax({
-            type: 'post',
-            url: '/upLast/'+uid,
-			data:{
-                type:'like'
-			},
-            dataType: 'json',
-            success: function(data) {
-                if(data===true){
-					alert("添加离开时间成功")
-                }else{
-                    alert("添加离开时间失败")
-                }
-            },
-            error: function(data) {
-				alert("请求失败")
-            },
-        });
-    }
+	// //评论我的人
+    // function comment() {
+    //     var uid=$("#uidVar").val();
+    //     $.ajax({
+    //         type: 'post',
+    //         url: '/upLast/'+uid,
+    //         data:{
+    //             type:'commen'
+    //         },
+    //         dataType: 'json',
+    //         success: function(data) {
+    //             if(data===true){
+    //                 alert("添加离开时间成功")
+    //             }else{
+    //                 alert("添加离开时间失败")
+    //             }
+    //         },
+    //         error: function(data) {
+    //             alert("请求失败")
+    //         },
+    //     });
+    // }
+	// //@我的页面信息更新
+	// function at() {
+    //     var uid=$("#uidVar").val();
+    //     $.ajax({
+    //         type: 'post',
+    //         url: '/upLast/'+uid,
+    //         data:{
+    //             type:'at'
+    //         },
+    //         dataType: 'json',
+    //         success: function(data) {
+    //             if(data===true){
+    //                 alert("添加离开时间成功")
+    //             }else{
+    //                 alert("添加离开时间失败")
+    //             }
+    //         },
+    //         error: function(data) {
+    //             alert("请求失败")
+    //         },
+    //     });
+    // }
+	//
+	// //插入最后进入点赞页面数据
+	// function lastlike() {
+	//     var uid=$("#uidVar").val();
+    //     $.ajax({
+    //         type: 'post',
+    //         url: '/upLast/'+uid,
+	// 		data:{
+    //             type:'like'
+	// 		},
+    //         dataType: 'json',
+    //         success: function(data) {
+    //             if(data===true){
+	// 				alert("添加离开时间成功")
+    //             }else{
+    //                 alert("添加离开时间失败")
+    //             }
+    //         },
+    //         error: function(data) {
+	// 			alert("请求失败")
+    //         },
+    //     });
+    // }
 	
 	function showImg(d){
 		$(d).css("display","block");

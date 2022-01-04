@@ -11,6 +11,16 @@ public class CommentLike {
 
     private Date likeTime;
 
+    private  Comment comment;
+
+    public Comment getComment() {
+        return comment;
+    }
+
+    public void setComment(Comment comment) {
+        this.comment = comment;
+    }
+
     public Integer getClid() {
         return clid;
     }

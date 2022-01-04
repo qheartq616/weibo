@@ -505,7 +505,7 @@ $('.layui-tab-title .like_tips span').remove();
 
 }else{//判断是否打开通知栏
 $("#head_bell_a").show();
-$('#content_tips').append('<div class="tips_loading"><img src="'+ajax_url_a.theme_url+'/images/chat-loading.gif"></div>');
+$('#content_tips').append('<div class="tips_loading"><img src="'+ajax_url_a.theme_url+'../images/chat-loading.gif"></div>');
 $.ajax({   
 url:ajax_url_a.lmlblog_ajax_url+"/get_item_tips.php",//获取关于动态/帖子的消息
 type:'POST',   

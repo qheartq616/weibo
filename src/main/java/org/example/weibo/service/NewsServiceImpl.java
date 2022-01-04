@@ -40,9 +40,14 @@ public class NewsServiceImpl implements  NewsService {
 //        return map;
 //    }
 
+    /**
+     * 获取被点赞的评论
+     * @param uid
+     * @return
+     */
     @Override
-    public PageInfo<PostLike> getLikedPost(Integer uid, Integer pageNum) {
-        PageHelper.startPage(pageNum,5);
+    public List<PostLike> getLikedPost(Integer uid) {
+     //   PageHelper.startPage(pageNum,5);
         PostLikeExample postLikeExample=new PostLikeExample();
         Last lastLeave = lastService.getLastLeave(uid);
         Date date=new Date();
@@ -59,9 +64,18 @@ public class NewsServiceImpl implements  NewsService {
             System.out.println(postLike.getUpid());
             System.out.println(postLike.getLikeTime());
         }
-        PageInfo<PostLike> pageInfo =new PageInfo<>(postLikes);
-        return pageInfo;
+    //    PageInfo<PostLike> pageInfo =new PageInfo<>(postLikes);
+        return postLikes;
     }
+
+    @Override
+    public List<CommentLike> getCommentLike(Integer uid) {
+        CommentLikeExample commentLikeExample=new CommentLikeExample();
+        Last lastLeave = lastService.getLastLeave(uid);
+        commentLikeExample.createCriteria().andLikeTimeGreaterThan(lastLeave.getLltime());
+        return null;
+    }
+
 //    @Override
 //    public List<Post> allPost(Integer uid) {
 //        List<PostLike> likedPost = getLikedPost(uid);
