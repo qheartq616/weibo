@@ -1,14 +1,11 @@
 package org.example.weibo.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.weibo.mapper.CommentLikeMapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.example.weibo.mapper.CommentMapper;
 import org.example.weibo.pojo.Comment;
 import org.example.weibo.pojo.CommentExample;
-import org.example.weibo.pojo.CommentLike;
-import org.example.weibo.pojo.CommentLikeExample;
 import org.example.weibo.utils.ListUtil;
-import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -32,24 +29,36 @@ public class CommentServiceImpl implements CommentService{
 
 	@Override
 	//应该用分页
-	public List<Comment> showLatestComment(String upid) {
-		return null;
+	//查询最近几条，some即为pageSize，pageNum为0
+	public PageInfo<Comment> showLatestComment(String upid,String upcid,Integer uid, Integer pageNum, Integer pageSize) {
+		PageHelper.startPage(pageNum,pageSize);
+		CommentExample commentExample=new CommentExample();
+		commentExample.setOrderByClause("order by comment_time desc");
+		commentExample.createCriteria().andUpidEqualTo(upid).andUpcidEqualTo(upcid);
+		List<Comment> commentList = commentMapper.selectByExample(commentExample);
+
+		PageInfo<Comment> pageInfo=new PageInfo<>(commentList);
+		List<Comment> fillCommentInfo = fillCommentInfo(pageInfo.getList(), uid, pageSize);
+		pageInfo.setList(fillCommentInfo);
+
+		return pageInfo;
 	}
 
 	@Override
 	//查询最热评论
-	public List<Comment> showHotComment(String upid,String upcid,Integer uid) {
+	public List<Comment> showHotComment(String upid,String upcid,Integer uid,Integer some) {
 		CommentExample commentExample=new CommentExample();
 		commentExample.createCriteria().andUpidEqualTo(upid).andUpcidEqualTo(upcid);
 		List<Comment> commentList = commentMapper.selectByExample(commentExample);
-		List<Comment> fillCommentInfo = fillCommentInfo(commentList,uid);
 
-		return ListUtil.sortByHeat(fillCommentInfo);
+		List<Comment> fillCommentInfo = fillCommentInfo(commentList,uid,some);
+
+		return ListUtil.sortByHeat(fillCommentInfo,some);
 	}
 
 	@Override
 	//补全微博信息
-	public List<Comment> fillCommentInfo(List<Comment> commentList, Integer uid) {
+	public List<Comment> fillCommentInfo(List<Comment> commentList, Integer uid,Integer some) {
 		for (Comment comment : commentList) {
 			//点赞数
 			int countCommentLike = commentLikeService.countCommentLike(comment.getUid() + "-" + comment.getCid());
@@ -61,7 +70,7 @@ public class CommentServiceImpl implements CommentService{
 
 			//热门子评论
 			if (comment.getUpcid().equals("0")){
-				List<Comment> showHotComment = showHotComment(comment.getUpid(), comment.getUid() + "-" + comment.getCid(),uid);
+				List<Comment> showHotComment = showHotComment(comment.getUpid(), comment.getUid() + "-" + comment.getCid(),uid,some);
 				comment.setSubCommentList(showHotComment);
 			}
 		}

@@ -58,25 +58,6 @@
 					<a th:href="@{|/main/${session.user.uid}/all/1|}" style="text-decoration: none"><i class="fa fa-home"></i>微博首页</a>
 				</li>
 				<li class="menu-item"><a href="#1" style="text-decoration: none"><i class="fa fa-envelope-o"></i>私信</a></li>
-				<!--<li class="menu-item">
-					<a href="#1">发现</a>
-				</li>
-				<li class="menu-item">
-					<a href="#1">微博</a>
-				</li>
-				<li id="menu-item" class="menu-item">
-					<a href="#1">空间</a>
-				</li>
-				<li class="menu-item menu-item-has-children"><a href="#1">好友</a>
-					<ul class="sub-menu">
-						<li class="menu-item"><a href="#">燕凌姣</a></li>
-						<li class="menu-item"><a href="#">姬如雪</a></li>
-						<li class="menu-item"><a href="#">陆林轩</a></li>
-						<li class="menu-item"><a href="#">红莲</a></li>
-						<li class="menu-item"><a href="#">陆雪琪</a></li>
-						<li class="menu-item"><a href="#">画江湖</a></li>
-					</ul>
-				</li>-->
 				<li th:class="|gengxin menu-item menu-item-type-custom|" th:if="${userCur.uid==session.user.uid}">
 					<a th:href="@{|/user/${session.user.uid}/1|}" style="text-decoration: none">
 						<img th:src="|/avatar/${session.user.image}|" style="height: 32px;width: 32px;position: relative;top: -3px;" class="avatar" />
@@ -102,7 +83,8 @@
 	</div>
 </div><!-- menu-bar -->
 
-<div style="clear: both;"></div><div class="lmlblog-member-main" data="1">
+<div style="clear: both;"></div>
+<div class="lmlblog-member-main" data="1">
 	<div class="lmlblog-member-bg">
 		<div class="lmlblog-member-content">
 			<div class="lmlblog-member-header">
@@ -289,7 +271,7 @@
 								<div class="row">
 									<div class="lmlblog-post-bar" >
 										<hr style="width: 710px;position: relative;left: -20px;top: 10px">
-										<li th:onclick='list_comments_show(this,[[${topPost.user.uid}]],[[${topPost.pid}]],[[${session.user.image}]]);'>
+										<li onclick="list_comments_show(this,this.getAttribute('data-uid'),this.getAttribute('data-pid'),this.getAttribute('data-image'))" th:data-uid="${topPost.user.uid}" th:data-pid="${topPost.pid}" th:data-image="${session.user.image}">
 											<i class="fa fa-comment-o"></i><span></span>
 										</li>
 										<li class="lmlblog-no-like" th:onclick="|javascript:doLike(${topPost.user.uid},${topPost.pid},${session.user.uid},this)|">
@@ -526,6 +508,7 @@
 </div>
 <!-- 返回顶部 -->
 <a href="javascript:returnTop();" class="cd-top"></a>
+</div>
 <script type="text/javascript">
 	var sdelay=0;
 	function returnTop() {
@@ -535,6 +518,7 @@
 		}
 	}
 </script>
+
 </body>
 <script type='text/javascript' th:src='@{/js/base.js}'></script>
 <script type='text/javascript' th:src='@{/all.js}'></script>
@@ -559,186 +543,213 @@
 		}
 	}
 
-	function list_comments_show(d,uid,pid,image) {
-		var display=$(d).parent().parent().parent().next().css("display");
-		if (display=="none"){
-			$(d).parent().parent().parent().next().css("display","block");
-			//alert("111");
-			$.post(
-				"/comment/hotComment",
-				"upid="+uid+"-"+pid,
-				function (data) {
-					var comment="";
-					comment="\t\t\t<!--发送评论开始-->\n" +
-							"\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px;padding-top: 10px'>\n" +
-							"\t\t\t\t<div class='col-lg-1'>\n" +
-							"\t\t\t\t\t<img src='/avatar/"+image+"' style='height: 32px;width: 32px' />\n" +
-							"\t\t\t\t</div>\n" +
-							"\t\t\t\t<div class='col-lg-11' style='padding-left: 0px'>\n" +
-							"\t\t\t\t\t<form role='form' method=\"post\">\n" +
-							"\t\t\t\t\t\t<div class='form-group' style='margin-top: 0px'>\n" +
-							"\t\t\t\t\t\t\t<div class='col-lg-12' style='padding-left: 0px'>\n" +
-							"\t\t\t\t\t\t\t\t<div contentEditable='true' class='form-control'\n" +
-							"\t\t\t\t\t\t\t\t\tstyle='width: 635px;height: auto' onkeyup='ifSendAble(this,"+0+")'></div>\n" +
-							"\t\t\t\t\t\t\t</div>\n" +
-							"\t\t\t\t\t\t\t<div class='col-lg-12' style='margin-top: 12px;margin-left: 12px;'>\n" +
-							"\t\t\t\t\t\t\t\t<button type='button' id='send' class='btn btn-default pull-right disabled'\n" +
-							"\t\t\t\t\t\t\t\t\tstyle='height: 30px;width: 60px;padding: 0 0' onclick='reply(this,"+uid+","+pid+",0,"+0+")'>发布</button>\n" +
-							"\t\t\t\t\t\t\t</div>\n" +
-							"\t\t\t\t\t\t</div>\n" +
-							"\t\t\t\t\t</form>\n" +
-							"\t\t\t\t</div>\n" +
-							"\t\t\t</div>\n" +
-							"\t\t\t<!--发送评论结束-->";
-					if (data!=""){
-						comment+="<hr style=\"width: 680px;margin-left: 15px\" />" +
-								"<div style='display: block;background-color: #f2f2f5;'>\n" +
-								"\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px;'>\n" +
-								"\t\t\t\t\t<div class=\"col-lg-6\"><a href=''>按热度</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href=''>按时间</a></div>\n" +
-								"\t\t\t\t</div>";
-						for (let i=0;i<data.length;i++){
-							comment+="<!--需要遍历的评论开始-->\n" +
-									"\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px'>\n" +
-									"\t\t\t\t\t<hr style=\"width: 680px;margin-left: 15px\" />\n" +
-									"\t\t\t\t\t<div class='col-lg-1'>\n" +
-									"\t\t\t\t\t\t<img src='/avatar/"+data[i].user.image+"' style='height: 32px;width: 32px' />\n" +
-									"\t\t\t\t\t</div>\n" +
-									"\t\t\t\t\t<div class='col-lg-11' style='padding-left: 0px'>\n" +
-									"\t\t\t\t\t\t<a style='color: orange' href='/user/"+data[i].uid+"/1'>"+data[i].user.name+"</a>\n" +
-									"\t\t\t\t\t\t<span>："+data[i].comment+"</span>\n" +
-									"\t\t\t\t\t</div>\n" +
-									"\t\t\t\t</div>\n" +
-									"\t\t\t\t<!--评论的时间与回复开始-->\n" +
-									"\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px'>\n" +
-									"\t\t\t\t\t<div class='col-lg-1'></div>\n" +
-									"\t\t\t\t\t<div class='col-lg-3' style=\"color: #808080;padding-left: 0px\">"+data[i].commentTime+"</div>\n" +
-									"\t\t\t\t\t<div class='col-lg-6'></div>\n" +
-									"\t\t\t\t\t<div class='col-lg-2'>\n" +
-									"\t\t\t\t\t\t<a href='javascript:void(0);' style='text-decoration: none' onclick='showReComment(this)'>回复</a>\n" +
-									"\t\t\t\t\t\t&nbsp;&nbsp;|&nbsp;&nbsp;\n" +
-									"\t\t\t\t\t\t<a href=''>";
-							if(data[i].commentLike){
-								comment+="<i class='fa fa-heart'></i>";
-							}else {
-								comment+="<i class='fa fa-heart-o'></i>";
-							}
-							comment+="</a>\n" +
-									"\t\t\t\t\t\t"+data[i].countCommentLike+"\n" +
-									"\t\t\t\t\t</div>\n" +
-									"\t\t\t\t</div>\n" +
-									"\t\t\t\t<!--评论的时间与回复结束-->\n" +
-									"\t\t\t\t<!--发送回复评论开始-->\n" +
-									"\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px;display: none'>\n" +
-									"\t\t\t\t\t<br>\n" +
-									"\t\t\t\t\t<div class='col-lg-1'></div>\n" +
-									"\t\t\t\t\t<div class='col-lg-11'\n" +
-									"\t\t\t\t\t\tstyle='padding-left: 0px;background-color: white;padding-right: 0px;width: 635px'>\n" +
-									"\t\t\t\t\t\t<br>\n" +
-									"\t\t\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px'>\n" +
-									"\t\t\t\t\t\t\t<div class='col-lg-12'>\n" +
-									"\t\t\t\t\t\t\t\t<form role='form' method=\"post\">\n" +
-									"\t\t\t\t\t\t\t\t\t<div class='form-group' style='margin-top: 0px'>\n" +
-									"\t\t\t\t\t\t\t\t\t\t<div class='col-lg-12' style='padding-left: 0px'>\n" +
-									"\t\t\t\t\t\t\t\t\t\t\t<div contentEditable='true' id=\"content1\" class='form-control'\n" +
-									"\t\t\t\t\t\t\t\t\t\t\t\tstyle='width: 605px;height: auto'>回复@"+data[i].user.name+"：</div>\n" +
-									"\t\t\t\t\t\t\t\t\t\t</div>\n" +
-									"\t\t\t\t\t\t\t\t\t\t<div class='col-lg-12' style='margin-top: 12px;margin-left: 12px;'>\n" +
-									"\t\t\t\t\t\t\t\t\t\t\t<button type='button' id='send' class='btn btn-default pull-right disabled'\n" +
-									"\t\t\t\t\t\t\t\t\t\t\t\tstyle='color: #ffc09f;height: 30px;width: 60px;padding: 0 0'>发布</button>\n" +
-									"\t\t\t\t\t\t\t\t\t\t</div>\n" +
-									"\t\t\t\t\t\t\t\t\t</div>\n" +
-									"\t\t\t\t\t\t\t\t</form>\n" +
-									"\t\t\t\t\t\t\t</div>\n" +
-									"\t\t\t\t\t\t</div>\n" +
-									"\t\t\t\t\t\t<br>\n" +
-									"\t\t\t\t\t</div>\n" +
-									"\t\t\t\t</div>\n" +
-									"\t\t\t\t<!--发送回复评论结束-->";
-							if (data[i].subCommentList!=""){
-								comment+="<br>";
-								for (let j=0;j<data[i].subCommentList.length;j++){
-									if (j!=0){
-										comment+="\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px;'>\n" +
-												"\t\t\t\t\t<div class='col-lg-1'></div>\n" +
-												"\t\t\t\t\t<div class='col-lg-11'\n" +
-												"\t\t\t\t\t\tstyle='padding-left: 15px;padding-right: 15px;background-color: #eaeaec;width: 635px;padding-top: 0px;padding-bottom: 0px'>\n" +
-												"<hr style='margin-top: 0;margin-bottom: 0'>"+
-												"</div>"+
-												"</div>";
-									}
-									comment+="<!-- 需要遍历的子评论开始 -->\n" +
-											"\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px;'>\n" +
+	function showCommentContent(uid,pid,image,kind) {
+		var comment="";
+		console.log(uid+","+pid+","+image+","+kind);
+		$.ajax({
+			type:"POST",
+			async:false,
+			dataType:"json",
+			url:"/comment/someComment?upid="+uid+"-"+pid+"&kind="+kind,
+			success: function (r) {
+				if (r.code===631548){
+					console.log(111111)
+					comment+="<div style='display: block;background-color: #f2f2f5;'>\n" +
+							"\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px;'>\n" +
+							"\t\t\t\t\t<div class=\"col-lg-6\">" +
+							"<a onclick=\"showCommentByKind(this,"+uid+","+pid+","+image+",'hot')\">按热度</a>" +
+							"&nbsp;&nbsp;|&nbsp;&nbsp;" +
+							"<a onclick=\"showCommentByKind(this,"+uid+","+pid+","+image+",'latest')\">按时间</a></div>\n" +
+							"\t\t\t\t</div>";
+					for (let i=0;i<r.data.commentList.length;i++){
+						console.log(i)
+						comment+="<!--需要遍历的评论开始-->\n" +
+								"\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px'>\n" +
+								"\t\t\t\t\t<hr style=\"width: 680px;margin-left: 15px\" />\n" +
+								"\t\t\t\t\t<div class='col-lg-1'>\n" +
+								"\t\t\t\t\t\t<img src='/avatar/"+r.data.commentList[i].user.image+"' style='height: 32px;width: 32px' />\n" +
+								"\t\t\t\t\t</div>\n" +
+								"\t\t\t\t\t<div class='col-lg-11' style='padding-left: 0px'>\n" +
+								"\t\t\t\t\t\t<a style='color: orange' href='/user/"+r.data.commentList[i].uid+"/1'>"+r.data.commentList[i].user.name+"</a>\n" +
+								"\t\t\t\t\t\t<span>："+r.data.commentList[i].comment+"</span>\n" +
+								"\t\t\t\t\t</div>\n" +
+								"\t\t\t\t</div>\n" +
+								"\t\t\t\t<!--评论的时间与回复开始-->\n" +
+								"\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px'>\n" +
+								"\t\t\t\t\t<div class='col-lg-1'></div>\n" +
+								"\t\t\t\t\t<div class='col-lg-3' style=\"color: #808080;padding-left: 0px\">"+r.data.commentList[i].commentTime+"</div>\n" +
+								"\t\t\t\t\t<div class='col-lg-6'></div>\n" +
+								"\t\t\t\t\t<div class='col-lg-2'>\n" +
+								"\t\t\t\t\t\t<a href='javascript:void(0);' style='text-decoration: none' onclick='showReComment(this)'>回复</a>\n" +
+								"\t\t\t\t\t\t&nbsp;&nbsp;|&nbsp;&nbsp;\n" +
+								"\t\t\t\t\t\t<a href=''>";
+						if(r.data.commentList[i].commentLike){
+							comment+="<i class='fa fa-heart'></i>";
+						}else {
+							comment+="<i class='fa fa-heart-o'></i>";
+						}
+						comment+="</a>\n" +
+								"\t\t\t\t\t\t"+r.data.commentList[i].countCommentLike+"\n" +
+								"\t\t\t\t\t</div>\n" +
+								"\t\t\t\t</div>\n" +
+								"\t\t\t\t<!--评论的时间与回复结束-->\n" +
+								"\t\t\t\t<!--发送回复评论开始-->\n" +
+								"\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px;display: none'>\n" +
+								"\t\t\t\t\t<br>\n" +
+								"\t\t\t\t\t<div class='col-lg-1'></div>\n" +
+								"\t\t\t\t\t<div class='col-lg-11'\n" +
+								"\t\t\t\t\t\tstyle='padding-left: 0px;background-color: white;padding-right: 0px;width: 635px'>\n" +
+								"\t\t\t\t\t\t<br>\n" +
+								"\t\t\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px'>\n" +
+								"\t\t\t\t\t\t\t<div class='col-lg-12'>\n" +
+								"\t\t\t\t\t\t\t\t<form role='form' method=\"post\">\n" +
+								"\t\t\t\t\t\t\t\t\t<div class='form-group' style='margin-top: 0px'>\n" +
+								"\t\t\t\t\t\t\t\t\t\t<div class='col-lg-12' style='padding-left: 0px'>\n" +
+								"\t\t\t\t\t\t\t\t\t\t\t<div contentEditable='true' id=\"content1\" class='form-control'\n" +
+								"\t\t\t\t\t\t\t\t\t\t\t\tstyle='width: 605px;height: auto'>回复@"+r.data.commentList[i].user.name+"：</div>\n" +
+								"\t\t\t\t\t\t\t\t\t\t</div>\n" +
+								"\t\t\t\t\t\t\t\t\t\t<div class='col-lg-12' style='margin-top: 12px;margin-left: 12px;'>\n" +
+								"\t\t\t\t\t\t\t\t\t\t\t<button type='button' id='send' class='btn btn-default pull-right disabled'\n" +
+								"\t\t\t\t\t\t\t\t\t\t\t\tstyle='color: #ffc09f;height: 30px;width: 60px;padding: 0 0'>发布</button>\n" +
+								"\t\t\t\t\t\t\t\t\t\t</div>\n" +
+								"\t\t\t\t\t\t\t\t\t</div>\n" +
+								"\t\t\t\t\t\t\t\t</form>\n" +
+								"\t\t\t\t\t\t\t</div>\n" +
+								"\t\t\t\t\t\t</div>\n" +
+								"\t\t\t\t\t\t<br>\n" +
+								"\t\t\t\t\t</div>\n" +
+								"\t\t\t\t</div>\n" +
+								"\t\t\t\t<!--发送回复评论结束-->";
+						if (r.data.commentList[i].subCommentList!=""){
+							comment+="<br>";
+							for (let j=0;j<r.data.commentList[i].subCommentList.length;j++){
+								if (j!=0){
+									comment+="\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px;'>\n" +
 											"\t\t\t\t\t<div class='col-lg-1'></div>\n" +
 											"\t\t\t\t\t<div class='col-lg-11'\n" +
-											"\t\t\t\t\t\tstyle='padding-left: 0px;background-color: #eaeaec;width: 635px;padding-top: 10px;padding-bottom: 15px'>\n" +
-											"\t\t\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px'>\n" +
-											"\t\t\t\t\t\t\t<div class='col-lg-12' style='padding-right: 0px;padding-left: 12px'>\n" +
-											"\t\t\t\t\t\t\t\t<a style='color: orange' href='/user/"+data[i].subCommentList[j].user.uid+"/1'>"+data[i].subCommentList[j].user.name+"</a>\n" +
-											"\t\t\t\t\t\t\t\t<span>："+data[i].subCommentList[j].comment+"</span>\n" +
-											"\t\t\t\t\t\t\t</div>\n" +
-											"\t\t\t\t\t\t</div>\n" +
-											"\t\t\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px'>\n" +
-											"\t\t\t\t\t\t\t<div class='col-lg-4' style='color: #808080;padding-right: 0px;padding-left: 12px'>"+data[i].subCommentList[j].commentTime+"</div>\n" +
-											"\t\t\t\t\t\t\t<div class='col-lg-5'></div>\n" +
-											"\t\t\t\t\t\t\t<div class='col-lg-3' style=\"padding-right: 5px\">\n" +
-											"\t\t\t\t\t\t\t\t<span style=\"float: right\">\n" +
-											"\t\t\t\t\t\t\t\t\t<a href='javascipt:void(0);' style='text-decoration: none'\n" +
-											"\t\t\t\t\t\t\t\t\t\tonclick='showReCommentComment(this)'>回复</a>\n" +
-											"\t\t\t\t\t\t\t\t\t&nbsp;&nbsp;|&nbsp;&nbsp;\n" +
-											"\t\t\t\t\t\t\t\t\t<a href=''>";
-									if(data[i].subCommentList[j].commentLike){
-										comment+="<i class='fa fa-heart'></i>";
-									}else {
-										comment+="<i class='fa fa-heart-o'></i>";
-									}
-									comment+="</a>\n" +
-											"\t\t\t\t\t\t\t\t\t"+data[i].subCommentList[j].countCommentLike+"\n" +
-											"\t\t\t\t\t\t\t\t</span>\n" +
-											"\t\t\t\t\t\t\t</div>\n" +
-											"\t\t\t\t\t\t</div>\n" +
-											"\t\t\t\t\t\t<div class='row' style='display: none;margin-left: 15px;margin-right: 0px'>\n" +
-											"\t\t\t\t\t\t\t<br>\n" +
-											"\t\t\t\t\t\t\t<div class='col-lg-12' style='background-color: white;'>\n" +
-											"\t\t\t\t\t\t\t\t<br>\n" +
-											"\t\t\t\t\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px'>\n" +
-											"\t\t\t\t\t\t\t\t\t<div class='col-lg-12' style='padding-left: 0px'>\n" +
-											"\t\t\t\t\t\t\t\t\t\t<form role='form' method=\"post\">\n" +
-											"\t\t\t\t\t\t\t\t\t\t\t<div class='form-group' style='margin-top: 0px'>\n" +
-											"\t\t\t\t\t\t\t\t\t\t\t\t<div class='col-lg-12' style='padding-left: 0px'>\n" +
-											"\t\t\t\t\t\t\t\t\t\t\t\t\t<div contentEditable='true' id=\"content2\" class='form-control'\n" +
-											"\t\t\t\t\t\t\t\t\t\t\t\t\t\tstyle='width: 575px;height: auto'>回复@"+data[i].subCommentList[j].user.name+"：</div>\n" +
-											"\t\t\t\t\t\t\t\t\t\t\t\t</div>\n" +
-											"\t\t\t\t\t\t\t\t\t\t\t\t<div class='col-lg-12'\n" +
-											"\t\t\t\t\t\t\t\t\t\t\t\t\tstyle='margin-top: 12px;margin-left: 12px;padding-right: 5px'>\n" +
-											"\t\t\t\t\t\t\t\t\t\t\t\t\t<button type='button' id='send'\n" +
-											"\t\t\t\t\t\t\t\t\t\t\t\t\t\tclass='btn btn-default pull-right disabled'\n" +
-											"\t\t\t\t\t\t\t\t\t\t\t\t\t\tstyle='color: #ffc09f;height: 30px;width: 60px;padding: 0 0'>发布</button>\n" +
-											"\t\t\t\t\t\t\t\t\t\t\t\t</div>\n" +
-											"\t\t\t\t\t\t\t\t\t\t\t</div>\n" +
-											"\t\t\t\t\t\t\t\t\t\t</form>\n" +
-											"\t\t\t\t\t\t\t\t\t</div>\n" +
-											"\t\t\t\t\t\t\t\t</div>\n" +
-											"\t\t\t\t\t\t\t\t<br>\n" +
-											"\t\t\t\t\t\t\t</div>\n" +
-											"\t\t\t\t\t\t</div>\n" +
-											"\t\t\t\t\t</div>\n" +
-											"\t\t\t\t</div>" +
-											"<!-- 需要遍历的子评论结束 -->\n" +
-											"\t\t\t\t<!-- 需要遍历的评论结束 -->";
+											"\t\t\t\t\t\tstyle='padding-left: 15px;padding-right: 15px;background-color: #eaeaec;width: 635px;padding-top: 0px;padding-bottom: 0px'>\n" +
+											"<hr style='margin-top: 0;margin-bottom: 0'>"+
+											"</div>"+
+											"</div>";
 								}
+								comment+="<!-- 需要遍历的子评论开始 -->\n" +
+										"\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px;'>\n" +
+										"\t\t\t\t\t<div class='col-lg-1'></div>\n" +
+										"\t\t\t\t\t<div class='col-lg-11'\n" +
+										"\t\t\t\t\t\tstyle='padding-left: 0px;background-color: #eaeaec;width: 635px;padding-top: 10px;padding-bottom: 15px'>\n" +
+										"\t\t\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px'>\n" +
+										"\t\t\t\t\t\t\t<div class='col-lg-12' style='padding-right: 0px;padding-left: 12px'>\n" +
+										"\t\t\t\t\t\t\t\t<a style='color: orange' href='/user/"+r.data.commentList[i].subCommentList[j].user.uid+"/1'>"+r.data.commentList[i].subCommentList[j].user.name+"</a>\n" +
+										"\t\t\t\t\t\t\t\t<span>："+r.data.commentList[i].subCommentList[j].comment+"</span>\n" +
+										"\t\t\t\t\t\t\t</div>\n" +
+										"\t\t\t\t\t\t</div>\n" +
+										"\t\t\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px'>\n" +
+										"\t\t\t\t\t\t\t<div class='col-lg-4' style='color: #808080;padding-right: 0px;padding-left: 12px'>"+r.data.commentList[i].subCommentList[j].commentTime+"</div>\n" +
+										"\t\t\t\t\t\t\t<div class='col-lg-5'></div>\n" +
+										"\t\t\t\t\t\t\t<div class='col-lg-3' style=\"padding-right: 5px\">\n" +
+										"\t\t\t\t\t\t\t\t<span style=\"float: right\">\n" +
+										"\t\t\t\t\t\t\t\t\t<a href='javascipt:void(0);' style='text-decoration: none'\n" +
+										"\t\t\t\t\t\t\t\t\t\tonclick='showReCommentComment(this)'>回复</a>\n" +
+										"\t\t\t\t\t\t\t\t\t&nbsp;&nbsp;|&nbsp;&nbsp;\n" +
+										"\t\t\t\t\t\t\t\t\t<a href=''>";
+								if(r.data.commentList[i].subCommentList[j].commentLike){
+									comment+="<i class='fa fa-heart'></i>";
+								}else {
+									comment+="<i class='fa fa-heart-o'></i>";
+								}
+								comment+="</a>\n" +
+										"\t\t\t\t\t\t\t\t\t"+r.data.commentList[i].subCommentList[j].countCommentLike+"\n" +
+										"\t\t\t\t\t\t\t\t</span>\n" +
+										"\t\t\t\t\t\t\t</div>\n" +
+										"\t\t\t\t\t\t</div>\n" +
+										"\t\t\t\t\t\t<div class='row' style='display: none;margin-left: 15px;margin-right: 0px'>\n" +
+										"\t\t\t\t\t\t\t<br>\n" +
+										"\t\t\t\t\t\t\t<div class='col-lg-12' style='background-color: white;'>\n" +
+										"\t\t\t\t\t\t\t\t<br>\n" +
+										"\t\t\t\t\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px'>\n" +
+										"\t\t\t\t\t\t\t\t\t<div class='col-lg-12' style='padding-left: 0px'>\n" +
+										"\t\t\t\t\t\t\t\t\t\t<form role='form' method=\"post\">\n" +
+										"\t\t\t\t\t\t\t\t\t\t\t<div class='form-group' style='margin-top: 0px'>\n" +
+										"\t\t\t\t\t\t\t\t\t\t\t\t<div class='col-lg-12' style='padding-left: 0px'>\n" +
+										"\t\t\t\t\t\t\t\t\t\t\t\t\t<div contentEditable='true' id=\"content2\" class='form-control'\n" +
+										"\t\t\t\t\t\t\t\t\t\t\t\t\t\tstyle='width: 575px;height: auto'>回复@"+r.data.commentList[i].subCommentList[j].user.name+"：</div>\n" +
+										"\t\t\t\t\t\t\t\t\t\t\t\t</div>\n" +
+										"\t\t\t\t\t\t\t\t\t\t\t\t<div class='col-lg-12'\n" +
+										"\t\t\t\t\t\t\t\t\t\t\t\t\tstyle='margin-top: 12px;margin-left: 12px;padding-right: 5px'>\n" +
+										"\t\t\t\t\t\t\t\t\t\t\t\t\t<button type='button' id='send'\n" +
+										"\t\t\t\t\t\t\t\t\t\t\t\t\t\tclass='btn btn-default pull-right disabled'\n" +
+										"\t\t\t\t\t\t\t\t\t\t\t\t\t\tstyle='color: #ffc09f;height: 30px;width: 60px;padding: 0 0'>发布</button>\n" +
+										"\t\t\t\t\t\t\t\t\t\t\t\t</div>\n" +
+										"\t\t\t\t\t\t\t\t\t\t\t</div>\n" +
+										"\t\t\t\t\t\t\t\t\t\t</form>\n" +
+										"\t\t\t\t\t\t\t\t\t</div>\n" +
+										"\t\t\t\t\t\t\t\t</div>\n" +
+										"\t\t\t\t\t\t\t\t<br>\n" +
+										"\t\t\t\t\t\t\t</div>\n" +
+										"\t\t\t\t\t\t</div>\n" +
+										"\t\t\t\t\t</div>\n" +
+										"\t\t\t\t</div>" +
+										"<!-- 需要遍历的子评论结束 -->\n" +
+										"\t\t\t\t<!-- 需要遍历的评论结束 -->";
 							}
 						}
 					}
 					comment+="</div>";
-					$(d).parent().parent().parent().next().html(comment);
-				},
-				"json"
-			);
+				}
+				//console.log(comment)
+			}
+		})
+		return comment;
+	}
+
+	function list_comments_show(d,uid,pid,image) {
+		var display=$(d).parent().parent().parent().next().css("display");
+		if (display==="none"){
+			$(d).parent().parent().parent().next().css("display","block");
+			//alert("111");
+			let comment="";
+			comment="\t\t\t<!--发送评论开始-->\n" +
+					"\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px;padding-top: 10px'>\n" +
+					"\t\t\t\t<div class='col-lg-1'>\n" +
+					"\t\t\t\t\t<img src='/avatar/"+image+"' style='height: 32px;width: 32px' />\n" +
+					"\t\t\t\t</div>\n" +
+					"\t\t\t\t<div class='col-lg-11' style='padding-left: 0px'>\n" +
+					"\t\t\t\t\t<form role='form' method=\"post\">\n" +
+					"\t\t\t\t\t\t<div class='form-group' style='margin-top: 0px'>\n" +
+					"\t\t\t\t\t\t\t<div class='col-lg-12' style='padding-left: 0px'>\n" +
+					"\t\t\t\t\t\t\t\t<div contentEditable='true' class='form-control'\n" +
+					"\t\t\t\t\t\t\t\t\tstyle='width: 635px;height: auto' onkeyup='ifSendAble(this,"+0+")'></div>\n" +
+					"\t\t\t\t\t\t\t</div>\n" +
+					"\t\t\t\t\t\t\t<div class='col-lg-12' style='margin-top: 12px;margin-left: 12px;'>\n" +
+					"\t\t\t\t\t\t\t\t<button type='button' id='send' class='btn btn-default pull-right disabled'\n" +
+					"\t\t\t\t\t\t\t\t\tstyle='height: 30px;width: 60px;padding: 0 0' onclick='reply(this,"+uid+","+pid+",0,"+0+")'>发布</button>\n" +
+					"\t\t\t\t\t\t\t</div>\n" +
+					"\t\t\t\t\t\t</div>\n" +
+					"\t\t\t\t\t</form>\n" +
+					"\t\t\t\t</div>\n" +
+					"\t\t\t</div>\n" +
+					"\t\t\t<!--发送评论结束-->";
+			let commentContent =showCommentContent(uid,pid,image,'hot');
+			//console.log(commentContent);
+			if (commentContent!==""){
+				console.log(215151)
+				comment+="<hr style=\"width: 680px;margin-left: 15px\" />";
+				comment+=commentContent;
+			}
+			$(d).parent().parent().parent().next().html(comment);
 		}else {
 			$(d).parent().parent().parent().next().css("display","none");
 		}
 	}
 
+	function showCommentByKind(d,uid,pid,image,kind) {
+		let comment="";
+		comment+=showCommentContent(uid,pid,image,kind)
+		let previousElement=$(d).parent().parent().parent().prev();
+		$(previousElement).next().remove();
+		$(previousElement).after(comment)
+	}
+	
 	function ifSendAble(d,name) {
 		//alert('=====')
 		let content_len = $(d).text().replace(/\s/g, "").length;
