@@ -5,6 +5,8 @@ import javafx.geometry.Pos;
 import java.util.Date;
 
 public class PostLike {
+    public static String type="post";
+
     private Integer lid;
 
     private Integer uid;

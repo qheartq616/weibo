@@ -1,10 +1,7 @@
 package org.example.weibo.service;
 
 import com.github.pagehelper.PageInfo;
-import org.example.weibo.pojo.CommentLike;
-import org.example.weibo.pojo.Post;
-import org.example.weibo.pojo.PostLike;
-import org.example.weibo.pojo.User;
+import org.example.weibo.pojo.*;
 
 import java.util.List;
 import java.util.Map;
@@ -16,4 +13,11 @@ public interface NewsService {
     List<PostLike> getLikedPost(Integer uid);
     //获取被点赞的评论 在 commentLike
     List<CommentLike> getCommentLike(Integer uid);
+    //合并 微博点赞和评论点赞
+    PageInfo<Object> allLike(Integer uid,Integer pageNum);
+
+    //评论我的人
+    PageInfo<Comment> getAllComments(Integer pageStart,Integer size,Integer uid);
+
+
 }

@@ -47,8 +47,8 @@ public class NewsController {
     }
     @RequestMapping("/likeMe/{uid}/{pageNum}")
     public String likeme(@PathVariable Integer uid, @PathVariable @RequestParam(defaultValue = "1") Integer pageNum, Model model){
-        PageInfo<PostLike> likedPost = newsService.getLikedPost(uid, pageNum);
-        model.addAttribute("pageInfo",likedPost);
+        PageInfo<Object> objectPageInfo = newsService.allLike(uid, pageNum);
+        model.addAttribute("pageInfo",objectPageInfo);
         return "news";
     }
 }

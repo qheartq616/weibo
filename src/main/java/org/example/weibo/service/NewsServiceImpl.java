@@ -2,9 +2,7 @@ package org.example.weibo.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.example.weibo.mapper.PostLikeMapper;
-import org.example.weibo.mapper.PostMapper;
-import org.example.weibo.mapper.UserMapper;
+import org.example.weibo.mapper.*;
 import org.example.weibo.pojo.*;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +19,10 @@ public class NewsServiceImpl implements  NewsService {
     PostMapper postMapper;
     @Resource
     LastService lastService;
+    @Resource
+    CommentLikeMapper commentLikeMapper;
+    @Resource
+    CommentMapper commentMapper;
 
 //    @Override
 //    public Map<User,Post> getAllUserLikeMeAfterLast(Integer uid, Integer pageNum) {
@@ -47,7 +49,7 @@ public class NewsServiceImpl implements  NewsService {
      */
     @Override
     public List<PostLike> getLikedPost(Integer uid) {
-     //   PageHelper.startPage(pageNum,5);
+     // PageHelper.startPage(pageNum,5);
         PostLikeExample postLikeExample=new PostLikeExample();
         Last lastLeave = lastService.getLastLeave(uid);
         Date date=new Date();
@@ -70,9 +72,55 @@ public class NewsServiceImpl implements  NewsService {
 
     @Override
     public List<CommentLike> getCommentLike(Integer uid) {
+        Date date=new Date();
         CommentLikeExample commentLikeExample=new CommentLikeExample();
         Last lastLeave = lastService.getLastLeave(uid);
-        commentLikeExample.createCriteria().andLikeTimeGreaterThan(lastLeave.getLltime());
+        commentLikeExample.createCriteria().andLikeTimeBetween(lastLeave.getLltime(),date).andUcidLike(""+uid+"-%");
+        List<CommentLike> commentLikes=commentLikeMapper.selectByExample(commentLikeExample);
+        System.out.println("符合条件的评论点赞个数"+commentLikes.size());
+        Comment comment=new Comment();
+        for (CommentLike commentLike : commentLikes) {
+            int commentId = Integer.parseInt(commentLike.getUcid().substring(commentLike.getUcid().indexOf("-") + 1));
+            comment = commentMapper.selectByPrimaryKey(commentId);
+            commentLike.setComment(comment);
+            int postId= Integer.parseInt(comment.getUpid().substring(comment.getUpid().indexOf("-") + 1));
+            comment.setPost(postMapper.selectByPrimaryKey(postId));
+            commentLike.setUser(userMapper.selectByPrimaryKey(commentLike.getUid()));
+        }
+
+        return commentLikes;
+    }
+
+    @Override
+    public PageInfo<Object> allLike(Integer uid, Integer pageNum) {
+        PageHelper.startPage(pageNum,5);
+        List<CommentLike> commentLike = this.getCommentLike(uid);
+        List<PostLike> likedPost = this.getLikedPost(uid);
+        List list=new ArrayList<>();
+
+        Iterator<CommentLike> it1=commentLike.iterator();
+        while(it1.hasNext()){
+            list.add(it1.next());
+        }
+        Iterator<PostLike> it2=likedPost.iterator();
+        while (it2.hasNext()){
+            list.add(it2.next());
+        }
+        System.out.println("所有点赞数"+list.size());
+        PageInfo pageInfo=new PageInfo(list);
+        return pageInfo;
+    }
+
+    /**
+     * 我的微博 的评论
+     * @param pageStart
+     * @param size
+     * @return
+     */
+    @Override
+    public PageInfo<Comment> getAllComments(Integer pageStart, Integer size,Integer uid) {
+
+
         return null;
     }
 

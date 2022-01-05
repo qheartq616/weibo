@@ -16,6 +16,8 @@ public class Comment {
 
     private String comment;
 
+    private  Post post;
+
     @JsonFormat(pattern = "MM月dd日 HH:mm",timezone="GMT+8")
     private Date commentTime;
 
@@ -42,6 +44,14 @@ public class Comment {
                 ", subCommentList=" + subCommentList +
                 ", commentLike=" + commentLike +
                 '}';
+    }
+
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
     }
 
     public List<Comment> getSubCommentList() {

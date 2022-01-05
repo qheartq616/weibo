@@ -3,6 +3,8 @@ package org.example.weibo.pojo;
 import java.util.Date;
 
 public class CommentLike {
+    public static String type="comment";
+
     private Integer clid;
 
     private Integer uid;
@@ -12,6 +14,16 @@ public class CommentLike {
     private Date likeTime;
 
     private  Comment comment;
+
+    private  User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public Comment getComment() {
         return comment;
