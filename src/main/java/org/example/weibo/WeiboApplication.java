@@ -5,7 +5,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 
-@EnableCaching
 @MapperScan(basePackages = "org.example.weibo.mapper")
 @SpringBootApplication
 public class WeiboApplication {

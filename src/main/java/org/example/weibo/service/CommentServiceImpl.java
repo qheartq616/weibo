@@ -33,7 +33,7 @@ public class CommentServiceImpl implements CommentService{
 	public PageInfo<Comment> showLatestComment(String upid,String upcid,Integer uid, Integer pageNum, Integer pageSize) {
 		PageHelper.startPage(pageNum,pageSize);
 		CommentExample commentExample=new CommentExample();
-		commentExample.setOrderByClause("order by comment_time desc");
+		commentExample.setOrderByClause("comment_time desc");
 		commentExample.createCriteria().andUpidEqualTo(upid).andUpcidEqualTo(upcid);
 		List<Comment> commentList = commentMapper.selectByExample(commentExample);
 
@@ -48,6 +48,7 @@ public class CommentServiceImpl implements CommentService{
 	//查询最热评论
 	public List<Comment> showHotComment(String upid,String upcid,Integer uid,Integer some) {
 		CommentExample commentExample=new CommentExample();
+		commentExample.setOrderByClause("comment_time desc");
 		commentExample.createCriteria().andUpidEqualTo(upid).andUpcidEqualTo(upcid);
 		List<Comment> commentList = commentMapper.selectByExample(commentExample);
 
