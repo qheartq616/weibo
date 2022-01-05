@@ -253,7 +253,7 @@
 								<div class="row">
 									<div class="lmlblog-post-bar" >
 										<hr style="width: 710px;position: relative;left: -20px;top: 10px">
-										<li onclick="list_comments_show(this,this.getAttribute('data-uid'),this.getAttribute('data-pid'),this.getAttribute('data-image'),this.getAttribute('data-name'))" th:data-uid="${topPost.user.uid}" th:data-pid="${topPost.pid}" th:data-image="${session.user.image}" th:data-name="${session.user.name}">
+										<li th:id="|show${topPost.pid}PostComment|" onclick="list_comments_show(this,this.getAttribute('data-uid'),this.getAttribute('data-pid'),this.getAttribute('data-image'),this.getAttribute('data-name'),'hot')" th:data-uid="${topPost.user.uid}" th:data-pid="${topPost.pid}" th:data-image="${session.user.image}" th:data-name="${session.user.name}">
 											<i class="fa fa-comment-o"></i><span></span>
 										</li>
 										<li class="lmlblog-no-like" th:onclick="|javascript:doLike(${topPost.user.uid},${topPost.pid},${session.user.uid},this)|">
@@ -446,7 +446,7 @@
 								<div class="row">
 									<div class="lmlblog-post-bar">
 										<hr style="width: 710px;position: relative;left: -20px;top: 10px">
-										<li onclick="list_comments_show(this,this.getAttribute('data-uid'),this.getAttribute('data-pid'),this.getAttribute('data-image'),this.getAttribute('data-name'))" th:data-uid="${post.user.uid}" th:data-pid="${post.pid}" th:data-image="${session.user.image}" th:data-name="${session.user.name}">
+										<li th:id="|show${post.pid}PostComment|" onclick="list_comments_show(this,this.getAttribute('data-uid'),this.getAttribute('data-pid'),this.getAttribute('data-image'),this.getAttribute('data-name'),'hot')" th:data-uid="${post.user.uid}" th:data-pid="${post.pid}" th:data-image="${session.user.image}" th:data-name="${session.user.name}">
 											<i class="fa fa-comment-o"></i><span></span>
 										</li>
 										<li class="lmlblog-no-like" th:onclick="|javascript:doLike(${post.user.uid},${post.pid},${session.user.uid},this)|">
@@ -650,21 +650,22 @@
 				if (r.code===631548){
 					//console.log(111111)
 					comment+="<div style='display: block;background-color: #f2f2f5;'>\n" +
-							"\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px;'>\n" +
-							"\t\t\t\t\t<div class=\"col-lg-6\">"
+							"\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px;'>\n"
 					if (kind==="hot"){
-						comment+="<a style='text-decoration: none;color: orange' onclick=\"showCommentByKind(this,"+uid+","+pid+",'"+image+"','hot')\">按热度</a>" +
+						comment+="\t\t\t\t\t<div class=\"col-lg-6\" data-kind='hot'>"+
+								"<a style='text-decoration: none;color: orange' onclick=\"showCommentByKind(this,"+uid+","+pid+",'"+image+"','hot')\">按热度</a>" +
 								"&nbsp;&nbsp;|&nbsp;&nbsp;" +
 								"<a style='text-decoration: none' onclick=\"showCommentByKind(this,"+uid+","+pid+",'"+image+"','latest')\">按时间</a>";
 					}else {
-						comment+="<a style='text-decoration: none' onclick=\"showCommentByKind(this,"+uid+","+pid+",'"+image+"','hot')\">按热度</a>" +
+						comment+="\t\t\t\t\t<div class=\"col-lg-6\" data-kind='latest'>"+
+								"<a style='text-decoration: none' onclick=\"showCommentByKind(this,"+uid+","+pid+",'"+image+"','hot')\">按热度</a>" +
 								"&nbsp;&nbsp;|&nbsp;&nbsp;" +
 								"<a style='text-decoration: none;color: orange' onclick=\"showCommentByKind(this,"+uid+","+pid+",'"+image+"','latest')\">按时间</a>";
 					}
 					comment+="</div>\n" +
 							"\t\t\t\t</div>";
 					for (let i=0;i<r.data.commentList.length;i++){
-						console.log(i)
+						//console.log(i)
 						comment+="<!--需要遍历的评论开始-->\n" +
 								"\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px'>\n" +
 								"\t\t\t\t\t<hr style=\"width: 680px;margin-left: 15px\" />\n" +
@@ -682,7 +683,7 @@
 								"\t\t\t\t\t<div class='col-lg-3' style=\"color: #808080;padding-left: 0px\">"+r.data.commentList[i].commentTime+"</div>\n" +
 								"\t\t\t\t\t<div class='col-lg-6'></div>\n" +
 								"\t\t\t\t\t<div class='col-lg-2'>\n" +
-								"\t\t\t\t\t\t<a href='javascript:void(0);' style='text-decoration: none' onclick='showReComment(this)'>回复</a>\n" +
+								"\t\t\t\t\t\t<a style='text-decoration: none' onclick='javascript:showReComment(this)'>回复</a>\n" +
 								"\t\t\t\t\t\t&nbsp;&nbsp;|&nbsp;&nbsp;\n" +
 								"\t\t\t\t\t\t<a href=''>";
 						if(r.data.commentList[i].commentLike){
@@ -708,11 +709,11 @@
 								"\t\t\t\t\t\t\t\t\t<div class='form-group' style='margin-top: 0px'>\n" +
 								"\t\t\t\t\t\t\t\t\t\t<div class='col-lg-12' style='padding-left: 0px'>\n" +
 								"\t\t\t\t\t\t\t\t\t\t\t<div contentEditable='true' id=\"content1\" class='form-control'\n" +
-								"\t\t\t\t\t\t\t\t\t\t\t\tstyle='width: 605px;height: auto'>回复@"+r.data.commentList[i].user.name+"：</div>\n" +
+								"\t\t\t\t\t\t\t\t\t\t\t\tstyle='width: 605px;height: auto' onkeyup=\"ifSendAble(this,0)\"></div>\n" +
 								"\t\t\t\t\t\t\t\t\t\t</div>\n" +
 								"\t\t\t\t\t\t\t\t\t\t<div class='col-lg-12' style='margin-top: 12px;margin-left: 12px;'>\n" +
 								"\t\t\t\t\t\t\t\t\t\t\t<button type='button' id='send' class='btn btn-default pull-right disabled'\n" +
-								"\t\t\t\t\t\t\t\t\t\t\t\tstyle='color: #ffc09f;height: 30px;width: 60px;padding: 0 0'>发布</button>\n" +
+								"\t\t\t\t\t\t\t\t\t\t\t\tstyle='height: 30px;width: 60px;padding: 0 0' onclick=\"reply(this,"+uid+","+pid+",'"+r.data.commentList[i].user.uid+'-'+r.data.commentList[i].cid+"',0,'"+r.data.commentList[i].user.name+"','"+image+"')\">发布</button>\n" +
 								"\t\t\t\t\t\t\t\t\t\t</div>\n" +
 								"\t\t\t\t\t\t\t\t\t</div>\n" +
 								"\t\t\t\t\t\t\t\t</form>\n" +
@@ -750,8 +751,8 @@
 										"\t\t\t\t\t\t\t<div class='col-lg-5'></div>\n" +
 										"\t\t\t\t\t\t\t<div class='col-lg-3' style=\"padding-right: 5px\">\n" +
 										"\t\t\t\t\t\t\t\t<span style=\"float: right\">\n" +
-										"\t\t\t\t\t\t\t\t\t<a href='javascipt:void(0);' style='text-decoration: none'\n" +
-										"\t\t\t\t\t\t\t\t\t\tonclick='showReCommentComment(this)'>回复</a>\n" +
+										"\t\t\t\t\t\t\t\t\t<a style='text-decoration: none'\n" +
+										"\t\t\t\t\t\t\t\t\t\t onclick='javascipt:showReCommentComment(this)'>回复</a>\n" +
 										"\t\t\t\t\t\t\t\t\t&nbsp;&nbsp;|&nbsp;&nbsp;\n" +
 										"\t\t\t\t\t\t\t\t\t<a href=''>";
 								if(r.data.commentList[i].subCommentList[j].commentLike){
@@ -774,13 +775,13 @@
 										"\t\t\t\t\t\t\t\t\t\t\t<div class='form-group' style='margin-top: 0px'>\n" +
 										"\t\t\t\t\t\t\t\t\t\t\t\t<div class='col-lg-12' style='padding-left: 0px'>\n" +
 										"\t\t\t\t\t\t\t\t\t\t\t\t\t<div contentEditable='true' id=\"content2\" class='form-control'\n" +
-										"\t\t\t\t\t\t\t\t\t\t\t\t\t\tstyle='width: 575px;height: auto'>回复@"+r.data.commentList[i].subCommentList[j].user.name+"：</div>\n" +
+										"\t\t\t\t\t\t\t\t\t\t\t\t\t\tstyle='width: 575px;height: auto' onkeyup=\"ifSendAble(this,'"+r.data.commentList[i].subCommentList[j].user.name+"')\">回复@"+r.data.commentList[i].subCommentList[j].user.name+"：</div>\n" +
 										"\t\t\t\t\t\t\t\t\t\t\t\t</div>\n" +
 										"\t\t\t\t\t\t\t\t\t\t\t\t<div class='col-lg-12'\n" +
 										"\t\t\t\t\t\t\t\t\t\t\t\t\tstyle='margin-top: 12px;margin-left: 12px;padding-right: 5px'>\n" +
 										"\t\t\t\t\t\t\t\t\t\t\t\t\t<button type='button' id='send'\n" +
 										"\t\t\t\t\t\t\t\t\t\t\t\t\t\tclass='btn btn-default pull-right disabled'\n" +
-										"\t\t\t\t\t\t\t\t\t\t\t\t\t\tstyle='color: #ffc09f;height: 30px;width: 60px;padding: 0 0'>发布</button>\n" +
+										"\t\t\t\t\t\t\t\t\t\t\t\t\t\tstyle='height: 30px;width: 60px;padding: 0 0' onclick=\"reply(this,"+uid+","+pid+",'"+r.data.commentList[i].user.uid+'-'+r.data.commentList[i].cid+"','"+r.data.commentList[i].subCommentList[j].user.uid+'-'+r.data.commentList[i].subCommentList[j].cid+"','"+r.data.commentList[i].user.name+"','"+image+"') \">发布</button>\n" +
 										"\t\t\t\t\t\t\t\t\t\t\t\t</div>\n" +
 										"\t\t\t\t\t\t\t\t\t\t\t</div>\n" +
 										"\t\t\t\t\t\t\t\t\t\t</form>\n" +
@@ -804,7 +805,7 @@
 		return comment;
 	}
 
-	function list_comments_show(d,uid,pid,image,name) {
+	function list_comments_show(d,uid,pid,image,name,kind) {
 		var display=$(d).parent().parent().parent().next().css("display");
 		if (display==="none"){
 			$(d).parent().parent().parent().next().css("display","block");
@@ -820,21 +821,19 @@
 					"\t\t\t\t\t\t<div class='form-group' style='margin-top: 0px'>\n" +
 					"\t\t\t\t\t\t\t<div class='col-lg-12' style='padding-left: 0px'>\n" +
 					"\t\t\t\t\t\t\t\t<div contentEditable='true' class='form-control'\n" +
-					"\t\t\t\t\t\t\t\t\tstyle='width: 635px;height: auto' onkeyup='ifSendAble(this,"+0+")'></div>\n" +
+					"\t\t\t\t\t\t\t\t\tstyle='width: 635px;height: auto' onkeyup=\"ifSendAble(this,'0')\"></div>\n" +
 					"\t\t\t\t\t\t\t</div>\n" +
 					"\t\t\t\t\t\t\t<div class='col-lg-12' style='margin-top: 12px;margin-left: 12px;'>\n" +
 					"\t\t\t\t\t\t\t\t<button type='button' id='send' class='btn btn-default pull-right disabled'\n" +
-					"\t\t\t\t\t\t\t\t\tstyle='height: 30px;width: 60px;padding: 0 0' onclick=\"reply(this,"+uid+","+pid+",0,'"+name+"','"+image+"')\">发布</button>\n" +
+					"\t\t\t\t\t\t\t\t\tstyle='height: 30px;width: 60px;padding: 0 0' onclick=\"reply(this,"+uid+","+pid+",0,0,'"+name+"','"+image+"')\">发布</button>\n" +
 					"\t\t\t\t\t\t\t</div>\n" +
 					"\t\t\t\t\t\t</div>\n" +
 					"\t\t\t\t\t</form>\n" +
 					"\t\t\t\t</div>\n" +
 					"\t\t\t</div>\n" +
 					"\t\t\t<!--发送评论结束-->";
-			let commentContent =showCommentContent(uid,pid,image,'hot');
-			//console.log(commentContent);
+			let commentContent =showCommentContent(uid,pid,image,kind);
 			if (commentContent!==""){
-				//console.log(215151)
 				comment+="<hr style=\"width: 680px;margin-left: 15px\" />";
 				comment+=commentContent;
 			}
@@ -847,57 +846,51 @@
 	function showCommentByKind(d,uid,pid,image,kind) {
 		let comment="";
 		comment+=showCommentContent(uid,pid,image,kind)
-		//console.log()
 		$(d).parent().parent().parent().replaceWith(comment)
 	}
 	
-	function ifSendAble(d,upcid) {
-		//alert('=====')
+	function ifSendAble(d,name) {
 		let content_len = $(d).text().replace(/\s/g, "").length;
 		let content=$(d).html();
-		if (upcid=='0'){
-			if(content_len==0){
+		if (name=='0'){
+			if(content_len===0){
 				$(d).parent().next().children().eq(0).addClass("disabled");
-				//alert(111)
 				return false;
 			}else{
 				$(d).parent().next().children().eq(0).removeClass("disabled");
-				//alert(222)
-				//alert(1111)
-				/*console.log(content_len)
-				alert($(d))
-				console.log($(d).html())*/
 				return true;
 			}
 		}else {
 			let str="回复@"+name+"：";
 			if (content==str){
-				$(d).addClass("disabled");
-				//alert(333)
+				$(d).parent().next().children().eq(0).addClass("disabled");
 				return false;
 			}else {
-				$(d).removeClass("disabled");
-				//alert(444)
+				$(d).parent().next().children().eq(0).removeClass("disabled");
 				return true;
 			}
 		}
 	}
 
-	function reply(d,uid,pid,upcid,name,image) {
+	function reply(d,uid,pid,upcid,urcid,name,image) {
 		let contentElement=$(d).parent().prev().children().eq(0);
 		let content=contentElement.html();
 
-		if (ifSendAble(contentElement,upcid)){
-			console.log('可以发送ajax')
+		if (ifSendAble(contentElement,name)){
+			//console.log('可以发送ajax')
 			$.post(
 				"/comment/sendComment",
-				"uid="+uid+"&upid="+uid+"-"+pid+"&upcid="+upcid+"&comment="+content,
+				"upid="+uid+"-"+pid+"&upcid="+upcid+"&urcid="+urcid+"&comment="+content,
 				function (r) {
 					console.log(r)
 					if (r.code===631548){
 						alert("发送成功");
 						contentElement.html("");
-						let newComment="<!--需要遍历的评论开始-->\n" +
+						$("#show"+pid+"PostComment").parent().parent().parent().next().css("display","none")
+						let kind=$("#show"+pid+"PostComment").parent().parent().parent().next().children().eq(2).children().eq(0).children().eq(0).attr("data-kind")
+						list_comments_show($("#show"+pid+"PostComment"),uid,pid,image,name,kind)
+						/*let newComment="";
+						newComment="<!--需要遍历的评论开始-->\n" +
 								"\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px'>\n" +
 								"\t\t\t\t\t<hr style=\"width: 680px;margin-left: 15px\" />\n" +
 								"\t\t\t\t\t<div class='col-lg-1'>\n" +
@@ -936,7 +929,7 @@
 								"\t\t\t\t\t\t\t\t\t<div class='form-group' style='margin-top: 0px'>\n" +
 								"\t\t\t\t\t\t\t\t\t\t<div class='col-lg-12' style='padding-left: 0px'>\n" +
 								"\t\t\t\t\t\t\t\t\t\t\t<div contentEditable='true' id=\"content1\" class='form-control'\n" +
-								"\t\t\t\t\t\t\t\t\t\t\t\tstyle='width: 605px;height: auto'>回复@"+name+"：</div>\n" +
+								"\t\t\t\t\t\t\t\t\t\t\t\tstyle='width: 605px;height: auto'></div>\n" +
 								"\t\t\t\t\t\t\t\t\t\t</div>\n" +
 								"\t\t\t\t\t\t\t\t\t\t<div class='col-lg-12' style='margin-top: 12px;margin-left: 12px;'>\n" +
 								"\t\t\t\t\t\t\t\t\t\t\t<button type='button' id='send' class='btn btn-default pull-right disabled'\n" +
@@ -951,7 +944,7 @@
 								"\t\t\t\t</div>\n" +
 								"\t\t\t\t<!--发送回复评论结束-->"
 
-						$(d).parent().parent().parent().parent().parent().next().next().children().eq(0).after(newComment)
+						$(d).parent().parent().parent().parent().parent().next().next().children().eq(0).after(newComment)*/
 					}else{
 						alert("发送失败");
 					}

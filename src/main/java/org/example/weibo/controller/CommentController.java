@@ -32,7 +32,7 @@ public class CommentController {
 		if (kind.equals("hot")){
 			commentList = commentService.showHotComment(upid,"0",user.getUid(),3);
 		}else {
-			commentList = commentService.showLatestComment(upid,"0", user.getUid(),0, 3).getList();
+			commentList = commentService.showLatestComment(upid,"0", user.getUid(),0, 5).getList();
 		}
 		/*System.out.println(upid);
 		for (Comment comment : commentList) {
@@ -47,7 +47,9 @@ public class CommentController {
 
 	@RequestMapping("sendComment")
 	@ResponseBody
-	public R sendComment(Comment comment){
+	public R sendComment(Comment comment,HttpSession session){
+		User user = (User) session.getAttribute("user");
+		comment.setUid(user.getUid());
 		comment.setCommentTime(new Date());
 		commentService.doComment(comment);
 		//System.out.println(comment.toString());

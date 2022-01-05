@@ -365,6 +365,76 @@ public class CommentExample {
             return (Criteria) this;
         }
 
+        public Criteria andUrcidIsNull() {
+            addCriterion("urcid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUrcidIsNotNull() {
+            addCriterion("urcid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUrcidEqualTo(String value) {
+            addCriterion("urcid =", value, "urcid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUrcidNotEqualTo(String value) {
+            addCriterion("urcid <>", value, "urcid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUrcidGreaterThan(String value) {
+            addCriterion("urcid >", value, "urcid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUrcidGreaterThanOrEqualTo(String value) {
+            addCriterion("urcid >=", value, "urcid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUrcidLessThan(String value) {
+            addCriterion("urcid <", value, "urcid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUrcidLessThanOrEqualTo(String value) {
+            addCriterion("urcid <=", value, "urcid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUrcidLike(String value) {
+            addCriterion("urcid like", value, "urcid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUrcidNotLike(String value) {
+            addCriterion("urcid not like", value, "urcid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUrcidIn(List<String> values) {
+            addCriterion("urcid in", values, "urcid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUrcidNotIn(List<String> values) {
+            addCriterion("urcid not in", values, "urcid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUrcidBetween(String value1, String value2) {
+            addCriterion("urcid between", value1, value2, "urcid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUrcidNotBetween(String value1, String value2) {
+            addCriterion("urcid not between", value1, value2, "urcid");
+            return (Criteria) this;
+        }
+
         public Criteria andCommentIsNull() {
             addCriterion("comment is null");
             return (Criteria) this;

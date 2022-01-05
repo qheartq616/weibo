@@ -67,11 +67,11 @@ public class ListUtil {
 			Random random=new Random();
 			set.add(userList.get(random.nextInt(userList.size())));
 		}
+		//没有关注人时会报错
 		List<User> subRandomUserList=new ArrayList<>();
 		/*for (User user : set) {
 			System.out.println("user = " + user.getUid());
 		}*/
-
 		subRandomUserList.addAll(set);
 		return subRandomUserList;
 	}
@@ -103,6 +103,9 @@ public class ListUtil {
 		});
 		//需要返回所有数据时，some去一个特别大的值保证some大于集合长度
 		if (commentList.size()<=some){
+			/*for (Comment comment : commentList) {
+				System.out.println(comment.toString());
+			}*/
 			return commentList;
 		}else {
 			/*for (Comment comment : commentList) {

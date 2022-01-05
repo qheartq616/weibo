@@ -38,7 +38,7 @@ public class CommentServiceImpl implements CommentService{
 		List<Comment> commentList = commentMapper.selectByExample(commentExample);
 
 		PageInfo<Comment> pageInfo=new PageInfo<>(commentList);
-		List<Comment> fillCommentInfo = fillCommentInfo(pageInfo.getList(), uid, pageSize);
+		List<Comment> fillCommentInfo = fillCommentInfo(pageInfo.getList(), uid, 3);
 		pageInfo.setList(fillCommentInfo);
 
 		return pageInfo;
@@ -54,6 +54,9 @@ public class CommentServiceImpl implements CommentService{
 
 		List<Comment> fillCommentInfo = fillCommentInfo(commentList,uid,some);
 
+		/*for (Comment comment : commentList) {
+			System.out.println(comment.toString());
+		}*/
 		return ListUtil.sortByHeat(fillCommentInfo,some);
 	}
 

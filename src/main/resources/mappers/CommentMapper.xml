@@ -6,6 +6,7 @@
     <result column="uid" property="uid" jdbcType="INTEGER" />
     <result column="upid" property="upid" jdbcType="VARCHAR" />
     <result column="upcid" property="upcid" jdbcType="VARCHAR" />
+    <result column="urcid" property="urcid" jdbcType="VARCHAR" />
     <result column="comment" property="comment" jdbcType="VARCHAR" />
     <result column="comment_time" property="commentTime" jdbcType="TIMESTAMP" />
     <association property="user" column="uid" javaType="org.example.weibo.pojo.User" select="org.example.weibo.mapper.UserMapper.selectByPrimaryKey"/>
@@ -69,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    cid, uid, upid, upcid, comment, comment_time
+    cid, uid, upid, upcid, urcid, comment, comment_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.example.weibo.pojo.CommentExample" >
     select
@@ -103,11 +104,11 @@
   </delete>
   <insert id="insert" parameterType="org.example.weibo.pojo.Comment" >
     insert into comment (cid, uid, upid, 
-      upcid, comment, comment_time
-      )
+      upcid, urcid, comment, 
+      comment_time)
     values (#{cid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{upid,jdbcType=VARCHAR}, 
-      #{upcid,jdbcType=VARCHAR}, #{comment,jdbcType=VARCHAR}, #{commentTime,jdbcType=TIMESTAMP}
-      )
+      #{upcid,jdbcType=VARCHAR}, #{urcid,jdbcType=VARCHAR}, #{comment,jdbcType=VARCHAR}, 
+      #{commentTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="org.example.weibo.pojo.Comment" >
     insert into comment
@@ -123,6 +124,9 @@
       </if>
       <if test="upcid != null" >
         upcid,
+      </if>
+      <if test="urcid != null" >
+        urcid,
       </if>
       <if test="comment != null" >
         comment,
@@ -143,6 +147,9 @@
       </if>
       <if test="upcid != null" >
         #{upcid,jdbcType=VARCHAR},
+      </if>
+      <if test="urcid != null" >
+        #{urcid,jdbcType=VARCHAR},
       </if>
       <if test="comment != null" >
         #{comment,jdbcType=VARCHAR},
@@ -173,6 +180,9 @@
       <if test="record.upcid != null" >
         upcid = #{record.upcid,jdbcType=VARCHAR},
       </if>
+      <if test="record.urcid != null" >
+        urcid = #{record.urcid,jdbcType=VARCHAR},
+      </if>
       <if test="record.comment != null" >
         comment = #{record.comment,jdbcType=VARCHAR},
       </if>
@@ -190,6 +200,7 @@
       uid = #{record.uid,jdbcType=INTEGER},
       upid = #{record.upid,jdbcType=VARCHAR},
       upcid = #{record.upcid,jdbcType=VARCHAR},
+      urcid = #{record.urcid,jdbcType=VARCHAR},
       comment = #{record.comment,jdbcType=VARCHAR},
       comment_time = #{record.commentTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
@@ -208,6 +219,9 @@
       <if test="upcid != null" >
         upcid = #{upcid,jdbcType=VARCHAR},
       </if>
+      <if test="urcid != null" >
+        urcid = #{urcid,jdbcType=VARCHAR},
+      </if>
       <if test="comment != null" >
         comment = #{comment,jdbcType=VARCHAR},
       </if>
@@ -222,6 +236,7 @@
     set uid = #{uid,jdbcType=INTEGER},
       upid = #{upid,jdbcType=VARCHAR},
       upcid = #{upcid,jdbcType=VARCHAR},
+      urcid = #{urcid,jdbcType=VARCHAR},
       comment = #{comment,jdbcType=VARCHAR},
       comment_time = #{commentTime,jdbcType=TIMESTAMP}
     where cid = #{cid,jdbcType=INTEGER}

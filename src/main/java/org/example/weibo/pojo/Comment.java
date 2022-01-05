@@ -14,6 +14,8 @@ public class Comment {
 
     private String upcid;
 
+    private String urcid;
+
     private String comment;
 
     @JsonFormat(pattern = "MM月dd日 HH:mm",timezone="GMT+8")
@@ -35,6 +37,7 @@ public class Comment {
                 ", uid=" + uid +
                 ", upid='" + upid + '\'' +
                 ", upcid='" + upcid + '\'' +
+                ", urcid='" + urcid + '\'' +
                 ", comment='" + comment + '\'' +
                 ", commentTime=" + commentTime +
                 ", user=" + user +
@@ -44,12 +47,12 @@ public class Comment {
                 '}';
     }
 
-    public List<Comment> getSubCommentList() {
-        return subCommentList;
+    public User getUser() {
+        return user;
     }
 
-    public void setSubCommentList(List<Comment> subCommentList) {
-        this.subCommentList = subCommentList;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public int getCountCommentLike() {
@@ -60,20 +63,20 @@ public class Comment {
         this.countCommentLike = countCommentLike;
     }
 
+    public List<Comment> getSubCommentList() {
+        return subCommentList;
+    }
+
+    public void setSubCommentList(List<Comment> subCommentList) {
+        this.subCommentList = subCommentList;
+    }
+
     public boolean isCommentLike() {
         return commentLike;
     }
 
     public void setCommentLike(boolean commentLike) {
         this.commentLike = commentLike;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public Integer getCid() {
@@ -106,6 +109,14 @@ public class Comment {
 
     public void setUpcid(String upcid) {
         this.upcid = upcid == null ? null : upcid.trim();
+    }
+
+    public String getUrcid() {
+        return urcid;
+    }
+
+    public void setUrcid(String urcid) {
+        this.urcid = urcid == null ? null : urcid.trim();
     }
 
     public String getComment() {
