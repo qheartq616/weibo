@@ -2,6 +2,7 @@ package org.example.weibo.controller;
 
 import com.github.pagehelper.PageInfo;
 import org.example.weibo.mapper.PostMapper;
+import org.example.weibo.pojo.Comment;
 import org.example.weibo.pojo.Post;
 import org.example.weibo.pojo.PostLike;
 import org.example.weibo.pojo.User;
@@ -42,7 +43,8 @@ public class NewsController {
     }
     @RequestMapping("/comment/{uid}/{pageNum}")
     public String comment(@PathVariable Integer uid,@PathVariable @RequestParam(defaultValue = "1")Integer pageNum, Model model){
-
+        PageInfo<Comment> allComments = newsService.getAllComments(pageNum, 5, uid);
+        model.addAttribute("CommentpageInfo",allComments);
         return "news";
     }
     @RequestMapping("/likeMe/{uid}/{pageNum}")

@@ -119,9 +119,19 @@ public class NewsServiceImpl implements  NewsService {
      */
     @Override
     public PageInfo<Comment> getAllComments(Integer pageStart, Integer size,Integer uid) {
-
-
-        return null;
+        CommentExample commentExample=new CommentExample();
+        Last lastLeave = lastService.getLastLeave(uid);
+        commentExample.createCriteria().andUpidLike(""+uid+"-%").andCommentTimeBetween(lastLeave.getLctime(),new Date());
+        List<Comment> comments=commentMapper.selectByExample(commentExample);
+        //评论的人
+        User user=new User();
+        for (Comment comment : comments) {
+            comment.setUser( userMapper.selectByPrimaryKey(comment.getUid()));
+            int postId= Integer.parseInt(comment.getUpid().substring(comment.getUpid().indexOf("-") + 1));
+            comment.setPost(postMapper.selectByPrimaryKey(postId));
+        }
+        PageInfo<Comment> pageInfo=new PageInfo<>(comments);
+        return pageInfo;
     }
 
 //    @Override

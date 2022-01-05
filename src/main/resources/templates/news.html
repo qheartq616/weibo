@@ -151,6 +151,7 @@
 
 			</div>
 			<div class="lmlblog-member-right-main" style="overflow: auto">
+                <!--点赞页面-->
 				<div th:if="${pageInfo!=null}">
 					<div class="lmlblog-post-list">
 					<div class="lmlblog-posts-list words" style="background-image:url(/images/058.png);"
@@ -206,9 +207,124 @@
 				</div>
 				<div th:if="${pageInfo==null}">
 					<div class="lmlblog-post-user-info">
-						<div class="lmlblog-post-user-info-time" title="2017-12-14 05:25" th:text="对不起没有数据">12-14 05:25</div>
+						<div class="lmlblog-post-user-info-time" title="2017-12-14 05:25" th:text="对不起没有点赞数据">12-14 05:25</div>
 					</div>
 				</div>
+                <!--评论页面-->
+                <div th:if="${CommentpageInfo!=null}">
+                    <div class="lmlblog-post-list">
+                        <div class="lmlblog-posts-list words" style="background-image:url(/images/058.png);"
+                             data="4197" th:each="post:${CommentpageInfo.list}" id="postList">
+                            <!-- 动态内容部分，包括列表 -->
+                            <div class="lmlblog-post-user-info">
+                                <div class="lmlblog-post-user-info-avatar" user-data="1">
+                                    <a th:href="@{|/user/${post.uid}/1|}" style="display: inline-block;">
+                                        <span class="lmlblog-vip-icon"></span>
+                                        <img th:src="|/avatar/${post.user.image}|" class="avatar" />
+                                        <i th:if="${post.user.status==0}" th:title="普通用户"></i>
+                                        <i th:if="${post.user.status==1}" class="lmlblog-verify lmlblog-verify-a" th:title="会员用户"></i>
+                                        <i th:if="${post.user.status==2}" class="lmlblog-verify lmlblog-verify-b" th:title="认证用户"></i>
+                                        <i th:if="${post.user.status==3}" class="lmlblog-verify-c lmlblog-verify-cc" th:title="超级管理员"></i>
+                                    </a>
+                                    <div class="lmlblog-user-info-card" style="display: none" onMouseOut="hideImg(this)" onmouseover="showImg(this)">
+                                        <!--悬浮显示信息-->
+                                        <div class="info_card_loading">
+                                            <img th:src="|/avatar/${post.user.image}|" class="avatar" />
+                                            <br>
+                                            <span th:text="${post.user.name}"></span>
+                                            <span>关注|粉丝|点赞</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="lmlblog-post-user-info-name">
+                                    <a th:href="@{|/user/${post.user.uid}/1|}">
+                                        <font style="color:#333;font-weight:600" th:text="${post.user.name}">司空琪</font>
+                                    </a>
+                                </div>
+                                <!--<div class="lmlblog-post-user-info-time" title="2017-12-14 05:25" th:text="${#dates.format(post.postTime,'yyyy-MM-dd HH:mm')}">12-14 05:25</div>-->
+                                <div class="lmlblog-post-user-info-time" title="来自weibo.com" style="width: 300px" th:text="|${#dates.format(post.commentTime,'yyyy年MM月dd日 HH:mm')}   来自weibo.com|">12-14 05:25</div>
+                            </div>
+                            <div class="lmlblog-post-content" style=" margin-left: 50px ">评论了你的微博</div>
+                            <div class="lmlblog-post-content" style=" margin-left: 50px " th:text="${post.comment}"></div>
+                            <div class="lmlblog-post-content" style=" margin-left: 67px; padding:10px; background-color: whitesmoke ;width: 600px;  vertical-align:middle;" >
+                                <a href="#" style="margin-bottom: 20px;padding-bottom: 10px"  th:text="${post.post.text}"></a>
+                            </div>
+                            <div class="lmlblog-post-footer-bar">
+                                <span  th:title="${#dates.format(post.post.postTime,'yyyy-MM-dd HH:mm')}" th:text="${#dates.format(post.post.postTime,'yyyy-MM-dd HH:mm')}">12月14日 05:25</span>
+                                <br/>
+                            </div>
+                        </div>
+                        <div class="lmlblog-pager" th:if="${#strings.isEmpty(gid)&&type!='all'}">
+                            <a class="lmlblog-pager-left" th:href="@{|/main/${session.user.uid}/${type}/${CommentpageInfo.hasPreviousPage?CommentpageInfo.prePage:1}|}">上一页</a>
+                            <div class="lmlblog-pager-center layui-form" th:text="|第${CommentpageInfo.pageNum==0?1:CommentpageInfo.pageNum}页|"></div>
+                            <a class="lmlblog-pager-right" th:href="@{|/main/${session.user.uid}/${type}/${CommentpageInfo.hasNextPage?CommentpageInfo.nextPage:CommentpageInfo.navigateLastPage}|}">下一页</a>
+                        </div>
+                    </div>
+                </div>
+                <div th:if="${CommentpageInfo==null}">
+                    <div class="lmlblog-post-user-info">
+                        <div class="lmlblog-post-user-info-time" title="2017-12-14 05:25" th:text="对不起没有评论数据">12-14 05:25</div>
+                    </div>
+                </div>
+                <!--@页面-->
+                <div th:if="${AtpageInfo!=null}">
+                    <div class="lmlblog-post-list">
+                        <div class="lmlblog-posts-list words" style="background-image:url(/images/058.png);"
+                             data="4197" th:each="post:${pageInfo.list}" id="postList">
+                            <!-- 动态内容部分，包括列表 -->
+                            <div class="lmlblog-post-user-info">
+                                <div class="lmlblog-post-user-info-avatar" user-data="1">
+                                    <a th:href="@{|/user/${post.uid}/1|}" style="display: inline-block;">
+                                        <span class="lmlblog-vip-icon"></span>
+                                        <img th:src="|/avatar/${post.user.image}|" class="avatar" />
+                                        <i th:if="${post.user.status==0}" th:title="普通用户"></i>
+                                        <i th:if="${post.user.status==1}" class="lmlblog-verify lmlblog-verify-a" th:title="会员用户"></i>
+                                        <i th:if="${post.user.status==2}" class="lmlblog-verify lmlblog-verify-b" th:title="认证用户"></i>
+                                        <i th:if="${post.user.status==3}" class="lmlblog-verify-c lmlblog-verify-cc" th:title="超级管理员"></i>
+                                    </a>
+                                    <div class="lmlblog-user-info-card" style="display: none" onMouseOut="hideImg(this)" onmouseover="showImg(this)">
+                                        <!--悬浮显示信息-->
+                                        <div class="info_card_loading">
+                                            <img th:src="|/avatar/${post.user.image}|" class="avatar" />
+                                            <br>
+                                            <span th:text="${post.user.name}"></span>
+                                            <span>关注|粉丝|点赞</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="lmlblog-post-user-info-name">
+                                    <a th:href="@{|/user/${post.user.uid}/1|}">
+                                        <font style="color:#333;font-weight:600" th:text="${post.user.name}">司空琪</font>
+                                    </a>
+                                </div>
+                                <!--<div class="lmlblog-post-user-info-time" title="2017-12-14 05:25" th:text="${#dates.format(post.postTime,'yyyy-MM-dd HH:mm')}">12-14 05:25</div>-->
+                                <div class="lmlblog-post-user-info-time" title="来自weibo.com" style="width: 300px" th:text="|${#dates.format(post.likeTime,'yyyy年MM月dd日 HH:mm')}   来自weibo.com|">12-14 05:25</div>
+                            </div>
+                            <div class="lmlblog-post-content" style=" margin-left: 50px "th:if=" ${post.type=='post'}">给你这条微博点了赞</div>
+                            <div class="lmlblog-post-content" style=" margin-left: 50px "th:if="${post.type=='comment'}">给你这条评论点了赞</div>
+                            <div class="lmlblog-post-content" style=" margin-left: 50px "th:if="${post.type=='comment'}" th:text="${post.comment.comment}"></div>
+                            <div class="lmlblog-post-content" style=" margin-left: 67px; padding:10px; background-color: whitesmoke ;width: 600px;  vertical-align:middle;" >
+                                <a href="#" style="margin-bottom: 20px;padding-bottom: 10px" th:if="${post.type=='post'}" h th:text="${post.post.text}"></a>
+                                <a href="#" style="margin-bottom: 20px;padding-bottom: 10px" th:if="${post.type=='comment'}" h th:text="${post.comment.post.text}"></a>
+                            </div>
+                            <div class="lmlblog-post-footer-bar">
+                                <span th:if="${post.type=='post'}" th:title="${#dates.format(post.post.postTime,'yyyy-MM-dd HH:mm')}" th:text="${#dates.format(post.post.postTime,'yyyy-MM-dd HH:mm')}">12月14日 05:25</span>
+                                <span th:if="${post.type=='comment'}" th:title="${#dates.format(post.comment.post.postTime,'yyyy-MM-dd HH:mm')}" th:text="${#dates.format(post.comment.post.postTime,'yyyy-MM-dd HH:mm')}">12月14日 05:25</span>
+                                <br/>
+                            </div>
+                        </div>
+                        <div class="lmlblog-pager" th:if="${#strings.isEmpty(gid)&&type!='all'}">
+                            <a class="lmlblog-pager-left" th:href="@{|/main/${session.user.uid}/${type}/${pageInfo.hasPreviousPage?pageInfo.prePage:1}|}">上一页</a>
+                            <div class="lmlblog-pager-center layui-form" th:text="|第${pageInfo.pageNum==0?1:pageInfo.pageNum}页|"></div>
+                            <a class="lmlblog-pager-right" th:href="@{|/main/${session.user.uid}/${type}/${pageInfo.hasNextPage?pageInfo.nextPage:pageInfo.navigateLastPage}|}">下一页</a>
+                        </div>
+                    </div>
+                </div>
+                <div th:if="${AtpageInfo==null}">
+                    <div class="lmlblog-post-user-info">
+                        <div class="lmlblog-post-user-info-time" title="2017-12-14 05:25" th:text="对不起没有数据">12-14 05:25</div>
+                    </div>
+                </div>
 			</div>
 		</div>
 	</div>
