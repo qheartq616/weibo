@@ -19,7 +19,14 @@ public class R {
 		R r=new R();
 		r.setSuccess(true);
 		r.setCode(631548);
-		r.setMessage("");
+		r.setMessage("ok");
+		return r;
+	}
+	public static R empty(){
+		R r=new R();
+		r.setSuccess(true);
+		r.setCode(100009);
+		r.setMessage("无数据");
 		return r;
 	}
 	public static R error(){
@@ -62,7 +69,8 @@ public class R {
 		this.data = data;
 	}
 
-	public void addData(String key, Object value){
+	public R addData(String key, Object value){
 		this.data.put(key,value);
+		return this;
 	}
 }

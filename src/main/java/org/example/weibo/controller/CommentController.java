@@ -38,17 +38,19 @@ public class CommentController {
 		for (Comment comment : commentList) {
 			System.out.println("comment.toString() = " + comment.toString());
 		}*/
-		R ok = R.ok();
-		ok.addData("commentList",commentList);
-		return ok;
+		if (commentList.size()==0){
+			return R.empty();
+		}else {
+			return R.ok().addData("commentList",commentList);
+		}
 	}
 
 	@RequestMapping("sendComment")
 	@ResponseBody
-	public boolean sendComment(Comment comment){
+	public R sendComment(Comment comment){
 		comment.setCommentTime(new Date());
 		commentService.doComment(comment);
 		//System.out.println(comment.toString());
-		return true;
+		return R.ok();
 	}
 }
