@@ -78,7 +78,7 @@ public class ListUtil {
 
 	//按热度排序，影响因子为转发数、评论数、点赞数，比重为6:3:1
 	//查询微博下的热门三条评论
-	public static List<Comment> sortByHeat(List<Comment> commentList){
+	public static List<Comment> sortByHeat(List<Comment> commentList,Integer some){
 		Collections.sort(commentList, new Comparator<Comment>() {
 			@Override
 			public int compare(Comment o1, Comment o2) {
@@ -101,14 +101,14 @@ public class ListUtil {
 				return heat2-heat1;
 			}
 		});
-		if (commentList.size()<=3){
+		//需要返回所有数据时，some去一个特别大的值保证some大于集合长度
+		if (commentList.size()<=some){
 			return commentList;
 		}else {
 			/*for (Comment comment : commentList) {
 				System.out.println(comment.toString());
 			}*/
-
-			return commentList.subList(0,3);
+			return commentList.subList(0,some);
 		}
 	}
 }
