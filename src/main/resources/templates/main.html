@@ -133,16 +133,9 @@
 			</ul>
 
 		</div>
-		<!--<div class="head_user_info">
-			<ul>
-				<li id="head_login" onclick="#1">登录</li>
-				<span class="head_login_middle">or</span>
-				<li id="head_reg" onclick="#1">注册</li>
-			</ul>
-		</div>-->
 		<div style="clear: both;"></div>
 	</div>
-</div><!-- menu-bar -->
+</div>
 <div style="clear: both;"></div>
 
 
@@ -150,10 +143,11 @@
 	<div class="lmlblog-member-bg-remove-image">
 
 		<div class="lmlblog-member-content-list clear">
-			<div class="lmlblog-member-left-main">
+			<div class="lmlblog-member-left">
 				<div class="lmlblog-member-left-profile">
 					<h3>首页</h3>
 					<ul>
+						<li><i class="fa fa-fire"></i><a th:href="@{|/main/${session.user.uid}/all/1|}">热门推荐</a></li>
 						<li><i class="fa fa-group"></i><a th:href="@{|/main/${session.user.uid}/all/1|}">全部关注</a></li>
 						<li><i class="fa fa-user"></i><a th:href="@{|/main/${session.user.uid}/latest/1|}">最新微博</a></li>
 						<li><i class="fa fa-street-view"></i><a th:href="@{|/main/${session.user.uid}/myGroups/0/1|}">特别关注</a></li>
@@ -176,19 +170,9 @@
 							<a th:unless="${gid==-1}" th:href="@{|/main/${session.user.uid}/myGroups/-1/1|}">未分组</a>
 						</li>
 					</ul>
-					<!--<div class="lmlblog-member-left-profile-hide" th:if="${groupList2.size()>0}">
-						<ul th:each="group2:${groupList2}">
-							<li><i class="fa fa-smile-o"></i><a th:href="@{|/main/${session.user.uid}/myGroups/${group2.gid}/1|}" th:text="${group2.name}">高校</a></li>
-						</ul>
-						<li><i class="fa fa-qq"></i> Q Q：<span>sikongqi-&#45;&#45;<span></li>
-                        <li><i class="fa fa-wechat"></i> 微信：<span>天涯路远，一剑轻安。携琪之手，相伴江湖-&#45;&#45;<span></li>
-                        <li><i class="fa fa-weibo"></i> 微博：<span>司空琪吧官博-&#45;&#45;<span></li>
-					</div>
-					<div class="lmlblog-member-left-profile-more" th:if="${groupList2.size()>0}">查看更多 <i class="fa fa-angle-right"></i></div>-->
 				</div>
-
 			</div>
-			<div class="lmlblog-member-right-main">
+			<div class="lmlblog-member-right">
 				<div class="lmlblog-post-list">
 					<div class="row" id="edit_form" style="margin-left: 0px; margin-right: 0px;">
 						<span class="pull-left" style="margin:15px;padding-left: 10px;padding-top: 5px;">编写新鲜事</span>
@@ -196,7 +180,7 @@
 						<form role="form" style="margin-top: 50px;" method="post">
 							<div class="form-group">
 								<div class="col-sm-12" style="margin-left: 5px">
-									<div contentEditable="true" id="content" class="form-control"></div>
+									<div contentEditable="true" id="content" style="width: 670px;" class="form-control"></div>
 								</div>
 								<div class="col-sm-12" style="margin-top: 12px;margin-left: 12px;">
 									<!--<span class="emoji" >表情</span>-->
@@ -263,50 +247,145 @@
 							</div>
 
 							<div class="lmlblog-post-content" style="white-space:pre-line" th:text="${post.text}">
-								<!--<a class="post_list_link" href="#">
-                                    <P>　　疏星淡月，紫陌曲岸，持觞游赏，神移长川。一片彀纹，溶溶泄泄，忽而烟靡云敛。睹一丽人，缦立青水，云蒸雾霭，花衬善睐。荧荧兮若北辰之荣现，扰扰兮若紫玉之生烟。颜如舜华，迫闻素腰华琚摇;和颜静志，远望渌水呈雾绡。戏流光之夜蝶，采舞雪之琼花，流眷眷之眸光，润荣曜之笑靥。
-                                    </P>
-                                    <P>　　偶得美人回顾，思之朝朝暮暮。采芝兰以明愫，寄琼琚以作妆。余咏永慕叹道长，彼应影独愿偕芳。才知世有解语，不过琪语溯光。<img
-                                            src="/images/66.png" alt="[s-65]" class="wp-smiley" />
-                                        <img src="/images/8.png" alt="[s-65]" class="wp-smiley" />
-                                    </P>
-                                </a>-->
 							</div>
 
-							<!--<div class="lmlblog-post-images-list clear">
-                                <a href="/images/qi01.jpg" data-fancybox="gallery"
-                                   data-caption='<i class="fa fa-copyright"></i> lmlblog'>
-                                    <img src="/images/qi01.jpg" alt="司空琪吧十一月壁纸" /></a>
-                                <a href="/images/qi02.jpg" data-fancybox="gallery"
-                                   data-caption='<i class="fa fa-copyright"></i> lmlblog'>
-                                    <img src="/images/qi02.jpg" alt="司空琪吧十一月壁纸" /></a>
-                                <a href="/images/qi03.jpg" data-fancybox="gallery"
-                                   data-caption='<i class="fa fa-copyright"></i> lmlblog'>
-                                    <img src="/images/qi03.jpg" alt="司空琪吧十一月壁纸" /></a>
-                            </div>-->
 							<div class="container">
 								<div class="row">
 									<div class="lmlblog-post-bar">
-										<li th:onclick='|list_comments_show(this,${post.user.uid},${post.pid});|'>
+										<hr style="width: 710px;position: relative;left: -20px;top: 10px">
+										<li th:id="|show${post.pid}PostComment|" onclick="list_comments_show(this,this.getAttribute('data-uid'),this.getAttribute('data-pid'),this.getAttribute('data-image'),this.getAttribute('data-name'),'hot')" th:data-uid="${post.user.uid}" th:data-pid="${post.pid}" th:data-image="${session.user.image}" th:data-name="${session.user.name}">
 											<i class="fa fa-comment-o"></i>
 											<span></span>
 										</li>
 										<li class="lmlblog-no-like" th:onclick="|javascript:doLike(${post.user.uid},${post.pid},${session.user.uid},this)|">
-											<i class="fa fa-heart" th:if="${post.postLike==true}"></i><i class="fa fa-heart-o" th:if="${post.postLike==false}"></i><span th:text="|${post.countPostLike}|"></span>
+											<i class="fa fa-heart" th:if="${post.postLike==true}"></i><i class="fa fa-heart-o" th:if="${post.postLike==false}"></i>
+											<span th:text="|${post.countPostLike}|"></span>
 										</li>
+									</div>
+									<hr style="width: 710px">
+								</div>
+							</div>
+
+							<div style='display: none;padding-bottom: 15px;background-color: #f2f2f5;position: relative;top: -10px' >
+								<!--发送评论开始-->
+								<div class='row' style='margin-left: 0px;margin-right: 0px;padding-top: 10px'>
+									<div class='col-lg-1'>
+										<img th:src='|/avatar/${session.user.image}|' style='height: 32px;width: 32px'/>
+									</div>
+									<div class='col-lg-11' style='padding-left: 0px'>
+										<form role='form' method="post">
+											<div class='form-group' style='margin-top: 0px'>
+												<div class='col-lg-12' style='padding-left: 0px'>
+													<div contentEditable='true' th:id='|comment${post.pid}|' class='form-control' style='width: 635px;height: auto'>我是母回复</div>
+												</div>
+												<div class='col-lg-12' style='margin-top: 12px;margin-left: 12px;'>
+													<button type='button' id='send' class='btn btn-default pull-right disabled' style='color: #ffc09f;height: 30px;width: 60px;padding: 0 0'>发布</button>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+								<!--发送评论结束-->
+								<hr style="width: 680px;margin-left: 15px"/>
+								<div style='display: none;padding-bottom: 15px;background-color: #f2f2f5;position: relative;top: -10px'>
+									<div class='row'  style='margin-left: 0px;margin-right: 0px;'>
+										<div class="col-lg-6"><a href=''>按热度</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href=''>按时间</a></div>
+									</div>
+									<!--需要遍历的评论开始-->
+									<div class='row' style='margin-left: 0px;margin-right: 0px'>
+										<hr style="width: 680px;margin-left: 15px"/>
+										<div class='col-lg-1'>
+											<img src='/avatar/1.jpg' style='height: 32px;width: 32px'/>
+										</div>
+										<div class='col-lg-11' style='padding-left: 0px'>
+											<a style='color: orange' href='/user/1/1'>Admin</a>
+											<span>：我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论</span>
+										</div>
+									</div>
+									<!--评论的时间与回复开始-->
+									<div class='row' style='margin-left: 0px;margin-right: 0px'>
+										<div class='col-lg-1'></div>
+										<div class='col-lg-3' style="color: #808080;padding-left: 0px">时间</div>
+										<div class='col-lg-6'></div>
+										<div class='col-lg-2'>
+											<a href='javascript:void(0);' style='text-decoration: none' onclick='showReComment(this)'>回复</a>
+											&nbsp;&nbsp;|&nbsp;&nbsp;
+											<a href=''><i class='fa fa-heart'></i></a>
+											1
+										</div>
+									</div>
+									<!--评论的时间与回复结束-->
+									<!--发送回复评论开始-->
+									<div class='row' style='margin-left: 0px;margin-right: 0px;display: none'>
+										<br>
+										<div class='col-lg-1'></div>
+										<div class='col-lg-11' style='padding-left: 0px;background-color: white;padding-right: 0px;width: 635px'>
+											<br>
+											<div class='row'  style='margin-left: 0px;margin-right: 0px'>
+												<div class='col-lg-12'>
+													<form role='form' method="post">
+														<div class='form-group' style='margin-top: 0px'>
+															<div class='col-lg-12' style='padding-left: 0px'>
+																<div contentEditable='true' id="content1" class='form-control' style='width: 605px;height: auto'>我是子回复</div>
+															</div>
+															<div class='col-lg-12' style='margin-top: 12px;margin-left: 12px;'>
+																<button type='button' id='send1' class='btn btn-default pull-right disabled' style='color: #ffc09f;height: 30px;width: 60px;padding: 0 0'>发布</button>
+															</div>
+														</div>
+													</form>
+												</div>
+											</div>
+											<br>
+										</div>
+									</div>
+									<!--发送回复评论结束-->
+									<div class='row' style='margin-left: 0px;margin-right: 0px;'>
+										<br>
+										<div class='col-lg-1'></div>
+										<div class='col-lg-11' style='padding-left: 0px;background-color: #eaeaec;width: 635px;padding-top: 10px;padding-bottom: 15px'>
+											<div class='row' style='margin-left: 0px;margin-right: 0px'>
+												<div class='col-lg-12' style='padding-right: 0px;padding-left: 12px'>
+													<a style='color: orange' href='/user/1/1'>Admin</a>
+													<span>：我是子评论我是子评论我是子评论我是子评论我是子评论我是子评论我是子评论我是子评论我是子评论我是子评论我是子评论我是子评论我是子评论我是子评论我是子评论</span>
+												</div>
+											</div>
+											<div class='row' style='margin-left: 0px;margin-right: 0px'>
+												<div class='col-lg-4' style='color: #808080;padding-right: 0px;padding-left: 12px'>时间</div>
+												<div class='col-lg-5'></div>
+												<div class='col-lg-3' style="padding-right: 5px">
+													<span style="float: right">
+														<a href='javascipt:void(0);' style='text-decoration: none' onclick='showReCommentComment(this)'>回复</a>
+														&nbsp;&nbsp;|&nbsp;&nbsp;
+														<a href=''><i class='fa fa-heart'></i></a>
+														1
+													</span>
+												</div>
+											</div>
+											<div class='row' style='display: none;margin-left: 15px;margin-right: 0px'>
+												<br>
+												<div class='col-lg-12' style='background-color: white;'>
+													<br>
+													<div class='row'  style='margin-left: 0px;margin-right: 0px'>
+														<div class='col-lg-12' style='padding-left: 0px'>
+															<form role='form' method="post">
+																<div class='form-group' style='margin-top: 0px'>
+																	<div class='col-lg-12' style='padding-left: 0px'>
+																		<div contentEditable='true' id="content2" class='form-control' style='width: 575px;height: auto'>我是子子回复</div>
+																	</div>
+																	<div class='col-lg-12' style='margin-top: 12px;margin-left: 12px;padding-right: 5px'>
+																		<button type='button' id='send2' class='btn btn-default pull-right disabled' style='color: #ffc09f;height: 30px;width: 60px;padding: 0 0'>发布</button>
+																	</div>
+																</div>
+															</form>
+														</div>
+													</div>
+													<br>
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
-
-							<div class="row" style="display: none">
-								<div class="col-lg-1">
-									头像
-								</div>
-								<div class="col-lg-11">
-									评论
-								</div>
-							</div>
-
 
 							<div class="lmlblog-post-footer-bar">
 								<span th:title="${#dates.format(post.postTime,'yyyy-MM-dd HH:mm')}" th:text="${#dates.format(post.postTime,'yyyy-MM-dd HH:mm')}">12月14日 05:25</span>
@@ -330,7 +409,6 @@
 			</div>
 		</div>
 	</div>
-</div>
 </div>
 <!-- 底部 -->
 <div style="clear:both"></div>
@@ -364,29 +442,337 @@
 <script type="text/javascript" src="js/jquery.qtip-1.0.0-rc3.js"></script>
 
 <script>
-	function list_comments_show(d,uid,pid) {
-		var display=$(d).parent().parent().parent().next().css("display");
-		if (display=="none"){
-			$(d).parent().parent().parent().next().css("display","");
-			alert("111");
-			$.post(
-				"/comment/hotComment",
-				"upid="+uid+"-"+pid,
-				function (data) {
-					if (data==""){
-						alert("empty");
-					}else {
-						for (var i=0;i<data.size();i++){
-							alert(data[i].comment);
-							alert(data[i].upid);
-							alert(data[i].upcid)
-						}
-					}
-				},
-				"json"
-			);
+	function showReComment(d) {
+		var displayRe=$(d).parent().parent().next().css("display");
+		if (displayRe=="none"){
+			$(d).parent().parent().next().css("display","block");
+		}else {
+			$(d).parent().parent().next().css("display","none");
+		}
+	}
+
+	function showReCommentComment(d) {
+		var displayRe=$(d).parent().parent().parent().next().css("display");
+		if (displayRe=="none"){
+			$(d).parent().parent().parent().next().css("display","block");
 		}else {
 			$(d).parent().parent().parent().next().css("display","none");
+		}
+	}
+
+	function showCommentContent(uid,pid,image,kind) {
+		var comment="";
+		console.log(uid+","+pid+","+image+","+kind);
+		$.ajax({
+			type:"POST",
+			async:false,
+			dataType:"json",
+			url:"/comment/someComment?upid="+uid+"-"+pid+"&kind="+kind,
+			success: function (r) {
+				if (r.code===631548){
+					//console.log(111111)
+					comment+="<div style='display: block;background-color: #f2f2f5;'>\n" +
+							"\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px;'>\n"
+					if (kind==="hot"){
+						comment+="\t\t\t\t\t<div class=\"col-lg-6\" data-kind='hot'>"+
+								"<a style='text-decoration: none;color: orange' onclick=\"showCommentByKind(this,"+uid+","+pid+",'"+image+"','hot')\">按热度</a>" +
+								"&nbsp;&nbsp;|&nbsp;&nbsp;" +
+								"<a style='text-decoration: none' onclick=\"showCommentByKind(this,"+uid+","+pid+",'"+image+"','latest')\">按时间</a>";
+					}else {
+						comment+="\t\t\t\t\t<div class=\"col-lg-6\" data-kind='latest'>"+
+								"<a style='text-decoration: none' onclick=\"showCommentByKind(this,"+uid+","+pid+",'"+image+"','hot')\">按热度</a>" +
+								"&nbsp;&nbsp;|&nbsp;&nbsp;" +
+								"<a style='text-decoration: none;color: orange' onclick=\"showCommentByKind(this,"+uid+","+pid+",'"+image+"','latest')\">按时间</a>";
+					}
+					comment+="</div>\n" +
+							"\t\t\t\t</div>";
+					for (let i=0;i<r.data.commentList.length;i++){
+						//console.log(i)
+						comment+="<!--需要遍历的评论开始-->\n" +
+								"\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px'>\n" +
+								"\t\t\t\t\t<hr style=\"width: 680px;margin-left: 15px\" />\n" +
+								"\t\t\t\t\t<div class='col-lg-1'>\n" +
+								"\t\t\t\t\t\t<img src='/avatar/"+r.data.commentList[i].user.image+"' style='height: 32px;width: 32px' />\n" +
+								"\t\t\t\t\t</div>\n" +
+								"\t\t\t\t\t<div class='col-lg-11' style='padding-left: 0px'>\n" +
+								"\t\t\t\t\t\t<a style='color: orange' href='/user/"+r.data.commentList[i].uid+"/1'>"+r.data.commentList[i].user.name+"</a>\n" +
+								"\t\t\t\t\t\t<span>："+r.data.commentList[i].comment+"</span>\n" +
+								"\t\t\t\t\t</div>\n" +
+								"\t\t\t\t</div>\n" +
+								"\t\t\t\t<!--评论的时间与回复开始-->\n" +
+								"\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px'>\n" +
+								"\t\t\t\t\t<div class='col-lg-1'></div>\n" +
+								"\t\t\t\t\t<div class='col-lg-3' style=\"color: #808080;padding-left: 0px\">"+r.data.commentList[i].commentTime+"</div>\n" +
+								"\t\t\t\t\t<div class='col-lg-6'></div>\n" +
+								"\t\t\t\t\t<div class='col-lg-2'>\n" +
+								"\t\t\t\t\t\t<a style='text-decoration: none' onclick='javascript:showReComment(this)'>回复</a>\n" +
+								"\t\t\t\t\t\t&nbsp;&nbsp;|&nbsp;&nbsp;\n" +
+								"\t\t\t\t\t\t<a href=''>";
+						if(r.data.commentList[i].commentLike){
+							comment+="<i class='fa fa-heart'></i>";
+						}else {
+							comment+="<i class='fa fa-heart-o'></i>";
+						}
+						comment+="</a>\n" +
+								"\t\t\t\t\t\t"+r.data.commentList[i].countCommentLike+"\n" +
+								"\t\t\t\t\t</div>\n" +
+								"\t\t\t\t</div>\n" +
+								"\t\t\t\t<!--评论的时间与回复结束-->\n" +
+								"\t\t\t\t<!--发送回复评论开始-->\n" +
+								"\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px;display: none'>\n" +
+								"\t\t\t\t\t<br>\n" +
+								"\t\t\t\t\t<div class='col-lg-1'></div>\n" +
+								"\t\t\t\t\t<div class='col-lg-11'\n" +
+								"\t\t\t\t\t\tstyle='padding-left: 0px;background-color: white;padding-right: 0px;width: 635px'>\n" +
+								"\t\t\t\t\t\t<br>\n" +
+								"\t\t\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px'>\n" +
+								"\t\t\t\t\t\t\t<div class='col-lg-12'>\n" +
+								"\t\t\t\t\t\t\t\t<form role='form' method=\"post\">\n" +
+								"\t\t\t\t\t\t\t\t\t<div class='form-group' style='margin-top: 0px'>\n" +
+								"\t\t\t\t\t\t\t\t\t\t<div class='col-lg-12' style='padding-left: 0px'>\n" +
+								"\t\t\t\t\t\t\t\t\t\t\t<div contentEditable='true' id=\"content1\" class='form-control'\n" +
+								"\t\t\t\t\t\t\t\t\t\t\t\tstyle='width: 605px;height: auto' onkeyup=\"ifSendAble(this,0)\"></div>\n" +
+								"\t\t\t\t\t\t\t\t\t\t</div>\n" +
+								"\t\t\t\t\t\t\t\t\t\t<div class='col-lg-12' style='margin-top: 12px;margin-left: 12px;'>\n" +
+								"\t\t\t\t\t\t\t\t\t\t\t<button type='button' id='send' class='btn btn-default pull-right disabled'\n" +
+								"\t\t\t\t\t\t\t\t\t\t\t\tstyle='height: 30px;width: 60px;padding: 0 0' onclick=\"reply(this,"+uid+","+pid+",'"+r.data.commentList[i].user.uid+'-'+r.data.commentList[i].cid+"',0,'"+r.data.commentList[i].user.name+"','"+image+"')\">发布</button>\n" +
+								"\t\t\t\t\t\t\t\t\t\t</div>\n" +
+								"\t\t\t\t\t\t\t\t\t</div>\n" +
+								"\t\t\t\t\t\t\t\t</form>\n" +
+								"\t\t\t\t\t\t\t</div>\n" +
+								"\t\t\t\t\t\t</div>\n" +
+								"\t\t\t\t\t\t<br>\n" +
+								"\t\t\t\t\t</div>\n" +
+								"\t\t\t\t</div>\n" +
+								"\t\t\t\t<!--发送回复评论结束-->";
+						if (r.data.commentList[i].subCommentList!=""){
+							comment+="<br>";
+							for (let j=0;j<r.data.commentList[i].subCommentList.length;j++){
+								if (j!=0){
+									comment+="\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px;'>\n" +
+											"\t\t\t\t\t<div class='col-lg-1'></div>\n" +
+											"\t\t\t\t\t<div class='col-lg-11'\n" +
+											"\t\t\t\t\t\tstyle='padding-left: 15px;padding-right: 15px;background-color: #eaeaec;width: 635px;padding-top: 0px;padding-bottom: 0px'>\n" +
+											"<hr style='margin-top: 0;margin-bottom: 0'>"+
+											"</div>"+
+											"</div>";
+								}
+								comment+="<!-- 需要遍历的子评论开始 -->\n" +
+										"\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px;'>\n" +
+										"\t\t\t\t\t<div class='col-lg-1'></div>\n" +
+										"\t\t\t\t\t<div class='col-lg-11'\n" +
+										"\t\t\t\t\t\tstyle='padding-left: 0px;background-color: #eaeaec;width: 635px;padding-top: 10px;padding-bottom: 15px'>\n" +
+										"\t\t\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px'>\n" +
+										"\t\t\t\t\t\t\t<div class='col-lg-12' style='padding-right: 0px;padding-left: 12px'>\n" +
+										"\t\t\t\t\t\t\t\t<a style='color: orange' href='/user/"+r.data.commentList[i].subCommentList[j].user.uid+"/1'>"+r.data.commentList[i].subCommentList[j].user.name+"</a>\n" +
+										"\t\t\t\t\t\t\t\t<span>："+r.data.commentList[i].subCommentList[j].comment+"</span>\n" +
+										"\t\t\t\t\t\t\t</div>\n" +
+										"\t\t\t\t\t\t</div>\n" +
+										"\t\t\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px'>\n" +
+										"\t\t\t\t\t\t\t<div class='col-lg-4' style='color: #808080;padding-right: 0px;padding-left: 12px'>"+r.data.commentList[i].subCommentList[j].commentTime+"</div>\n" +
+										"\t\t\t\t\t\t\t<div class='col-lg-5'></div>\n" +
+										"\t\t\t\t\t\t\t<div class='col-lg-3' style=\"padding-right: 5px\">\n" +
+										"\t\t\t\t\t\t\t\t<span style=\"float: right\">\n" +
+										"\t\t\t\t\t\t\t\t\t<a style='text-decoration: none'\n" +
+										"\t\t\t\t\t\t\t\t\t\t onclick='javascipt:showReCommentComment(this)'>回复</a>\n" +
+										"\t\t\t\t\t\t\t\t\t&nbsp;&nbsp;|&nbsp;&nbsp;\n" +
+										"\t\t\t\t\t\t\t\t\t<a href=''>";
+								if(r.data.commentList[i].subCommentList[j].commentLike){
+									comment+="<i class='fa fa-heart'></i>";
+								}else {
+									comment+="<i class='fa fa-heart-o'></i>";
+								}
+								comment+="</a>\n" +
+										"\t\t\t\t\t\t\t\t\t"+r.data.commentList[i].subCommentList[j].countCommentLike+"\n" +
+										"\t\t\t\t\t\t\t\t</span>\n" +
+										"\t\t\t\t\t\t\t</div>\n" +
+										"\t\t\t\t\t\t</div>\n" +
+										"\t\t\t\t\t\t<div class='row' style='display: none;margin-left: 15px;margin-right: 0px'>\n" +
+										"\t\t\t\t\t\t\t<br>\n" +
+										"\t\t\t\t\t\t\t<div class='col-lg-12' style='background-color: white;'>\n" +
+										"\t\t\t\t\t\t\t\t<br>\n" +
+										"\t\t\t\t\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px'>\n" +
+										"\t\t\t\t\t\t\t\t\t<div class='col-lg-12' style='padding-left: 0px'>\n" +
+										"\t\t\t\t\t\t\t\t\t\t<form role='form' method=\"post\">\n" +
+										"\t\t\t\t\t\t\t\t\t\t\t<div class='form-group' style='margin-top: 0px'>\n" +
+										"\t\t\t\t\t\t\t\t\t\t\t\t<div class='col-lg-12' style='padding-left: 0px'>\n" +
+										"\t\t\t\t\t\t\t\t\t\t\t\t\t<div contentEditable='true' id=\"content2\" class='form-control'\n" +
+										"\t\t\t\t\t\t\t\t\t\t\t\t\t\tstyle='width: 575px;height: auto' onkeyup=\"ifSendAble(this,'"+r.data.commentList[i].subCommentList[j].user.name+"')\">回复@"+r.data.commentList[i].subCommentList[j].user.name+"：</div>\n" +
+										"\t\t\t\t\t\t\t\t\t\t\t\t</div>\n" +
+										"\t\t\t\t\t\t\t\t\t\t\t\t<div class='col-lg-12'\n" +
+										"\t\t\t\t\t\t\t\t\t\t\t\t\tstyle='margin-top: 12px;margin-left: 12px;padding-right: 5px'>\n" +
+										"\t\t\t\t\t\t\t\t\t\t\t\t\t<button type='button' id='send'\n" +
+										"\t\t\t\t\t\t\t\t\t\t\t\t\t\tclass='btn btn-default pull-right disabled'\n" +
+										"\t\t\t\t\t\t\t\t\t\t\t\t\t\tstyle='height: 30px;width: 60px;padding: 0 0' onclick=\"reply(this,"+uid+","+pid+",'"+r.data.commentList[i].user.uid+'-'+r.data.commentList[i].cid+"','"+r.data.commentList[i].subCommentList[j].user.uid+'-'+r.data.commentList[i].subCommentList[j].cid+"','"+r.data.commentList[i].user.name+"','"+image+"') \">发布</button>\n" +
+										"\t\t\t\t\t\t\t\t\t\t\t\t</div>\n" +
+										"\t\t\t\t\t\t\t\t\t\t\t</div>\n" +
+										"\t\t\t\t\t\t\t\t\t\t</form>\n" +
+										"\t\t\t\t\t\t\t\t\t</div>\n" +
+										"\t\t\t\t\t\t\t\t</div>\n" +
+										"\t\t\t\t\t\t\t\t<br>\n" +
+										"\t\t\t\t\t\t\t</div>\n" +
+										"\t\t\t\t\t\t</div>\n" +
+										"\t\t\t\t\t</div>\n" +
+										"\t\t\t\t</div>" +
+										"<!-- 需要遍历的子评论结束 -->\n" +
+										"\t\t\t\t<!-- 需要遍历的评论结束 -->";
+							}
+						}
+					}
+					comment+="</div>";
+				}
+				//console.log(comment)
+			}
+		})
+		return comment;
+	}
+
+	function list_comments_show(d,uid,pid,image,name,kind) {
+		var display=$(d).parent().parent().parent().next().css("display");
+		if (display==="none"){
+			$(d).parent().parent().parent().next().css("display","block");
+			//alert("111");
+			let comment="";
+			comment="\t\t\t<!--发送评论开始-->\n" +
+					"\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px;padding-top: 10px'>\n" +
+					"\t\t\t\t<div class='col-lg-1'>\n" +
+					"\t\t\t\t\t<img src='/avatar/"+image+"' style='height: 32px;width: 32px' />\n" +
+					"\t\t\t\t</div>\n" +
+					"\t\t\t\t<div class='col-lg-11' style='padding-left: 0px'>\n" +
+					"\t\t\t\t\t<form role='form' method=\"post\">\n" +
+					"\t\t\t\t\t\t<div class='form-group' style='margin-top: 0px'>\n" +
+					"\t\t\t\t\t\t\t<div class='col-lg-12' style='padding-left: 0px'>\n" +
+					"\t\t\t\t\t\t\t\t<div contentEditable='true' class='form-control'\n" +
+					"\t\t\t\t\t\t\t\t\tstyle='width: 635px;height: auto' onkeyup=\"ifSendAble(this,'0')\"></div>\n" +
+					"\t\t\t\t\t\t\t</div>\n" +
+					"\t\t\t\t\t\t\t<div class='col-lg-12' style='margin-top: 12px;margin-left: 12px;'>\n" +
+					"\t\t\t\t\t\t\t\t<button type='button' id='send' class='btn btn-default pull-right disabled'\n" +
+					"\t\t\t\t\t\t\t\t\tstyle='height: 30px;width: 60px;padding: 0 0' onclick=\"reply(this,"+uid+","+pid+",0,0,'"+name+"','"+image+"')\">发布</button>\n" +
+					"\t\t\t\t\t\t\t</div>\n" +
+					"\t\t\t\t\t\t</div>\n" +
+					"\t\t\t\t\t</form>\n" +
+					"\t\t\t\t</div>\n" +
+					"\t\t\t</div>\n" +
+					"\t\t\t<!--发送评论结束-->";
+			let commentContent =showCommentContent(uid,pid,image,kind);
+			if (commentContent!==""){
+				comment+="<hr style=\"width: 680px;margin-left: 15px\" />";
+				comment+=commentContent;
+			}
+			$(d).parent().parent().parent().next().html(comment);
+		}else {
+			$(d).parent().parent().parent().next().css("display","none");
+		}
+	}
+
+	function showCommentByKind(d,uid,pid,image,kind) {
+		let comment="";
+		comment+=showCommentContent(uid,pid,image,kind)
+		$(d).parent().parent().parent().replaceWith(comment)
+	}
+
+	function ifSendAble(d,name) {
+		let content_len = $(d).text().replace(/\s/g, "").length;
+		let content=$(d).html();
+		if (name=='0'){
+			if(content_len===0){
+				$(d).parent().next().children().eq(0).addClass("disabled");
+				return false;
+			}else{
+				$(d).parent().next().children().eq(0).removeClass("disabled");
+				return true;
+			}
+		}else {
+			let str="回复@"+name+"：";
+			if (content==str){
+				$(d).parent().next().children().eq(0).addClass("disabled");
+				return false;
+			}else {
+				$(d).parent().next().children().eq(0).removeClass("disabled");
+				return true;
+			}
+		}
+	}
+
+	function reply(d,uid,pid,upcid,urcid,name,image) {
+		let contentElement=$(d).parent().prev().children().eq(0);
+		let content=contentElement.html();
+
+		if (ifSendAble(contentElement,name)){
+			//console.log('可以发送ajax')
+			$.post(
+					"/comment/sendComment",
+					"upid="+uid+"-"+pid+"&upcid="+upcid+"&urcid="+urcid+"&comment="+content,
+					function (r) {
+						console.log(r)
+						if (r.code===631548){
+							alert("发送成功");
+							contentElement.html("");
+							$("#show"+pid+"PostComment").parent().parent().parent().next().css("display","none")
+							let kind=$("#show"+pid+"PostComment").parent().parent().parent().next().children().eq(2).children().eq(0).children().eq(0).attr("data-kind")
+							list_comments_show($("#show"+pid+"PostComment"),uid,pid,image,name,kind)
+							/*let newComment="";
+                            newComment="<!--需要遍历的评论开始-->\n" +
+                                    "\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px'>\n" +
+                                    "\t\t\t\t\t<hr style=\"width: 680px;margin-left: 15px\" />\n" +
+                                    "\t\t\t\t\t<div class='col-lg-1'>\n" +
+                                    "\t\t\t\t\t\t<img src='/avatar/"+image+"' style='height: 32px;width: 32px' />\n" +
+                                    "\t\t\t\t\t</div>\n" +
+                                    "\t\t\t\t\t<div class='col-lg-11' style='padding-left: 0px'>\n" +
+                                    "\t\t\t\t\t\t<a style='color: orange' href='/user/"+uid+"/1'>"+name+"</a>\n" +
+                                    "\t\t\t\t\t\t<span>："+content+"</span>\n" +
+                                    "\t\t\t\t\t</div>\n" +
+                                    "\t\t\t\t</div>\n" +
+                                    "\t\t\t\t<!--评论的时间与回复开始-->\n" +
+                                    "\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px'>\n" +
+                                    "\t\t\t\t\t<div class='col-lg-1'></div>\n" +
+                                    "\t\t\t\t\t<div class='col-lg-3' style=\"color: #808080;padding-left: 0px\">刚刚</div>\n" +
+                                    "\t\t\t\t\t<div class='col-lg-6'></div>\n" +
+                                    "\t\t\t\t\t<div class='col-lg-2'>\n" +
+                                    "\t\t\t\t\t\t<a href='javascript:void(0);' style='text-decoration: none' onclick='showReComment(this)'>回复</a>\n" +
+                                    "\t\t\t\t\t\t&nbsp;&nbsp;|&nbsp;&nbsp;\n" +
+                                    "\t\t\t\t\t\t<a href=''>" +
+                                    "<i class='fa fa-heart-o'></i>" +
+                                    "</a>\n" +
+                                    "\t\t\t\t\t\t0\n" +
+                                    "\t\t\t\t\t</div>\n" +
+                                    "\t\t\t\t</div>\n" +
+                                    "\t\t\t\t<!--评论的时间与回复结束-->\n" +
+                                    "\t\t\t\t<!--发送回复评论开始-->\n" +
+                                    "\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px;display: none'>\n" +
+                                    "\t\t\t\t\t<br>\n" +
+                                    "\t\t\t\t\t<div class='col-lg-1'></div>\n" +
+                                    "\t\t\t\t\t<div class='col-lg-11'\n" +
+                                    "\t\t\t\t\t\tstyle='padding-left: 0px;background-color: white;padding-right: 0px;width: 635px'>\n" +
+                                    "\t\t\t\t\t\t<br>\n" +
+                                    "\t\t\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px'>\n" +
+                                    "\t\t\t\t\t\t\t<div class='col-lg-12'>\n" +
+                                    "\t\t\t\t\t\t\t\t<form role='form' method=\"post\">\n" +
+                                    "\t\t\t\t\t\t\t\t\t<div class='form-group' style='margin-top: 0px'>\n" +
+                                    "\t\t\t\t\t\t\t\t\t\t<div class='col-lg-12' style='padding-left: 0px'>\n" +
+                                    "\t\t\t\t\t\t\t\t\t\t\t<div contentEditable='true' id=\"content1\" class='form-control'\n" +
+                                    "\t\t\t\t\t\t\t\t\t\t\t\tstyle='width: 605px;height: auto'></div>\n" +
+                                    "\t\t\t\t\t\t\t\t\t\t</div>\n" +
+                                    "\t\t\t\t\t\t\t\t\t\t<div class='col-lg-12' style='margin-top: 12px;margin-left: 12px;'>\n" +
+                                    "\t\t\t\t\t\t\t\t\t\t\t<button type='button' id='send' class='btn btn-default pull-right disabled'\n" +
+                                    "\t\t\t\t\t\t\t\t\t\t\t\tstyle='color: #ffc09f;height: 30px;width: 60px;padding: 0 0'>发布</button>\n" +
+                                    "\t\t\t\t\t\t\t\t\t\t</div>\n" +
+                                    "\t\t\t\t\t\t\t\t\t</div>\n" +
+                                    "\t\t\t\t\t\t\t\t</form>\n" +
+                                    "\t\t\t\t\t\t\t</div>\n" +
+                                    "\t\t\t\t\t\t</div>\n" +
+                                    "\t\t\t\t\t\t<br>\n" +
+                                    "\t\t\t\t\t</div>\n" +
+                                    "\t\t\t\t</div>\n" +
+                                    "\t\t\t\t<!--发送回复评论结束-->"
+
+                            $(d).parent().parent().parent().parent().parent().next().next().children().eq(0).after(newComment)*/
+						}else{
+							alert("发送失败");
+						}
+					},
+					"json"
+			)
 		}
 	}
 
@@ -493,17 +879,6 @@
 		)
 	}
 
-	function doDelete(uid,pid) {
-		$.post(
-				"/user/"+uid+"/doDelete",
-				"pid="+pid,
-				function (){
-					$("#post"+pid).remove();
-				},
-				"json"
-		)
-	}
-
 	function doFollow(uid,followUid) {
 		$.post(
 				"/user/"+uid+"/doFollow",
@@ -513,6 +888,17 @@
 				},
 				"json"
 		);
+	}
+
+	function doDelete(uid,pid) {
+		$.post(
+				"/user/"+uid+"/doDelete",
+				"pid="+pid,
+				function (){
+					$("#post"+pid).remove();
+				},
+				"json"
+		)
 	}
 
 	$(function(){

@@ -9,6 +9,7 @@
     <result column="urcid" property="urcid" jdbcType="VARCHAR" />
     <result column="comment" property="comment" jdbcType="VARCHAR" />
     <result column="comment_time" property="commentTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
     <association property="user" column="uid" javaType="org.example.weibo.pojo.User" select="org.example.weibo.mapper.UserMapper.selectByPrimaryKey"/>
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -70,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    cid, uid, upid, upcid, urcid, comment, comment_time
+    cid, uid, upid, upcid, urcid, comment, comment_time, status
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.example.weibo.pojo.CommentExample" >
     select
@@ -105,10 +106,10 @@
   <insert id="insert" parameterType="org.example.weibo.pojo.Comment" >
     insert into comment (cid, uid, upid, 
       upcid, urcid, comment, 
-      comment_time)
+      comment_time, status)
     values (#{cid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{upid,jdbcType=VARCHAR}, 
       #{upcid,jdbcType=VARCHAR}, #{urcid,jdbcType=VARCHAR}, #{comment,jdbcType=VARCHAR}, 
-      #{commentTime,jdbcType=TIMESTAMP})
+      #{commentTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="org.example.weibo.pojo.Comment" >
     insert into comment
@@ -134,6 +135,9 @@
       <if test="commentTime != null" >
         comment_time,
       </if>
+      <if test="status != null" >
+        status,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="cid != null" >
@@ -156,6 +160,9 @@
       </if>
       <if test="commentTime != null" >
         #{commentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -189,6 +196,9 @@
       <if test="record.commentTime != null" >
         comment_time = #{record.commentTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -202,7 +212,8 @@
       upcid = #{record.upcid,jdbcType=VARCHAR},
       urcid = #{record.urcid,jdbcType=VARCHAR},
       comment = #{record.comment,jdbcType=VARCHAR},
-      comment_time = #{record.commentTime,jdbcType=TIMESTAMP}
+      comment_time = #{record.commentTime,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -228,6 +239,9 @@
       <if test="commentTime != null" >
         comment_time = #{commentTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
     </set>
     where cid = #{cid,jdbcType=INTEGER}
   </update>
@@ -238,7 +252,8 @@
       upcid = #{upcid,jdbcType=VARCHAR},
       urcid = #{urcid,jdbcType=VARCHAR},
       comment = #{comment,jdbcType=VARCHAR},
-      comment_time = #{commentTime,jdbcType=TIMESTAMP}
+      comment_time = #{commentTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER}
     where cid = #{cid,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -21,31 +21,20 @@ public class Comment {
     @JsonFormat(pattern = "MM月dd日 HH:mm",timezone="GMT+8")
     private Date commentTime;
 
+    private Integer status;
+
     //发评论的用户
     private User user;
 
     private int countCommentLike;
 
+    //总的评论数
+    private int countComment;
+
+    //子评论集合，有时显示部分有时显示全部，其长度小于等于总评论数
     private List<Comment> subCommentList;
 
     private boolean commentLike;
-
-    @Override
-    public String toString() {
-        return "Comment{" +
-                "cid=" + cid +
-                ", uid=" + uid +
-                ", upid='" + upid + '\'' +
-                ", upcid='" + upcid + '\'' +
-                ", urcid='" + urcid + '\'' +
-                ", comment='" + comment + '\'' +
-                ", commentTime=" + commentTime +
-                ", user=" + user +
-                ", countCommentLike=" + countCommentLike +
-                ", subCommentList=" + subCommentList +
-                ", commentLike=" + commentLike +
-                '}';
-    }
 
     public User getUser() {
         return user;
@@ -61,6 +50,14 @@ public class Comment {
 
     public void setCountCommentLike(int countCommentLike) {
         this.countCommentLike = countCommentLike;
+    }
+
+    public int getCountComment() {
+        return countComment;
+    }
+
+    public void setCountComment(int countComment) {
+        this.countComment = countComment;
     }
 
     public List<Comment> getSubCommentList() {
@@ -133,5 +130,13 @@ public class Comment {
 
     public void setCommentTime(Date commentTime) {
         this.commentTime = commentTime;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

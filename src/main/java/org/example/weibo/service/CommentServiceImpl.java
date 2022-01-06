@@ -38,7 +38,8 @@ public class CommentServiceImpl implements CommentService{
 		List<Comment> commentList = commentMapper.selectByExample(commentExample);
 
 		PageInfo<Comment> pageInfo=new PageInfo<>(commentList);
-		List<Comment> fillCommentInfo = fillCommentInfo(pageInfo.getList(), uid, 3);
+		//显示四条热门评论
+		List<Comment> fillCommentInfo = fillCommentInfo(pageInfo.getList(), uid, 4);
 		pageInfo.setList(fillCommentInfo);
 
 		return pageInfo;
@@ -61,7 +62,7 @@ public class CommentServiceImpl implements CommentService{
 	}
 
 	@Override
-	//补全微博信息
+	//补全评论信息
 	public List<Comment> fillCommentInfo(List<Comment> commentList, Integer uid,Integer some) {
 		for (Comment comment : commentList) {
 			//点赞数
@@ -72,10 +73,15 @@ public class CommentServiceImpl implements CommentService{
 			boolean ifCommentLike = commentLikeService.ifCommentLike(comment.getUid() + "-" + comment.getCid(), uid);
 			comment.setCommentLike(ifCommentLike);
 
-			//热门子评论
 			if (comment.getUpcid().equals("0")){
+				//父级评论情况下
+				//热门子评论
 				List<Comment> showHotComment = showHotComment(comment.getUpid(), comment.getUid() + "-" + comment.getCid(),uid,some);
 				comment.setSubCommentList(showHotComment);
+
+				//评论数
+				int i = countComment(comment.getUpid(), comment.getUid()+"-"+comment.getCid());
+				comment.setCountComment(i);
 			}
 		}
 
@@ -86,6 +92,30 @@ public class CommentServiceImpl implements CommentService{
 	//发评论
 	public void doComment(Comment comment) {
 		commentMapper.insertSelective(comment);
+	}
+
+	@Override
+	//查评论数
+	//数据库三个参数  upid：uid-pid  upcid：uid-parentcid  urcid：uid-replycid
+	//只需要前两个参数  对应两种需求
+	public int countComment(String upid, String upcid) {
+		CommentExample commentExample=new CommentExample();
+		if (upcid!=null){
+			commentExample.createCriteria().andUpidEqualTo(upid).andUpcidEqualTo(upcid);
+		}else {
+			commentExample.createCriteria().andUpidEqualTo(upid);
+		}
+		int i = commentMapper.countByExample(commentExample);
+		return i;
+	}
+
+	@Override
+	//状态码默认1，正常；0，删除不可见；-1，被举报
+	public void doDeleteComment(Integer cid) {
+		Comment comment=new Comment();
+		comment.setCid(cid);
+		comment.setStatus(0);
+		commentMapper.updateByPrimaryKeySelective(comment);
 	}
 
 }

@@ -11,5 +11,6 @@ public interface CommentService {
 	public List<Comment> showHotComment(String upid,String upcid,Integer uid,Integer some);
 	public List<Comment> fillCommentInfo(List<Comment> commentList,Integer uid,Integer some);
 	public void doComment(Comment comment);
-
+	public int countComment(String upid,String upcid);
+	public void doDeleteComment(Integer cid);
 }

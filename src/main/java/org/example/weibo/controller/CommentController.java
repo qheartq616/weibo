@@ -1,8 +1,10 @@
 package org.example.weibo.controller;
 
 import org.example.weibo.pojo.Comment;
+import org.example.weibo.pojo.Post;
 import org.example.weibo.pojo.R;
 import org.example.weibo.pojo.User;
+import org.example.weibo.service.CommentLikeService;
 import org.example.weibo.service.CommentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +23,8 @@ import java.util.Map;
 public class CommentController {
 	@Resource
 	CommentService commentService;
+	@Resource
+	CommentLikeService commentLikeService;
 
 	@RequestMapping("someComment")
 	@ResponseBody
@@ -54,5 +58,23 @@ public class CommentController {
 		commentService.doComment(comment);
 		//System.out.println(comment.toString());
 		return R.ok();
+	}
+
+	@RequestMapping("doLike")
+	@ResponseBody
+	public boolean doLike(@RequestParam(name = "uid") Integer uid,
+	                      @RequestParam(name = "cid") Integer cid,
+	                      HttpSession session){
+		User user = (User) session.getAttribute("user");
+		boolean commentLike = commentLikeService.doCommentLike(uid + "-" + cid, user.getUid());
+		return commentLike;
+	}
+
+	@RequestMapping("deleteComment")
+	@ResponseBody
+	public Post doDelete(@RequestParam(name = "cid")Integer cid,
+	                     @RequestParam(name = "upid")String upid){
+		commentService.doDeleteComment(cid);
+		return null;
 	}
 }

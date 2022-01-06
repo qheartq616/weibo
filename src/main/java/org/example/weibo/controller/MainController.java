@@ -82,8 +82,6 @@ public class MainController {
 		return "main";
 	}
 
-
-
 	@RequestMapping("{uid}/myGroups/{gid}/{pageNum}")
 	public String showGroupPost(HttpSession session,Model model,
 	                            @PathVariable("uid") Integer uid,
