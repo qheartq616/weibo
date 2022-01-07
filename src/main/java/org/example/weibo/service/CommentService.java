@@ -10,7 +10,8 @@ public interface CommentService {
 	public PageInfo<Comment> showLatestComment(String upid,String upcid,Integer uid,Integer pageNum,Integer pageSize);
 	public List<Comment> showHotComment(String upid,String upcid,Integer uid,Integer some);
 	public List<Comment> fillCommentInfo(List<Comment> commentList,Integer uid,Integer some);
-	public void doComment(Comment comment);
+	public Comment doComment(Comment comment);
 	public int countComment(String upid,String upcid);
 	public void doDeleteComment(Integer cid);
+	public Comment findComment(Integer cid);
 }
