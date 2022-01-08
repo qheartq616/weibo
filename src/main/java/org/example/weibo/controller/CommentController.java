@@ -62,7 +62,7 @@ public class CommentController {
 			int pcid = Integer.parseInt(split[1]);
 			Comment pcomment = commentService.findComment(pcid);
 			Calendar beforeTime = Calendar.getInstance();
-			beforeTime.add(Calendar.MINUTE, +5);// 5分钟后的时间
+			beforeTime.add(Calendar.MINUTE, -1);// 1分钟前的时间
 			Date beforeD = beforeTime.getTime();
 			if (pcomment.getCommentTime().after(beforeD)){
 				return R.ok().addData("comment",comment1).addData("kind","latest");

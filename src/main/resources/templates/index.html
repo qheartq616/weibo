@@ -58,7 +58,7 @@
 					</form>
 				</li>
 				<li class="menu-item menu-item-type-taxonomy menu-item-object-category">
-					<a th:href="@{|/main/${session.user.uid}/all/1|}" style="text-decoration: none"><i class="fa fa-home"></i>微博首页</a>
+					<a th:href="@{|/main/all/1|}" style="text-decoration: none"><i class="fa fa-home"></i>微博首页</a>
 				</li>
 				<li class="menu-item"><a href="#1" style="text-decoration: none"><i class="fa fa-envelope-o"></i>私信</a></li>
 				<li th:class="|gengxin menu-item menu-item-type-custom|" th:if="${userCur.uid==session.user.uid}">
@@ -801,7 +801,7 @@
 										"\t\t\t\t\t\t\t\t\t\t\t\t\tstyle='margin-top: 12px;margin-left: 12px;padding-right: 5px'>\n" +
 										"\t\t\t\t\t\t\t\t\t\t\t\t\t<button type='button' id='send'\n" +
 										"\t\t\t\t\t\t\t\t\t\t\t\t\t\tclass='btn btn-default pull-right disabled'\n" +
-										"\t\t\t\t\t\t\t\t\t\t\t\t\t\tstyle='height: 30px;width: 60px;padding: 0 0' onclick=\"reply(this,"+uid+","+pid+",'"+r.data.commentList[i].user.uid+'-'+r.data.commentList[i].cid+"','"+r.data.commentList[i].subCommentList[j].user.uid+'-'+r.data.commentList[i].subCommentList[j].cid+"','"+r.data.commentList[i].user.name+"','"+image+"',"+suid+") \">发布</button>\n" +
+										"\t\t\t\t\t\t\t\t\t\t\t\t\t\tstyle='height: 30px;width: 60px;padding: 0 0' onclick=\"reply(this,"+uid+","+pid+",'"+r.data.commentList[i].user.uid+'-'+r.data.commentList[i].cid+"','"+r.data.commentList[i].subCommentList[j].user.uid+'-'+r.data.commentList[i].subCommentList[j].cid+"','"+r.data.commentList[i].subCommentList[j].user.name+"','"+image+"',"+suid+") \">发布</button>\n" +
 										"\t\t\t\t\t\t\t\t\t\t\t\t</div>\n" +
 										"\t\t\t\t\t\t\t\t\t\t\t</div>\n" +
 										"\t\t\t\t\t\t\t\t\t\t</form>\n" +
@@ -846,6 +846,7 @@
 	}
 
 	function list_comments_show(d,uid,pid,image,name,kind,suid) {
+		//name为session中
 		var display=$(d).parent().parent().parent().next().css("display");
 		if (display==="none"){
 			$(d).parent().parent().parent().next().css("display","block");
@@ -873,6 +874,7 @@
 					"\t\t\t\t\t\t\t</div>\n" +
 					"\t\t\t\t\t\t\t<div class='col-lg-12' style='margin-top: 12px;margin-left: 12px;'>\n" +
 					"\t\t\t\t\t\t\t\t<button type='button' id='send' class='btn btn-default pull-right disabled'\n" +
+					/*name为session中*/
 					"\t\t\t\t\t\t\t\t\tstyle='height: 30px;width: 60px;padding: 0 0' onclick=\"reply(this,"+uid+","+pid+",0,0,'"+name+"','"+image+"',"+suid+")\">发布</button>\n" +
 					"\t\t\t\t\t\t\t</div>\n" +
 					"\t\t\t\t\t\t</div>\n" +
@@ -921,12 +923,14 @@
 	}
 
 	function reply(d,uid,pid,upcid,urcid,name,image,suid) {
+		//list_comments_show中name为session中
 		let contentElement=$(d).parent().prev().children().eq(0);
 		let content=contentElement.html();
 
 		if (ifSendAble(contentElement,name)){
 			//console.log('可以发送ajax')
 			if (urcid!==0){
+				//此处需要回复的name
 				let oldName="@"+name
 				content=content.substring(0,2)+"<a class='searchInfo'>@"+name+"</a>"+content.substring(oldName.length+2)
 			}
@@ -940,6 +944,7 @@
 						alert("发送成功");
 						let kind=$("#show"+pid+"PostComment").parent().parent().parent().next().children().eq(2).children().eq(0).children().eq(0).attr("data-kind")
 						if (kind==='hot'&&upcid===0){
+							//若为按热评且为微博回复（母回复为0），session中name对此适用，用于回显
 							let newComment="";
 							newComment="<!--需要遍历的评论开始-->\n" +
 									"\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px'>\n" +

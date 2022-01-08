@@ -62,7 +62,7 @@
 					</form>
 				</li>
 				<li class="gengxin menu-item menu-item-type-custom">
-					<a th:href="@{|/main/${session.user.uid}/all/1|}"><i class="fa fa-home"></i>微博首页</a>
+					<a th:href="@{|/main/all/1|}"><i class="fa fa-home"></i>微博首页</a>
 				</li>
 				<li class="menu-item"><a href="#1"><i class="fa fa-envelope-o"></i>私信</a></li>
 				<li th:class="|menu-item menu-item-type-custom|">
@@ -88,11 +88,11 @@
 				<div class="lmlblog-member-left-profile">
 					<h3>首页</h3>
 					<ul>
-						<li><i class="fa fa-fire"></i><a th:href="@{|/main/${session.user.uid}/all/1|}">热门推荐</a></li>
-						<li><i class="fa fa-group"></i><a th:href="@{|/main/${session.user.uid}/all/1|}">全部关注</a></li>
-						<li><i class="fa fa-user"></i><a th:href="@{|/main/${session.user.uid}/latest/1|}">最新微博</a></li>
-						<li><i class="fa fa-street-view"></i><a th:href="@{|/main/${session.user.uid}/myGroups/0/1|}">特别关注</a></li>
-						<li><i class="fa fa-gittip"></i><a th:href="@{|/main/${session.user.uid}/mutual/1|}">好友圈</a></li>
+						<li><i class="fa fa-fire"></i><a th:href="@{|/main/all/1|}">热门推荐</a></li>
+						<li><i class="fa fa-group"></i><a th:href="@{|/main/all/1|}">全部关注</a></li>
+						<li><i class="fa fa-user"></i><a th:href="@{|/main/latest/1|}">最新微博</a></li>
+						<li><i class="fa fa-street-view"></i><a th:href="@{|/main/myGroups/0/1|}">特别关注</a></li>
+						<li><i class="fa fa-gittip"></i><a th:href="@{|/main/mutual/1|}">好友圈</a></li>
 					</ul>
 				</div>
 				<div class="lmlblog-member-left-profile">
@@ -101,14 +101,14 @@
 						<li>
 							<i th:if="${group.gid==gid}" style="color: #ff8862;" class="fa fa-smile-o"></i>
 							<i th:unless="${group.gid==gid}" class="fa fa-smile-o"></i>
-							<a th:if="${group.gid==gid}" style="color: #ff8862;" th:href="@{|/main/${session.user.uid}/myGroups/${group.gid}/1|}" th:text="${group.name}">高校</a>
-							<a th:unless="${group.gid==gid}" th:href="@{|/main/${session.user.uid}/myGroups/${group.gid}/1|}" th:text="${group.name}">高校</a>
+							<a th:if="${group.gid==gid}" style="color: #ff8862;" th:href="@{|/main/myGroups/${group.gid}/1|}" th:text="${group.name}">高校</a>
+							<a th:unless="${group.gid==gid}" th:href="@{|/main/myGroups/${group.gid}/1|}" th:text="${group.name}">高校</a>
 						</li>
 						<li>
 							<i th:if="${gid==-1}" style="color: #ff8862;" class="fa fa-smile-o"></i>
 							<i th:unless="${gid==-1}" class="fa fa-smile-o"></i>
-							<a th:if="${gid==-1}" style="color: #ff8862;" th:href="@{|/main/${session.user.uid}/myGroups/-1/1|}">未分组</a>
-							<a th:unless="${gid==-1}" th:href="@{|/main/${session.user.uid}/myGroups/-1/1|}">未分组</a>
+							<a th:if="${gid==-1}" style="color: #ff8862;" th:href="@{|/main/myGroups/-1/1|}">未分组</a>
+							<a th:unless="${gid==-1}" th:href="@{|/main/myGroups/-1/1|}">未分组</a>
 						</li>
 					</ul>
 				</div>
@@ -335,14 +335,14 @@
 
 						</div>
 						<div class="lmlblog-pager" th:if="${#strings.isEmpty(gid)&&type!='all'}">
-							<a class="lmlblog-pager-left" th:href="@{|/main/${session.user.uid}/${type}/${pageInfo.hasPreviousPage?pageInfo.prePage:1}|}">上一页</a>
+							<a class="lmlblog-pager-left" th:href="@{|/main/${type}/${pageInfo.hasPreviousPage?pageInfo.prePage:1}|}">上一页</a>
 							<div class="lmlblog-pager-center layui-form" th:text="|第${pageInfo.pageNum==0?1:pageInfo.pageNum}页|"></div>
-							<a class="lmlblog-pager-right" th:href="@{|/main/${session.user.uid}/${type}/${pageInfo.hasNextPage?pageInfo.nextPage:pageInfo.navigateLastPage}|}">下一页</a>
+							<a class="lmlblog-pager-right" th:href="@{|/main/${type}/${pageInfo.hasNextPage?pageInfo.nextPage:pageInfo.navigateLastPage}|}">下一页</a>
 						</div>
 						<div class="lmlblog-pager" th:if="${not #strings.isEmpty(gid)}">
-							<a class="lmlblog-pager-left" th:href="@{|/main/${session.user.uid}/myGroups/${gid}/${pageInfo.hasPreviousPage?pageInfo.prePage:1}|}">上一页</a>
+							<a class="lmlblog-pager-left" th:href="@{|/main/myGroups/${gid}/${pageInfo.hasPreviousPage?pageInfo.prePage:1}|}">上一页</a>
 							<div class="lmlblog-pager-center layui-form" th:text="|第${pageInfo.pageNum==0?1:pageInfo.pageNum}页|"></div>
-							<a class="lmlblog-pager-right" th:href="@{|/main/${session.user.uid}/myGroups/${gid}/${pageInfo.hasNextPage?pageInfo.nextPage:pageInfo.navigateLastPage}|}">下一页</a>
+							<a class="lmlblog-pager-right" th:href="@{|/main/myGroups/${gid}/${pageInfo.hasNextPage?pageInfo.nextPage:pageInfo.navigateLastPage}|}">下一页</a>
 						</div>
 					</div>
 
@@ -897,7 +897,7 @@
 				"/user/"+uid+"/doFollow",
 				"uid="+uid+"&followUid="+followUid,
 				function (followStatus){
-					location.href="/main/"+uid+"/all/1";
+					location.href="/main/all/1";
 				},
 				"json"
 		);

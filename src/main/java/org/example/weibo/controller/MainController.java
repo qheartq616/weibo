@@ -29,7 +29,7 @@ public class MainController {
 	@Resource
 	UserService userService;
 
-	@RequestMapping("{uid}/{type}/{pageNum}")
+	@RequestMapping("{type}/{pageNum}")
 	public String showAll(HttpSession session,Model model,
 	                      @PathVariable Integer pageNum,
 	                      @PathVariable("type") String type){
@@ -82,14 +82,13 @@ public class MainController {
 		return "main";
 	}
 
-	@RequestMapping("{uid}/myGroups/{gid}/{pageNum}")
+	@RequestMapping("myGroups/{gid}/{pageNum}")
 	public String showGroupPost(HttpSession session,Model model,
-	                            @PathVariable("uid") Integer uid,
 	                            @PathVariable("gid") Integer gid,
 	                            @PathVariable("pageNum") Integer pageNum){
 		User user = (User) session.getAttribute("user");
 
-		PageInfo<Post> pageInfo = postService.showGroupAllPost(uid,gid,pageNum);
+		PageInfo<Post> pageInfo = postService.showGroupAllPost(user.getUid(),gid,pageNum);
 		model.addAttribute("pageInfo",pageInfo);
 
 		List<Group> groupList = groupService.showAllGroupList(user.getUid());

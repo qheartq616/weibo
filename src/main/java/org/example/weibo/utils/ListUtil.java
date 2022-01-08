@@ -65,6 +65,7 @@ public class ListUtil {
 		Set<User> set = new HashSet<>();
 		while (set.size() < (userList.size()/2)||set.size()<=1){
 			Random random=new Random();
+			//未关注人的情况会报错，需要跳转到热点推荐
 			set.add(userList.get(random.nextInt(userList.size())));
 		}
 		//没有关注人时会报错
