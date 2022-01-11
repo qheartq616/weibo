@@ -53,30 +53,13 @@ public class MainController {
 			PageInfo<Post> pageInfo = postService.showAllFollowUserPostMutual(user.getUid(), pageNum);
 			model.addAttribute("pageInfo", pageInfo);
 			//System.out.println(3333);
+		} else if (type.equals("hottest")){
+			PageInfo<Post> pageInfo = postService.showAllFollowUserPostHottest(user.getUid(), pageNum);
+			model.addAttribute("pageInfo", pageInfo);
 		}
-
 
 		List<Group> groupList = groupService.showAllGroupList(user.getUid());
-		/*for (Group group : groupList) {
-			System.out.println("group.getName() = " + group.getName());
-		}*/
-		/*List<Group> groupList1=new ArrayList<>();
-		List<Group> groupList2=new ArrayList<>();
-		if (groupList.size()<=4){
-			groupList1=groupList;
-		}else {
-			for (int i=0;i<groupList.size();i++){
-				if(i<4){
-					groupList1.add(groupList.get(i));
-				}else {
-					groupList2.add(groupList.get(i));
-				}
-			}
-		}
-		model.addAttribute("groupList1",groupList1);
-		model.addAttribute("groupList2",groupList2);*/
 		model.addAttribute("groupList", groupList);
-
 
 		return "main";
 	}

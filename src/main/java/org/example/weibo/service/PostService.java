@@ -11,6 +11,7 @@ public interface PostService {
 	public PageInfo<Post> showAllFollowUserPostRandom(Integer uid, Integer pageNum);
 	public PageInfo<Post> showAllFollowUserPostLatest(Integer uid, Integer pageNum);
 	public PageInfo<Post> showAllFollowUserPostMutual(Integer uid, Integer pageNum);
+	public PageInfo<Post> showAllFollowUserPostHottest(Integer uid, Integer pageNum);
 	public Post doPost(Post post);
 	public int countPost(Integer uid);
 	public PageInfo<Post> showGroupAllPost(Integer uid,Integer gid,Integer pageNum);

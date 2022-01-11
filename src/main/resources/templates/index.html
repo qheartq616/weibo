@@ -165,20 +165,19 @@
                             <span>被点赞</span>
                         </li>
                     </div>
-                    <div class="lmlblog-member-left-bg-music clear">
-                        <h3>背景音乐</h3>
-                        <div id="lmlblog-memeber-bg-music" class="aplayer"></div>
-                        <img src="http://wx2.sinaimg.cn/large/9c774d91gy1ft4lhr5vbmg20jp08okbw.gif" alt="司空琪">
-                        <audio src="https://img.jinsom.cn/user_files/12551/bg-music/music_1530776683.mp3" autoplay
-                               controls></audio>
-                    </div>
+<!--                    <div class="lmlblog-member-left-bg-music clear">-->
+<!--                        <h3>背景音乐</h3>-->
+<!--                        <div id="lmlblog-memeber-bg-music" class="aplayer"></div>-->
+<!--                        <img src="http://wx2.sinaimg.cn/large/9c774d91gy1ft4lhr5vbmg20jp08okbw.gif" alt="司空琪">-->
+<!--                        <audio src="https://img.jinsom.cn/user_files/12551/bg-music/music_1530776683.mp3" autoplay-->
+<!--                               controls></audio>-->
+<!--                    </div>-->
                     <div class="lmlblog-member-left-profile">
                         <h3>资料简介</h3>
                         <li><i class="fa fa-address-book-o"></i>微博ID：<span th:text="${userCur.uid}">520</span></li>
                         <li><i class="fa fa-transgender"></i>性别：<span th:text="${userCur.gender}">女生</span></li>
                         <li><i class="fa fa-map-marker"></i>城市：<span th:text="${userCur.city}">画江湖 司空家</span></li>
-                        <li><i class="fa fa-smile-o"></i>签名：<span th:text="${userCur.description}">坚强勇敢，利落干脆。冰雪聪明，明眸善睐。重情重义，侠骨柔情。</span>
-                        </li>
+                        <li><i class="fa fa-smile-o"></i>签名：<span th:text="${userCur.description}">坚强勇敢，利落干脆。冰雪聪明，明眸善睐。重情重义，侠骨柔情。</span></li>
                         <div class="lmlblog-member-left-profile-hide">
                             <!--<li><i class="fa fa-qq"></i> Q Q：<span>sikongqi-&#45;&#45;<span></li>
                             <li><i class="fa fa-wechat"></i> 微信：<span>天涯路远，一剑轻安。携琪之手，相伴江湖-&#45;&#45;<span></li>
@@ -189,61 +188,11 @@
                         <div class="lmlblog-member-left-profile-more">查看更多 <i class="fa fa-angle-right"></i></div>
                     </div>
 
-                    <div class="lmlblog-member-left-visitor clear">
-                        <h3>最近访客---</h3>
-                        <li><a href="#1" title="访问时间：22分钟前"><img src="/picture/1.gif" class="avatar"/>
-                            <p>born</p></a></li>
-                        <li><a href="#2" title="访问时间：3小时前"><span class="lmlblog-vip-icon"></span><img
-                                src="/picture/qi.jpg" class="avatar"/>
-                            <p>司空琪</p></a></li>
-                        <li><a href="#3" title="访问时间：10小时前"><span class="lmlblog-vip-icon"></span><img
-                                src="/picture/2.gif" class="avatar"/>
-                            <p>晴川</p></a></li>
-                        <li><a href="#4" title="访问时间：14小时前"><img src="/picture/3.gif" class="avatar"/>
-                            <p>大白兔</p></a></li>
-                        <li><a href="#5" title="访问时间：15小时前"><img src="/picture/4.jpg" class="avatar"/>
-                            <p>momo</p></a></li>
-                        <li><a href="#6" title="访问时间：1天前"><span class="lmlblog-vip-icon"></span><img
-                                src="/picture/5.png" class="avatar"/>
-                            <p>啦啦啦123</p></a></li>
-                        <li><a href="#7" title="访问时间：1天前"><img src="/picture/6.gif" class="avatar"/>
-                            <p>随风</p></a></li>
-                        <li><a href="#8" title="访问时间：1天前"><img src="/picture/7.gif" class="avatar"/>
-                            <p>哒哒</p></a></li>
-                        <li><a href="#9" title="访问时间：1天前"><img src="/picture/8.gif" class="avatar"/>
-                            <p>陌若</p></a></li>
-                        <li><a href="#10" title="访问时间：2天前"><span class="lmlblog-vip-icon"></span><img
-                                src="/picture/9.gif" class="avatar"/>
-                            <p>hidhz</p></a></li>
-                        <li><a href="#11" title="访问时间：2天前"><span class="lmlblog-vip-icon"></span><img
-                                src="/picture/10.gif" class="avatar"/>
-                            <p>老虎</p></a></li>
-                        <li><a href="#12" title="访问时间：3天前"><img src="/picture/11.gif" class="avatar"/>
-                            <p>不要演有事说</p></a></li>
-                        <li><a href="#13" title="访问时间：3天前"><img src="/picture/12.gif" class="avatar"/>
-                            <p>瑾似流年</p></a></li>
-                        <li><a href="#14" title="访问时间：3天前"><img src="/picture/13.gif" class="avatar"/>
-                            <p>九张机</p></a></li>
-                        <li><a href="#15" title="访问时间：4天前"><img src="/picture/14.jpg" class="avatar"/>
-                            <p>美美哒</p></a></li>
-                        <li><a href="#16" title="访问时间：4天前"><span class="lmlblog-vip-icon"></span><img
-                                src="/picture/15.gif" class="avatar"/>
-                            <p>zanbocm</p></a></li>
-                        <li><a href="#2528" title="访问时间：4天前"><img src="/picture/16.gif" class="avatar"/>
-                            <p>yfdaifhc</p></a></li>
-                        <li><a href="#52" title="访问时间：4天前"><img src="/picture/17.png" class="avatar"/>
-                            <p>xcxla</p></a></li>
-                        <li><a href="#0292" title="访问时间：4天前"><img src="/picture/18.jpg" class="avatar"/>
-                            <p>墨虹客栈</p></a></li>
-                        <li><a href="#1753" title="访问时间：5天前"><img src="/picture/19.jpg" class="avatar"/>
-                            <p>空间吧</p></a></li>
-                    </div>
+
                     <div class="lmlblog-member-left-bg-xg clear">
-                        <h3>相关推荐---</h3>
+                        <h3>他的热门-&#45;&#45;</h3>
                         <div id="lmlblog-memeber-bg-xg" class="aplayer"></div>
-                        <a href="http://www.lmlblog.com/blog/yanlingjiao/1.html" target="_blank"><h2>燕凌姣个人主页</h2>
-                            <img src="http://www.lmlblog.com/blog/yanlingjiao/images/jiao8.jpg" alt="燕凌姣个人主页">
-                            <p>　　一袭蓝衣亭亭玉立，姣若春梅绽雪，神如月射寒江，香培玉琢、英姿飒爽;其静兰生幽谷，其动若飞若扬，性格大气坚毅、疏朗开阔，举止敢爱敢恨、聪明磊落...他就是燕凌姣</p></a>
+
                     </div>
                 </div>
                 <div class="lmlblog-member-right">
@@ -1218,6 +1167,46 @@
         )
     }
 
+    function showImg(pid, curUid, uid) {
+        $.post(
+            "/user/" + uid + "/getInfoByUid",
+            "curUid=" + curUid,
+            function (data) {
+                var infoCard = "<a href='/user/" + data.uid + "/1' style='display: inline-block'><img src='/avatar/" + data.image + "' class='avatar'/>"
+                switch (data.status) {
+                    case 0:
+                        infoCard += "<i title='普通用户'/>";
+                        break;
+                    case 1:
+                        infoCard += "<i class='lmlblog-verify lmlblog-verify-a' style='position: absolute;top: 38px;left: 200px;' title='会员用户'/>";
+                        break;
+                    case 2:
+                        infoCard += "<i class='lmlblog-verify lmlblog-verify-b' style='position: absolute;top: 38px;left: 200px;' title='认证用户'/>";
+                        break;
+                    case 3:
+                        infoCard += "<i class='lmlblog-verify-c lmlblog-verify-cc' style='position: absolute;top: 38px;left: 200px;' title='超级管理员'/>";
+                        break;
+                }
+                infoCard += "</a><div><strong>" + data.name + "</strong>";
+                switch (data.gender) {
+                    case '男':
+                        infoCard += "<span class='lmlblog-mark lmlblog-boy'><i class='fa fa-mars'></i></span>";
+                        break;
+                    case '女':
+                        infoCard += "<span class='lmlblog-mark lmlblog-girl'><i class='fa fa-venus'></i></span>";
+                        break;
+                    default:
+                        infoCard += "<span class='lmlblog-mark' style='background-color: orange'><i class='fa fa-transgender-alt'></i></span>";
+                        break;
+                }
+                infoCard += "</div><br><div>" + data.description + "</div><hr><div>&nbsp;&nbsp;关注&nbsp;" + data.countAllFollowUser + "&nbsp;&nbsp;|&nbsp;&nbsp;粉丝&nbsp;" + data.countAllFans + "&nbsp;&nbsp;|&nbsp;&nbsp;<a href='/user/" + data.uid + "/1'>微博&nbsp;" + data.countAllPost + "</a>&nbsp;&nbsp;</div><br><div>" + data.city + "</div>";
+
+                $("#infoCard" + pid).html(infoCard);
+            },
+            "json"
+        );
+    }
+
     jQuery(document).ready(function ($) {
         $.fn.smartFloat = function () {
             var position = function (element) {
@@ -1313,5 +1302,148 @@
             "json"
         )
     }
+
+    $(function () {
+        $("#content").keyup(function () {
+            //判断输入的字符串长度
+            var content_len = $("#content").text().replace(/\s/g, "").length;
+
+            $(".tips").text("已经输入" + content_len + "个字");
+
+            if (content_len == 0) {
+                // alert(content);
+                $(".tips").text("");
+                $("#send").addClass("disabled");
+                return false;
+            } else {
+                $("#send").removeClass("disabled");
+            }
+        });
+
+        $(".pic").click(function () {
+            $("#select_Img_New").click();
+        })
+
+        //点击按钮发送内容
+        $("#send").click(function () {
+
+            // var myDate = new Date();
+
+            //   var min = myDate.getMinutes();
+
+            //   var time = min-(min-1);
+
+            //   //alert(time);
+
+            var content = $("#content").html();
+
+            //判断选择的是否是图片格式
+            var imgPath = $(".preview").text();
+            var start = imgPath.lastIndexOf(".");
+            var postfix = imgPath.substring(start, imgPath.length).toUpperCase();
+
+            /*var mytime=time.toLocaleTimeString(); //获取当前时间
+            time.toLocaleString( ); //获取日期与时间
+
+            alert(mytime);*/
+
+            var uid = $("#uidVar").val();
+
+            //alert(uid);
+
+            if (imgPath != "") {
+                if (postfix != ".PNG" && postfix != ".JPG" && postfix != ".GIF" && postfix != ".JPEG") {
+                    alert("图片格式需为png,gif,jpeg,jpg格式");
+                } else {
+                    /*$(".item_msg").append("<div class='col-sm-12 col-xs-12 message' > <img src='/img/icon.png' class='col-sm-2 col-xs-2' style='border-radius: 50%'><div class='col-sm-10 col-xs-10'><span style='font-weight: bold;''>Jack.C</span> <br><small class='date' style='color:#999'>刚刚</small><div class='msg_content'>"+content+"<img class='mypic' onerror='this.src='/img/bg_1.jpg' src='/file:///"+imgPath+"' ></div></div></div>");*/
+
+                }
+            } else {
+                /*$(".item_msg").append("<div class='col-sm-12 col-xs-12 message' > <img src='/img/icon.png' class='col-sm-2 col-xs-2' style='border-radius: 50%'><div class='col-sm-10 col-xs-10'><span style='font-weight: bold;''>Jack.C</span> <br><small class='date' style='color:#999'>刚刚</small><div class='msg_content'>"+content+"</div></div></div>");*/
+
+            }
+
+            $.post(
+                "/main/submit",
+                "forwardPid=0&uid=" + uid + "&text=" + content + "&status=1",
+                function (data) {
+                    /*var time1 = post.postTime.format("yyyy-MM-dd hh:mm:ss");
+                    alert(time1);*/
+                    var prependPost0 = "<div class='lmlblog-posts-list words' style='background-image:url(/images/058.png);' ><div class='lmlblog-post-user-info'><div class='lmlblog-post-user-info-avatar' user-data='1'><a href='#1' style='display: inline-block;'><span class='lmlblog-vip-icon'></span><img src='/avatar/" + data.post.user.image + "' class='avatar' /><i class='' title=" + data.post.user.name + "></i></a><div class='lmlblog-user-info-card'><div class='info_card_loading'><img src='/picture/chat-loading.gif'><p>资料加载中...</p></div></div></div><div class='lmlblog-post-user-info-name'><a href='#1'><font style='color:#333;font-weight:600' >" + data.post.user.name + "</font></a></div><div class='lmlblog-post-user-info-time' title='" + data.formatTime + "')} >刚刚</div><div class='lmlblog-post-user-info-time' title='来自weibo.com' >来自weibo.com</div></div><div class='lmlblog-post-setting'><i class='fa fa-angle-down'></i><div class='lmlblog-post-setting-box'><ul><a href='/user/" + uid + "/doTopPost?pid=" + data.post.pid + "' title='置顶'><li>置顶</li></a><a href='#' title='编辑'><li>编辑</li></a><a href='javascript:doDelete(" + uid + "," + data.post.pid + ")' title='删除'><li>删除</li></a></ul></div></div><div class='lmlblog-post-content' style='white-space:pre-line'>" + data.post.text + "</div><div class='lmlblog-post-bar'><li onclick='list_comments_show(this);'><i class='fa fa-comment-o'></i><span></span></li><li class='lmlblog-no-like' onclick='javascript:doLike(" + data.post.pid + "," + uid + ",this)'><i class='fa fa-heart-o'></i><span>" + data.post.countPostLike + "</span></li></div><div class='lmlblog-post-footer-bar'><span title='" + data.formatTime + "' >" + data.formatTime + "</span><span>小尾巴</span><i class='lmlblog-icon' onclick='lmlblog_post_type_open();'></i></div></div>";
+                    var prependPost1 = "<div class='lmlblog-posts-list words' style='background-image:url(/images/058.png);' ><div class='lmlblog-post-user-info'><div class='lmlblog-post-user-info-avatar' user-data='1'><a href='#1' style='display: inline-block;'><span class='lmlblog-vip-icon'></span><img src='/avatar/" + data.post.user.image + "' class='avatar' /><i class='lmlblog-verify lmlblog-verify-a' title=" + data.post.user.name + "></i></a><div class='lmlblog-user-info-card'><div class='info_card_loading'><img src='/picture/chat-loading.gif'><p>资料加载中...</p></div></div></div><div class='lmlblog-post-user-info-name'><a href='#1'><font style='color:#333;font-weight:600' >" + data.post.user.name + "</font></a></div><div class='lmlblog-post-user-info-time' title='" + data.formatTime + "')} >刚刚</div><div class='lmlblog-post-user-info-time' title='来自weibo.com' >来自weibo.com</div></div><div class='lmlblog-post-setting'><i class='fa fa-angle-down'></i><div class='lmlblog-post-setting-box'><ul><a href='/user/" + uid + "/doTopPost?pid=" + data.post.pid + "' title='置顶'><li>置顶</li></a><a href='#' title='编辑'><li>编辑</li></a><a href='javascript:doDelete(" + uid + "," + data.post.pid + ")' title='删除'><li>删除</li></a></ul></div></div><div class='lmlblog-post-content' style='white-space:pre-line'>" + data.post.text + "</div><div class='lmlblog-post-bar'><li onclick='list_comments_show(this);'><i class='fa fa-comment-o'></i><span></span></li><li class='lmlblog-no-like' onclick='javascript:doLike(" + data.post.pid + "," + uid + ",this)'><i class='fa fa-heart-o'></i><span>" + data.post.countPostLike + "</span></li></div><div class='lmlblog-post-footer-bar'><span title='" + data.formatTime + "' >" + data.formatTime + "</span><span>小尾巴</span><i class='lmlblog-icon' onclick='lmlblog_post_type_open();'></i></div></div>";
+                    var prependPost2 = "<div class='lmlblog-posts-list words' style='background-image:url(/images/058.png);' ><div class='lmlblog-post-user-info'><div class='lmlblog-post-user-info-avatar' user-data='1'><a href='#1' style='display: inline-block;'><span class='lmlblog-vip-icon'></span><img src='/avatar/" + data.post.user.image + "' class='avatar' /><i class='lmlblog-verify lmlblog-verify-b' title=" + data.post.user.name + "></i></a><div class='lmlblog-user-info-card'><div class='info_card_loading'><img src='/picture/chat-loading.gif'><p>资料加载中...</p></div></div></div><div class='lmlblog-post-user-info-name'><a href='#1'><font style='color:#333;font-weight:600' >" + data.post.user.name + "</font></a></div><div class='lmlblog-post-user-info-time' title='" + data.formatTime + "')} >刚刚</div><div class='lmlblog-post-user-info-time' title='来自weibo.com' >来自weibo.com</div></div><div class='lmlblog-post-setting'><i class='fa fa-angle-down'></i><div class='lmlblog-post-setting-box'><ul><a href='/user/" + uid + "/doTopPost?pid=" + data.post.pid + "' title='置顶'><li>置顶</li></a><a href='#' title='编辑'><li>编辑</li></a><a href='javascript:doDelete(" + uid + "," + data.post.pid + ")' title='删除'><li>删除</li></a></ul></div></div><div class='lmlblog-post-content' style='white-space:pre-line'>" + data.post.text + "</div><div class='lmlblog-post-bar'><li onclick='list_comments_show(this);'><i class='fa fa-comment-o'></i><span></span></li><li class='lmlblog-no-like' onclick='javascript:doLike(" + data.post.pid + "," + uid + ",this)'><i class='fa fa-heart-o'></i><span>" + data.post.countPostLike + "</span></li></div><div class='lmlblog-post-footer-bar'><span title='" + data.formatTime + "' >" + data.formatTime + "</span><span>小尾巴</span><i class='lmlblog-icon' onclick='lmlblog_post_type_open();'></i></div></div>";
+                    var prependPost3 = "<div class='lmlblog-posts-list words' style='background-image:url(/images/058.png);' ><div class='lmlblog-post-user-info'><div class='lmlblog-post-user-info-avatar' user-data='1'><a href='#1' style='display: inline-block;'><span class='lmlblog-vip-icon'></span><img src='/avatar/" + data.post.user.image + "' class='avatar' /><i class='lmlblog-verify-c lmlblog-verify-cc' title=" + data.post.user.name + "></i></a><div class='lmlblog-user-info-card'><div class='info_card_loading'><img src='/picture/chat-loading.gif'><p>资料加载中...</p></div></div></div><div class='lmlblog-post-user-info-name'><a href='#1'><font style='color:#333;font-weight:600' >" + data.post.user.name + "</font></a></div><div class='lmlblog-post-user-info-time' title='" + data.formatTime + "')} >刚刚</div><div class='lmlblog-post-user-info-time' title='来自weibo.com' >来自weibo.com</div></div><div class='lmlblog-post-setting'><i class='fa fa-angle-down'></i><div class='lmlblog-post-setting-box'><ul><a href='/user/" + uid + "/doTopPost?pid=" + data.post.pid + "' title='置顶'><li>置顶</li></a><a href='#' title='编辑'><li>编辑</li></a><a href='javascript:doDelete(" + uid + "," + data.post.pid + ")' title='删除'><li>删除</li></a></ul></div></div><div class='lmlblog-post-content' style='white-space:pre-line'>" + data.post.text + "</div><div class='lmlblog-post-bar'><li onclick='list_comments_show(this);'><i class='fa fa-comment-o'></i><span></span></li><li class='lmlblog-no-like' onclick='javascript:doLike(" + data.post.pid + "," + uid + ",this)'><i class='fa fa-heart-o'></i><span>" + data.post.countPostLike + "</span></li></div><div class='lmlblog-post-footer-bar'><span title='" + data.formatTime + "' >" + data.formatTime + "</span><span>小尾巴</span><i class='lmlblog-icon' onclick='lmlblog_post_type_open();'></i></div></div>";
+                    alert("发送成功！");
+                    $("#content").html("");
+                    $(".tips").text("");
+                    var vip = data.post.user.status;
+                    if (vip == 0) {
+                        $("#postList").before(prependPost0);
+                    } else if (vip == 1) {
+                        $("#postList").before(prependPost1);
+                    } else if (vip == 2) {
+                        $("#postList").before(prependPost2);
+                    } else if (vip == 3) {
+                        $("#postList").before(prependPost3);
+                    }
+                },
+                "json"
+            );
+
+
+        });
+
+        //添加表情包1
+        for (var i = 1; i < 60; i++) {
+
+            $(".emoji_1").append("<img src='/img/f" + i + ".png' style='width:35px;height:35px' >");
+        }
+        //添加表情包2
+        for (var i = 1; i < 61; i++) {
+
+            $(".emoji_2").append("<img src='/img/h" + i + ".png' style='width:35px;height:35px' >");
+        }
+
+
+        $(".emoji").click(function () {
+
+            $(".myEmoji").show();
+
+            //点击空白处隐藏弹出层
+            $(document).click(function (e) {
+
+                if (!$("#edit_form").is(e.target) && $("#edit_form").has(e.target).length === 0) {
+
+                    $(".myEmoji").hide();
+                }
+            });
+        });
+
+        //将表情添加到输入框
+        $(".myEmoji img").each(function () {
+            $(this).click(function () {
+                var url = $(this)[0].src;
+
+                $('#content').append("<img src='/" + url + "' style='width:25px;height:25px' >");
+
+                $("#send").removeClass("disabled");
+            })
+        })
+
+        //放大或缩小预览图片
+        $(".mypic").click(function () {
+            var oWidth = $(this).width(); //取得图片的实际宽度
+            var oHeight = $(this).height(); //取得图片的实际高度
+
+            if ($(this).height() != 200) {
+                $(this).height(200);
+            } else {
+                $(this).height(oHeight + 200 / oWidth * oHeight);
+
+            }
+
+        })
+
+    })
 </script>
 </html>

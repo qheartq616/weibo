@@ -102,7 +102,7 @@ public class ListUtil {
 				return heat2-heat1;
 			}
 		});
-		//需要返回所有数据时，some去一个特别大的值保证some大于集合长度
+		//需要返回所有数据时，some取一个特别大的值保证some大于集合长度
 		if (commentList.size()<=some){
 			/*for (Comment comment : commentList) {
 				System.out.println(comment.toString());
@@ -114,5 +114,20 @@ public class ListUtil {
 			}*/
 			return commentList.subList(0,some);
 		}
+	}
+
+	//按热度排序，影响因子为转发数、评论数、点赞数，比重为6:3:1
+	//查询微博下的热门三条评论
+	public static List<Post> sortByPostHeat(List<Post> postList){
+		Collections.sort(postList, new Comparator<Post>() {
+			@Override
+			public int compare(Post o1, Post o2) {
+				int heat1,heat2=0;
+				heat1=(o1.getCountForward()*6+o1.getCountPostComment()*3+o1.getCountPostLike())*(new Random().nextInt(10));
+				heat2=(o2.getCountForward()*6+o2.getCountPostComment()*3+o2.getCountPostLike())*(new Random().nextInt(10));
+				return heat2-heat1;
+			}
+		});
+		return postList.subList(0,9);
 	}
 }
