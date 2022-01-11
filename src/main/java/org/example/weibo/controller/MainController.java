@@ -30,28 +30,28 @@ public class MainController {
 	UserService userService;
 
 	@RequestMapping("{type}/{pageNum}")
-	public String showAll(HttpSession session,Model model,
+	public String showAll(HttpSession session, Model model,
 	                      @PathVariable Integer pageNum,
-	                      @PathVariable("type") String type){
+	                      @PathVariable("type") String type) {
 		User user = (User) session.getAttribute("user");
 
-		if (type!=null){
-			model.addAttribute("type",type);
+		if (type != null) {
+			model.addAttribute("type", type);
 		}
 
-		if (type.equals("all")){
+		if (type.equals("all")) {
 			//PageHelper.startPage(pageNum,5);
 			PageInfo<Post> pageInfo = postService.showAllFollowUserPostRandom(user.getUid(), pageNum);
 			//PageInfo<Post> pageInfo=new PageInfo<>(postList);
-			model.addAttribute("pageInfo",pageInfo);
+			model.addAttribute("pageInfo", pageInfo);
 			//System.out.println(1111);
-		}else if (type.equals("latest")){
+		} else if (type.equals("latest")) {
 			PageInfo<Post> pageInfo = postService.showAllFollowUserPostLatest(user.getUid(), pageNum);
-			model.addAttribute("pageInfo",pageInfo);
+			model.addAttribute("pageInfo", pageInfo);
 			//System.out.println(2222);
-		}else if (type.equals("mutual")){
+		} else if (type.equals("mutual")) {
 			PageInfo<Post> pageInfo = postService.showAllFollowUserPostMutual(user.getUid(), pageNum);
-			model.addAttribute("pageInfo",pageInfo);
+			model.addAttribute("pageInfo", pageInfo);
 			//System.out.println(3333);
 		}
 
@@ -75,49 +75,48 @@ public class MainController {
 		}
 		model.addAttribute("groupList1",groupList1);
 		model.addAttribute("groupList2",groupList2);*/
-		model.addAttribute("groupList",groupList);
-
+		model.addAttribute("groupList", groupList);
 
 
 		return "main";
 	}
 
 	@RequestMapping("myGroups/{gid}/{pageNum}")
-	public String showGroupPost(HttpSession session,Model model,
+	public String showGroupPost(HttpSession session, Model model,
 	                            @PathVariable("gid") Integer gid,
-	                            @PathVariable("pageNum") Integer pageNum){
+	                            @PathVariable("pageNum") Integer pageNum) {
 		User user = (User) session.getAttribute("user");
 
-		PageInfo<Post> pageInfo = postService.showGroupAllPost(user.getUid(),gid,pageNum);
-		model.addAttribute("pageInfo",pageInfo);
+		PageInfo<Post> pageInfo = postService.showGroupAllPost(user.getUid(), gid, pageNum);
+		model.addAttribute("pageInfo", pageInfo);
 
 		List<Group> groupList = groupService.showAllGroupList(user.getUid());
-		model.addAttribute("groupList",groupList);
+		model.addAttribute("groupList", groupList);
 
 		return "main";
 	}
 
 	@RequestMapping("submit")
 	@ResponseBody
-	public Map<String,Object> submitNewPost(Post post){
+	public Map<String, Object> submitNewPost(Post post) {
 		post.setPostTime(new Date());
 		Post postNew = postService.doPost(post);
 		User user = postNew.getUser();
 		User filledUser = userService.fillUserInfo(user, user);
 		postNew.setUser(filledUser);
 
-		Map<String,Object> map=new HashMap<>();
-		map.put("post",postNew);
+		Map<String, Object> map = new HashMap<>();
+		map.put("post", postNew);
 
-		SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		String formatTime = simpleDateFormat.format(postNew.getPostTime());
-		map.put("formatTime",formatTime);
+		map.put("formatTime", formatTime);
 		return map;
 	}
 
 	@RequestMapping("delete")
 	@ResponseBody
-	public void deletePost(Integer pid){
+	public void deletePost(Integer pid) {
 		postService.doDelete(pid);
 	}
 }
