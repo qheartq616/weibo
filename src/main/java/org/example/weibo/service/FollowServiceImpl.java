@@ -28,13 +28,11 @@ public class FollowServiceImpl implements FollowService{
 		FollowExample followExample=new FollowExample();
 		followExample.createCriteria().andUidEqualTo(uid);
 		List<Follow> followList = followMapper.selectByExample(followExample);
-
 		List<User> allFollowUserList=new ArrayList<>();
 		for (Follow follow : followList) {
 			User user = userMapper.selectByPrimaryKey(follow.getFollowUid());
 			allFollowUserList.add(user);
 		}
-
 		return allFollowUserList;
 	}
 

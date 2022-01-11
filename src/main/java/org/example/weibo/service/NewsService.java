@@ -15,7 +15,6 @@ public interface NewsService {
     List<CommentLike> getCommentLike(Integer uid);
     //合并 微博点赞和评论点赞
     PageInfo<Object> allLike(Integer uid,Integer pageNum);
-
     //评论我的人
     PageInfo<Comment> getAllComments(Integer pageStart,Integer size,Integer uid);
 

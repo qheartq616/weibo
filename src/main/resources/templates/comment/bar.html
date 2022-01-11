@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--个人主页 左侧的菜单-->
+<div th:fragment="ownLeft" class="lmlblog-member-left-main">
+    <div class="lmlblog-member-left-profile">
+        <h3>个人主页</h3>
+        <ul>
+            <li><i class="fa fa-group"></i><a th:href="@{|/main/${session.user.uid}/all/1|}">全部关注</a></li>
+            <li><i class="fa fa-user"></i><a th:href="@{|/main/${session.user.uid}/latest/1|}">最新微博</a></li>
+            <li><i class="fa fa-street-view"></i><a th:href="@{|/main/${session.user.uid}/myGroups/0/1|}">特别关注</a></li>
+            <li><i class="fa fa-gittip"></i><a th:href="@{|/main/${session.user.uid}/mutual/1|}">好友圈</a></li>
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>

@@ -144,4 +144,13 @@ public class GroupServiceImpl implements GroupService{
 		}
 	}
 
+	@Override
+	public Integer getMaxGid() {
+		GroupExample groupExample=new GroupExample();
+		groupExample.setOrderByClause("gid desc");
+		List<Group> list=groupMapper.selectByExample(groupExample);
+		Integer gid=(list.get(0).getGid()*1)+1;
+		return gid;
+	}
+
 }

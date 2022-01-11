@@ -205,11 +205,6 @@
 					</div>
 				</div>
 				</div>
-				<div th:if="${pageInfo==null}">
-					<div class="lmlblog-post-user-info">
-						<div class="lmlblog-post-user-info-time" title="2017-12-14 05:25" th:text="对不起没有点赞数据">12-14 05:25</div>
-					</div>
-				</div>
                 <!--评论页面-->
                 <div th:if="${CommentpageInfo!=null}">
                     <div class="lmlblog-post-list">
@@ -259,11 +254,6 @@
                             <div class="lmlblog-pager-center layui-form" th:text="|第${CommentpageInfo.pageNum==0?1:CommentpageInfo.pageNum}页|"></div>
                             <a class="lmlblog-pager-right" th:href="@{|/main/${session.user.uid}/${type}/${CommentpageInfo.hasNextPage?CommentpageInfo.nextPage:CommentpageInfo.navigateLastPage}|}">下一页</a>
                         </div>
-                    </div>
-                </div>
-                <div th:if="${CommentpageInfo==null}">
-                    <div class="lmlblog-post-user-info">
-                        <div class="lmlblog-post-user-info-time" title="2017-12-14 05:25" th:text="对不起没有评论数据">12-14 05:25</div>
                     </div>
                 </div>
                 <!--@页面-->
@@ -320,7 +310,7 @@
                         </div>
                     </div>
                 </div>
-                <div th:if="${AtpageInfo==null}">
+                <div th:if="${AtpageInfo==null && CommentpageInfo==null && pageInfo==null}">
                     <div class="lmlblog-post-user-info">
                         <div class="lmlblog-post-user-info-time" title="2017-12-14 05:25" th:text="对不起没有数据">12-14 05:25</div>
                     </div>

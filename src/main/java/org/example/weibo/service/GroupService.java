@@ -14,4 +14,6 @@ public interface GroupService {
 	public void deleteUserFromAllGroup(Integer uid,Integer followUid);
 	public List<User> showAllNoGroupUser(Integer uid);
 	public User showSpUser(Integer uid);
+	Integer getMaxGid();
+//	List<Group> getAllGroupByUidGname(Integer uid ,String);
 }
