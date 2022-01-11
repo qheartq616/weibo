@@ -27,7 +27,17 @@ public class Post {
 
     private int countPostLike;
 
+    private int countPostComment;
+
     private List<Comment> commentList;
+
+    public int getCountPostComment() {
+        return countPostComment;
+    }
+
+    public void setCountPostComment(int countPostComment) {
+        this.countPostComment = countPostComment;
+    }
 
     public User getUser() {
         return user;

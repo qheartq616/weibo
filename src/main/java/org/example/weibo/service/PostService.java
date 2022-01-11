@@ -20,4 +20,5 @@ public interface PostService {
 	public void doTopPost(Integer uid, Integer pid);
 	public Post showTopPost(Integer uid);
 	public List<Post> fillPostInfo(List<Post> postList,Integer uid);
+	public Post showPost(Integer pid);
 }

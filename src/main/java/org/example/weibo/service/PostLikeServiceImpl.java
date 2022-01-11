@@ -53,14 +53,13 @@ public class PostLikeServiceImpl implements PostLikeService {
 	//改了，去掉了like列和like属性
 	//点赞插入like表对应uid、pid，取消点赞根据uid、pid删除like表对应数据
 	public boolean doPostLike(String upid, Integer uid) {
-		boolean selectLove = this.ifPostLike(upid, uid);
+		boolean ifPostLike = this.ifPostLike(upid, uid);
 
-		PostLike like1=new PostLike();
-		like1.setUpid(upid);
-		like1.setUid(uid);
-		like1.setLikeTime(new Date());
-
-		if (!selectLove){
+		if (!ifPostLike){
+			PostLike like1=new PostLike();
+			like1.setUpid(upid);
+			like1.setUid(uid);
+			like1.setLikeTime(new Date());
 			//System.out.println("777");
 			postLikeMapper.insertSelective(like1);
 			return true;
@@ -76,22 +75,9 @@ public class PostLikeServiceImpl implements PostLikeService {
 	@Override
 	//uid总共收到多少个点赞？
 	public int countAllPostLike(Integer uid) {
-		PostExample postExample=new PostExample();
-		postExample.createCriteria().andUidEqualTo(uid);
-		List<Post> postList = postMapper.selectByExample(postExample);
-		List<String> upidList=new ArrayList<>();
-		for (Post post : postList) {
-			upidList.add(post.getUser().getUid()+"-"+post.getPid());
-		}
-		if (upidList.size()>0){
-			PostLikeExample postLikeExample=new PostLikeExample();
-			postLikeExample.createCriteria().andUpidIn(upidList);
+		PostLikeExample postLikeExample=new PostLikeExample();
+		postLikeExample.createCriteria().andUpidLike(uid+"-%");
 
-			return postLikeMapper.countByExample(postLikeExample);
-		}else {
-			return 0;
-		}
+		return postLikeMapper.countByExample(postLikeExample);
 	}
-
-
 }

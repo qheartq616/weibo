@@ -1,118 +1,58 @@
 ﻿<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<link rel="shortcut icon" href="/images/tx.jpg" />
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta http-equiv="Pragma" content="no-cache">
-	<meta http-equiv="Cache-Control" content="no-cache">
-	<meta http-equiv="Expires" content="0">
-	<title th:text="|${session.user.name}的首页 微博-随时随地发现新鲜事|"></title>
-	<meta name="keywords" content="司空琪个人微博,司空琪个人主页,司空琪空间,画江湖动漫" />
-	<meta name="description" content="司空琪个人微博,司空琪个人主页,司空琪空间说说,画江湖动漫" />
-	<style type="text/css">
-		img.wp-smiley,
-		img.emoji {
-			display: inline !important;
-			border: none !important;
-			box-shadow: none !important;
-			height: 1em !important;
-			width: 1em !important;
-			margin: 0 .07em !important;
-			vertical-align: -0.1em !important;
-			background: none !important;
-			padding: 0 !important;
-		}
+    <link rel="shortcut icon" href="/images/tx.jpg"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title text="我的首页 微博-随时随地发现新鲜事"></title>
+    <meta name="keywords" content="司空琪个人微博,司空琪个人主页,司空琪空间,画江湖动漫"/>
+    <meta name="description" content="司空琪个人微博,司空琪个人主页,司空琪空间说说,画江湖动漫"/>
+    <style type="text/css">
+        img.wp-smiley,
+        img.emoji {
+            display: inline !important;
+            border: none !important;
+            box-shadow: none !important;
+            height: 1em !important;
+            width: 1em !important;
+            margin: 0 .07em !important;
+            vertical-align: -0.1em !important;
+            background: none !important;
+            padding: 0 !important;
+        }
 
-		/**/
+    </style>
 
-		/*!*头像信息框的样式*!
-		*{margin:0;padding:0;list-style-type:none;font-style:normal;}
-		a,img{border:0;}
-		a,a:visited{color:#5e5e5e; text-decoration:none;}
-		a:hover{color:#4183C4;text-decoration:underline;}
-		.clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden;}
-		.clearfix{display:inline-table;}!* Hides from IE-mac *!
-		*html .clearfix{height:1%;}
-		.clearfix{display:block;}!* End hide from IE-mac *!
-		*+html .clearfix{min-height:1%;}
-		!*.clear{height:0;overflow:hidden;clear:both;display:block;}*!
-		body{font:12px/180% Arial, Helvetica, sans-serif, "新宋体";}
-		!* demo *!
-		.demo{width:950px;margin:20px auto;}
-		.demo h2{color:#8FD401;font-size:16px;height:40px;text-align:center;}
-		.demo p{line-height:22px;margin-bottom:20px;}
-		.demo p a{color:#3366cc;margin:0 5px;font-weight:800;font-size:14px;}
-		.demo .fl{float:left;}
-		.demo img{border:1px solid #555555;margin:5px 15px 0 0;padding:3px;}
-		!* demobtn *!
-		.demobtn{padding:20px 10px 40px 10px;}
-		.demobtn a{display:inline-block;height:24px;line-height:24px;font-size:14px;padding:5px 0;text-align:center;width:210px;}
-		!* qtip 提示框基础样式 *!
-		.qtip .qtip-content{padding:10px;overflow:hidden;}
-		.qtip .qtip-content .qtip-title,.qtip-cream .qtip-content .qtip-title{background-color:#F0DE7D;}
-		.qtip-light .qtip-content .qtip-title{background-color:#f1f1f1;}
-		.qtip-dark .qtip-content .qtip-title{background-color:#404040;}
-		.qtip-red .qtip-content .qtip-title{background-color:#F28279;}
-		.qtip-green .qtip-content .qtip-title{background-color:#B9DB8C;}
-		!* name_card *!
-		.name_card{background:url("/images/footer_bg.png") no-repeat -230px bottom;_background:none;}
-		.name_card .W_vline{color:#999;}
-		!* name_card name *!
-		.name_card .name dt,.name_card .name dd,.name_card .info dt,.name_card .info dd{float:left;display:inline;}
-		.name_card .name{padding:20px 20px 10px;zoom:1;}
-		.name_card .name dt img{height:50px;display:block;border-radius: 2px;}
-		.name_card .name dd{margin:-4px 0 0 10px;line-height:20px;}
-		.name_card .name dd span{padding:0 10px 0 0;}
-		.name_card .name dd p{width:260px;word-wrap:break-word;}
-		.name_card .name dd div{width: 210px}.
-											 .name_card .name .address img{margin:0 0 0 3px;}
-		!* name_card info *!
-		.name_card .info{margin:0 20px 8px;line-height:18px;width:330px;}
-		.name_card .info dd{width:294px;margin-bottom:2px;word-wrap:break-word;}
-		.name_card .info dd a{display:inline-block;}
-		.name_card .info li.honour{padding-top:5px;float:left;margin-right:10px;height:24px}
-		!* name_card links *!
-		.name_card .links{margin:0;padding:6px 20px 10px;overflow:hidden}
-		.name_card .links .W_vline{margin:0 3px;}
-		.name_card .links .W_btn_c{float:right;display:inline;}
-		.name_card .links p{float:left;display:inline-block;margin-top:4px}
-		.name_card .links p .W_chat_stat{display:inline-block;width:7px;height:7px;border-width:1px;border-style:solid;border-radius:2px;overflow:hidden;}
-		.name_card .links p .W_chat_stat_online{margin-right:5px;background-color:#8FDC00;border-color:#48C000;}
-		!* name_card userdata *!
-		.name_card .userdata{width:270px}
-		.name_card .userdata li{float:left}
-		.name_card .userdata li.W_vline{margin:0 8px;}*/
-	</style>
-
-	<link rel="stylesheet" href="/css/bootstrap.min.css">
-	<link rel='stylesheet' id='style-css' href='/css/style.css' type='text/css' media='all' />
-	<link rel='stylesheet' id='lmlblog-css' href='/css/lmlblog.css' type='text/css' media='all' />
-	<link rel='stylesheet' id='all-css' href='/css/all.css' type='text/css' media='all' />
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel='stylesheet' id='style-css' href='/css/style.css' type='text/css' media='all'/>
+    <link rel='stylesheet' id='lmlblog-css' href='/css/lmlblog.css' type='text/css' media='all'/>
+    <link rel='stylesheet' id='all-css' href='/css/all.css' type='text/css' media='all'/>
 
 
-	<link rel="stylesheet" type="text/css" href="/css/style-input.css">
+    <link rel="stylesheet" type="text/css" href="/css/style-input.css">
 
-	<script type='text/javascript' src='/js/jquery.min.js'></script>
-	<script type='text/javascript' src='/js/ueditor.all.min.js'></script>
-	<style type="text/css">
-		a{
-			color: black;
-			text-decoration: none;
-		}
-		a:hover{
-			color: orange;
-			text-decoration: none;
-		}
-	</style>
+    <script type='text/javascript' src='/js/jquery.min.js'></script>
+    <script type='text/javascript' src='/js/ueditor.all.min.js'></script>
+    <style type="text/css">
+        a {
+            color: black;
+            text-decoration: none;
+        }
 
-
+        a:hover {
+            color: orange;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
 <input hidden th:value="${session.user.uid}" id="uidVar">
 <!-- 菜单 -->
 <div class="menu-bar">
-	<div class="head_content">
-		<h1 class="m-logo"><a href="https://weibo.com/"></a></h1>
+    <div class="head_content">
+        <h1 class="m-logo"><a href="https://weibo.com/"></a></h1>
 
 		<div id="nav" class="menu-menu-1-container">
 			<ul id="menu-menu-1" class="menu" >
@@ -134,226 +74,377 @@
 				</li>
 			</ul>
 
-		</div>
-		<!--<div class="head_user_info">
-			<ul>
-				<li id="head_login" onclick="#1">登录</li>
-				<span class="head_login_middle">or</span>
-				<li id="head_reg" onclick="#1">注册</li>
-			</ul>
-		</div>-->
-		<div style="clear: both;"></div>
-	</div>
-</div><!-- menu-bar -->
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+</div>
 <div style="clear: both;"></div>
 
 
 <div class="lmlblog-member-main" data="1">
-	<div class="lmlblog-member-bg-remove-image">
+    <div class="lmlblog-member-bg-remove-image">
 
-		<div class="lmlblog-member-content-list clear">
-			<div class="lmlblog-member-left-main">
-				<div class="lmlblog-member-left-profile">
-					<h3>首页</h3>
-					<ul>
-						<li><i class="fa fa-group"></i><a th:href="@{|/main/${session.user.uid}/all/1|}">全部关注</a></li>
-						<li><i class="fa fa-user"></i><a th:href="@{|/main/${session.user.uid}/latest/1|}">最新微博</a></li>
-						<li><i class="fa fa-street-view"></i><a th:href="@{|/main/${session.user.uid}/myGroups/0/1|}">特别关注</a></li>
-						<li><i class="fa fa-gittip"></i><a th:href="@{|/main/${session.user.uid}/mutual/1|}">好友圈</a></li>
-					</ul>
-				</div>
-				<div class="lmlblog-member-left-profile">
-					<h3>自定义分组 </h3>
-					<ul th:each="group:${groupList}">
-						<li>
-							<i th:if="${group.gid==gid}" style="color: #ff8862;" class="fa fa-smile-o"></i>
-							<i th:unless="${group.gid==gid}" class="fa fa-smile-o"></i>
-							<a th:if="${group.gid==gid}" style="color: #ff8862;" th:href="@{|/main/${session.user.uid}/myGroups/${group.gid}/1|}" th:text="${group.name}">高校</a>
-							<a th:unless="${group.gid==gid}" th:href="@{|/main/${session.user.uid}/myGroups/${group.gid}/1|}" th:text="${group.name}">高校</a>
-						</li>
-						<li>
-							<i th:if="${gid==-1}" style="color: #ff8862;" class="fa fa-smile-o"></i>
-							<i th:unless="${gid==-1}" class="fa fa-smile-o"></i>
-							<a th:if="${gid==-1}" style="color: #ff8862;" th:href="@{|/main/${session.user.uid}/myGroups/-1/1|}">未分组</a>
-							<a th:unless="${gid==-1}" th:href="@{|/main/${session.user.uid}/myGroups/-1/1|}">未分组</a>
-						</li>
-					</ul>
-					<!--<div class="lmlblog-member-left-profile-hide" th:if="${groupList2.size()>0}">
-						<ul th:each="group2:${groupList2}">
-							<li><i class="fa fa-smile-o"></i><a th:href="@{|/main/${session.user.uid}/myGroups/${group2.gid}/1|}" th:text="${group2.name}">高校</a></li>
-						</ul>
-						<li><i class="fa fa-qq"></i> Q Q：<span>sikongqi-&#45;&#45;<span></li>
-                        <li><i class="fa fa-wechat"></i> 微信：<span>天涯路远，一剑轻安。携琪之手，相伴江湖-&#45;&#45;<span></li>
-                        <li><i class="fa fa-weibo"></i> 微博：<span>司空琪吧官博-&#45;&#45;<span></li>
-					</div>
-					<div class="lmlblog-member-left-profile-more" th:if="${groupList2.size()>0}">查看更多 <i class="fa fa-angle-right"></i></div>-->
-				</div>
-
-			</div>
-			<div class="lmlblog-member-right-main">
-				<div class="lmlblog-post-list">
-					<div class="row" id="edit_form" style="margin-left: 0px; margin-right: 0px;">
-						<span class="pull-left" style="margin:15px;padding-left: 10px;padding-top: 5px;">编写新鲜事</span>
-						<span class="tips pull-right" style="margin:15px;"></span>
-						<form role="form" style="margin-top: 50px;" method="post">
-							<div class="form-group">
-								<div class="col-sm-12" style="margin-left: 5px">
-									<div contentEditable="true" id="content" class="form-control"></div>
-								</div>
-								<div class="col-sm-12" style="margin-top: 12px;margin-left: 12px;">
-									<!--<span class="emoji" >表情</span>-->
-									<span class="pic" >图片</span>
-									<span>
-										<input type="file" name="" class="select_Img" style="display: none" >
-										<img class="preview" src="">
+        <div class="lmlblog-member-content-list clear">
+            <div class="lmlblog-member-left">
+                <div class="lmlblog-member-left-profile">
+                    <h3>首页</h3>
+                    <ul>
+                        <li><i class="fa fa-fire"></i><a th:href="@{|/main/all/1|}">热门推荐</a></li>
+                        <li><i class="fa fa-group"></i><a th:href="@{|/main/all/1|}">全部关注</a></li>
+                        <li><i class="fa fa-user"></i><a th:href="@{|/main/latest/1|}">最新微博</a></li>
+                        <li><i class="fa fa-street-view"></i><a th:href="@{|/main/myGroups/0/1|}">特别关注</a></li>
+                        <li><i class="fa fa-gittip"></i><a th:href="@{|/main/mutual/1|}">好友圈</a></li>
+                    </ul>
+                </div>
+                <div class="lmlblog-member-left-profile">
+                    <h3>自定义分组 </h3>
+                    <ul th:each="group:${groupList}">
+                        <li>
+                            <i th:if="${group.gid==gid}" style="color: #ff8862;" class="fa fa-smile-o"></i>
+                            <i th:unless="${group.gid==gid}" class="fa fa-smile-o"></i>
+                            <a th:if="${group.gid==gid}" style="color: #ff8862;"
+                               th:href="@{|/main/myGroups/${group.gid}/1|}" th:text="${group.name}">高校</a>
+                            <a th:unless="${group.gid==gid}" th:href="@{|/main/myGroups/${group.gid}/1|}"
+                               th:text="${group.name}">高校</a>
+                        </li>
+                        <li>
+                            <i th:if="${gid==-1}" style="color: #ff8862;" class="fa fa-smile-o"></i>
+                            <i th:unless="${gid==-1}" class="fa fa-smile-o"></i>
+                            <a th:if="${gid==-1}" style="color: #ff8862;" th:href="@{|/main/myGroups/-1/1|}">未分组</a>
+                            <a th:unless="${gid==-1}" th:href="@{|/main/myGroups/-1/1|}">未分组</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="lmlblog-member-right">
+                <div class="lmlblog-post-list">
+                    <div class="row" id="edit_form" style="margin-left: 0px; margin-right: 0px;">
+                        <span class="pull-left" style="margin:15px;padding-left: 10px;padding-top: 5px;">编写新鲜事</span>
+                        <span class="tips pull-right" style="margin:15px;"></span>
+                        <form role="form" style="margin-top: 50px;" method="post">
+                            <div class="form-group">
+                                <div class="col-sm-12" style="margin-left: 5px">
+                                    <div contentEditable="true" id="content" style="width: 670px;"
+                                         class="form-control"></div>
+                                </div>
+                                <div class="col-lg-12" style="margin-left: 5px;margin-top: 15px;display: none"
+                                     id="showPic">
+                                    <img id="previewNew" src="" width="300px" style="position: relative;top: 50%;">
+                                </div>
+                                <div class="col-sm-12" style="margin-top: 12px;margin-left: 12px;">
+                                    <!--<span class="emoji" >表情</span>-->
+                                    <span class="pic">图片</span>
+                                    <span>
+										<input type="file" name="" id="select_Img_New" style="display: none"
+                                               onchange="showPicture()">
 									</span>
-									<button type="button" id="send" class="btn btn-default pull-right disabled" style="position: relative;margin-right: 20px;">发布</button>
-								</div>
-							</div>
-						</form>
-					</div>
+                                    <button type="button" id="send" class="btn btn-default pull-right disabled"
+                                            style="position: relative;margin-right: 20px;">发布
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
 
-					<br>
-					<div th:if="${pageInfo==null}">
-						该分组下暂无微博，去其他地方看看吧
-					</div>
-					<div th:if="${pageInfo!=null}">
-						<div class="lmlblog-posts-list words" style="background-image:url(/images/058.png);"
-							 data="4197" th:each="post:${pageInfo.list}" id="postList">
+                    <br>
+                    <div th:if="${pageInfo==null}">
+                        该分组下暂无微博，去其他地方看看吧
+                    </div>
+                    <div th:if="${pageInfo!=null}">
+                        <div class="lmlblog-posts-list words" style="background-image:url(/images/058.png);"
+                             data="4197" th:each="post:${pageInfo.list}" id="postList">
 
-							<!-- 动态内容部分，包括列表 -->
-							<div class="lmlblog-post-user-info">
-								<div class="lmlblog-post-user-info-avatar" user-data="1">
-									<a th:href="@{|/user/${post.user.uid}/1|}" style="display: inline-block;" th:onmouseover="|showImg(${post.pid},${post.user.uid},${session.user.uid})|">
-										<span class="lmlblog-vip-icon"></span>
-										<img th:src="|/avatar/${post.user.image}|" class="avatar" />
-										<i th:if="${post.user.status==0}" th:title="普通用户"></i>
-										<i th:if="${post.user.status==1}" class="lmlblog-verify lmlblog-verify-a" th:title="会员用户"></i>
-										<i th:if="${post.user.status==2}" class="lmlblog-verify lmlblog-verify-b" th:title="认证用户"></i>
-										<i th:if="${post.user.status==3}" class="lmlblog-verify-c lmlblog-verify-cc" th:title="超级管理员"></i>
-									</a>
-									<div class="lmlblog-user-info-card">
-										<div class="info_card_loading" th:id="|infoCard${post.pid}|">
-											<img style="margin-top: 70px" src="/picture/chat-loading.gif">
-											<p>资料加载中...</p>
-										</div>
-										<!--<a class="nameInfo fl" title="详情" rel="/ajax/floatbox.html"></a>-->
-									</div>
-								</div>
+                            <!-- 动态内容部分，包括列表 -->
+                            <div class="lmlblog-post-user-info">
+                                <div class="lmlblog-post-user-info-avatar" user-data="1">
+                                    <a th:href="@{|/user/${post.user.uid}/1|}" style="display: inline-block;"
+                                       th:onmouseover="|showImg(${post.pid},${post.user.uid},${session.user.uid})|">
+                                        <span class="lmlblog-vip-icon"></span>
+                                        <img th:src="|/avatar/${post.user.image}|" class="avatar"/>
+                                        <i th:if="${post.user.status==0}" th:title="普通用户"></i>
+                                        <i th:if="${post.user.status==1}" class="lmlblog-verify lmlblog-verify-a"
+                                           th:title="会员用户"></i>
+                                        <i th:if="${post.user.status==2}" class="lmlblog-verify lmlblog-verify-b"
+                                           th:title="认证用户"></i>
+                                        <i th:if="${post.user.status==3}" class="lmlblog-verify-c lmlblog-verify-cc"
+                                           th:title="超级管理员"></i>
+                                    </a>
+                                    <div class="lmlblog-user-info-card">
+                                        <div class="info_card_loading" th:id="|infoCard${post.pid}|">
+                                            <img style="margin-top: 70px" src="/picture/chat-loading.gif">
+                                            <p>资料加载中...</p>
+                                        </div>
+                                        <!--<a class="nameInfo fl" title="详情" rel="/ajax/floatbox.html"></a>-->
+                                    </div>
+                                </div>
 
-								<div class="lmlblog-post-user-info-name">
-									<a th:href="@{|/user/${post.user.uid}/1|}">
-										<font style="color:#333;font-weight:600" th:text="${post.user.name}">司空琪</font>
-									</a>
-									<!--<span class="lmlblog-mark lmlblog-lv" title="经验：3815">Lv.6</span><span
+                                <div class="lmlblog-post-user-info-name">
+                                    <a th:href="@{|/user/${post.user.uid}/1|}">
+                                        <font style="color:#333;font-weight:600" th:text="${post.user.name}">司空琪</font>
+                                    </a>
+                                    <!--<span class="lmlblog-mark lmlblog-lv" title="经验：3815">Lv.6</span><span
                                         class="lmlblog-mark lmlblog-vip">VIP 6</span>-->
-								</div>
-								<div class="lmlblog-post-user-info-time" title="2017-12-14 05:25" th:text="${#dates.format(post.postTime,'yyyy-MM-dd HH:mm')}">12-14 05:25</div>
-								<div class="lmlblog-post-user-info-time" title="来自weibo.com" th:text="来自weibo.com">12-14 05:25</div>
-							</div>
+                                </div>
+                                <div class="lmlblog-post-user-info-time" title="2017-12-14 05:25"
+                                     th:text="${#dates.format(post.postTime,'yyyy-MM-dd HH:mm')}">12-14 05:25
+                                </div>
+                                <div class="lmlblog-post-user-info-time" title="来自weibo.com" th:text="来自weibo.com">12-14
+                                    05:25
+                                </div>
+                            </div>
 
-							<!-- 作者信息 -->
-							<div class="lmlblog-post-setting">
-								<i class="fa fa-angle-down"></i>
-								<div class="lmlblog-post-setting-box">
-									<ul>
-										<a th:href="@{|/user/${post.user.uid}/1|}" title="访问主页"><li>访问主页</li></a>
-										<a th:href="|javascript:doFollow(${session.user.uid},${post.user.uid})|" th:title="|取消关注${post.user.name}|"><li>取消关注</li></a>
-										<a href="#" title="举报"><li>举报</li></a>
-									</ul>
-								</div>
-							</div>
+                            <!-- 作者信息 -->
+                            <div class="lmlblog-post-setting">
+                                <i class="fa fa-angle-down"></i>
+                                <div class="lmlblog-post-setting-box">
+                                    <ul>
+                                        <a th:href="@{|/user/${post.user.uid}/1|}" title="访问主页">
+                                            <li>访问主页</li>
+                                        </a>
+                                        <a th:href="|javascript:doFollow(${session.user.uid},${post.user.uid})|"
+                                           th:title="|取消关注${post.user.name}|">
+                                            <li>取消关注</li>
+                                        </a>
+                                        <a href="#" title="举报">
+                                            <li>举报</li>
+                                        </a>
+                                    </ul>
+                                </div>
+                            </div>
 
-							<div class="lmlblog-post-content" style="white-space:pre-line" th:text="${post.text}">
-								<!--<a class="post_list_link" href="#">
-                                    <P>　　疏星淡月，紫陌曲岸，持觞游赏，神移长川。一片彀纹，溶溶泄泄，忽而烟靡云敛。睹一丽人，缦立青水，云蒸雾霭，花衬善睐。荧荧兮若北辰之荣现，扰扰兮若紫玉之生烟。颜如舜华，迫闻素腰华琚摇;和颜静志，远望渌水呈雾绡。戏流光之夜蝶，采舞雪之琼花，流眷眷之眸光，润荣曜之笑靥。
-                                    </P>
-                                    <P>　　偶得美人回顾，思之朝朝暮暮。采芝兰以明愫，寄琼琚以作妆。余咏永慕叹道长，彼应影独愿偕芳。才知世有解语，不过琪语溯光。<img
-                                            src="/images/66.png" alt="[s-65]" class="wp-smiley" />
-                                        <img src="/images/8.png" alt="[s-65]" class="wp-smiley" />
-                                    </P>
-                                </a>-->
-							</div>
-
-							<!--<div class="lmlblog-post-images-list clear">
-                                <a href="/images/qi01.jpg" data-fancybox="gallery"
+                            <div class="lmlblog-post-content" style="white-space:pre-line"
+                                 th:utext="${post.text}"></div>
+                            <div class="lmlblog-post-images-list clear" th:if="${post.picture!=null}">
+                                <a th:href="|/uploadPicture/${post.picture}|" data-fancybox="gallery"
                                    data-caption='<i class="fa fa-copyright"></i> lmlblog'>
-                                    <img src="/images/qi01.jpg" alt="司空琪吧十一月壁纸" /></a>
-                                <a href="/images/qi02.jpg" data-fancybox="gallery"
-                                   data-caption='<i class="fa fa-copyright"></i> lmlblog'>
-                                    <img src="/images/qi02.jpg" alt="司空琪吧十一月壁纸" /></a>
-                                <a href="/images/qi03.jpg" data-fancybox="gallery"
-                                   data-caption='<i class="fa fa-copyright"></i> lmlblog'>
-                                    <img src="/images/qi03.jpg" alt="司空琪吧十一月壁纸" /></a>
-                            </div>-->
-							<div class="container">
-								<div class="row">
-									<div class="lmlblog-post-bar">
-										<li th:onclick='|list_comments_show(this,${post.user.uid},${post.pid});|'>
-											<i class="fa fa-comment-o"></i>
-											<span></span>
-										</li>
-										<li class="lmlblog-no-like" th:onclick="|javascript:doLike(${post.user.uid},${post.pid},${session.user.uid},this)|">
-											<i class="fa fa-heart" th:if="${post.postLike==true}"></i><i class="fa fa-heart-o" th:if="${post.postLike==false}"></i><span th:text="|${post.countPostLike}|"></span>
-										</li>
-									</div>
-								</div>
-							</div>
+                                    <img th:src="|/uploadPicture/${post.picture}|"/>
+                                </a>
+                            </div>
 
-							<div class="row" style="display: none">
-								<div class="col-lg-1">
-									头像
-								</div>
-								<div class="col-lg-11">
-									评论
-								</div>
-							</div>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="lmlblog-post-bar">
+                                        <hr style="width: 710px;position: relative;left: -20px;top: 10px">
+                                        <li th:id="|show${post.pid}PostComment|"
+                                            onclick="list_comments_show(this,this.getAttribute('data-uid'),this.getAttribute('data-pid'),this.getAttribute('data-image'),this.getAttribute('data-name'),'hot')"
+                                            th:data-uid="${post.user.uid}" th:data-pid="${post.pid}"
+                                            th:data-image="${session.user.image}" th:data-name="${session.user.name}">
+                                            <i class="fa fa-comment-o"></i>
+                                            <span th:text="${post.countPostComment}"></span>
+                                        </li>
+                                        <li class="lmlblog-no-like"
+                                            th:onclick="|javascript:doLike(${post.user.uid},${post.pid},${session.user.uid},this)|">
+                                            <i class="fa fa-heart" th:if="${post.postLike==true}"></i><i
+                                                class="fa fa-heart-o" th:if="${post.postLike==false}"></i>
+                                            <span th:text="${post.countPostLike}"></span>
+                                        </li>
+                                    </div>
+                                    <hr style="width: 710px">
+                                </div>
+                            </div>
 
+                            <div style='display: none;padding-bottom: 15px;background-color: #f2f2f5;position: relative;top: -10px'>
+                                <!--发送评论开始-->
+                                <div class='row' style='margin-left: 0px;margin-right: 0px;padding-top: 10px'>
+                                    <div class='col-lg-1'>
+                                        <img th:src='|/avatar/${session.user.image}|' style='height: 32px;width: 32px'/>
+                                    </div>
+                                    <div class='col-lg-11' style='padding-left: 0px'>
+                                        <form role='form' method="post">
+                                            <div class='form-group' style='margin-top: 0px'>
+                                                <div class='col-lg-12' style='padding-left: 0px'>
+                                                    <div contentEditable='true' th:id='|comment${post.pid}|'
+                                                         class='form-control' style='width: 635px;height: auto'>我是母回复
+                                                    </div>
+                                                </div>
+                                                <div class='col-lg-12' style='margin-top: 12px;margin-left: 12px;'>
+                                                    <button type='button' id='send'
+                                                            class='btn btn-default pull-right disabled'
+                                                            style='color: #ffc09f;height: 30px;width: 60px;padding: 0 0'>
+                                                        发布
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!--发送评论结束-->
+                                <hr style="width: 680px;margin-left: 15px"/>
+                                <div style='display: none;padding-bottom: 15px;background-color: #f2f2f5;position: relative;top: -10px'>
+                                    <div class='row' style='margin-left: 0px;margin-right: 0px;'>
+                                        <div class="col-lg-6"><a href=''>按热度</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
+                                                href=''>按时间</a></div>
+                                    </div>
+                                    <!--需要遍历的评论开始-->
+                                    <div class='row' style='margin-left: 0px;margin-right: 0px'>
+                                        <hr style="width: 680px;margin-left: 15px"/>
+                                        <div class='col-lg-1'>
+                                            <img src='/avatar/1.jpg' style='height: 32px;width: 32px'/>
+                                        </div>
+                                        <div class='col-lg-11' style='padding-left: 0px'>
+                                            <a style='color: orange' href='/user/1/1'>Admin</a>
+                                            <span>：我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论</span>
+                                        </div>
+                                    </div>
+                                    <!--评论的时间与回复开始-->
+                                    <div class='row' style='margin-left: 0px;margin-right: 0px'>
+                                        <div class='col-lg-1'></div>
+                                        <div class='col-lg-3' style="color: #808080;padding-left: 0px">时间</div>
+                                        <div class='col-lg-6'></div>
+                                        <div class='col-lg-2'>
+                                            <a href='javascript:void(0);' style='text-decoration: none'
+                                               onclick='showReComment(this)'>回复</a>
+                                            &nbsp;&nbsp;|&nbsp;&nbsp;
+                                            <a href=''><i class='fa fa-heart'></i></a>
+                                            1
+                                        </div>
+                                    </div>
+                                    <!--评论的时间与回复结束-->
+                                    <!--发送回复评论开始-->
+                                    <div class='row' style='margin-left: 0px;margin-right: 0px;display: none'>
+                                        <br>
+                                        <div class='col-lg-1'></div>
+                                        <div class='col-lg-11'
+                                             style='padding-left: 0px;background-color: white;padding-right: 0px;width: 635px'>
+                                            <br>
+                                            <div class='row' style='margin-left: 0px;margin-right: 0px'>
+                                                <div class='col-lg-12'>
+                                                    <form role='form' method="post">
+                                                        <div class='form-group' style='margin-top: 0px'>
+                                                            <div class='col-lg-12' style='padding-left: 0px'>
+                                                                <div contentEditable='true' id="content1"
+                                                                     class='form-control'
+                                                                     style='width: 605px;height: auto'>我是子回复
+                                                                </div>
+                                                            </div>
+                                                            <div class='col-lg-12'
+                                                                 style='margin-top: 12px;margin-left: 12px;'>
+                                                                <button type='button' id='send1'
+                                                                        class='btn btn-default pull-right disabled'
+                                                                        style='color: #ffc09f;height: 30px;width: 60px;padding: 0 0'>
+                                                                    发布
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <br>
+                                        </div>
+                                    </div>
+                                    <!--发送回复评论结束-->
+                                    <div class='row' style='margin-left: 0px;margin-right: 0px;'>
+                                        <br>
+                                        <div class='col-lg-1'></div>
+                                        <div class='col-lg-11'
+                                             style='padding-left: 0px;background-color: #eaeaec;width: 635px;padding-top: 10px;padding-bottom: 15px'>
+                                            <div class='row' style='margin-left: 0px;margin-right: 0px'>
+                                                <div class='col-lg-12' style='padding-right: 0px;padding-left: 12px'>
+                                                    <a style='color: orange' href='/user/1/1'>Admin</a>
+                                                    <span>：我是子评论我是子评论我是子评论我是子评论我是子评论我是子评论我是子评论我是子评论我是子评论我是子评论我是子评论我是子评论我是子评论我是子评论我是子评论</span>
+                                                </div>
+                                            </div>
+                                            <div class='row' style='margin-left: 0px;margin-right: 0px'>
+                                                <div class='col-lg-4'
+                                                     style='color: #808080;padding-right: 0px;padding-left: 12px'>时间
+                                                </div>
+                                                <div class='col-lg-5'></div>
+                                                <div class='col-lg-3' style="padding-right: 5px">
+													<span style="float: right">
+														<a href='javascipt:void(0);' style='text-decoration: none'
+                                                           onclick='showReCommentComment(this)'>回复</a>
+														&nbsp;&nbsp;|&nbsp;&nbsp;
+														<a href=''><i class='fa fa-heart'></i></a>
+														1
+													</span>
+                                                </div>
+                                            </div>
+                                            <div class='row' style='display: none;margin-left: 15px;margin-right: 0px'>
+                                                <br>
+                                                <div class='col-lg-12' style='background-color: white;'>
+                                                    <br>
+                                                    <div class='row' style='margin-left: 0px;margin-right: 0px'>
+                                                        <div class='col-lg-12' style='padding-left: 0px'>
+                                                            <form role='form' method="post">
+                                                                <div class='form-group' style='margin-top: 0px'>
+                                                                    <div class='col-lg-12' style='padding-left: 0px'>
+                                                                        <div contentEditable='true' id="content2"
+                                                                             class='form-control'
+                                                                             style='width: 575px;height: auto'>我是子子回复
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class='col-lg-12'
+                                                                         style='margin-top: 12px;margin-left: 12px;padding-right: 5px'>
+                                                                        <button type='button' id='send2'
+                                                                                class='btn btn-default pull-right disabled'
+                                                                                style='color: #ffc09f;height: 30px;width: 60px;padding: 0 0'>
+                                                                            发布
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                    <br>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-							<div class="lmlblog-post-footer-bar">
-								<span th:title="${#dates.format(post.postTime,'yyyy-MM-dd HH:mm')}" th:text="${#dates.format(post.postTime,'yyyy-MM-dd HH:mm')}">12月14日 05:25</span>
-								<span>小尾巴</span><i class="lmlblog-icon" onclick="lmlblog_post_type_open();">&#xe62c;</i>
-							</div>
+                            <div class="lmlblog-post-footer-bar">
+                                <span th:title="${#dates.format(post.postTime,'yyyy-MM-dd HH:mm')}"
+                                      th:text="${#dates.format(post.postTime,'yyyy-MM-dd HH:mm')}">12月14日 05:25</span>
+                                <span>小尾巴</span><i class="lmlblog-icon" onclick="lmlblog_post_type_open();">&#xe62c;</i>
+                            </div>
 
-						</div>
-						<div class="lmlblog-pager" th:if="${#strings.isEmpty(gid)&&type!='all'}">
-							<a class="lmlblog-pager-left" th:href="@{|/main/${session.user.uid}/${type}/${pageInfo.hasPreviousPage?pageInfo.prePage:1}|}">上一页</a>
-							<div class="lmlblog-pager-center layui-form" th:text="|第${pageInfo.pageNum==0?1:pageInfo.pageNum}页|"></div>
-							<a class="lmlblog-pager-right" th:href="@{|/main/${session.user.uid}/${type}/${pageInfo.hasNextPage?pageInfo.nextPage:pageInfo.navigateLastPage}|}">下一页</a>
-						</div>
-						<div class="lmlblog-pager" th:if="${not #strings.isEmpty(gid)}">
-							<a class="lmlblog-pager-left" th:href="@{|/main/${session.user.uid}/myGroups/${gid}/${pageInfo.hasPreviousPage?pageInfo.prePage:1}|}">上一页</a>
-							<div class="lmlblog-pager-center layui-form" th:text="|第${pageInfo.pageNum==0?1:pageInfo.pageNum}页|"></div>
-							<a class="lmlblog-pager-right" th:href="@{|/main/${session.user.uid}/myGroups/${gid}/${pageInfo.hasNextPage?pageInfo.nextPage:pageInfo.navigateLastPage}|}">下一页</a>
-						</div>
-					</div>
-
-				</div>
-			</div>
-		</div>
-	</div>
+                        </div>
+                        <div class="lmlblog-pager" th:if="${#strings.isEmpty(gid)&&type!='all'}">
+                            <a class="lmlblog-pager-left"
+                               th:href="@{|/main/${type}/${pageInfo.hasPreviousPage?pageInfo.prePage:1}|}">上一页</a>
+                            <div class="lmlblog-pager-center layui-form"
+                                 th:text="|第${pageInfo.pageNum==0?1:pageInfo.pageNum}页|"></div>
+                            <a class="lmlblog-pager-right"
+                               th:href="@{|/main/${type}/${pageInfo.hasNextPage?pageInfo.nextPage:pageInfo.navigateLastPage}|}">下一页</a>
+                        </div>
+                        <div class="lmlblog-pager" th:if="${not #strings.isEmpty(gid)}">
+                            <a class="lmlblog-pager-left"
+                               th:href="@{|/main/myGroups/${gid}/${pageInfo.hasPreviousPage?pageInfo.prePage:1}|}">上一页</a>
+                            <div class="lmlblog-pager-center layui-form"
+                                 th:text="|第${pageInfo.pageNum==0?1:pageInfo.pageNum}页|"></div>
+                            <a class="lmlblog-pager-right"
+                               th:href="@{|/main/myGroups/${gid}/${pageInfo.hasNextPage?pageInfo.nextPage:pageInfo.navigateLastPage}|}">下一页</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
+</div>
 <!-- 底部 -->
 <div style="clear:both"></div>
 <div class="footer">
-	<div class="footer_b_foot">
-		<div class="footer_b_top">
-		</div>
-		<div class="footer_b_bottom">Design by 2017 画江湖杯莫停 司空琪个人主页 司空琪微博/空间/贴吧官博。Promoted by 2021 红桃QHeartQ。内容源于网络搜集，仅学习、分享交流。</div>
-	</div>
+    <div class="footer_b_foot">
+        <div class="footer_b_top">
+        </div>
+        <div class="footer_b_bottom">Design by 2017 画江湖杯莫停 司空琪个人主页 司空琪微博/空间/贴吧官博。Promoted by 2021
+            红桃QHeartQ。内容源于网络搜集，仅学习、分享交流。
+        </div>
+    </div>
 </div>
 <!-- 返回顶部 -->
 <a href="javascript:returnTop();" class="cd-top"></a>
 <script type="text/javascript">
-	var sdelay = 0;
+    var sdelay = 0;
 
-	function returnTop() {
-		window.scrollBy(0, -100); //Only for y vertical-axis
-		if (document.body.scrollTop > 0) {
-			sdelay = setTimeout('returnTop()', 50);
-		}
-	}
+    function returnTop() {
+        window.scrollBy(0, -100); //Only for y vertical-axis
+        if (document.body.scrollTop > 0) {
+            sdelay = setTimeout('returnTop()', 50);
+        }
+    }
 </script>
 </body>
 <script type='text/javascript' src='/js/base.js'></script>
@@ -366,308 +457,689 @@
 <script type="text/javascript" src="js/jquery.qtip-1.0.0-rc3.js"></script>
 
 <script>
-	function list_comments_show(d,uid,pid) {
-		var display=$(d).parent().parent().parent().next().css("display");
-		if (display=="none"){
-			$(d).parent().parent().parent().next().css("display","");
-			alert("111");
-			$.post(
-				"/comment/hotComment",
-				"upid="+uid+"-"+pid,
-				function (data) {
-					if (data==""){
-						alert("empty");
-					}else {
-						for (var i=0;i<data.size();i++){
-							alert(data[i].comment);
-							alert(data[i].upid);
-							alert(data[i].upcid)
-						}
-					}
-				},
-				"json"
-			);
-		}else {
-			$(d).parent().parent().parent().next().css("display","none");
-		}
-	}
+    function showReComment(d) {
+        var displayRe = $(d).parent().parent().parent().next().css("display");
+        if (displayRe == "none") {
+            $(d).parent().parent().parent().next().css("display", "block");
+        } else {
+            $(d).parent().parent().parent().next().css("display", "none");
+        }
+    }
 
-	function showImg(pid,curUid,uid){
-		$.post(
-			"/user/"+uid+"/getInfoByUid",
-			"curUid="+curUid,
-			function (data) {
-				var infoCard="<a href='/user/"+data.uid+"/1' style='display: inline-block'><img src='/avatar/"+data.image+"' class='avatar'/>"
-				switch (data.status) {
-					case 0:
-						infoCard+="<i title='普通用户'/>";
-						break;
-					case 1:
-						infoCard+="<i class='lmlblog-verify lmlblog-verify-a' style='position: absolute;top: 38px;left: 200px;' title='会员用户'/>";
-						break;
-					case 2:
-						infoCard+="<i class='lmlblog-verify lmlblog-verify-b' style='position: absolute;top: 38px;left: 200px;' title='认证用户'/>";
-						break;
-					case 3:
-						infoCard+="<i class='lmlblog-verify-c lmlblog-verify-cc' style='position: absolute;top: 38px;left: 200px;' title='超级管理员'/>";
-						break;
-				}
-				infoCard+="</a><div><strong>"+data.name+"</strong>";
-				switch (data.gender) {
-					case '男':
-						infoCard+="<span class='lmlblog-mark lmlblog-boy'><i class='fa fa-mars'></i></span>";
-						break;
-					case '女':
-						infoCard+="<span class='lmlblog-mark lmlblog-girl'><i class='fa fa-venus'></i></span>";
-						break;
-					default:
-						infoCard+="<span class='lmlblog-mark' style='background-color: orange'><i class='fa fa-transgender-alt'></i></span>";
-						break;
-				}
-				infoCard+="</div><br><div>"+data.description+"</div><hr><div>&nbsp;&nbsp;关注&nbsp;"+data.countAllFollowUser+"&nbsp;&nbsp;|&nbsp;&nbsp;粉丝&nbsp;"+data.countAllFans+"&nbsp;&nbsp;|&nbsp;&nbsp;<a href='/user/"+data.uid+"/1'>微博&nbsp;"+data.countAllPost+"</a>&nbsp;&nbsp;</div><br><div>"+data.city+"</div>";
+    function showReCommentComment(d) {
+        var displayRe = $(d).parent().parent().parent().next().css("display");
+        if (displayRe == "none") {
+            $(d).parent().parent().parent().next().css("display", "block");
+        } else {
+            $(d).parent().parent().parent().next().css("display", "none");
+        }
+    }
 
-				$("#infoCard"+pid).html(infoCard);
-			},
-			"json"
-		);
-	}
+    function getCommentContent(uid, pid, image, kind, suid) {
+        var comment = "";
+        //console.log(uid+","+pid+","+image+","+kind);
+        $.ajax({
+            type: "POST",
+            async: false,
+            dataType: "json",
+            url: "/comment/someComment?upid=" + uid + "-" + pid + "&kind=" + kind,
+            success: function (r) {
+                if (r.code === 631548) {
+                    //console.log(111111)
+                    comment += "<div style='display: block;background-color: #f2f2f5;'>\n" +
+                        "\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px;'>\n"
+                    if (kind === "hot") {
+                        comment += "\t\t\t\t\t<div class=\"col-lg-6\" data-kind='hot'>" +
+                            "<a style='text-decoration: none;color: orange' onclick=\"showCommentByKind(this," + uid + "," + pid + ",'" + image + "','hot'," + suid + ")\">按热度</a>" +
+                            "&nbsp;&nbsp;|&nbsp;&nbsp;" +
+                            "<a style='text-decoration: none' onclick=\"showCommentByKind(this," + uid + "," + pid + ",'" + image + "','latest'," + suid + ")\">按时间</a>";
+                    } else {
+                        comment += "\t\t\t\t\t<div class=\"col-lg-6\" data-kind='latest'>" +
+                            "<a style='text-decoration: none' onclick=\"showCommentByKind(this," + uid + "," + pid + ",'" + image + "','hot'," + suid + ")\">按热度</a>" +
+                            "&nbsp;&nbsp;|&nbsp;&nbsp;" +
+                            "<a style='text-decoration: none;color: orange' onclick=\"showCommentByKind(this," + uid + "," + pid + ",'" + image + "','latest'," + suid + ")\">按时间</a>";
+                    }
+                    comment += "</div>\n" +
+                        "\t\t\t\t</div>";
+                    for (let i = 0; i < r.data.commentList.length; i++) {
+                        //console.log(i)
+                        comment += "<!--需要遍历的评论开始-->\n" +
+                            "\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px'>\n" +
+                            "\t\t\t\t\t<hr style=\"width: 680px;margin-left: 15px\" />\n" +
+                            "\t\t\t\t\t<div class='col-lg-1'>\n" +
+                            "\t\t\t\t\t\t<img src='/avatar/" + r.data.commentList[i].user.image + "' style='height: 32px;width: 32px' />\n" +
+                            "\t\t\t\t\t</div>\n" +
+                            "\t\t\t\t\t<div class='col-lg-11' style='padding-left: 0px'>\n" +
+                            "\t\t\t\t\t\t<a style='color: orange' href='/user/" + r.data.commentList[i].uid + "/1'>" + r.data.commentList[i].user.name + "</a>" +
+                            "\t\t\t\t\t\t<span>：" + r.data.commentList[i].comment + "</span>\n" +
+                            "\t\t\t\t\t</div>\n" +
+                            "\t\t\t\t</div>\n" +
+                            "\t\t\t\t<!--评论的时间与回复开始-->\n" +
+                            "\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px'>\n" +
+                            "\t\t\t\t\t<div class='col-lg-1'></div>\n" +
+                            "\t\t\t\t\t<div class='col-lg-3' style=\"color: #808080;padding-left: 0px\">" + r.data.commentList[i].commentTime + "</div>\n" +
+                            "\t\t\t\t\t<div class='col-lg-4'></div>\n" +
+                            "\t\t\t\t\t<div class='col-lg-4'>\n" +
+                            "<div style='float: right'>"
+                        //console.log(suid+"=="+r.data.commentList[i].uid)
+                        if (suid == r.data.commentList[i].uid) {
+                            comment += "\t\t\t\t\t\t<a style='text-decoration: none' onclick=\"deleteComment(" + r.data.commentList[i].cid + ",'" + r.data.commentList[i].upid + "','" + kind + "')\">删除</a>\n" +
+                                "\t\t\t\t\t\t&nbsp;&nbsp;|&nbsp;&nbsp;\n"
+                        }
+                        comment += "\t\t\t\t\t\t<a style='text-decoration: none' onclick='showReComment(this)'>回复</a>\n" +
+                            "\t\t\t\t\t\t&nbsp;&nbsp;|&nbsp;&nbsp;\n" +
+                            "\t\t\t\t\t\t<a onclick='doCommentLike(this," + r.data.commentList[i].uid + "," + r.data.commentList[i].cid + ")'>";
+                        if (r.data.commentList[i].commentLike) {
+                            comment += "<i class='fa fa-heart'></i>";
+                        } else {
+                            comment += "<i class='fa fa-heart-o'></i>";
+                        }
+                        comment += "</a>\n" +
+                            "\t\t\t\t\t\t<span>" + r.data.commentList[i].countCommentLike + "</span>\n" +
+                            "\t\t\t\t\t</div>" +
+                            "</div>\n" +
+                            "\t\t\t\t</div>\n" +
+                            "\t\t\t\t<!--评论的时间与回复结束-->\n" +
+                            "\t\t\t\t<!--发送回复评论开始-->\n" +
+                            "\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px;display: none'>\n" +
+                            "\t\t\t\t\t<br>\n" +
+                            "\t\t\t\t\t<div class='col-lg-1'></div>\n" +
+                            "\t\t\t\t\t<div class='col-lg-11'\n" +
+                            "\t\t\t\t\t\tstyle='padding-left: 0px;background-color: white;padding-right: 0px;width: 635px'>\n" +
+                            "\t\t\t\t\t\t<br>\n" +
+                            "\t\t\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px'>\n" +
+                            "\t\t\t\t\t\t\t<div class='col-lg-12'>\n" +
+                            "\t\t\t\t\t\t\t\t<form role='form' method=\"post\">\n" +
+                            "\t\t\t\t\t\t\t\t\t<div class='form-group' style='margin-top: 0px'>\n" +
+                            "\t\t\t\t\t\t\t\t\t\t<div class='col-lg-12' style='padding-left: 0px'>\n" +
+                            "\t\t\t\t\t\t\t\t\t\t\t<div contentEditable='true' id=\"content1\" class='form-control'\n" +
+                            "\t\t\t\t\t\t\t\t\t\t\t\tstyle='width: 605px;height: auto' onkeyup=\"ifSendAble(this,0)\"></div>\n" +
+                            "\t\t\t\t\t\t\t\t\t\t</div>\n" +
+                            "\t\t\t\t\t\t\t\t\t\t<div class='col-lg-12' style='margin-top: 12px;margin-left: 12px;'>\n" +
+                            "\t\t\t\t\t\t\t\t\t\t\t<button type='button' id='send' class='btn btn-default pull-right disabled'\n" +
+                            "\t\t\t\t\t\t\t\t\t\t\t\tstyle='height: 30px;width: 60px;padding: 0 0' onclick=\"reply(this," + uid + "," + pid + ",'" + r.data.commentList[i].user.uid + '-' + r.data.commentList[i].cid + "',0,'" + r.data.commentList[i].user.name + "','" + image + "'," + suid + ")\">发布</button>\n" +
+                            "\t\t\t\t\t\t\t\t\t\t</div>\n" +
+                            "\t\t\t\t\t\t\t\t\t</div>\n" +
+                            "\t\t\t\t\t\t\t\t</form>\n" +
+                            "\t\t\t\t\t\t\t</div>\n" +
+                            "\t\t\t\t\t\t</div>\n" +
+                            "\t\t\t\t\t\t<br>\n" +
+                            "\t\t\t\t\t</div>\n" +
+                            "\t\t\t\t</div>\n" +
+                            "\t\t\t\t<!--发送回复评论结束-->";
+                        if (r.data.commentList[i].subCommentList != "") {
+                            comment += "<br>";
+                            for (let j = 0; j < r.data.commentList[i].subCommentList.length; j++) {
+                                if (j != 0) {
+                                    comment += "\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px;'>\n" +
+                                        "\t\t\t\t\t<div class='col-lg-1'></div>\n" +
+                                        "\t\t\t\t\t<div class='col-lg-11'\n" +
+                                        "\t\t\t\t\t\tstyle='padding-left: 15px;padding-right: 15px;background-color: #eaeaec;width: 635px;padding-top: 0px;padding-bottom: 0px'>\n" +
+                                        "<hr style='margin-top: 0;margin-bottom: 0'>" +
+                                        "</div>" +
+                                        "</div>";
+                                }
+                                comment += "<!-- 需要遍历的子评论开始 -->\n" +
+                                    "\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px;'>\n" +
+                                    "\t\t\t\t\t<div class='col-lg-1'></div>\n" +
+                                    "\t\t\t\t\t<div class='col-lg-11'\n" +
+                                    "\t\t\t\t\t\tstyle='padding-left: 0px;background-color: #eaeaec;width: 635px;padding-top: 10px;padding-bottom: 15px'>\n" +
+                                    "\t\t\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px'>\n" +
+                                    "\t\t\t\t\t\t\t<div class='col-lg-12' style='padding-right: 0px;padding-left: 12px'>\n" +
+                                    "\t\t\t\t\t\t\t\t<a style='color: orange' href='/user/" + r.data.commentList[i].subCommentList[j].user.uid + "/1'>" + r.data.commentList[i].subCommentList[j].user.name + "</a>" +
+                                    "\t\t\t\t\t\t\t\t<span>：" + r.data.commentList[i].subCommentList[j].comment + "</span>\n" +
+                                    "\t\t\t\t\t\t\t</div>\n" +
+                                    "\t\t\t\t\t\t</div>\n" +
+                                    "\t\t\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px'>\n" +
+                                    "\t\t\t\t\t\t\t<div class='col-lg-4' style='color: #808080;padding-right: 0px;padding-left: 12px'>" + r.data.commentList[i].subCommentList[j].commentTime + "</div>\n" +
+                                    "\t\t\t\t\t\t\t<div class='col-lg-4'></div>\n" +
+                                    "\t\t\t\t\t\t\t<div class='col-lg-4' style=\"padding-right: 5px\">\n" +
+                                    "\t\t\t\t\t\t\t\t<div style=\"float: right\">\n"
+                                if (suid == r.data.commentList[i].subCommentList[j].uid) {
+                                    comment += "\t\t\t\t\t\t<a style='text-decoration: none' onclick=\"deleteComment(" + r.data.commentList[i].subCommentList[j].cid + ",'" + r.data.commentList[i].subCommentList[j].upid + "','" + kind + "')\">删除</a>\n" +
+                                        "\t\t\t\t\t\t&nbsp;&nbsp;|&nbsp;&nbsp;\n"
+                                }
+                                comment += "\t\t\t\t\t\t\t\t\t<a style='text-decoration: none'\n" +
+                                    "\t\t\t\t\t\t\t\t\t\t onclick='javascipt:showReCommentComment(this)'>回复</a>\n" +
+                                    "\t\t\t\t\t\t\t\t\t&nbsp;&nbsp;|&nbsp;&nbsp;\n" +
+                                    "\t\t\t\t\t\t\t\t\t<a onclick='doCommentLike(this," + r.data.commentList[i].subCommentList[j].uid + "," + r.data.commentList[i].subCommentList[j].cid + ")'>";
+                                if (r.data.commentList[i].subCommentList[j].commentLike) {
+                                    comment += "<i class='fa fa-heart'></i>";
+                                } else {
+                                    comment += "<i class='fa fa-heart-o'></i>";
+                                }
+                                comment += "</a>\n" +
+                                    "\t\t\t\t\t\t\t\t\t<span>" + r.data.commentList[i].subCommentList[j].countCommentLike + "</span>\n" +
+                                    "\t\t\t\t\t\t\t\t</div>\n" +
+                                    "\t\t\t\t\t\t\t</div>\n" +
+                                    "\t\t\t\t\t\t</div>\n" +
+                                    "\t\t\t\t\t\t<div class='row' style='display: none;margin-left: 15px;margin-right: 0px'>\n" +
+                                    "\t\t\t\t\t\t\t<br>\n" +
+                                    "\t\t\t\t\t\t\t<div class='col-lg-12' style='background-color: white;'>\n" +
+                                    "\t\t\t\t\t\t\t\t<br>\n" +
+                                    "\t\t\t\t\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px'>\n" +
+                                    "\t\t\t\t\t\t\t\t\t<div class='col-lg-12' style='padding-left: 0px'>\n" +
+                                    "\t\t\t\t\t\t\t\t\t\t<form role='form' method=\"post\">\n" +
+                                    "\t\t\t\t\t\t\t\t\t\t\t<div class='form-group' style='margin-top: 0px'>\n" +
+                                    "\t\t\t\t\t\t\t\t\t\t\t\t<div class='col-lg-12' style='padding-left: 0px'>\n" +
+                                    "\t\t\t\t\t\t\t\t\t\t\t\t\t<div contentEditable='true' id=\"content2\" class='form-control'\n" +
+                                    "\t\t\t\t\t\t\t\t\t\t\t\t\t\tstyle='width: 575px;height: auto' onkeyup=\"ifSendAble(this,'" + r.data.commentList[i].subCommentList[j].user.name + "')\">回复@" + r.data.commentList[i].subCommentList[j].user.name + "：</div>\n" +
+                                    "\t\t\t\t\t\t\t\t\t\t\t\t</div>\n" +
+                                    "\t\t\t\t\t\t\t\t\t\t\t\t<div class='col-lg-12'\n" +
+                                    "\t\t\t\t\t\t\t\t\t\t\t\t\tstyle='margin-top: 12px;margin-left: 12px;padding-right: 5px'>\n" +
+                                    "\t\t\t\t\t\t\t\t\t\t\t\t\t<button type='button' id='send'\n" +
+                                    "\t\t\t\t\t\t\t\t\t\t\t\t\t\tclass='btn btn-default pull-right disabled'\n" +
+                                    "\t\t\t\t\t\t\t\t\t\t\t\t\t\tstyle='height: 30px;width: 60px;padding: 0 0' onclick=\"reply(this," + uid + "," + pid + ",'" + r.data.commentList[i].user.uid + '-' + r.data.commentList[i].cid + "','" + r.data.commentList[i].subCommentList[j].user.uid + '-' + r.data.commentList[i].subCommentList[j].cid + "','" + r.data.commentList[i].user.name + "','" + image + "'," + suid + ") \">发布</button>\n" +
+                                    "\t\t\t\t\t\t\t\t\t\t\t\t</div>\n" +
+                                    "\t\t\t\t\t\t\t\t\t\t\t</div>\n" +
+                                    "\t\t\t\t\t\t\t\t\t\t</form>\n" +
+                                    "\t\t\t\t\t\t\t\t\t</div>\n" +
+                                    "\t\t\t\t\t\t\t\t</div>\n" +
+                                    "\t\t\t\t\t\t\t\t<br>\n" +
+                                    "\t\t\t\t\t\t\t</div>\n" +
+                                    "\t\t\t\t\t\t</div>\n" +
+                                    "\t\t\t\t\t</div>\n" +
+                                    "\t\t\t\t</div>" +
+                                    "<!-- 需要遍历的子评论结束 -->\n"
 
-	jQuery(document).ready(function($) {
-		$.fn.smartFloat = function() {
-			var position = function(element) {
-				var top = element.position().top,
-						pos = element.css("position");
-				$(window).scroll(function() {
-					var scrolls = $(this).scrollTop();
-					if (scrolls > top) {
-						if (window.XMLHttpRequest) {
-							element.css({
-								position: "fixed",
-								top: 0
-							});
-						} else {
-							element.css({
-								top: scrolls
-							});
-						}
-					} else {
-						element.css({
-							position: "absolute",
-							top: top
-						});
-					}
-				});
-			};
-			return $(this).each(function() {
-				position($(this));
-			});
-		};
-		$(".lmlblog-member-left-bg-xg").smartFloat();
-	});
+                                comment += "\t\t\t\t<!-- 需要遍历的评论结束 -->";
+                            }
+                            if (r.data.commentList[i].subCommentList.length < r.data.commentList[i].countComment) {
+                                comment += "\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px;'>\n" +
+                                    "\t\t\t\t\t<div class='col-lg-1'></div>\n" +
+                                    "\t\t\t\t\t<div class='col-lg-11'\n" +
+                                    "\t\t\t\t\t\tstyle='padding-left: 15px;padding-right: 15px;background-color: #eaeaec;width: 635px;padding-top: 0px;padding-bottom: 0px'>\n" +
+                                    "<hr style='margin-top: 0;margin-bottom: 0'>" +
+                                    "</div>" +
+                                    "</div>";
+                                comment += "<div class='row' style='margin-left: 0;margin-right: 0'>" +
+                                    "<div class='col-lg-1'></div>" +
+                                    "<div class='col-lg-11' style='padding-left: 0;padding-top:10px;padding-bottom:15px;width: 635px;background-color: #eaeaec'>" +
+                                    "<div class='row' style='margin-left: 0;margin-right: 0'>" +
+                                    "<div class='col-lg-12' style='padding-right: 0;padding-left:12px'>" +
+                                    "<a style='color: orange' href='/post/" + r.data.commentList[i].upid + "/detail'>共" + r.data.commentList[i].countComment + "条评论</a>" +
+                                    "</div>" +
+                                    "</div>" +
+                                    "</div>" +
+                                    "</div>"
+                            }
+                        }
+                    }
+                    comment += "</div>";
+                }
+                //console.log(comment)
+            }
+        })
+        return comment;
+    }
 
-	function doLike(puid,pid,uid,d) {
-		//alert("22");
-		$.post(
-				"/user/"+uid+"/doLike",
-				"upid="+puid+"-"+pid+"&uid="+uid,
-				function (data){
-					//alert("33");
-					//应该还需要去改变post.like的值
-					//alert(data);
-					var a=$("#post"+pid+"0").text();
-					var b=parseInt($(d).children().eq(1).text());
-					var h="<i className='fa fa-heart'></i>";
-					var ho="<i className='fa fa-heart-o'></i>";
-					//alert(b);
-					//alert(b-1);
-					//alert(!data);
-					if (!data){
-						$(d).children().eq(0).removeClass("fa fa-heart");
-						$(d).children().eq(0).addClass("fa fa-heart-o");
-						$(d).children().eq(1).text(b-1);
-					}else {
-						$(d).children().eq(0).removeClass("fa fa-heart-o");
-						$(d).children().eq(0).addClass("fa fa-heart");
-						$(d).children().eq(1).text(b+1);
-					}
-				},
-				"json"
-		)
-	}
+    function list_comments_show(d, uid, pid, image, name, kind, suid) {
+        var display = $(d).parent().parent().parent().next().css("display");
+        if (display === "none") {
+            $(d).parent().parent().parent().next().css("display", "block");
+            //alert("111");
+            let comment = "";
+            comment = "\t\t\t<!--发送评论开始-->\n" +
+                "\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px;padding-top: 10px'>\n" +
+                "\t\t\t\t<div class='col-lg-1'>\n" +
+                "\t\t\t\t\t<img src='/avatar/" + image + "' style='height: 32px;width: 32px' />\n" +
+                "\t\t\t\t</div>\n" +
+                "\t\t\t\t<div class='col-lg-11' style='padding-left: 0px'>\n" +
+                "\t\t\t\t\t<form role='form' method=\"post\">\n" +
+                "\t\t\t\t\t\t<div class='form-group' style='margin-top: 0px'>\n" +
+                "\t\t\t\t\t\t\t<div class='col-lg-12' style='padding-left: 0px'>\n" +
+                "\t\t\t\t\t\t\t\t<div contentEditable='true' class='form-control'\n" +
+                "\t\t\t\t\t\t\t\t\tstyle='width: 635px;height: auto' onkeyup=\"ifSendAble(this,'0')\"></div>\n" +
+                "\t\t\t\t\t\t\t</div>\n" +
+                "\t\t\t\t\t\t\t<div class='col-lg-12' style='margin-top: 12px;margin-left: 12px;'>\n" +
+                "\t\t\t\t\t\t\t\t<button type='button' id='send' class='btn btn-default pull-right disabled'\n" +
+                "\t\t\t\t\t\t\t\t\tstyle='height: 30px;width: 60px;padding: 0 0' onclick=\"reply(this," + uid + "," + pid + ",0,0,'" + name + "','" + image + "'," + suid + ")\">发布</button>\n" +
+                "\t\t\t\t\t\t\t</div>\n" +
+                "\t\t\t\t\t\t</div>\n" +
+                "\t\t\t\t\t</form>\n" +
+                "\t\t\t\t</div>\n" +
+                "\t\t\t</div>\n" +
+                "\t\t\t<!--发送评论结束-->";
+            let commentContent = getCommentContent(uid, pid, image, kind, suid);
+            if (commentContent !== "") {
+                comment += "<hr style=\"width: 680px;margin-left: 15px\" />";
+                comment += commentContent;
+            }
+            $(d).parent().parent().parent().next().html(comment);
+        } else {
+            $(d).parent().parent().parent().next().css("display", "none");
+        }
+    }
 
-	function doDelete(uid,pid) {
-		$.post(
-				"/user/"+uid+"/doDelete",
-				"pid="+pid,
-				function (){
-					$("#post"+pid).remove();
-				},
-				"json"
-		)
-	}
+    function showCommentByKind(d, uid, pid, image, kind, suid) {
+        let comment = "";
+        comment += getCommentContent(uid, pid, image, kind, suid)
+        $(d).parent().parent().parent().replaceWith(comment)
+    }
 
-	function doFollow(uid,followUid) {
-		$.post(
-				"/user/"+uid+"/doFollow",
-				"uid="+uid+"&followUid="+followUid,
-				function (followStatus){
-					location.href="/main/"+uid+"/all/1";
-				},
-				"json"
-		);
-	}
+    function ifSendAble(d, name) {
+        let content_len = $(d).text().replace(/\s/g, "").length;
+        let content = $(d).html();
+        if (name == '0') {
+            if (content_len === 0) {
+                $(d).parent().next().children().eq(0).addClass("disabled");
+                return false;
+            } else {
+                $(d).parent().next().children().eq(0).removeClass("disabled");
+                return true;
+            }
+        } else {
+            let str = "回复@" + name + "：";
+            if (content == str) {
+                $(d).parent().next().children().eq(0).addClass("disabled");
+                return false;
+            } else {
+                $(d).parent().next().children().eq(0).removeClass("disabled");
+                return true;
+            }
+        }
+    }
 
-	$(function(){
-		$("#content").keyup(function(){
-			//判断输入的字符串长度
-			var content_len = $("#content").text().replace(/\s/g,"").length;
+    function reply(d, uid, pid, upcid, urcid, name, image, suid) {
+        let contentElement = $(d).parent().prev().children().eq(0);
+        let content = contentElement.html();
 
-			$(".tips").text("已经输入"+content_len+"个字");
+        if (ifSendAble(contentElement, name)) {
+            //console.log('可以发送ajax')
+            if (urcid !== 0) {
+                let oldName = "@" + name
+                content = content.substring(0, 2) + "<a class='searchInfo'>@" + name + "</a>" + content.substring(oldName.length + 2)
+            }
+            $.post(
+                "/comment/sendComment",
+                "upid=" + uid + "-" + pid + "&upcid=" + upcid + "&urcid=" + urcid + "&comment=" + content,
+                function (r) {
+                    console.log(r)
+                    if (r.code === 631548) {
+                        contentElement.html("");
+                        alert("发送成功");
+                        let kind = $("#show" + pid + "PostComment").parent().parent().parent().next().children().eq(2).children().eq(0).children().eq(0).attr("data-kind")
+                        if (kind === 'hot' && upcid === 0) {
+                            let newComment = "";
+                            newComment = "<!--需要遍历的评论开始-->\n" +
+                                "\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px'>\n" +
+                                "\t\t\t\t\t<hr style=\"width: 680px;margin-left: 15px\" />\n" +
+                                "\t\t\t\t\t<div class='col-lg-1'>\n" +
+                                "\t\t\t\t\t\t<img src='/avatar/" + image + "' style='height: 32px;width: 32px' />\n" +
+                                "\t\t\t\t\t</div>\n" +
+                                "\t\t\t\t\t<div class='col-lg-11' style='padding-left: 0px'>\n" +
+                                "\t\t\t\t\t\t<a style='color: orange' href='/user/" + uid + "/1'>" + name + "</a>\n" +
+                                "\t\t\t\t\t\t<span>：" + content + "</span>\n" +
+                                "\t\t\t\t\t</div>\n" +
+                                "\t\t\t\t</div>\n" +
+                                "\t\t\t\t<!--评论的时间与回复开始-->\n" +
+                                "\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px'>\n" +
+                                "\t\t\t\t\t<div class='col-lg-1'></div>\n" +
+                                "\t\t\t\t\t<div class='col-lg-3' style=\"color: #808080;padding-left: 0px\">刚刚</div>\n" +
+                                "\t\t\t\t\t<div class='col-lg-6'></div>\n" +
+                                "\t\t\t\t\t<div class='col-lg-2'>\n" +
+                                "\t\t\t\t\t\t<a href='javascript:void(0);' style='text-decoration: none' onclick='showReComment(this)'>回复</a>\n" +
+                                "\t\t\t\t\t\t&nbsp;&nbsp;|&nbsp;&nbsp;\n" +
+                                "\t\t\t\t\t\t<a href=''>" +
+                                "<i class='fa fa-heart-o'></i>" +
+                                "</a>\n" +
+                                "\t\t\t\t\t\t0\n" +
+                                "\t\t\t\t\t</div>\n" +
+                                "\t\t\t\t</div>\n" +
+                                "\t\t\t\t<!--评论的时间与回复结束-->\n" +
+                                "\t\t\t\t<!--发送回复评论开始-->\n" +
+                                "\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px;display: none'>\n" +
+                                "\t\t\t\t\t<br>\n" +
+                                "\t\t\t\t\t<div class='col-lg-1'></div>\n" +
+                                "\t\t\t\t\t<div class='col-lg-11'\n" +
+                                "\t\t\t\t\t\tstyle='padding-left: 0px;background-color: white;padding-right: 0px;width: 635px'>\n" +
+                                "\t\t\t\t\t\t<br>\n" +
+                                "\t\t\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px'>\n" +
+                                "\t\t\t\t\t\t\t<div class='col-lg-12'>\n" +
+                                "\t\t\t\t\t\t\t\t<form role='form' method=\"post\">\n" +
+                                "\t\t\t\t\t\t\t\t\t<div class='form-group' style='margin-top: 0px'>\n" +
+                                "\t\t\t\t\t\t\t\t\t\t<div class='col-lg-12' style='padding-left: 0px'>\n" +
+                                "\t\t\t\t\t\t\t\t\t\t\t<div contentEditable='true' id=\"content1\" class='form-control'\n" +
+                                "\t\t\t\t\t\t\t\t\t\t\t\tstyle='width: 605px;height: auto'></div>\n" +
+                                "\t\t\t\t\t\t\t\t\t\t</div>\n" +
+                                "\t\t\t\t\t\t\t\t\t\t<div class='col-lg-12' style='margin-top: 12px;margin-left: 12px;'>\n" +
+                                "\t\t\t\t\t\t\t\t\t\t\t<button type='button' id='send' class='btn btn-default pull-right disabled'\n" +
+                                "\t\t\t\t\t\t\t\t\t\t\t\tstyle='color: #ffc09f;height: 30px;width: 60px;padding: 0 0'>发布</button>\n" +
+                                "\t\t\t\t\t\t\t\t\t\t</div>\n" +
+                                "\t\t\t\t\t\t\t\t\t</div>\n" +
+                                "\t\t\t\t\t\t\t\t</form>\n" +
+                                "\t\t\t\t\t\t\t</div>\n" +
+                                "\t\t\t\t\t\t</div>\n" +
+                                "\t\t\t\t\t\t<br>\n" +
+                                "\t\t\t\t\t</div>\n" +
+                                "\t\t\t\t</div>\n" +
+                                "\t\t\t\t<!--发送回复评论结束-->"
+                            $(d).parent().parent().parent().parent().parent().next().next().children().eq(0).after(newComment)
+                        } else {
+                            $("#show" + pid + "PostComment").parent().parent().parent().next().css("display", "none")
+                            list_comments_show($("#show" + pid + "PostComment"), uid, pid, image, name, kind, suid)
+                        }
+                    } else {
+                        alert("发送失败");
+                    }
+                },
+                "json"
+            )
+        }
+    }
 
-			if(content_len==0){
-				// alert(content);
-				$(".tips").text("");
-				$("#send").addClass("disabled");
-				return false;
-			}else{
-				$("#send").removeClass("disabled");
-			}
-		});
+    function deleteComment(cid, upid, kind) {
+        var c = confirm("确认要删除这条评论吗？这条评论下的所有评论也会一起被删除哦~")
+        if (c) {
+            $.post(
+                "/comment/deleteComment",
+                "cid=" + cid + "&upid=" + upid,
+                function (r) {
+                    let a = $("#show" + r.data.post.pid + "PostComment")
+                    a.parent().parent().parent().next().css("display", "none")
+                    a.children().eq(1).text(r.data.countComment)
+                    list_comments_show(a, r.data.post.uid, r.data.post.pid, r.data.user.image, r.data.user.name, kind, r.data.user.uid)
+                },
+                "json"
+            )
+        }
+    }
 
-		$(".pic").click(function(){
-			$(".select_Img").click();
-		})
+    function doCommentLike(d, uid, cid) {
+        $.post(
+            "/comment/doLike",
+            "uid=" + uid + "&cid=" + cid,
+            function (data) {
+                var b = parseInt($(d).next().text());
+                if (data) {
+                    $(d).children().eq(0).replaceWith("<i class='fa fa-heart'></i>")
+                    $(d).next().text(b + 1)
+                } else {
+                    $(d).children().eq(0).replaceWith("<i class='fa fa-heart-o'></i>")
+                    $(d).next().text(b - 1)
+                }
+            },
+            "json"
+        )
+    }
 
-		// 	function confirm(){
+    function showImg(pid, curUid, uid) {
+        $.post(
+            "/user/" + uid + "/getInfoByUid",
+            "curUid=" + curUid,
+            function (data) {
+                var infoCard = "<a href='/user/" + data.uid + "/1' style='display: inline-block'><img src='/avatar/" + data.image + "' class='avatar'/>"
+                switch (data.status) {
+                    case 0:
+                        infoCard += "<i title='普通用户'/>";
+                        break;
+                    case 1:
+                        infoCard += "<i class='lmlblog-verify lmlblog-verify-a' style='position: absolute;top: 38px;left: 200px;' title='会员用户'/>";
+                        break;
+                    case 2:
+                        infoCard += "<i class='lmlblog-verify lmlblog-verify-b' style='position: absolute;top: 38px;left: 200px;' title='认证用户'/>";
+                        break;
+                    case 3:
+                        infoCard += "<i class='lmlblog-verify-c lmlblog-verify-cc' style='position: absolute;top: 38px;left: 200px;' title='超级管理员'/>";
+                        break;
+                }
+                infoCard += "</a><div><strong>" + data.name + "</strong>";
+                switch (data.gender) {
+                    case '男':
+                        infoCard += "<span class='lmlblog-mark lmlblog-boy'><i class='fa fa-mars'></i></span>";
+                        break;
+                    case '女':
+                        infoCard += "<span class='lmlblog-mark lmlblog-girl'><i class='fa fa-venus'></i></span>";
+                        break;
+                    default:
+                        infoCard += "<span class='lmlblog-mark' style='background-color: orange'><i class='fa fa-transgender-alt'></i></span>";
+                        break;
+                }
+                infoCard += "</div><br><div>" + data.description + "</div><hr><div>&nbsp;&nbsp;关注&nbsp;" + data.countAllFollowUser + "&nbsp;&nbsp;|&nbsp;&nbsp;粉丝&nbsp;" + data.countAllFans + "&nbsp;&nbsp;|&nbsp;&nbsp;<a href='/user/" + data.uid + "/1'>微博&nbsp;" + data.countAllPost + "</a>&nbsp;&nbsp;</div><br><div>" + data.city + "</div>";
 
-		// 		var r= new FileReader();
-		// f=$(".select_Img").files[0];
-		// r.readAsDataURL(f);
-		// r.onload=function(e) {
-		// 	$(".preview").src=this.result;
+                $("#infoCard" + pid).html(infoCard);
+            },
+            "json"
+        );
+    }
 
-		// };
-		// 	}
+    jQuery(document).ready(function ($) {
+        $.fn.smartFloat = function () {
+            var position = function (element) {
+                var top = element.position().top,
+                    pos = element.css("position");
+                $(window).scroll(function () {
+                    var scrolls = $(this).scrollTop();
+                    if (scrolls > top) {
+                        if (window.XMLHttpRequest) {
+                            element.css({
+                                position: "fixed",
+                                top: 0
+                            });
+                        } else {
+                            element.css({
+                                top: scrolls
+                            });
+                        }
+                    } else {
+                        element.css({
+                            position: "absolute",
+                            top: top
+                        });
+                    }
+                });
+            };
+            return $(this).each(function () {
+                position($(this));
+            });
+        };
+        $(".lmlblog-member-left-bg-xg").smartFloat();
+    });
 
-		//点击按钮发送内容
-		$("#send").click(function(){
+    function doLike(puid, pid, uid, d) {
+        //alert("22");
+        $.post(
+            "/user/" + uid + "/doLike",
+            "upid=" + puid + "-" + pid + "&uid=" + uid,
+            function (data) {
+                //alert("33");
+                //应该还需要去改变post.like的值
+                //alert(data);
+                var a = $("#post" + pid + "0").text();
+                var b = parseInt($(d).children().eq(1).text());
+                var h = "<i className='fa fa-heart'></i>";
+                var ho = "<i className='fa fa-heart-o'></i>";
+                //alert(b);
+                //alert(b-1);
+                //alert(!data);
+                if (!data) {
+                    $(d).children().eq(0).removeClass("fa fa-heart");
+                    $(d).children().eq(0).addClass("fa fa-heart-o");
+                    $(d).children().eq(1).text(b - 1);
+                } else {
+                    $(d).children().eq(0).removeClass("fa fa-heart-o");
+                    $(d).children().eq(0).addClass("fa fa-heart");
+                    $(d).children().eq(1).text(b + 1);
+                }
+            },
+            "json"
+        )
+    }
 
-			// var myDate = new Date();
+    function doFollow(uid, followUid) {
+        $.post(
+            "/user/" + uid + "/doFollow",
+            "uid=" + uid + "&followUid=" + followUid,
+            function (followStatus) {
+                location.href = "/main/all/1";
+            },
+            "json"
+        );
+    }
 
-			//   var min = myDate.getMinutes();
+    function doDelete(uid, pid) {
+        $.post(
+            "/user/" + uid + "/doDelete",
+            "pid=" + pid,
+            function () {
+                $("#post" + pid).remove();
+            },
+            "json"
+        )
+    }
+
+    function showPicture() {
+        var reader = new FileReader();
+        var files = document.getElementById("select_Img_New").files;
+        reader.readAsDataURL(files[0]);
+        reader.onload = function () {
+            var img = document.getElementById("previewNew");
+            img.src = reader.result;
+        }
+        $("#showPic").css("display", "block");
+    }
+
+    $(function () {
+        $("#content").keyup(function () {
+            //判断输入的字符串长度
+            var content_len = $("#content").text().replace(/\s/g, "").length;
+
+            $(".tips").text("已经输入" + content_len + "个字");
+
+            if (content_len == 0) {
+                // alert(content);
+                $(".tips").text("");
+                $("#send").addClass("disabled");
+                return false;
+            } else {
+                $("#send").removeClass("disabled");
+            }
+        });
+
+        $(".pic").click(function () {
+            $("#select_Img_New").click();
+        })
+
+        //点击按钮发送内容
+        $("#send").click(function () {
+
+            // var myDate = new Date();
+
+            //   var min = myDate.getMinutes();
 
 			//   var time = min-(min-1);
 
-			//   //alert(time);
+            //   //alert(time);
 
-			var content=$("#content").html();
+            var content = $("#content").html();
 
-			//判断选择的是否是图片格式
-			var imgPath = $(".imgPath").text();
-			var start  = imgPath.lastIndexOf(".");
-			var postfix = imgPath.substring(start,imgPath.length).toUpperCase();
+            //判断选择的是否是图片格式
+            var imgPath = $(".preview").text();
+            var start = imgPath.lastIndexOf(".");
+            var postfix = imgPath.substring(start, imgPath.length).toUpperCase();
 
-			/*var mytime=time.toLocaleTimeString(); //获取当前时间
-			time.toLocaleString( ); //获取日期与时间
+            /*var mytime=time.toLocaleTimeString(); //获取当前时间
+            time.toLocaleString( ); //获取日期与时间
 
-			alert(mytime);*/
+            alert(mytime);*/
 
-			var uid=$("#uidVar").val();
+            var uid = $("#uidVar").val();
 
-			//alert(uid);
+            //alert(uid);
 
-			$.post(
-					"/main/submit",
-					"forwardPid=0&uid="+uid+"&text="+content+"&status=1",
-					function (data) {
-						/*var time1 = post.postTime.format("yyyy-MM-dd hh:mm:ss");
-						alert(time1);*/
-						var prependPost0="<div class='lmlblog-posts-list words' style='background-image:url(/images/058.png);' ><div class='lmlblog-post-user-info'><div class='lmlblog-post-user-info-avatar' user-data='1'><a href='#1' style='display: inline-block;'><span class='lmlblog-vip-icon'></span><img src='/avatar/"+data.post.user.image+"' class='avatar' /><i class='' title="+data.post.user.name+"></i></a><div class='lmlblog-user-info-card'><div class='info_card_loading'><img src='/picture/chat-loading.gif'><p>资料加载中...</p></div></div></div><div class='lmlblog-post-user-info-name'><a href='#1'><font style='color:#333;font-weight:600' >"+data.post.user.name+"</font></a></div><div class='lmlblog-post-user-info-time' title='"+data.formatTime+"')} >刚刚</div><div class='lmlblog-post-user-info-time' title='来自weibo.com' >来自weibo.com</div></div><div class='lmlblog-post-setting'><i class='fa fa-angle-down'></i><div class='lmlblog-post-setting-box'><ul><a href='/user/"+uid+"/doTopPost?pid="+data.post.pid+"' title='置顶'><li>置顶</li></a><a href='#' title='编辑'><li>编辑</li></a><a href='javascript:doDelete("+uid+","+data.post.pid+")' title='删除'><li>删除</li></a></ul></div></div><div class='lmlblog-post-content' style='white-space:pre-line'>"+data.post.text+"</div><div class='lmlblog-post-bar'><li onclick='list_comments_show(this);'><i class='fa fa-comment-o'></i><span></span></li><li class='lmlblog-no-like' onclick='javascript:doLike("+data.post.pid+","+uid+",this)'><i class='fa fa-heart-o'></i><span>"+data.post.countPostLike+"</span></li></div><div class='lmlblog-post-footer-bar'><span title='"+data.formatTime+"' >"+data.formatTime+"</span><span>小尾巴</span><i class='lmlblog-icon' onclick='lmlblog_post_type_open();'></i></div></div>";
-						var prependPost1="<div class='lmlblog-posts-list words' style='background-image:url(/images/058.png);' ><div class='lmlblog-post-user-info'><div class='lmlblog-post-user-info-avatar' user-data='1'><a href='#1' style='display: inline-block;'><span class='lmlblog-vip-icon'></span><img src='/avatar/"+data.post.user.image+"' class='avatar' /><i class='lmlblog-verify lmlblog-verify-a' title="+data.post.user.name+"></i></a><div class='lmlblog-user-info-card'><div class='info_card_loading'><img src='/picture/chat-loading.gif'><p>资料加载中...</p></div></div></div><div class='lmlblog-post-user-info-name'><a href='#1'><font style='color:#333;font-weight:600' >"+data.post.user.name+"</font></a></div><div class='lmlblog-post-user-info-time' title='"+data.formatTime+"')} >刚刚</div><div class='lmlblog-post-user-info-time' title='来自weibo.com' >来自weibo.com</div></div><div class='lmlblog-post-setting'><i class='fa fa-angle-down'></i><div class='lmlblog-post-setting-box'><ul><a href='/user/"+uid+"/doTopPost?pid="+data.post.pid+"' title='置顶'><li>置顶</li></a><a href='#' title='编辑'><li>编辑</li></a><a href='javascript:doDelete("+uid+","+data.post.pid+")' title='删除'><li>删除</li></a></ul></div></div><div class='lmlblog-post-content' style='white-space:pre-line'>"+data.post.text+"</div><div class='lmlblog-post-bar'><li onclick='list_comments_show(this);'><i class='fa fa-comment-o'></i><span></span></li><li class='lmlblog-no-like' onclick='javascript:doLike("+data.post.pid+","+uid+",this)'><i class='fa fa-heart-o'></i><span>"+data.post.countPostLike+"</span></li></div><div class='lmlblog-post-footer-bar'><span title='"+data.formatTime+"' >"+data.formatTime+"</span><span>小尾巴</span><i class='lmlblog-icon' onclick='lmlblog_post_type_open();'></i></div></div>";
-						var prependPost2="<div class='lmlblog-posts-list words' style='background-image:url(/images/058.png);' ><div class='lmlblog-post-user-info'><div class='lmlblog-post-user-info-avatar' user-data='1'><a href='#1' style='display: inline-block;'><span class='lmlblog-vip-icon'></span><img src='/avatar/"+data.post.user.image+"' class='avatar' /><i class='lmlblog-verify lmlblog-verify-b' title="+data.post.user.name+"></i></a><div class='lmlblog-user-info-card'><div class='info_card_loading'><img src='/picture/chat-loading.gif'><p>资料加载中...</p></div></div></div><div class='lmlblog-post-user-info-name'><a href='#1'><font style='color:#333;font-weight:600' >"+data.post.user.name+"</font></a></div><div class='lmlblog-post-user-info-time' title='"+data.formatTime+"')} >刚刚</div><div class='lmlblog-post-user-info-time' title='来自weibo.com' >来自weibo.com</div></div><div class='lmlblog-post-setting'><i class='fa fa-angle-down'></i><div class='lmlblog-post-setting-box'><ul><a href='/user/"+uid+"/doTopPost?pid="+data.post.pid+"' title='置顶'><li>置顶</li></a><a href='#' title='编辑'><li>编辑</li></a><a href='javascript:doDelete("+uid+","+data.post.pid+")' title='删除'><li>删除</li></a></ul></div></div><div class='lmlblog-post-content' style='white-space:pre-line'>"+data.post.text+"</div><div class='lmlblog-post-bar'><li onclick='list_comments_show(this);'><i class='fa fa-comment-o'></i><span></span></li><li class='lmlblog-no-like' onclick='javascript:doLike("+data.post.pid+","+uid+",this)'><i class='fa fa-heart-o'></i><span>"+data.post.countPostLike+"</span></li></div><div class='lmlblog-post-footer-bar'><span title='"+data.formatTime+"' >"+data.formatTime+"</span><span>小尾巴</span><i class='lmlblog-icon' onclick='lmlblog_post_type_open();'></i></div></div>";
-						var prependPost3="<div class='lmlblog-posts-list words' style='background-image:url(/images/058.png);' ><div class='lmlblog-post-user-info'><div class='lmlblog-post-user-info-avatar' user-data='1'><a href='#1' style='display: inline-block;'><span class='lmlblog-vip-icon'></span><img src='/avatar/"+data.post.user.image+"' class='avatar' /><i class='lmlblog-verify-c lmlblog-verify-cc' title="+data.post.user.name+"></i></a><div class='lmlblog-user-info-card'><div class='info_card_loading'><img src='/picture/chat-loading.gif'><p>资料加载中...</p></div></div></div><div class='lmlblog-post-user-info-name'><a href='#1'><font style='color:#333;font-weight:600' >"+data.post.user.name+"</font></a></div><div class='lmlblog-post-user-info-time' title='"+data.formatTime+"')} >刚刚</div><div class='lmlblog-post-user-info-time' title='来自weibo.com' >来自weibo.com</div></div><div class='lmlblog-post-setting'><i class='fa fa-angle-down'></i><div class='lmlblog-post-setting-box'><ul><a href='/user/"+uid+"/doTopPost?pid="+data.post.pid+"' title='置顶'><li>置顶</li></a><a href='#' title='编辑'><li>编辑</li></a><a href='javascript:doDelete("+uid+","+data.post.pid+")' title='删除'><li>删除</li></a></ul></div></div><div class='lmlblog-post-content' style='white-space:pre-line'>"+data.post.text+"</div><div class='lmlblog-post-bar'><li onclick='list_comments_show(this);'><i class='fa fa-comment-o'></i><span></span></li><li class='lmlblog-no-like' onclick='javascript:doLike("+data.post.pid+","+uid+",this)'><i class='fa fa-heart-o'></i><span>"+data.post.countPostLike+"</span></li></div><div class='lmlblog-post-footer-bar'><span title='"+data.formatTime+"' >"+data.formatTime+"</span><span>小尾巴</span><i class='lmlblog-icon' onclick='lmlblog_post_type_open();'></i></div></div>";
-						alert("发送成功！");
-						$("#content").html("");
-						$(".tips").text("");
-						var vip=data.post.user.status;
-						if (vip==0){
-							$("#postList").before(prependPost0);
-						}else if (vip==1){
-							$("#postList").before(prependPost1);
-						}else if (vip==2){
-							$("#postList").before(prependPost2);
-						}else if (vip==3){
-							$("#postList").before(prependPost3);
-						}
-					},
-					"json"
-			);
+            if (imgPath != "") {
+                if (postfix != ".PNG" && postfix != ".JPG" && postfix != ".GIF" && postfix != ".JPEG") {
+                    alert("图片格式需为png,gif,jpeg,jpg格式");
+                } else {
+                    /*$(".item_msg").append("<div class='col-sm-12 col-xs-12 message' > <img src='/img/icon.png' class='col-sm-2 col-xs-2' style='border-radius: 50%'><div class='col-sm-10 col-xs-10'><span style='font-weight: bold;''>Jack.C</span> <br><small class='date' style='color:#999'>刚刚</small><div class='msg_content'>"+content+"<img class='mypic' onerror='this.src='/img/bg_1.jpg' src='/file:///"+imgPath+"' ></div></div></div>");*/
 
-			if(imgPath!=""){
-				if(postfix!=".PNG"&&postfix!=".JPG"&&postfix!=".GIF"&&postfix!=".JPEG"){
-					alert("图片格式需为png,gif,jpeg,jpg格式");
-				}else{
-					/*$(".item_msg").append("<div class='col-sm-12 col-xs-12 message' > <img src='/img/icon.png' class='col-sm-2 col-xs-2' style='border-radius: 50%'><div class='col-sm-10 col-xs-10'><span style='font-weight: bold;''>Jack.C</span> <br><small class='date' style='color:#999'>刚刚</small><div class='msg_content'>"+content+"<img class='mypic' onerror='this.src='/img/bg_1.jpg' src='/file:///"+imgPath+"' ></div></div></div>");*/
+                }
+            } else {
+                /*$(".item_msg").append("<div class='col-sm-12 col-xs-12 message' > <img src='/img/icon.png' class='col-sm-2 col-xs-2' style='border-radius: 50%'><div class='col-sm-10 col-xs-10'><span style='font-weight: bold;''>Jack.C</span> <br><small class='date' style='color:#999'>刚刚</small><div class='msg_content'>"+content+"</div></div></div>");*/
 
-				}
-			}else{
-				/*$(".item_msg").append("<div class='col-sm-12 col-xs-12 message' > <img src='/img/icon.png' class='col-sm-2 col-xs-2' style='border-radius: 50%'><div class='col-sm-10 col-xs-10'><span style='font-weight: bold;''>Jack.C</span> <br><small class='date' style='color:#999'>刚刚</small><div class='msg_content'>"+content+"</div></div></div>");*/
+            }
 
-			}
-
-		});
-
-		//添加表情包1
-		for (var i = 1; i < 60; i++) {
-
-			$(".emoji_1").append("<img src='/img/f"+i+".png' style='width:35px;height:35px' >");
-		}
-		//添加表情包2
-		for (var i = 1; i < 61; i++) {
-
-			$(".emoji_2").append("<img src='/img/h"+i+".png' style='width:35px;height:35px' >");
-		}
+            $.post(
+                "/main/submit",
+                "forwardPid=0&uid=" + uid + "&text=" + content + "&status=1",
+                function (data) {
+                    /*var time1 = post.postTime.format("yyyy-MM-dd hh:mm:ss");
+                    alert(time1);*/
+                    var prependPost0 = "<div class='lmlblog-posts-list words' style='background-image:url(/images/058.png);' ><div class='lmlblog-post-user-info'><div class='lmlblog-post-user-info-avatar' user-data='1'><a href='#1' style='display: inline-block;'><span class='lmlblog-vip-icon'></span><img src='/avatar/" + data.post.user.image + "' class='avatar' /><i class='' title=" + data.post.user.name + "></i></a><div class='lmlblog-user-info-card'><div class='info_card_loading'><img src='/picture/chat-loading.gif'><p>资料加载中...</p></div></div></div><div class='lmlblog-post-user-info-name'><a href='#1'><font style='color:#333;font-weight:600' >" + data.post.user.name + "</font></a></div><div class='lmlblog-post-user-info-time' title='" + data.formatTime + "')} >刚刚</div><div class='lmlblog-post-user-info-time' title='来自weibo.com' >来自weibo.com</div></div><div class='lmlblog-post-setting'><i class='fa fa-angle-down'></i><div class='lmlblog-post-setting-box'><ul><a href='/user/" + uid + "/doTopPost?pid=" + data.post.pid + "' title='置顶'><li>置顶</li></a><a href='#' title='编辑'><li>编辑</li></a><a href='javascript:doDelete(" + uid + "," + data.post.pid + ")' title='删除'><li>删除</li></a></ul></div></div><div class='lmlblog-post-content' style='white-space:pre-line'>" + data.post.text + "</div><div class='lmlblog-post-bar'><li onclick='list_comments_show(this);'><i class='fa fa-comment-o'></i><span></span></li><li class='lmlblog-no-like' onclick='javascript:doLike(" + data.post.pid + "," + uid + ",this)'><i class='fa fa-heart-o'></i><span>" + data.post.countPostLike + "</span></li></div><div class='lmlblog-post-footer-bar'><span title='" + data.formatTime + "' >" + data.formatTime + "</span><span>小尾巴</span><i class='lmlblog-icon' onclick='lmlblog_post_type_open();'></i></div></div>";
+                    var prependPost1 = "<div class='lmlblog-posts-list words' style='background-image:url(/images/058.png);' ><div class='lmlblog-post-user-info'><div class='lmlblog-post-user-info-avatar' user-data='1'><a href='#1' style='display: inline-block;'><span class='lmlblog-vip-icon'></span><img src='/avatar/" + data.post.user.image + "' class='avatar' /><i class='lmlblog-verify lmlblog-verify-a' title=" + data.post.user.name + "></i></a><div class='lmlblog-user-info-card'><div class='info_card_loading'><img src='/picture/chat-loading.gif'><p>资料加载中...</p></div></div></div><div class='lmlblog-post-user-info-name'><a href='#1'><font style='color:#333;font-weight:600' >" + data.post.user.name + "</font></a></div><div class='lmlblog-post-user-info-time' title='" + data.formatTime + "')} >刚刚</div><div class='lmlblog-post-user-info-time' title='来自weibo.com' >来自weibo.com</div></div><div class='lmlblog-post-setting'><i class='fa fa-angle-down'></i><div class='lmlblog-post-setting-box'><ul><a href='/user/" + uid + "/doTopPost?pid=" + data.post.pid + "' title='置顶'><li>置顶</li></a><a href='#' title='编辑'><li>编辑</li></a><a href='javascript:doDelete(" + uid + "," + data.post.pid + ")' title='删除'><li>删除</li></a></ul></div></div><div class='lmlblog-post-content' style='white-space:pre-line'>" + data.post.text + "</div><div class='lmlblog-post-bar'><li onclick='list_comments_show(this);'><i class='fa fa-comment-o'></i><span></span></li><li class='lmlblog-no-like' onclick='javascript:doLike(" + data.post.pid + "," + uid + ",this)'><i class='fa fa-heart-o'></i><span>" + data.post.countPostLike + "</span></li></div><div class='lmlblog-post-footer-bar'><span title='" + data.formatTime + "' >" + data.formatTime + "</span><span>小尾巴</span><i class='lmlblog-icon' onclick='lmlblog_post_type_open();'></i></div></div>";
+                    var prependPost2 = "<div class='lmlblog-posts-list words' style='background-image:url(/images/058.png);' ><div class='lmlblog-post-user-info'><div class='lmlblog-post-user-info-avatar' user-data='1'><a href='#1' style='display: inline-block;'><span class='lmlblog-vip-icon'></span><img src='/avatar/" + data.post.user.image + "' class='avatar' /><i class='lmlblog-verify lmlblog-verify-b' title=" + data.post.user.name + "></i></a><div class='lmlblog-user-info-card'><div class='info_card_loading'><img src='/picture/chat-loading.gif'><p>资料加载中...</p></div></div></div><div class='lmlblog-post-user-info-name'><a href='#1'><font style='color:#333;font-weight:600' >" + data.post.user.name + "</font></a></div><div class='lmlblog-post-user-info-time' title='" + data.formatTime + "')} >刚刚</div><div class='lmlblog-post-user-info-time' title='来自weibo.com' >来自weibo.com</div></div><div class='lmlblog-post-setting'><i class='fa fa-angle-down'></i><div class='lmlblog-post-setting-box'><ul><a href='/user/" + uid + "/doTopPost?pid=" + data.post.pid + "' title='置顶'><li>置顶</li></a><a href='#' title='编辑'><li>编辑</li></a><a href='javascript:doDelete(" + uid + "," + data.post.pid + ")' title='删除'><li>删除</li></a></ul></div></div><div class='lmlblog-post-content' style='white-space:pre-line'>" + data.post.text + "</div><div class='lmlblog-post-bar'><li onclick='list_comments_show(this);'><i class='fa fa-comment-o'></i><span></span></li><li class='lmlblog-no-like' onclick='javascript:doLike(" + data.post.pid + "," + uid + ",this)'><i class='fa fa-heart-o'></i><span>" + data.post.countPostLike + "</span></li></div><div class='lmlblog-post-footer-bar'><span title='" + data.formatTime + "' >" + data.formatTime + "</span><span>小尾巴</span><i class='lmlblog-icon' onclick='lmlblog_post_type_open();'></i></div></div>";
+                    var prependPost3 = "<div class='lmlblog-posts-list words' style='background-image:url(/images/058.png);' ><div class='lmlblog-post-user-info'><div class='lmlblog-post-user-info-avatar' user-data='1'><a href='#1' style='display: inline-block;'><span class='lmlblog-vip-icon'></span><img src='/avatar/" + data.post.user.image + "' class='avatar' /><i class='lmlblog-verify-c lmlblog-verify-cc' title=" + data.post.user.name + "></i></a><div class='lmlblog-user-info-card'><div class='info_card_loading'><img src='/picture/chat-loading.gif'><p>资料加载中...</p></div></div></div><div class='lmlblog-post-user-info-name'><a href='#1'><font style='color:#333;font-weight:600' >" + data.post.user.name + "</font></a></div><div class='lmlblog-post-user-info-time' title='" + data.formatTime + "')} >刚刚</div><div class='lmlblog-post-user-info-time' title='来自weibo.com' >来自weibo.com</div></div><div class='lmlblog-post-setting'><i class='fa fa-angle-down'></i><div class='lmlblog-post-setting-box'><ul><a href='/user/" + uid + "/doTopPost?pid=" + data.post.pid + "' title='置顶'><li>置顶</li></a><a href='#' title='编辑'><li>编辑</li></a><a href='javascript:doDelete(" + uid + "," + data.post.pid + ")' title='删除'><li>删除</li></a></ul></div></div><div class='lmlblog-post-content' style='white-space:pre-line'>" + data.post.text + "</div><div class='lmlblog-post-bar'><li onclick='list_comments_show(this);'><i class='fa fa-comment-o'></i><span></span></li><li class='lmlblog-no-like' onclick='javascript:doLike(" + data.post.pid + "," + uid + ",this)'><i class='fa fa-heart-o'></i><span>" + data.post.countPostLike + "</span></li></div><div class='lmlblog-post-footer-bar'><span title='" + data.formatTime + "' >" + data.formatTime + "</span><span>小尾巴</span><i class='lmlblog-icon' onclick='lmlblog_post_type_open();'></i></div></div>";
+                    alert("发送成功！");
+                    $("#content").html("");
+                    $(".tips").text("");
+                    var vip = data.post.user.status;
+                    if (vip == 0) {
+                        $("#postList").before(prependPost0);
+                    } else if (vip == 1) {
+                        $("#postList").before(prependPost1);
+                    } else if (vip == 2) {
+                        $("#postList").before(prependPost2);
+                    } else if (vip == 3) {
+                        $("#postList").before(prependPost3);
+                    }
+                },
+                "json"
+            );
 
 
-		$(".emoji").click(function(){
+        });
 
-			$(".myEmoji").show();
+        //添加表情包1
+        for (var i = 1; i < 60; i++) {
 
-			//点击空白处隐藏弹出层
-			$(document).click(function (e) {
+            $(".emoji_1").append("<img src='/img/f" + i + ".png' style='width:35px;height:35px' >");
+        }
+        //添加表情包2
+        for (var i = 1; i < 61; i++) {
 
-				if (!$("#edit_form").is(e.target) && $("#edit_form").has(e.target).length === 0) {
+            $(".emoji_2").append("<img src='/img/h" + i + ".png' style='width:35px;height:35px' >");
+        }
 
-					$(".myEmoji").hide();
-				}
-			});
-		});
 
-		//将表情添加到输入框
-		$(".myEmoji img").each(function(){
-			$(this).click(function(){
-				var url = $(this)[0].src;
+        $(".emoji").click(function () {
 
-				$('#content').append("<img src='/"+url+"' style='width:25px;height:25px' >");
+            $(".myEmoji").show();
 
-				$("#send").removeClass("disabled");
-			})
-		})
+            //点击空白处隐藏弹出层
+            $(document).click(function (e) {
 
-		//放大或缩小预览图片
-		$(".mypic").click(function(){
-			var oWidth=$(this).width(); //取得图片的实际宽度
-			var oHeight=$(this).height(); //取得图片的实际高度
+                if (!$("#edit_form").is(e.target) && $("#edit_form").has(e.target).length === 0) {
 
-			if($(this).height()!=200){
-				$(this).height(200);
-			}else{
-				$(this).height(oHeight + 200/oWidth*oHeight);
+                    $(".myEmoji").hide();
+                }
+            });
+        });
 
-			}
+        //将表情添加到输入框
+        $(".myEmoji img").each(function () {
+            $(this).click(function () {
+                var url = $(this)[0].src;
 
-		})
+                $('#content').append("<img src='/" + url + "' style='width:25px;height:25px' >");
 
-	})
+                $("#send").removeClass("disabled");
+            })
+        })
+
+        //放大或缩小预览图片
+        $(".mypic").click(function () {
+            var oWidth = $(this).width(); //取得图片的实际宽度
+            var oHeight = $(this).height(); //取得图片的实际高度
+
+            if ($(this).height() != 200) {
+                $(this).height(200);
+            } else {
+                $(this).height(oHeight + 200 / oWidth * oHeight);
+
+            }
+
+        })
+
+    })
 </script>
 </html>
