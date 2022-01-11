@@ -247,9 +247,9 @@
                                     <div class="lmlblog-post-bar">
                                         <hr style="width: 710px;position: relative;left: -20px;top: 10px">
                                         <li th:id="|show${post.pid}PostComment|"
-                                            onclick="list_comments_show(this,this.getAttribute('data-uid'),this.getAttribute('data-pid'),this.getAttribute('data-image'),this.getAttribute('data-name'),'hot')"
+                                            onclick="list_comments_show(this,this.getAttribute('data-uid'),this.getAttribute('data-pid'),this.getAttribute('data-image'),this.getAttribute('data-name'),'hot',this.getAttribute('data-suid'))"
                                             th:data-uid="${post.user.uid}" th:data-pid="${post.pid}"
-                                            th:data-image="${session.user.image}" th:data-name="${session.user.name}">
+                                            th:data-image="${session.user.image}" th:data-name="${session.user.name}" th:data-suid="${session.user.uid}">
                                             <i class="fa fa-comment-o"></i>
                                             <span th:text="${post.countPostComment}"></span>
                                         </li>

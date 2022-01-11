@@ -38,6 +38,16 @@
             color: orange;
             text-decoration: none;
         }
+
+        .detailPost{
+            color: black;
+            text-decoration: none;
+        }
+
+        .detailPost:hover{
+            color: orange;
+            text-decoration: none;
+        }
     </style>
     <link rel='stylesheet' th:href='@{/css/bootstrap.min.css}' type='text/css' media='all'/>
     <link rel='stylesheet' id='style-css' th:href='@{/css/style.css}' type='text/css' media='all'/>
@@ -190,9 +200,8 @@
 
 
                     <div class="lmlblog-member-left-bg-xg clear">
-                        <h3>他的热门-&#45;&#45;</h3>
-                        <div id="lmlblog-memeber-bg-xg" class="aplayer"></div>
-
+                        <h3>他的热门</h3>
+                        <div id="lmlblog-memeber-bg-xg" class="aplayer" th:utext="${hotPost.text}"></div>
                     </div>
                 </div>
                 <div class="lmlblog-member-right">
@@ -203,7 +212,8 @@
                                 <div><i class="fa fa-arrow-circle-up"></i><span style="color: red;">置顶</span><br><br>
                                 </div>
                                 <div class="lmlblog-post-user-info-avatar" user-data="1">
-                                    <a href="#" style="display: inline-block;">
+                                    <a th:href="@{|/user/${topPost.user.uid}/1|}" style="display: inline-block;"
+                                       th:onmouseover="|showImg(${topPost.pid},${topPost.user.uid},${session.user.uid})|">
                                         <span class="lmlblog-vip-icon"></span>
                                         <img th:src="|/avatar/${topPost.user.image}|" class="avatar"/>
                                         <i th:if="${topPost.user.status==0}" th:title="普通用户"></i>
@@ -215,10 +225,11 @@
                                            th:title="超级管理员"></i>
                                     </a>
                                     <div class="lmlblog-user-info-card">
-                                        <div class="info_card_loading">
+                                        <div class="info_card_loading" th:id="|infoCard${topPost.pid}|">
                                             <img style="margin-top: 70px" src="/picture/chat-loading.gif">
                                             <p>资料加载中...</p>
                                         </div>
+                                        <!--<a class="nameInfo fl" title="详情" rel="/ajax/floatbox.html"></a>-->
                                     </div>
                                 </div>
 
@@ -458,7 +469,8 @@
                                     <i class="fa fa-user" th:case="3"><span style="color: orange;">仅粉丝可见</span><br><br></i>
                                 </div>
                                 <div class="lmlblog-post-user-info-avatar" user-data="1">
-                                    <a href="#" style="display: inline-block;">
+                                    <a th:href="@{|/user/${post.user.uid}/1|}" style="display: inline-block;"
+                                       th:onmouseover="|showImg(${post.pid},${post.user.uid},${session.user.uid})|">
                                         <span class="lmlblog-vip-icon"></span>
                                         <img th:src="|/avatar/${post.user.image}|" class="avatar"/>
                                         <i th:if="${post.user.status==0}" th:title="普通用户"></i>
@@ -470,10 +482,11 @@
                                            th:title="超级管理员"></i>
                                     </a>
                                     <div class="lmlblog-user-info-card">
-                                        <div class="info_card_loading"><img style="margin-top: 70px"
-                                                                            src="/picture/chat-loading.gif">
+                                        <div class="info_card_loading" th:id="|infoCard${post.pid}|">
+                                            <img style="margin-top: 70px" src="/picture/chat-loading.gif">
                                             <p>资料加载中...</p>
                                         </div>
+                                        <!--<a class="nameInfo fl" title="详情" rel="/ajax/floatbox.html"></a>-->
                                     </div>
                                 </div>
 
@@ -999,6 +1012,12 @@
                 comment += "<hr style=\"width: 680px;margin-left: 15px\" />";
                 comment += commentContent;
             }
+            comment+=
+                "<div class='row' style='margin-left: 0px;margin-right: 0px;padding-top: 10px'>" +
+                "<div class='col-lg-12' style='text-align: center'>" +
+                "<a class='detailPost' href='/main/detail/"+pid+"'>查看详情</a>" +
+                "</div>" +
+                "</div>"
             $(d).parent().parent().parent().next().html(comment);
         } else {
             $(d).parent().parent().parent().next().css("display", "none");
@@ -1178,13 +1197,13 @@
                         infoCard += "<i title='普通用户'/>";
                         break;
                     case 1:
-                        infoCard += "<i class='lmlblog-verify lmlblog-verify-a' style='position: absolute;top: 38px;left: 200px;' title='会员用户'/>";
+                        infoCard += "<i class='lmlblog-verify lmlblog-verify-a' style='position: absolute;top: 66px;left: 200px;' title='会员用户'/>";
                         break;
                     case 2:
-                        infoCard += "<i class='lmlblog-verify lmlblog-verify-b' style='position: absolute;top: 38px;left: 200px;' title='认证用户'/>";
+                        infoCard += "<i class='lmlblog-verify lmlblog-verify-b' style='position: absolute;top: 66px;left: 200px;' title='认证用户'/>";
                         break;
                     case 3:
-                        infoCard += "<i class='lmlblog-verify-c lmlblog-verify-cc' style='position: absolute;top: 38px;left: 200px;' title='超级管理员'/>";
+                        infoCard += "<i class='lmlblog-verify-c lmlblog-verify-cc' style='position: absolute;top: 66px;left: 200px;' title='超级管理员'/>";
                         break;
                 }
                 infoCard += "</a><div><strong>" + data.name + "</strong>";

@@ -22,4 +22,5 @@ public interface PostService {
 	public Post showTopPost(Integer uid);
 	public List<Post> fillPostInfo(List<Post> postList,Integer uid);
 	public Post showPost(Integer pid);
+	public Post hotPost(Integer curUid);
 }

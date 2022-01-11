@@ -347,5 +347,16 @@ public class PostServiceImpl implements PostService{
 		return post;
 	}
 
+	@Override
+	//查询个人最热门微博
+	public Post hotPost(Integer curUid) {
+		PostExample postExample=new PostExample();
+		postExample.createCriteria().andUidEqualTo(curUid);
+		List<Post> posts = postMapper.selectByExample(postExample);
+		List<Post> posts1 = fillPostInfo(posts, curUid);
+		Post hotPost = ListUtil.sortByPostHeatSingle(posts1).get(posts1.size()-1);
+		return hotPost;
+	}
+
 
 }
