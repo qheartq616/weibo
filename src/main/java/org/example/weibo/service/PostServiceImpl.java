@@ -228,19 +228,21 @@ public class PostServiceImpl implements PostService{
 			return null;
 		}else {*/
 		List<Integer> uidList=new ArrayList<>();
-		for (User user : userList) {
-			uidList.add(
-					user.getUid());
-		}
-
-		PageHelper.startPage(pageNum,7);
-		PostExample postExample=new PostExample();
-		postExample.setOrderByClause("post_time desc");
-		postExample.createCriteria().andUidIn(uidList);
-		List<Post> postList = postMapper.selectByExample(postExample);
-		PageInfo<Post> pageInfo=new PageInfo<>(postList);
-		List<Post> filledPostList = fillPostInfo(pageInfo.getList(), uid);
-		pageInfo.setList(filledPostList);
+			if(userList!=null){
+			for (User user : userList) {
+				if(user.getUid()!=0){
+				uidList.add(
+						user.getUid());
+				}
+			}
+			PageHelper.startPage(pageNum,7);
+			PostExample postExample=new PostExample();
+			postExample.setOrderByClause("post_time desc");
+			postExample.createCriteria().andUidIn(uidList);
+			List<Post> postList = postMapper.selectByExample(postExample);
+			PageInfo<Post> pageInfo=new PageInfo<>(postList);
+			List<Post> filledPostList = fillPostInfo(pageInfo.getList(), uid);
+			pageInfo.setList(filledPostList);
 	/*for (Post post : pageInfo.getList()) {
 		//加入点赞状态
 		boolean b = postLikeService.ifPostLike(post.getPid(), uid);
@@ -250,8 +252,11 @@ public class PostServiceImpl implements PostService{
 		int i = postLikeService.countPostLike(post.getPid());
 		post.setCountPostLike(i);
 	}*/
+			return pageInfo;
+			}else {
+				return null;
+			}
 
-		return pageInfo;
 		/*}*/
 	}
 

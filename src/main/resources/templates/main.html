@@ -63,7 +63,7 @@
 					</form>
 				</li>
 				<li class="gengxin menu-item menu-item-type-custom">
-					<a th:href="@{|/main/${session.user.uid}/all/1|}"><i class="fa fa-home"></i>微博首页</a>
+					<a th:href="@{|/main/all/1|}"><i class="fa fa-home"></i>微博首页</a>
 				</li>
 				<li class="menu-item"><a th:href="@{|/news/atme/${session.user.uid}/1|}"><i class="fa fa-envelope-o"></i>私信</a></li>
 				<li th:class="|menu-item menu-item-type-custom|">
@@ -118,8 +118,8 @@
                 </div>
                 <div class="lmlblog-member-left-profile">
                     <h3>自定义分组 </h3>
-                    <ul th:each="group:${groupList}">
-                        <li>
+                    <ul >
+                        <li th:each="group:${groupList}">
                             <i th:if="${group.gid==gid}" style="color: #ff8862;" class="fa fa-smile-o"></i>
                             <i th:unless="${group.gid==gid}" class="fa fa-smile-o"></i>
                             <a th:if="${group.gid==gid}" style="color: #ff8862;"

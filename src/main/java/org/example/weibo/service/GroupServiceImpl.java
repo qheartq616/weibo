@@ -42,20 +42,17 @@ public class GroupServiceImpl implements GroupService{
 	//只需要一个gid
 	public List<User> showAllFollowUser(Integer gid) {
 		GroupExample groupExample=new GroupExample();
-		groupExample.createCriteria().andGidEqualTo(gid);
+		groupExample.createCriteria().andGidEqualTo(gid).andFollowUidNotEqualTo(0);
 		List<Group> groupList = groupMapper.selectByExample(groupExample);
-
 		/*for (Group group : groupList) {
 			System.out.println("group = " + group.toString());
 		}*/
-
 		if (groupList.size()>0){
 			List<User> followUserList=new ArrayList<>();
 			for (Group group : groupList) {
 				User user = userMapper.selectByPrimaryKey(group.getFollowUid());
 				followUserList.add(user);
 			}
-
 			return followUserList;
 		}else {
 			return null;

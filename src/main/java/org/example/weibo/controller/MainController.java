@@ -66,8 +66,8 @@ public class MainController {
 
 	@RequestMapping("myGroups/{gid}/{pageNum}")
 	public String showGroupPost(HttpSession session, Model model,
-	                            @PathVariable("gid") Integer gid,
-	                            @PathVariable("pageNum") Integer pageNum) {
+								@PathVariable("gid") Integer gid,
+								@PathVariable("pageNum") Integer pageNum) {
 		User user = (User) session.getAttribute("user");
 
 		PageInfo<Post> pageInfo = postService.showGroupAllPost(user.getUid(), gid, pageNum);

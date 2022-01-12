@@ -162,7 +162,7 @@
                             </li>
                             <li style="margin: 0px 20px">
                                 <ul id="groups" th:each="group:${userCurGroup}">
-                                    <li><a th:text="${group.name}"></a></li>
+                                    <li><a th:href="@{|/myGroups/${userCur.uid}/${group.gid}/1|}" th:text="${group.name}"></a></li>
                                 </ul>
                             </li>
                             <li th:if="${session.user.uid== userCur.uid}">
@@ -174,11 +174,12 @@
                     </div>
                 </div>
                 <div class=" lmlblog-member-right">
-                    <div class="lmlblog-post-list" th:each="user:${users}">
+                    <div class="lmlblog-post-list" th:if="${users!=null}" th:each="user:${users}">
                         <div class="lmlblog-posts-list words" style="background-image:url(/images/058.png); "
                              data="4197">
                             <!-- 动态内容部分，包括列表 -->
-                            <div class="lmlblog-post-user-info" style="display: inline-block">
+                            <div class="lmlblog-post-user-info" style="display: inline-block"
+                                 >
                                 <div class="lmlblog-post-user-info-avatar" user-data="1">
                                     <a th:href="@{|/user/${user.uid}/1|}" style="display: inline-block;">
                                         <span class="lmlblog-vip-icon"></span>
@@ -192,9 +193,11 @@
                                            th:title="超级管理员"></i>
                                     </a>
                                     <div class="lmlblog-user-info-card">
-                                        <div class="info_card_loading"><img style="margin-top: 70px" src="/picture/chat-loading.gif">
+                                        <div class="info_card_loading" th:id="|infoCard${user.uid}|">
+                                            <img style="margin-top: 70px" src="/picture/chat-loading.gif">
                                             <p>资料加载中...</p>
                                         </div>
+                                        <!--<a class="nameInfo fl" title="详情" rel="/ajax/floatbox.html"></a>-->
                                     </div>
                                 </div>
                                 <div class="lmlblog-post-user-info-name">
@@ -224,6 +227,17 @@
                                 <p th:utext="${user.description}"></p>
                             </div>
 
+                            <div class="lmlblog-post-footer-bar">
+                                <span>小尾巴</span><i class="lmlblog-icon" onclick="lmlblog_post_type_open();">&#xe62c;</i>
+                            </div>
+
+                        </div>
+                        <!-- posts_list -->
+                    </div>
+                    <div class="lmlblog-post-list" th:if="${users==null}">
+                        <div class="lmlblog-posts-list words" style="background-image:url(/images/058.png); "
+                             data="4197">
+                          <span>对不起该分组下还没有关注的人</span>
                             <div class="lmlblog-post-footer-bar">
                                 <span>小尾巴</span><i class="lmlblog-icon" onclick="lmlblog_post_type_open();">&#xe62c;</i>
                             </div>
@@ -361,7 +375,45 @@
         })
 
     });
+    function showImg(pid, curUid, uid) {
+        $.post(
+            "/user/" + uid + "/getInfoByUid",
+            "curUid=" + curUid,
+            function (data) {
+                var infoCard = "<a href='/user/" + data.uid + "/1' style='display: inline-block'><img src='/avatar/" + data.image + "' class='avatar'/>"
+                switch (data.status) {
+                    case 0:
+                        infoCard += "<i title='普通用户'/>";
+                        break;
+                    case 1:
+                        infoCard += "<i class='lmlblog-verify lmlblog-verify-a' style='position: absolute;top: 66px;left: 200px;' title='会员用户'/>";
+                        break;
+                    case 2:
+                        infoCard += "<i class='lmlblog-verify lmlblog-verify-b' style='position: absolute;top: 66px;left: 200px;' title='认证用户'/>";
+                        break;
+                    case 3:
+                        infoCard += "<i class='lmlblog-verify-c lmlblog-verify-cc' style='position: absolute;top: 66px;left: 200px;' title='超级管理员'/>";
+                        break;
+                }
+                infoCard += "</a><div><strong>" + data.name + "</strong>";
+                switch (data.gender) {
+                    case '男':
+                        infoCard += "<span class='lmlblog-mark lmlblog-boy'><i class='fa fa-mars'></i></span>";
+                        break;
+                    case '女':
+                        infoCard += "<span class='lmlblog-mark lmlblog-girl'><i class='fa fa-venus'></i></span>";
+                        break;
+                    default:
+                        infoCard += "<span class='lmlblog-mark' style='background-color: orange'><i class='fa fa-transgender-alt'></i></span>";
+                        break;
+                }
+                infoCard += "</div><br><div>" + data.description + "</div><hr><div>&nbsp;&nbsp;关注&nbsp;" + data.countAllFollowUser + "&nbsp;&nbsp;|&nbsp;&nbsp;粉丝&nbsp;" + data.countAllFans + "&nbsp;&nbsp;|&nbsp;&nbsp;<a href='/user/" + data.uid + "/1'>微博&nbsp;" + data.countAllPost + "</a>&nbsp;&nbsp;</div><br><div>" + data.city + "</div>";
 
+                $("#infoCard" + pid).html(infoCard);
+            },
+            "json"
+        );
+    }
     function showList(d) {
         $(".setList").css({"display": "block"});
         $(".setList").mouseover(function () {

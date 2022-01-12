@@ -1,8 +1,10 @@
 package org.example.weibo.controller;
 
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.example.weibo.mapper.UserMapper;
 import org.example.weibo.pojo.Group;
+import org.example.weibo.pojo.Post;
 import org.example.weibo.pojo.R;
 import org.example.weibo.pojo.User;
 import org.example.weibo.service.FollowService;
@@ -86,6 +88,40 @@ public class FollowController {
         groupService.createGroup(group);
         return R.ok().addData("result","添加分组成功");
     }
+    @RequestMapping("/myGroups/{userCurUid}/{gid}/{pageNum}")
+    public String showGroupPost(HttpSession session, Model model,
+                                @PathVariable Integer userCurUid,
+                                @PathVariable("gid") Integer gid,
+                                @PathVariable("pageNum") Integer pageNum) {
+        User user = (User) session.getAttribute("user");
 
+        User userCur = userMapper.selectByPrimaryKey(userCurUid);
+
+        User fillUserCur = userService.fillUserInfo(user, userCur);
+        model.addAttribute("userCur",fillUserCur);
+
+        List<Group> list = groupService.showAllGroupList(userCurUid);
+        model.addAttribute("userCurGroup",list);
+        for (Group group : list) {
+            System.out.println(group.getName()+"--"+group.getGid());
+        }
+        List<User> users = groupService.showAllFollowUser(gid);
+        if(users!=null) {
+            for (User user1 : users) {
+                List<User> users1 = followService.showAllFollowUser(user1.getUid());
+                user1.setCountAllFollowUser(users1.size());
+                List<User> users2 = followService.showAllFans(user1.getUid());
+                user1.setCountAllFans(users2.size());
+                int i = postService.countPost(user1.getUid());
+                user1.setCountAllPost(i);
+            }
+            model.addAttribute("users", users);
+        }else{
+            model.addAttribute("user",null);
+        }
+
+
+        return "personal";
+    }
 
 }
