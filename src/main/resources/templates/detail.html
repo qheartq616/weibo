@@ -38,6 +38,15 @@
             color: orange;
             text-decoration: none;
         }
+
+        .commona{
+            color: black;
+            text-decoration: none;
+        }
+        .commona:hover{
+            text-decoration: none;
+            color: orange;
+        }
     </style>
     <link rel='stylesheet' th:href='@{/css/bootstrap.min.css}' type='text/css' media='all'/>
     <link rel='stylesheet' id='style-css' th:href='@{/css/style.css}' type='text/css' media='all'/>
@@ -88,7 +97,7 @@
 
 <div style="clear: both;"></div>
 <div class="lmlblog-member-main" data="1">
-    <div class="lmlblog-member-bg">
+    <div class="lmlblog-member-bg-detail">
         <div class="lmlblog-member-content">
             <div class="lmlblog-member-content-list clear">
                 <div class="lmlblog-member-left">
@@ -102,7 +111,7 @@
                             <span>粉丝</span>
                         </li>
                         <li>
-                            <a th:href="@{|/user/${post.user.uid}/1|}">
+                            <a class="commona" th:href="@{|/user/${post.user.uid}/1|}">
                                 <strong th:text="${post.user.countAllPost}">888-&#45;&#45;</strong>
                                 <span>微博</span>
                             </a>
@@ -175,7 +184,7 @@
                                 </div>
 
                                 <div class="lmlblog-post-user-info-name">
-                                    <a href="#">
+                                    <a class="commona" href="#">
                                         <font style="color:#333;font-weight:600" th:text="${post.user.name}">司空琪</font>
                                     </a>
                                     <span class="lmlblog-mark lmlblog-lv" title="经验：3815"></span><span
@@ -192,21 +201,21 @@
                                 <i class="fa fa-angle-down"></i>
                                 <div class="lmlblog-post-setting-box" th:switch="${post.user.uid==session.user.uid}">
                                     <ul th:case="true">
-                                        <a th:href="@{/user/${session.user.uid}/doTopPost(pid=${post.pid})}" title="置顶">
+                                        <a class="commona" th:href="@{/user/${session.user.uid}/doTopPost(pid=${post.pid})}" title="置顶">
                                             <li>置顶</li>
                                         </a>
-                                        <a href="#" title="编辑">
+                                        <a class="commona" href="#" title="编辑">
                                             <li>编辑</li>
                                         </a>
-                                        <a th:href="|javascript:doDelete(${post.user.uid},${post.pid})|" title="删除">
+                                        <a class="commona" th:href="|javascript:doDelete(${post.user.uid},${post.pid})|" title="删除">
                                             <li>删除</li>
                                         </a>
                                     </ul>
                                     <ul th:case="false">
-                                        <a th:href="@{|/user/${post.user.uid}/1|}" title="取消关注">
+                                        <a class="commona" th:href="@{|/user/${post.user.uid}/1|}" title="取消关注">
                                             <li>取消关注</li>
                                         </a>
-                                        <a href="#" title="举报">
+                                        <a class="commona" href="#" title="举报">
                                             <li>举报</li>
                                         </a>
                                     </ul>
@@ -406,7 +415,7 @@
             <div class="footer_b_top">
             </div>
             <div class="footer_b_bottom">Design by 2017 画江湖杯莫停 司空琪个人主页 司空琪微博/空间/贴吧官博。Promoted by 2021
-                红桃QHeartQ。内容源于网络搜集，仅学习、分享交流。
+                qhq616。内容源于网络搜集，仅学习、分享交流。
             </div>
         </div>
     </div>
@@ -431,8 +440,9 @@
 <script type='text/javascript' th:src='@{/js/layui.js}'></script>
 <script>
     $(document).ready(function(){
-        window.onload = list_comments_show
+        $("#showPostComment").trigger('click')
     });
+
     function showReComment(d) {
         var displayRe = $(d).parent().parent().parent().next().css("display");
         if (displayRe == "none") {
@@ -458,7 +468,7 @@
             type: "POST",
             async: false,
             dataType: "json",
-            url: "/comment/someComment?upid=" + uid + "-" + pid + "&kind=" + kind,
+            url: "/comment/allComment?upid=" + uid + "-" + pid + "&kind=" + kind,
             success: function (r) {
                 if (r.code === 631548) {
                     //console.log(111111)
@@ -466,14 +476,14 @@
                         "\t\t\t\t<div class='row' style='margin-left: 0px;margin-right: 0px;'>\n"
                     if (kind === "hot") {
                         comment += "\t\t\t\t\t<div class=\"col-lg-6\" data-kind='hot'>" +
-                            "<a style='text-decoration: none;color: orange' onclick=\"showCommentByKind(this," + uid + "," + pid + ",'" + image + "','hot'," + suid + ")\">按热度</a>" +
+                            "<a class=\"commona\" style='text-decoration: none;color: orange' onclick=\"showCommentByKind(this," + uid + "," + pid + ",'" + image + "','hot'," + suid + ")\">按热度</a>" +
                             "&nbsp;&nbsp;|&nbsp;&nbsp;" +
-                            "<a style='text-decoration: none' onclick=\"showCommentByKind(this," + uid + "," + pid + ",'" + image + "','latest'," + suid + ")\">按时间</a>";
+                            "<a class=\"commona\" style='text-decoration: none' onclick=\"showCommentByKind(this," + uid + "," + pid + ",'" + image + "','latest'," + suid + ")\">按时间</a>";
                     } else {
                         comment += "\t\t\t\t\t<div class=\"col-lg-6\" data-kind='latest'>" +
-                            "<a style='text-decoration: none' onclick=\"showCommentByKind(this," + uid + "," + pid + ",'" + image + "','hot'," + suid + ")\">按热度</a>" +
+                            "<a class=\"commona\" style='text-decoration: none' onclick=\"showCommentByKind(this," + uid + "," + pid + ",'" + image + "','hot'," + suid + ")\">按热度</a>" +
                             "&nbsp;&nbsp;|&nbsp;&nbsp;" +
-                            "<a style='text-decoration: none;color: orange' onclick=\"showCommentByKind(this," + uid + "," + pid + ",'" + image + "','latest'," + suid + ")\">按时间</a>";
+                            "<a class=\"commona\" style='text-decoration: none;color: orange' onclick=\"showCommentByKind(this," + uid + "," + pid + ",'" + image + "','latest'," + suid + ")\">按时间</a>";
                     }
                     comment += "</div>\n" +
                         "\t\t\t\t</div>";
@@ -499,12 +509,12 @@
                             "<div style='float: right'>"
                         //console.log(suid+"=="+r.data.commentList[i].uid)
                         if (suid == r.data.commentList[i].uid) {
-                            comment += "\t\t\t\t\t\t<a style='text-decoration: none' onclick=\"deleteComment(" + r.data.commentList[i].cid + ",'" + r.data.commentList[i].upid + "','" + kind + "')\">删除</a>\n" +
+                            comment += "\t\t\t\t\t\t<a class=\"commona\" style='text-decoration: none' onclick=\"deleteComment(" + r.data.commentList[i].cid + ",'" + r.data.commentList[i].upid + "','" + kind + "')\">删除</a>\n" +
                                 "\t\t\t\t\t\t&nbsp;&nbsp;|&nbsp;&nbsp;\n"
                         }
-                        comment += "\t\t\t\t\t\t<a style='text-decoration: none' onclick='showReComment(this)'>回复</a>\n" +
+                        comment += "\t\t\t\t\t\t<a class=\"commona\" style='text-decoration: none' onclick='showReComment(this)'>回复</a>\n" +
                             "\t\t\t\t\t\t&nbsp;&nbsp;|&nbsp;&nbsp;\n" +
-                            "\t\t\t\t\t\t<a onclick='doCommentLike(this," + r.data.commentList[i].uid + "," + r.data.commentList[i].cid + ")'>";
+                            "\t\t\t\t\t\t<a class=\"commona\" onclick='doCommentLike(this," + r.data.commentList[i].uid + "," + r.data.commentList[i].cid + ")'>";
                         if (r.data.commentList[i].commentLike) {
                             comment += "<i class='fa fa-heart'></i>";
                         } else {
@@ -572,13 +582,13 @@
                                     "\t\t\t\t\t\t\t<div class='col-lg-4' style=\"padding-right: 5px\">\n" +
                                     "\t\t\t\t\t\t\t\t<div style=\"float: right\">\n"
                                 if (suid == r.data.commentList[i].subCommentList[j].uid) {
-                                    comment += "\t\t\t\t\t\t<a style='text-decoration: none' onclick=\"deleteComment(" + r.data.commentList[i].subCommentList[j].cid + ",'" + r.data.commentList[i].subCommentList[j].upid + "','" + kind + "')\">删除</a>\n" +
+                                    comment += "\t\t\t\t\t\t<a class=\"commona\" style='text-decoration: none' onclick=\"deleteComment(" + r.data.commentList[i].subCommentList[j].cid + ",'" + r.data.commentList[i].subCommentList[j].upid + "','" + kind + "')\">删除</a>\n" +
                                         "\t\t\t\t\t\t&nbsp;&nbsp;|&nbsp;&nbsp;\n"
                                 }
-                                comment += "\t\t\t\t\t\t\t\t\t<a style='text-decoration: none'\n" +
+                                comment += "\t\t\t\t\t\t\t\t\t<a class=\"commona\" style='text-decoration: none'\n" +
                                     "\t\t\t\t\t\t\t\t\t\t onclick='javascipt:showReCommentComment(this)'>回复</a>\n" +
                                     "\t\t\t\t\t\t\t\t\t&nbsp;&nbsp;|&nbsp;&nbsp;\n" +
-                                    "\t\t\t\t\t\t\t\t\t<a onclick='doCommentLike(this," + r.data.commentList[i].subCommentList[j].uid + "," + r.data.commentList[i].subCommentList[j].cid + ")'>";
+                                    "\t\t\t\t\t\t\t\t\t<a class=\"commona\" onclick='doCommentLike(this," + r.data.commentList[i].subCommentList[j].uid + "," + r.data.commentList[i].subCommentList[j].cid + ")'>";
                                 if (r.data.commentList[i].subCommentList[j].commentLike) {
                                     comment += "<i class='fa fa-heart'></i>";
                                 } else {
@@ -768,11 +778,11 @@
                                 "\t\t\t\t\t<div class='col-lg-4'></div>\n" +
                                 "\t\t\t\t\t<div class='col-lg-4'>\n" +
                                 "<div style='float: right'>" +
-                                "\t\t\t\t\t\t<a style='text-decoration: none' onclick=\"deleteComment(" + r.data.comment.cid + ",'" + r.data.comment.upid + "','" + kind + "')\">删除</a>\n" +
+                                "\t\t\t\t\t\t<a class=\"commona\" style='text-decoration: none' onclick=\"deleteComment(" + r.data.comment.cid + ",'" + r.data.comment.upid + "','" + kind + "')\">删除</a>\n" +
                                 "\t\t\t\t\t\t&nbsp;&nbsp;|&nbsp;&nbsp;\n" +
-                                "\t\t\t\t\t\t<a style='text-decoration: none' onclick='showReComment(this)'>回复</a>\n" +
+                                "\t\t\t\t\t\t<a class=\"commona\" style='text-decoration: none' onclick='showReComment(this)'>回复</a>\n" +
                                 "\t\t\t\t\t\t&nbsp;&nbsp;|&nbsp;&nbsp;\n" +
-                                "\t\t\t\t\t\t<a onclick='doCommentLike(this," + r.data.comment.uid + "," + r.data.comment.cid + ")'>" +
+                                "\t\t\t\t\t\t<a class=\"commona\" onclick='doCommentLike(this," + r.data.comment.uid + "," + r.data.comment.cid + ")'>" +
                                 "<i class='fa fa-heart-o'></i>" +
                                 "</a>\n" +
                                 "\t\t\t\t\t\t<span>0</span>\n" +
@@ -891,7 +901,7 @@
                         infoCard += "<span class='lmlblog-mark' style='background-color: orange'><i class='fa fa-transgender-alt'></i></span>";
                         break;
                 }
-                infoCard += "</div><br><div>" + data.description + "</div><hr><div>&nbsp;&nbsp;关注&nbsp;" + data.countAllFollowUser + "&nbsp;&nbsp;|&nbsp;&nbsp;粉丝&nbsp;" + data.countAllFans + "&nbsp;&nbsp;|&nbsp;&nbsp;<a href='/user/" + data.uid + "/1'>微博&nbsp;" + data.countAllPost + "</a>&nbsp;&nbsp;</div><br><div>" + data.city + "</div>";
+                infoCard += "</div><br><div>" + data.description + "</div><hr><div><a class=\"commona\" href='/follow/"+data.uid+"/1'>&nbsp;&nbsp;关注&nbsp;" + data.countAllFollowUser + "</a>&nbsp;&nbsp;|<a class=\"commona\" href='/follow/"+data.uid+"/2'>&nbsp;&nbsp;粉丝&nbsp;" + data.countAllFans + "</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a class=\"commona\" href='/user/" + data.uid + "/1'>微博&nbsp;" + data.countAllPost + "</a>&nbsp;&nbsp;</div><br><div>" + data.city + "</div>";
 
                 $("#infoCard" + pid).html(infoCard);
             },
@@ -1061,10 +1071,10 @@
                 function (data) {
                     /*var time1 = post.postTime.format("yyyy-MM-dd hh:mm:ss");
                     alert(time1);*/
-                    var prependPost0 = "<div class='lmlblog-posts-list words' style='background-image:url(/images/058.png);' ><div class='lmlblog-post-user-info'><div class='lmlblog-post-user-info-avatar' user-data='1'><a href='#1' style='display: inline-block;'><span class='lmlblog-vip-icon'></span><img src='/avatar/" + data.post.user.image + "' class='avatar' /><i class='' title=" + data.post.user.name + "></i></a><div class='lmlblog-user-info-card'><div class='info_card_loading'><img src='/picture/chat-loading.gif'><p>资料加载中...</p></div></div></div><div class='lmlblog-post-user-info-name'><a href='#1'><font style='color:#333;font-weight:600' >" + data.post.user.name + "</font></a></div><div class='lmlblog-post-user-info-time' title='" + data.formatTime + "')} >刚刚</div><div class='lmlblog-post-user-info-time' title='来自weibo.com' >来自weibo.com</div></div><div class='lmlblog-post-setting'><i class='fa fa-angle-down'></i><div class='lmlblog-post-setting-box'><ul><a href='/user/" + uid + "/doTopPost?pid=" + data.post.pid + "' title='置顶'><li>置顶</li></a><a href='#' title='编辑'><li>编辑</li></a><a href='javascript:doDelete(" + uid + "," + data.post.pid + ")' title='删除'><li>删除</li></a></ul></div></div><div class='lmlblog-post-content' style='white-space:pre-line'>" + data.post.text + "</div><div class='lmlblog-post-bar'><li onclick='list_comments_show(this);'><i class='fa fa-comment-o'></i><span></span></li><li class='lmlblog-no-like' onclick='javascript:doLike(" + data.post.pid + "," + uid + ",this)'><i class='fa fa-heart-o'></i><span>" + data.post.countPostLike + "</span></li></div><div class='lmlblog-post-footer-bar'><span title='" + data.formatTime + "' >" + data.formatTime + "</span><span>小尾巴</span><i class='lmlblog-icon' onclick='lmlblog_post_type_open();'></i></div></div>";
-                    var prependPost1 = "<div class='lmlblog-posts-list words' style='background-image:url(/images/058.png);' ><div class='lmlblog-post-user-info'><div class='lmlblog-post-user-info-avatar' user-data='1'><a href='#1' style='display: inline-block;'><span class='lmlblog-vip-icon'></span><img src='/avatar/" + data.post.user.image + "' class='avatar' /><i class='lmlblog-verify lmlblog-verify-a' title=" + data.post.user.name + "></i></a><div class='lmlblog-user-info-card'><div class='info_card_loading'><img src='/picture/chat-loading.gif'><p>资料加载中...</p></div></div></div><div class='lmlblog-post-user-info-name'><a href='#1'><font style='color:#333;font-weight:600' >" + data.post.user.name + "</font></a></div><div class='lmlblog-post-user-info-time' title='" + data.formatTime + "')} >刚刚</div><div class='lmlblog-post-user-info-time' title='来自weibo.com' >来自weibo.com</div></div><div class='lmlblog-post-setting'><i class='fa fa-angle-down'></i><div class='lmlblog-post-setting-box'><ul><a href='/user/" + uid + "/doTopPost?pid=" + data.post.pid + "' title='置顶'><li>置顶</li></a><a href='#' title='编辑'><li>编辑</li></a><a href='javascript:doDelete(" + uid + "," + data.post.pid + ")' title='删除'><li>删除</li></a></ul></div></div><div class='lmlblog-post-content' style='white-space:pre-line'>" + data.post.text + "</div><div class='lmlblog-post-bar'><li onclick='list_comments_show(this);'><i class='fa fa-comment-o'></i><span></span></li><li class='lmlblog-no-like' onclick='javascript:doLike(" + data.post.pid + "," + uid + ",this)'><i class='fa fa-heart-o'></i><span>" + data.post.countPostLike + "</span></li></div><div class='lmlblog-post-footer-bar'><span title='" + data.formatTime + "' >" + data.formatTime + "</span><span>小尾巴</span><i class='lmlblog-icon' onclick='lmlblog_post_type_open();'></i></div></div>";
-                    var prependPost2 = "<div class='lmlblog-posts-list words' style='background-image:url(/images/058.png);' ><div class='lmlblog-post-user-info'><div class='lmlblog-post-user-info-avatar' user-data='1'><a href='#1' style='display: inline-block;'><span class='lmlblog-vip-icon'></span><img src='/avatar/" + data.post.user.image + "' class='avatar' /><i class='lmlblog-verify lmlblog-verify-b' title=" + data.post.user.name + "></i></a><div class='lmlblog-user-info-card'><div class='info_card_loading'><img src='/picture/chat-loading.gif'><p>资料加载中...</p></div></div></div><div class='lmlblog-post-user-info-name'><a href='#1'><font style='color:#333;font-weight:600' >" + data.post.user.name + "</font></a></div><div class='lmlblog-post-user-info-time' title='" + data.formatTime + "')} >刚刚</div><div class='lmlblog-post-user-info-time' title='来自weibo.com' >来自weibo.com</div></div><div class='lmlblog-post-setting'><i class='fa fa-angle-down'></i><div class='lmlblog-post-setting-box'><ul><a href='/user/" + uid + "/doTopPost?pid=" + data.post.pid + "' title='置顶'><li>置顶</li></a><a href='#' title='编辑'><li>编辑</li></a><a href='javascript:doDelete(" + uid + "," + data.post.pid + ")' title='删除'><li>删除</li></a></ul></div></div><div class='lmlblog-post-content' style='white-space:pre-line'>" + data.post.text + "</div><div class='lmlblog-post-bar'><li onclick='list_comments_show(this);'><i class='fa fa-comment-o'></i><span></span></li><li class='lmlblog-no-like' onclick='javascript:doLike(" + data.post.pid + "," + uid + ",this)'><i class='fa fa-heart-o'></i><span>" + data.post.countPostLike + "</span></li></div><div class='lmlblog-post-footer-bar'><span title='" + data.formatTime + "' >" + data.formatTime + "</span><span>小尾巴</span><i class='lmlblog-icon' onclick='lmlblog_post_type_open();'></i></div></div>";
-                    var prependPost3 = "<div class='lmlblog-posts-list words' style='background-image:url(/images/058.png);' ><div class='lmlblog-post-user-info'><div class='lmlblog-post-user-info-avatar' user-data='1'><a href='#1' style='display: inline-block;'><span class='lmlblog-vip-icon'></span><img src='/avatar/" + data.post.user.image + "' class='avatar' /><i class='lmlblog-verify-c lmlblog-verify-cc' title=" + data.post.user.name + "></i></a><div class='lmlblog-user-info-card'><div class='info_card_loading'><img src='/picture/chat-loading.gif'><p>资料加载中...</p></div></div></div><div class='lmlblog-post-user-info-name'><a href='#1'><font style='color:#333;font-weight:600' >" + data.post.user.name + "</font></a></div><div class='lmlblog-post-user-info-time' title='" + data.formatTime + "')} >刚刚</div><div class='lmlblog-post-user-info-time' title='来自weibo.com' >来自weibo.com</div></div><div class='lmlblog-post-setting'><i class='fa fa-angle-down'></i><div class='lmlblog-post-setting-box'><ul><a href='/user/" + uid + "/doTopPost?pid=" + data.post.pid + "' title='置顶'><li>置顶</li></a><a href='#' title='编辑'><li>编辑</li></a><a href='javascript:doDelete(" + uid + "," + data.post.pid + ")' title='删除'><li>删除</li></a></ul></div></div><div class='lmlblog-post-content' style='white-space:pre-line'>" + data.post.text + "</div><div class='lmlblog-post-bar'><li onclick='list_comments_show(this);'><i class='fa fa-comment-o'></i><span></span></li><li class='lmlblog-no-like' onclick='javascript:doLike(" + data.post.pid + "," + uid + ",this)'><i class='fa fa-heart-o'></i><span>" + data.post.countPostLike + "</span></li></div><div class='lmlblog-post-footer-bar'><span title='" + data.formatTime + "' >" + data.formatTime + "</span><span>小尾巴</span><i class='lmlblog-icon' onclick='lmlblog_post_type_open();'></i></div></div>";
+                    var prependPost0 = "<div class='lmlblog-posts-list words' style='background-image:url(/images/058.png);' ><div class='lmlblog-post-user-info'><div class='lmlblog-post-user-info-avatar' user-data='1'><a href='#1' style='display: inline-block;'><span class='lmlblog-vip-icon'></span><img src='/avatar/" + data.post.user.image + "' class='avatar' /><i class='' title=" + data.post.user.name + "></i></a><div class='lmlblog-user-info-card'><div class='info_card_loading'><img src='/picture/chat-loading.gif'><p>资料加载中...</p></div></div></div><div class='lmlblog-post-user-info-name'><a href='#1'><font style='color:#333;font-weight:600' >" + data.post.user.name + "</font></a></div><div class='lmlblog-post-user-info-time' title='" + data.formatTime + "')} >刚刚</div><div class='lmlblog-post-user-info-time' title='来自weibo.com' >来自weibo.com</div></div><div class='lmlblog-post-setting'><i class='fa fa-angle-down'></i><div class='lmlblog-post-setting-box'><ul><a class=\"commona\" href='/user/" + uid + "/doTopPost?pid=" + data.post.pid + "' title='置顶'><li>置顶</li></a><a class=\"commona\" href='#' title='编辑'><li>编辑</li></a><a class=\"commona\" href='javascript:doDelete(" + uid + "," + data.post.pid + ")' title='删除'><li>删除</li></a></ul></div></div><div class='lmlblog-post-content' style='white-space:pre-line'>" + data.post.text + "</div><div class='lmlblog-post-bar'><li onclick='list_comments_show(this);'><i class='fa fa-comment-o'></i><span></span></li><li class='lmlblog-no-like' onclick='javascript:doLike(" + data.post.pid + "," + uid + ",this)'><i class='fa fa-heart-o'></i><span>" + data.post.countPostLike + "</span></li></div><div class='lmlblog-post-footer-bar'><span title='" + data.formatTime + "' >" + data.formatTime + "</span><span>小尾巴</span><i class='lmlblog-icon' onclick='lmlblog_post_type_open();'></i></div></div>";
+                    var prependPost1 = "<div class='lmlblog-posts-list words' style='background-image:url(/images/058.png);' ><div class='lmlblog-post-user-info'><div class='lmlblog-post-user-info-avatar' user-data='1'><a href='#1' style='display: inline-block;'><span class='lmlblog-vip-icon'></span><img src='/avatar/" + data.post.user.image + "' class='avatar' /><i class='lmlblog-verify lmlblog-verify-a' title=" + data.post.user.name + "></i></a><div class='lmlblog-user-info-card'><div class='info_card_loading'><img src='/picture/chat-loading.gif'><p>资料加载中...</p></div></div></div><div class='lmlblog-post-user-info-name'><a href='#1'><font style='color:#333;font-weight:600' >" + data.post.user.name + "</font></a></div><div class='lmlblog-post-user-info-time' title='" + data.formatTime + "')} >刚刚</div><div class='lmlblog-post-user-info-time' title='来自weibo.com' >来自weibo.com</div></div><div class='lmlblog-post-setting'><i class='fa fa-angle-down'></i><div class='lmlblog-post-setting-box'><ul><a class=\"commona\" href='/user/" + uid + "/doTopPost?pid=" + data.post.pid + "' title='置顶'><li>置顶</li></a><a class=\"commona\" href='#' title='编辑'><li>编辑</li></a><a class=\"commona\" href='javascript:doDelete(" + uid + "," + data.post.pid + ")' title='删除'><li>删除</li></a></ul></div></div><div class='lmlblog-post-content' style='white-space:pre-line'>" + data.post.text + "</div><div class='lmlblog-post-bar'><li onclick='list_comments_show(this);'><i class='fa fa-comment-o'></i><span></span></li><li class='lmlblog-no-like' onclick='javascript:doLike(" + data.post.pid + "," + uid + ",this)'><i class='fa fa-heart-o'></i><span>" + data.post.countPostLike + "</span></li></div><div class='lmlblog-post-footer-bar'><span title='" + data.formatTime + "' >" + data.formatTime + "</span><span>小尾巴</span><i class='lmlblog-icon' onclick='lmlblog_post_type_open();'></i></div></div>";
+                    var prependPost2 = "<div class='lmlblog-posts-list words' style='background-image:url(/images/058.png);' ><div class='lmlblog-post-user-info'><div class='lmlblog-post-user-info-avatar' user-data='1'><a href='#1' style='display: inline-block;'><span class='lmlblog-vip-icon'></span><img src='/avatar/" + data.post.user.image + "' class='avatar' /><i class='lmlblog-verify lmlblog-verify-b' title=" + data.post.user.name + "></i></a><div class='lmlblog-user-info-card'><div class='info_card_loading'><img src='/picture/chat-loading.gif'><p>资料加载中...</p></div></div></div><div class='lmlblog-post-user-info-name'><a href='#1'><font style='color:#333;font-weight:600' >" + data.post.user.name + "</font></a></div><div class='lmlblog-post-user-info-time' title='" + data.formatTime + "')} >刚刚</div><div class='lmlblog-post-user-info-time' title='来自weibo.com' >来自weibo.com</div></div><div class='lmlblog-post-setting'><i class='fa fa-angle-down'></i><div class='lmlblog-post-setting-box'><ul><a class=\"commona\" href='/user/" + uid + "/doTopPost?pid=" + data.post.pid + "' title='置顶'><li>置顶</li></a><a class=\"commona\" href='#' title='编辑'><li>编辑</li></a><a class=\"commona\" href='javascript:doDelete(" + uid + "," + data.post.pid + ")' title='删除'><li>删除</li></a></ul></div></div><div class='lmlblog-post-content' style='white-space:pre-line'>" + data.post.text + "</div><div class='lmlblog-post-bar'><li onclick='list_comments_show(this);'><i class='fa fa-comment-o'></i><span></span></li><li class='lmlblog-no-like' onclick='javascript:doLike(" + data.post.pid + "," + uid + ",this)'><i class='fa fa-heart-o'></i><span>" + data.post.countPostLike + "</span></li></div><div class='lmlblog-post-footer-bar'><span title='" + data.formatTime + "' >" + data.formatTime + "</span><span>小尾巴</span><i class='lmlblog-icon' onclick='lmlblog_post_type_open();'></i></div></div>";
+                    var prependPost3 = "<div class='lmlblog-posts-list words' style='background-image:url(/images/058.png);' ><div class='lmlblog-post-user-info'><div class='lmlblog-post-user-info-avatar' user-data='1'><a href='#1' style='display: inline-block;'><span class='lmlblog-vip-icon'></span><img src='/avatar/" + data.post.user.image + "' class='avatar' /><i class='lmlblog-verify-c lmlblog-verify-cc' title=" + data.post.user.name + "></i></a><div class='lmlblog-user-info-card'><div class='info_card_loading'><img src='/picture/chat-loading.gif'><p>资料加载中...</p></div></div></div><div class='lmlblog-post-user-info-name'><a href='#1'><font style='color:#333;font-weight:600' >" + data.post.user.name + "</font></a></div><div class='lmlblog-post-user-info-time' title='" + data.formatTime + "')} >刚刚</div><div class='lmlblog-post-user-info-time' title='来自weibo.com' >来自weibo.com</div></div><div class='lmlblog-post-setting'><i class='fa fa-angle-down'></i><div class='lmlblog-post-setting-box'><ul><a class=\"commona\" href='/user/" + uid + "/doTopPost?pid=" + data.post.pid + "' title='置顶'><li>置顶</li></a><a class=\"commona\" href='#' title='编辑'><li>编辑</li></a><a class=\"commona\" href='javascript:doDelete(" + uid + "," + data.post.pid + ")' title='删除'><li>删除</li></a></ul></div></div><div class='lmlblog-post-content' style='white-space:pre-line'>" + data.post.text + "</div><div class='lmlblog-post-bar'><li onclick='list_comments_show(this);'><i class='fa fa-comment-o'></i><span></span></li><li class='lmlblog-no-like' onclick='javascript:doLike(" + data.post.pid + "," + uid + ",this)'><i class='fa fa-heart-o'></i><span>" + data.post.countPostLike + "</span></li></div><div class='lmlblog-post-footer-bar'><span title='" + data.formatTime + "' >" + data.formatTime + "</span><span>小尾巴</span><i class='lmlblog-icon' onclick='lmlblog_post_type_open();'></i></div></div>";
                     alert("发送成功！");
                     $("#content").html("");
                     $(".tips").text("");

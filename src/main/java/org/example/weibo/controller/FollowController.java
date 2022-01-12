@@ -86,7 +86,7 @@ public class FollowController {
         Integer maxGid = groupService.getMaxGid();
         group.setGid(maxGid);
         groupService.createGroup(group);
-        return R.ok().addData("result","添加分组成功");
+        return R.ok().addData("gid",group.getGid());
     }
     @RequestMapping("/myGroups/{userCurUid}/{gid}/{pageNum}")
     public String showGroupPost(HttpSession session, Model model,

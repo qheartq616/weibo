@@ -175,13 +175,14 @@
                 </div>
                 <div class=" lmlblog-member-right">
                     <div class="lmlblog-post-list" th:if="${users!=null}" th:each="user:${users}">
-                        <div class="lmlblog-posts-list words" style="background-image:url(/images/058.png); "
+                        <div class="lmlblog-posts-list words"
                              data="4197">
                             <!-- 动态内容部分，包括列表 -->
                             <div class="lmlblog-post-user-info" style="display: inline-block"
                                  >
                                 <div class="lmlblog-post-user-info-avatar" user-data="1">
-                                    <a th:href="@{|/user/${user.uid}/1|}" style="display: inline-block;">
+                                    <a th:href="@{|/user/${user.uid}/1|}" style="display: inline-block;"
+                                       th:onmouseover="|showImg(${user.uid},${session.user.uid})|">
                                         <span class="lmlblog-vip-icon"></span>
                                         <img th:src="|/avatar/${user.image}|" class="avatar"/>
                                         <i th:if="${user.status==0}" th:title="普通用户"></i>
@@ -205,10 +206,10 @@
                                         <font style="color:#333;font-weight:600" th:text="${user.name}">司空琪</font>
                                     </a>
                                     <p style="margin: 8px auto"><a th:href="@{|/follow/${user.uid}/1|}">关注
-                                        [[${user.countAllFollowUser}]] </a> | <a th:href="@{|/follow/${user.uid}/2|}">粉丝
-                                        [[${user.countAllFans}]] </a> | <a th:href="@{|/user/${user.uid}/1|}">微博
+                                        [[${user.countAllFollowUser}]]</a>|<a th:href="@{|/follow/${user.uid}/2|}">粉丝
+                                        [[${user.countAllFans}]]</a>|<a th:href="@{|/user/${user.uid}/1|}">微博
                                         [[${user.countAllPost}]]</a></p>
-                                    <p style="margin: 8px auto">地址 [[${user.city}]] </p>
+                                    <p style="margin: 8px auto">地址[[${user.city}]]</p>
                                 </div>
 
                             </div><!-- 作者信息 -->
@@ -349,7 +350,8 @@
                 console.log(data)
                 if (data.code === 631548) {
                     $(".close").click()
-                    $("#groups").append("<li><a>" + groupName + "</a></li>")
+                    $("#groups").append("<li><a href='/myGroups/"+uid+"/"+data.data.gid+"/1' >" + groupName + "</a></li>")
+
                 } else {
                     alert("添加分组失败")
                 }
@@ -375,7 +377,7 @@
         })
 
     });
-    function showImg(pid, curUid, uid) {
+    function showImg( curUid, uid) {
         $.post(
             "/user/" + uid + "/getInfoByUid",
             "curUid=" + curUid,
@@ -409,7 +411,7 @@
                 }
                 infoCard += "</div><br><div>" + data.description + "</div><hr><div>&nbsp;&nbsp;关注&nbsp;" + data.countAllFollowUser + "&nbsp;&nbsp;|&nbsp;&nbsp;粉丝&nbsp;" + data.countAllFans + "&nbsp;&nbsp;|&nbsp;&nbsp;<a href='/user/" + data.uid + "/1'>微博&nbsp;" + data.countAllPost + "</a>&nbsp;&nbsp;</div><br><div>" + data.city + "</div>";
 
-                $("#infoCard" + pid).html(infoCard);
+                $("#infoCard" + curUid).html(infoCard);
             },
             "json"
         );

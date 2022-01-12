@@ -267,7 +267,8 @@
                             <!-- 动态内容部分，包括列表 -->
                             <div class="lmlblog-post-user-info">
                                 <div class="lmlblog-post-user-info-avatar" user-data="1">
-                                    <a th:href="@{|/user/${post.uid}/1|}" style="display: inline-block;">
+                                    <a th:href="@{|/user/${post.uid}/1|}" style="display: inline-block;"
+									   th:onmouseover="|showImg(${post.pid},${post.user.uid},${session.user.uid})|">
                                         <span class="lmlblog-vip-icon"></span>
                                         <img th:src="|/avatar/${post.user.image}|" class="avatar" />
                                         <i th:if="${post.user.status==0}" th:title="普通用户"></i>
@@ -275,15 +276,12 @@
                                         <i th:if="${post.user.status==2}" class="lmlblog-verify lmlblog-verify-b" th:title="认证用户"></i>
                                         <i th:if="${post.user.status==3}" class="lmlblog-verify-c lmlblog-verify-cc" th:title="超级管理员"></i>
                                     </a>
-                                    <div class="lmlblog-user-info-card" style="display: none" onMouseOut="hideImg(this)" onmouseover="showImg(this)">
-                                        <!--悬浮显示信息-->
-                                        <div class="info_card_loading">
-                                            <img th:src="|/avatar/${post.user.image}|" class="avatar" />
-                                            <br>
-                                            <span th:text="${post.user.name}"></span>
-                                            <span>关注|粉丝|点赞</span>
-                                        </div>
-                                    </div>
+									<div class="lmlblog-user-info-card">
+										<div class="info_card_loading" th:id="|infoCard${post.pid}|">
+											<img style="margin-top: 70px" src="/picture/chat-loading.gif">
+											<p>资料加载中...</p>
+										</div>
+									</div>
                                 </div>
                                 <div class="lmlblog-post-user-info-name">
                                     <a th:href="@{|/user/${post.user.uid}/1|}">
@@ -315,7 +313,7 @@
                 </div>
                 <div th:if="${AtpageInfo==null && CommentpageInfo==null && pageInfo==null}">
                     <div class="lmlblog-post-user-info">
-                        <div class="lmlblog-post-user-info-time" title="2017-12-14 05:25" style="font-size: 20px; height: 300px" th:text="对不起没有数据">12-14 05:25</div>
+                        <div class="lmlblog-post-user-info-time" title="2017-12-14 05:25" style="font-size: 20px; height: 600px" th:text="对不起没有数据">12-14 05:25</div>
                     </div>
                 </div>
 			</div>
@@ -420,12 +418,44 @@
             },
         });
     }
-	
-	function showImg(d){
-		$(d).css("display","block");
-	}
-	function hideImg(d){
-		$(d).css("display","block");
+
+	function showImg(pid, curUid, uid) {
+		$.post(
+				"/user/" + uid + "/getInfoByUid",
+				"curUid=" + curUid,
+				function (data) {
+					var infoCard = "<a href='/user/" + data.uid + "/1' style='display: inline-block'><img src='/avatar/" + data.image + "' class='avatar'/>"
+					switch (data.status) {
+						case 0:
+							infoCard += "<i title='普通用户'/>";
+							break;
+						case 1:
+							infoCard += "<i class='lmlblog-verify lmlblog-verify-a' style='position: absolute;top: 66px;left: 200px;' title='会员用户'/>";
+							break;
+						case 2:
+							infoCard += "<i class='lmlblog-verify lmlblog-verify-b' style='position: absolute;top: 66px;left: 200px;' title='认证用户'/>";
+							break;
+						case 3:
+							infoCard += "<i class='lmlblog-verify-c lmlblog-verify-cc' style='position: absolute;top: 66px;left: 200px;' title='超级管理员'/>";
+							break;
+					}
+					infoCard += "</a><div><strong>" + data.name + "</strong>";
+					switch (data.gender) {
+						case '男':
+							infoCard += "<span class='lmlblog-mark lmlblog-boy'><i class='fa fa-mars'></i></span>";
+							break;
+						case '女':
+							infoCard += "<span class='lmlblog-mark lmlblog-girl'><i class='fa fa-venus'></i></span>";
+							break;
+						default:
+							infoCard += "<span class='lmlblog-mark' style='background-color: orange'><i class='fa fa-transgender-alt'></i></span>";
+							break;
+					}
+					infoCard += "</div><br><div>" + data.description + "</div><hr><div><a class=\"commona\" href='/follow/"+data.uid+"/1'>&nbsp;&nbsp;关注&nbsp;" + data.countAllFollowUser + "</a>&nbsp;&nbsp;|<a class=\"commona\" href='/follow/"+data.uid+"/2'>&nbsp;&nbsp;粉丝&nbsp;" + data.countAllFans + "</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a class=\"commona\" href='/user/" + data.uid + "/1'>微博&nbsp;" + data.countAllPost + "</a>&nbsp;&nbsp;</div><br><div>" + data.city + "</div>";
+					$("#infoCard" + pid).html(infoCard);
+				},
+				"json"
+		);
 	}
 	jQuery(document).ready(function($) {
 		$.fn.smartFloat = function() {

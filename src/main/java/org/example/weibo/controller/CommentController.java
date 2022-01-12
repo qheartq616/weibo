@@ -29,14 +29,36 @@ public class CommentController {
 	@RequestMapping("someComment")
 	@ResponseBody
 	public R showSomeComment(@RequestParam(name = "upid") String upid,
-	                        @RequestParam(name = "kind") String kind,
-	                                    HttpSession session){
+	                         @RequestParam(name = "kind") String kind,
+	                         HttpSession session){
 		User user = (User) session.getAttribute("user");
 		List<Comment> commentList=null;
 		if (kind.equals("hot")){
 			commentList = commentService.showHotComment(upid,"0",user.getUid(),3);
 		}else {
 			commentList = commentService.showLatestComment(upid,"0", user.getUid(),0, 5).getList();
+		}
+		/*System.out.println(upid);
+		for (Comment comment : commentList) {
+			System.out.println("comment.toString() = " + comment.toString());
+		}*/
+		if (commentList.size()==0){
+			return R.empty();
+		}else {
+			return R.ok().addData("commentList",commentList);
+		}
+	}
+	@RequestMapping("allComment")
+	@ResponseBody
+	public R showAllComment(@RequestParam(name = "upid") String upid,
+	                         @RequestParam(name = "kind") String kind,
+	                         HttpSession session){
+		User user = (User) session.getAttribute("user");
+		List<Comment> commentList=null;
+		if (kind.equals("hot")){
+			commentList = commentService.showHotComment(upid,"0",user.getUid(),10000);
+		}else {
+			commentList = commentService.showLatestComment(upid,"0", user.getUid(),0, 10000).getList();
 		}
 		/*System.out.println(upid);
 		for (Comment comment : commentList) {
