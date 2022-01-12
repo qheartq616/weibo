@@ -53,30 +53,13 @@ public class MainController {
 			PageInfo<Post> pageInfo = postService.showAllFollowUserPostMutual(user.getUid(), pageNum);
 			model.addAttribute("pageInfo", pageInfo);
 			//System.out.println(3333);
+		} else if (type.equals("hottest")){
+			PageInfo<Post> pageInfo = postService.showAllFollowUserPostHottest(user.getUid(), pageNum);
+			model.addAttribute("pageInfo", pageInfo);
 		}
-
 
 		List<Group> groupList = groupService.showAllGroupList(user.getUid());
-		/*for (Group group : groupList) {
-			System.out.println("group.getName() = " + group.getName());
-		}*/
-		/*List<Group> groupList1=new ArrayList<>();
-		List<Group> groupList2=new ArrayList<>();
-		if (groupList.size()<=4){
-			groupList1=groupList;
-		}else {
-			for (int i=0;i<groupList.size();i++){
-				if(i<4){
-					groupList1.add(groupList.get(i));
-				}else {
-					groupList2.add(groupList.get(i));
-				}
-			}
-		}
-		model.addAttribute("groupList1",groupList1);
-		model.addAttribute("groupList2",groupList2);*/
 		model.addAttribute("groupList", groupList);
-
 
 		return "main";
 	}
@@ -118,5 +101,27 @@ public class MainController {
 	@ResponseBody
 	public void deletePost(Integer pid) {
 		postService.doDelete(pid);
+	}
+
+	@RequestMapping("detail/{pid}")
+	public String detail(HttpSession session,
+	                     @PathVariable("pid") Integer pid,
+	                     Model model){
+		Post post = postService.showPost(pid);
+
+		Post hotPost = postService.hotPost(post.getUid());
+		model.addAttribute("hotPost",hotPost);
+
+		List<Post> posts=new ArrayList<>();
+		posts.add(post);
+		User user = (User) session.getAttribute("user");
+		List<Post> posts1 = postService.fillPostInfo(posts, user.getUid());
+
+		User user1 = userService.fillUserInfo(user, post.getUser());
+		posts1.get(0).setUser(user1);
+
+		model.addAttribute("post",posts1.get(0));
+
+		return "detail";
 	}
 }

@@ -28,6 +28,8 @@ public class PostServiceImpl implements PostService{
 	UserMapper userMapper;
 	@Resource
 	CommentService commentService;
+	@Resource
+	UserService userService;
 
 	//微博状态码：-1：仅自己可见，0：删除，1：公开，2：好友圈，3：粉丝，4：置顶（置顶微博必须公开）
 	@Override
@@ -164,6 +166,21 @@ public class PostServiceImpl implements PostService{
 		}*/
 		List<Post> filledPostList = fillPostInfo(pageInfo.getList(), uid);
 		pageInfo.setList(filledPostList);
+
+		return pageInfo;
+	}
+
+	@Override
+	//热门微博
+	public PageInfo<Post> showAllFollowUserPostHottest(Integer uid, Integer pageNum) {
+		PostExample postExample=new PostExample();
+		postExample.createCriteria().andUidNotEqualTo(uid).andStatusEqualTo(1);
+		List<Post> posts = postMapper.selectByExample(postExample);
+
+		List<Post> posts1 = fillPostInfo(posts, uid);
+
+		PageInfo<Post> pageInfo=new PageInfo<>(posts1);
+		pageInfo.setList(ListUtil.sortByPostHeat(posts1));
 
 		return pageInfo;
 	}
@@ -328,6 +345,17 @@ public class PostServiceImpl implements PostService{
 	public Post showPost(Integer pid) {
 		Post post = postMapper.selectByPrimaryKey(pid);
 		return post;
+	}
+
+	@Override
+	//查询个人最热门微博
+	public Post hotPost(Integer curUid) {
+		PostExample postExample=new PostExample();
+		postExample.createCriteria().andUidEqualTo(curUid);
+		List<Post> posts = postMapper.selectByExample(postExample);
+		List<Post> posts1 = fillPostInfo(posts, curUid);
+		Post hotPost = ListUtil.sortByPostHeatSingle(posts1).get(posts1.size()-1);
+		return hotPost;
 	}
 
 

@@ -58,6 +58,9 @@ public class UserController {
 		}*/
 		model.addAttribute("pageInfo",pageInfo);
 
+		Post hotPost = postService.hotPost(userCurUid);
+		model.addAttribute("hotPost",hotPost);
+
 		return "index";
 	}
 
